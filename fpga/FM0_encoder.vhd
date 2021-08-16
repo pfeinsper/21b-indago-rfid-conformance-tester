@@ -12,13 +12,15 @@ entity FM0_encoder is
 	port ( 
 		clk             : in std_logic;
 		need_to_process : in std_logic; -- if encoder has data do encode, is used to keep encoder index at 0 when no needed
-		tari            : in std_logic_vector(11 downto 0); -- format expected : ddddddddmmmm; -- the value expected is 1e8 times greater than the real one, tari goes normaly btw 6.25 µs and 25µs
+		tari            : in std_logic_vector(11 downto 0); -- the value expected is 1e8 times greater than the real one, tari goes normaly btw 6.25 µs and 25µs
 		data_in         : in std_logic_vector((data_width + mask_width)-1 downto 0); -- format expected : ddddddddmmmm
 
 		
 		reduced_clk_out  : out std_logic;
 		reset_i_out      : out std_logic;
 		encoded_data_out : out std_logic_vector(data_width*2 -1 downto 0);
+		not_encoded_data_out : out std_logic_vector(data_width-1 downto 0);
+		mask_out : out std_logic_vector(mask_width -1 downto 0);
 		
 		data_out : out std_logic; 
 		is_free  : out std_logic
@@ -58,6 +60,9 @@ architecture arch of FM0_encoder is
 	signal clock_tari_over_two : integer := 2; -- to_integer(unsigned(tari)) / 2e8 * clk_f;
 	
 	
+	signal aa : std_logic := '0';
+	
+	
 	begin
 		data_encoder : process( clk )
 			variable i : integer range 0 to 15 := 0;
@@ -72,10 +77,12 @@ architecture arch of FM0_encoder is
 						current_start_value <= not current_start_value; -- default value only change when a '1' is current data bit
 					end if ;
 					
-					
+					reset_i_out <= data(i);
+					mask_out <= std_logic_vector(to_unsigned(i, 4));
 					i := i + 1;
 					if (i = mask_value) then
 						i := 0;
+						aa <= not aa;
 					end if;
 				end if ;
 		
@@ -115,5 +122,8 @@ architecture arch of FM0_encoder is
 		
 		encoded_data_out <= encoded_data;
 		reduced_clk_out <= reduced_clk;
+		
+--		reset_i_out <= aa;
+		not_encoded_data_out <= data;
 
 end arch ; -- arch

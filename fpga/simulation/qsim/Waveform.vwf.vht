@@ -19,7 +19,7 @@
 -- the top level entity of the current Quartus project .The user can use this   
 -- testbench to simulate his design using a third-party simulation tool .       
 -- *****************************************************************************
--- Generated on "08/16/2021 14:30:18"
+-- Generated on "08/16/2021 17:57:03"
                                                              
 -- Vhdl Test Bench(with test vectors) for design  :          FM0_encoder
 -- 
@@ -39,7 +39,9 @@ SIGNAL data_in : STD_LOGIC_VECTOR(11 DOWNTO 0);
 SIGNAL data_out : STD_LOGIC;
 SIGNAL encoded_data_out : STD_LOGIC_VECTOR(15 DOWNTO 0);
 SIGNAL is_free : STD_LOGIC;
+SIGNAL mask_out : STD_LOGIC_VECTOR(3 DOWNTO 0);
 SIGNAL need_to_process : STD_LOGIC;
+SIGNAL not_encoded_data_out : STD_LOGIC_VECTOR(7 DOWNTO 0);
 SIGNAL reduced_clk_out : STD_LOGIC;
 SIGNAL reset_i_out : STD_LOGIC;
 SIGNAL tari : STD_LOGIC_VECTOR(11 DOWNTO 0);
@@ -47,12 +49,14 @@ COMPONENT FM0_encoder
 	PORT (
 	clk : IN STD_LOGIC;
 	data_in : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
-	data_out : OUT STD_LOGIC;
-	encoded_data_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
-	is_free : OUT STD_LOGIC;
+	data_out : BUFFER STD_LOGIC;
+	encoded_data_out : BUFFER STD_LOGIC_VECTOR(15 DOWNTO 0);
+	is_free : BUFFER STD_LOGIC;
+	mask_out : BUFFER STD_LOGIC_VECTOR(3 DOWNTO 0);
 	need_to_process : IN STD_LOGIC;
-	reduced_clk_out : OUT STD_LOGIC;
-	reset_i_out : OUT STD_LOGIC;
+	not_encoded_data_out : BUFFER STD_LOGIC_VECTOR(7 DOWNTO 0);
+	reduced_clk_out : BUFFER STD_LOGIC;
+	reset_i_out : BUFFER STD_LOGIC;
 	tari : IN STD_LOGIC_VECTOR(11 DOWNTO 0)
 	);
 END COMPONENT;
@@ -65,7 +69,9 @@ BEGIN
 	data_out => data_out,
 	encoded_data_out => encoded_data_out,
 	is_free => is_free,
+	mask_out => mask_out,
 	need_to_process => need_to_process,
+	not_encoded_data_out => not_encoded_data_out,
 	reduced_clk_out => reduced_clk_out,
 	reset_i_out => reset_i_out,
 	tari => tari
@@ -85,49 +91,49 @@ END PROCESS t_prcs_clk;
 -- data_in[11]
 t_prcs_data_in_11: PROCESS
 BEGIN
-	data_in(11) <= '0';
+	data_in(11) <= '1';
 WAIT;
 END PROCESS t_prcs_data_in_11;
 -- data_in[10]
 t_prcs_data_in_10: PROCESS
 BEGIN
-	data_in(10) <= '0';
+	data_in(10) <= '1';
 WAIT;
 END PROCESS t_prcs_data_in_10;
 -- data_in[9]
 t_prcs_data_in_9: PROCESS
 BEGIN
-	data_in(9) <= '0';
+	data_in(9) <= '1';
 WAIT;
 END PROCESS t_prcs_data_in_9;
 -- data_in[8]
 t_prcs_data_in_8: PROCESS
 BEGIN
-	data_in(8) <= '0';
+	data_in(8) <= '1';
 WAIT;
 END PROCESS t_prcs_data_in_8;
 -- data_in[7]
 t_prcs_data_in_7: PROCESS
 BEGIN
-	data_in(7) <= '0';
+	data_in(7) <= '1';
 WAIT;
 END PROCESS t_prcs_data_in_7;
 -- data_in[6]
 t_prcs_data_in_6: PROCESS
 BEGIN
-	data_in(6) <= '0';
+	data_in(6) <= '1';
 WAIT;
 END PROCESS t_prcs_data_in_6;
 -- data_in[5]
 t_prcs_data_in_5: PROCESS
 BEGIN
-	data_in(5) <= '0';
+	data_in(5) <= '1';
 WAIT;
 END PROCESS t_prcs_data_in_5;
 -- data_in[4]
 t_prcs_data_in_4: PROCESS
 BEGIN
-	data_in(4) <= '1';
+	data_in(4) <= '0';
 WAIT;
 END PROCESS t_prcs_data_in_4;
 -- data_in[3]

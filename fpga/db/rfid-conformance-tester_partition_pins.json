@@ -8,6 +8,10 @@
 					"strict" : false
 				},
 				{
+					"name" : "reset_i_out",
+					"strict" : false
+				},
+				{
 					"name" : "encoded_data_out[0]",
 					"strict" : false
 				},
@@ -72,7 +76,87 @@
 					"strict" : false
 				},
 				{
+					"name" : "not_encoded_data_out[0]",
+					"strict" : false
+				},
+				{
+					"name" : "not_encoded_data_out[1]",
+					"strict" : false
+				},
+				{
+					"name" : "not_encoded_data_out[2]",
+					"strict" : false
+				},
+				{
+					"name" : "not_encoded_data_out[3]",
+					"strict" : false
+				},
+				{
+					"name" : "not_encoded_data_out[4]",
+					"strict" : false
+				},
+				{
+					"name" : "not_encoded_data_out[5]",
+					"strict" : false
+				},
+				{
+					"name" : "not_encoded_data_out[6]",
+					"strict" : false
+				},
+				{
+					"name" : "not_encoded_data_out[7]",
+					"strict" : false
+				},
+				{
+					"name" : "mask_out[0]",
+					"strict" : false
+				},
+				{
+					"name" : "mask_out[1]",
+					"strict" : false
+				},
+				{
+					"name" : "mask_out[2]",
+					"strict" : false
+				},
+				{
+					"name" : "mask_out[3]",
+					"strict" : false
+				},
+				{
 					"name" : "data_out",
+					"strict" : false
+				},
+				{
+					"name" : "data_in[4]",
+					"strict" : false
+				},
+				{
+					"name" : "data_in[5]",
+					"strict" : false
+				},
+				{
+					"name" : "data_in[6]",
+					"strict" : false
+				},
+				{
+					"name" : "data_in[7]",
+					"strict" : false
+				},
+				{
+					"name" : "data_in[8]",
+					"strict" : false
+				},
+				{
+					"name" : "data_in[9]",
+					"strict" : false
+				},
+				{
+					"name" : "data_in[10]",
+					"strict" : false
+				},
+				{
+					"name" : "data_in[11]",
 					"strict" : false
 				},
 				{
@@ -93,38 +177,6 @@
 				},
 				{
 					"name" : "data_in[2]",
-					"strict" : false
-				},
-				{
-					"name" : "data_in[9]",
-					"strict" : false
-				},
-				{
-					"name" : "data_in[11]",
-					"strict" : false
-				},
-				{
-					"name" : "data_in[8]",
-					"strict" : false
-				},
-				{
-					"name" : "data_in[10]",
-					"strict" : false
-				},
-				{
-					"name" : "data_in[5]",
-					"strict" : false
-				},
-				{
-					"name" : "data_in[7]",
-					"strict" : false
-				},
-				{
-					"name" : "data_in[4]",
-					"strict" : false
-				},
-				{
-					"name" : "data_in[6]",
 					"strict" : false
 				}
 			]
