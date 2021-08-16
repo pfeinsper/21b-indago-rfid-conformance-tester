@@ -1,5 +1,5 @@
 Analysis & Synthesis report for rfid-conformance-tester
-Mon Aug 16 10:36:10 2021
+Mon Aug 16 14:23:19 2021
 Quartus Prime Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
 
 
@@ -14,10 +14,11 @@ Quartus Prime Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
   6. Analysis & Synthesis Resource Usage Summary
   7. Analysis & Synthesis Resource Utilization by Entity
   8. General Register Statistics
-  9. Parameter Settings for User Entity Instance: Top-level Entity: |FM0_encoder
- 10. Post-Synthesis Netlist Statistics for Top Partition
- 11. Elapsed Time Per Partition
- 12. Analysis & Synthesis Messages
+  9. Inverted Register Statistics
+ 10. Parameter Settings for User Entity Instance: Top-level Entity: |FM0_encoder
+ 11. Post-Synthesis Netlist Statistics for Top Partition
+ 12. Elapsed Time Per Partition
+ 13. Analysis & Synthesis Messages
 
 
 
@@ -44,14 +45,14 @@ https://fpgasoftware.intel.com/eula.
 +-------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                  ;
 +---------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Mon Aug 16 10:36:10 2021       ;
+; Analysis & Synthesis Status     ; Successful - Mon Aug 16 14:23:19 2021       ;
 ; Quartus Prime Version           ; 20.1.1 Build 720 11/11/2020 SJ Lite Edition ;
 ; Revision Name                   ; rfid-conformance-tester                     ;
 ; Top-level Entity Name           ; FM0_encoder                                 ;
 ; Family                          ; Cyclone V                                   ;
 ; Logic utilization (in ALMs)     ; N/A                                         ;
-; Total registers                 ; 0                                           ;
-; Total pins                      ; 48                                          ;
+; Total registers                 ; 37                                          ;
+; Total pins                      ; 46                                          ;
 ; Total virtual pins              ; 0                                           ;
 ; Total block memory bits         ; 0                                           ;
 ; Total DSP Blocks                ; 0                                           ;
@@ -160,10 +161,12 @@ https://fpgasoftware.intel.com/eula.
 ; Maximum allowed            ; 4           ;
 ;                            ;             ;
 ; Average used               ; 1.00        ;
-; Maximum used               ; 1           ;
+; Maximum used               ; 4           ;
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
+;     Processor 2            ;   0.0%      ;
+;     Processors 3-4         ;   0.0%      ;
 +----------------------------+-------------+
 
 
@@ -176,31 +179,31 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------------+-----------------+-----------------+-------------------------------------------------------------------------------------------+---------+
 
 
-+-----------------------------------------------------+
-; Analysis & Synthesis Resource Usage Summary         ;
-+---------------------------------------------+-------+
-; Resource                                    ; Usage ;
-+---------------------------------------------+-------+
-; Estimate of Logic utilization (ALMs needed) ; 0     ;
-;                                             ;       ;
-; Combinational ALUT usage for logic          ; 0     ;
-;     -- 7 input functions                    ; 0     ;
-;     -- 6 input functions                    ; 0     ;
-;     -- 5 input functions                    ; 0     ;
-;     -- 4 input functions                    ; 0     ;
-;     -- <=3 input functions                  ; 0     ;
-;                                             ;       ;
-; Dedicated logic registers                   ; 0     ;
-;                                             ;       ;
-; I/O pins                                    ; 48    ;
-;                                             ;       ;
-; Total DSP Blocks                            ; 0     ;
-;                                             ;       ;
-; Maximum fan-out node                        ; clk   ;
-; Maximum fan-out                             ; 1     ;
-; Total fan-out                               ; 48    ;
-; Average fan-out                             ; 0.50  ;
-+---------------------------------------------+-------+
++---------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary             ;
++---------------------------------------------+-----------+
+; Resource                                    ; Usage     ;
++---------------------------------------------+-----------+
+; Estimate of Logic utilization (ALMs needed) ; 33        ;
+;                                             ;           ;
+; Combinational ALUT usage for logic          ; 51        ;
+;     -- 7 input functions                    ; 2         ;
+;     -- 6 input functions                    ; 11        ;
+;     -- 5 input functions                    ; 2         ;
+;     -- 4 input functions                    ; 6         ;
+;     -- <=3 input functions                  ; 30        ;
+;                                             ;           ;
+; Dedicated logic registers                   ; 37        ;
+;                                             ;           ;
+; I/O pins                                    ; 46        ;
+;                                             ;           ;
+; Total DSP Blocks                            ; 0         ;
+;                                             ;           ;
+; Maximum fan-out node                        ; clk~input ;
+; Maximum fan-out                             ; 32        ;
+; Total fan-out                               ; 339       ;
+; Average fan-out                             ; 1.88      ;
++---------------------------------------------+-----------+
 
 
 +----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -208,7 +211,7 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------+-------------+--------------+
 ; Compilation Hierarchy Node ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name ; Entity Name ; Library Name ;
 +----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------+-------------+--------------+
-; |FM0_encoder               ; 0 (0)               ; 0 (0)                     ; 0                 ; 0          ; 48   ; 0            ; |FM0_encoder        ; FM0_encoder ; work         ;
+; |FM0_encoder               ; 51 (51)             ; 37 (37)                   ; 0                 ; 0          ; 46   ; 0            ; |FM0_encoder        ; FM0_encoder ; work         ;
 +----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------+-------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
 
@@ -218,14 +221,24 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 0     ;
-; Number of registers using Synchronous Clear  ; 0     ;
+; Total registers                              ; 37    ;
+; Number of registers using Synchronous Clear  ; 10    ;
 ; Number of registers using Synchronous Load   ; 0     ;
 ; Number of registers using Asynchronous Clear ; 0     ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 0     ;
+; Number of registers using Clock Enable       ; 16    ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
+
+
++--------------------------------------------------+
+; Inverted Register Statistics                     ;
++----------------------------------------+---------+
+; Inverted Register                      ; Fan out ;
++----------------------------------------+---------+
+; current_start_value                    ; 9       ;
+; Total number of inverted registers = 1 ;         ;
++----------------------------------------+---------+
 
 
 +-----------------------------------------------------------------------------+
@@ -245,13 +258,27 @@ Note: In order to hide this table in the UI and the text report file, please set
 +-----------------------+-----------------------------+
 ; Type                  ; Count                       ;
 +-----------------------+-----------------------------+
-; arriav_lcell_comb     ; 1                           ;
-;     normal            ; 1                           ;
+; arriav_ff             ; 37                          ;
+;     ENA               ; 16                          ;
+;     SCLR              ; 10                          ;
+;     plain             ; 11                          ;
+; arriav_lcell_comb     ; 52                          ;
+;     arith             ; 10                          ;
+;         1 data inputs ; 10                          ;
+;     extend            ; 2                           ;
+;         7 data inputs ; 2                           ;
+;     normal            ; 40                          ;
 ;         0 data inputs ; 1                           ;
-; boundary_port         ; 48                          ;
+;         1 data inputs ; 8                           ;
+;         2 data inputs ; 2                           ;
+;         3 data inputs ; 10                          ;
+;         4 data inputs ; 6                           ;
+;         5 data inputs ; 2                           ;
+;         6 data inputs ; 11                          ;
+; boundary_port         ; 46                          ;
 ;                       ;                             ;
-; Max LUT depth         ; 0.00                        ;
-; Average LUT depth     ; 0.00                        ;
+; Max LUT depth         ; 3.50                        ;
+; Average LUT depth     ; 2.28                        ;
 +-----------------------+-----------------------------+
 
 
@@ -270,24 +297,28 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
-    Info: Processing started: Mon Aug 16 10:36:02 2021
+    Info: Processing started: Mon Aug 16 14:23:10 2021
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off rfid-conformance-tester -c rfid-conformance-tester
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
 Info (12021): Found 0 design units, including 0 entities, in source file rfid-conformance-tester.vhd
 Info (12021): Found 2 design units, including 1 entities, in source file fm0_encoder.vhd
-    Info (12022): Found design unit 1: FM0_encoder-arch File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 25
+    Info (12022): Found design unit 1: FM0_encoder-arch File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 31
     Info (12023): Found entity 1: FM0_encoder File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 5
 Info (12127): Elaborating entity "FM0_encoder" for the top level hierarchy
-Warning (10541): VHDL Signal Declaration warning at FM0_encoder.vhd(19): used implicit default value for signal "is_free" because signal was never assigned a value or an explicit default value. Use of implicit default value may introduce unintended design optimizations. File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 19
-Warning (10540): VHDL Signal Declaration warning at FM0_encoder.vhd(50): used explicit default value for signal "tmp_data_out" because signal was never assigned a value File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 50
+Warning (10541): VHDL Signal Declaration warning at FM0_encoder.vhd(20): used implicit default value for signal "reset_i_out" because signal was never assigned a value or an explicit default value. Use of implicit default value may introduce unintended design optimizations. File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 20
+Warning (10541): VHDL Signal Declaration warning at FM0_encoder.vhd(24): used implicit default value for signal "is_free" because signal was never assigned a value or an explicit default value. Use of implicit default value may introduce unintended design optimizations. File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 24
+Warning (10540): VHDL Signal Declaration warning at FM0_encoder.vhd(51): used explicit default value for signal "data" because signal was never assigned a value File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 51
+Warning (10540): VHDL Signal Declaration warning at FM0_encoder.vhd(52): used explicit default value for signal "mask" because signal was never assigned a value File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 52
+Warning (10540): VHDL Signal Declaration warning at FM0_encoder.vhd(53): used explicit default value for signal "mask_value" because signal was never assigned a value File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 53
+Warning (10540): VHDL Signal Declaration warning at FM0_encoder.vhd(58): used explicit default value for signal "clock_tari_over_two" because signal was never assigned a value File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 58
 Warning (13024): Output pins are stuck at VCC or GND
-    Warning (13410): Pin "data_out" is stuck at GND File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 18
-    Warning (13410): Pin "is_free" is stuck at GND File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 19
+    Warning (13410): Pin "reset_i_out" is stuck at GND File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 20
+    Warning (13410): Pin "is_free" is stuck at GND File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 24
+Info (286030): Timing-Driven Synthesis is running
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
-Warning (21074): Design contains 46 input pin(s) that do not drive logic
-    Warning (15610): No output dependent on input pin "clk" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 13
+Warning (21074): Design contains 13 input pin(s) that do not drive logic
     Warning (15610): No output dependent on input pin "need_to_process" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 14
     Warning (15610): No output dependent on input pin "tari[0]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
     Warning (15610): No output dependent on input pin "tari[1]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
@@ -301,45 +332,14 @@ Warning (21074): Design contains 46 input pin(s) that do not drive logic
     Warning (15610): No output dependent on input pin "tari[9]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
     Warning (15610): No output dependent on input pin "tari[10]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
     Warning (15610): No output dependent on input pin "tari[11]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
-    Warning (15610): No output dependent on input pin "tari[12]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
-    Warning (15610): No output dependent on input pin "tari[13]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
-    Warning (15610): No output dependent on input pin "tari[14]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
-    Warning (15610): No output dependent on input pin "tari[15]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
-    Warning (15610): No output dependent on input pin "tari[16]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
-    Warning (15610): No output dependent on input pin "tari[17]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
-    Warning (15610): No output dependent on input pin "tari[18]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
-    Warning (15610): No output dependent on input pin "tari[19]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
-    Warning (15610): No output dependent on input pin "tari[20]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
-    Warning (15610): No output dependent on input pin "tari[21]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
-    Warning (15610): No output dependent on input pin "tari[22]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
-    Warning (15610): No output dependent on input pin "tari[23]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
-    Warning (15610): No output dependent on input pin "tari[24]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
-    Warning (15610): No output dependent on input pin "tari[25]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
-    Warning (15610): No output dependent on input pin "tari[26]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
-    Warning (15610): No output dependent on input pin "tari[27]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
-    Warning (15610): No output dependent on input pin "tari[28]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
-    Warning (15610): No output dependent on input pin "tari[29]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
-    Warning (15610): No output dependent on input pin "tari[30]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
-    Warning (15610): No output dependent on input pin "tari[31]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
-    Warning (15610): No output dependent on input pin "data_in[0]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 16
-    Warning (15610): No output dependent on input pin "data_in[1]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 16
-    Warning (15610): No output dependent on input pin "data_in[2]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 16
-    Warning (15610): No output dependent on input pin "data_in[3]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 16
-    Warning (15610): No output dependent on input pin "data_in[4]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 16
-    Warning (15610): No output dependent on input pin "data_in[5]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 16
-    Warning (15610): No output dependent on input pin "data_in[6]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 16
-    Warning (15610): No output dependent on input pin "data_in[7]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 16
-    Warning (15610): No output dependent on input pin "data_in[8]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 16
-    Warning (15610): No output dependent on input pin "data_in[9]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 16
-    Warning (15610): No output dependent on input pin "data_in[10]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 16
-    Warning (15610): No output dependent on input pin "data_in[11]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 16
-Info (21057): Implemented 48 device resources after synthesis - the final resource count might be different
-    Info (21058): Implemented 46 input pins
-    Info (21059): Implemented 2 output pins
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 53 warnings
-    Info: Peak virtual memory: 4854 megabytes
-    Info: Processing ended: Mon Aug 16 10:36:10 2021
-    Info: Elapsed time: 00:00:08
-    Info: Total CPU time (on all processors): 00:00:20
+Info (21057): Implemented 116 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 26 input pins
+    Info (21059): Implemented 20 output pins
+    Info (21061): Implemented 70 logic cells
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 24 warnings
+    Info: Peak virtual memory: 4870 megabytes
+    Info: Processing ended: Mon Aug 16 14:23:19 2021
+    Info: Elapsed time: 00:00:09
+    Info: Total CPU time (on all processors): 00:00:21
 
 
