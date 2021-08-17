@@ -10,13 +10,13 @@ entity FM0_encoder is
 	);
 	
 	port ( 
-		clk             : in std_logic;
-		need_to_process : in std_logic; -- if encoder has data do encode, is used to keep encoder index at 0 when no needed
-		tari            : in std_logic_vector(11 downto 0); -- the value expected is 1e8 times greater than the real one, tari goes normaly btw 6.25 µs and 25µs
-		data_in         : in std_logic_vector((data_width + mask_width)-1 downto 0); -- format expected : ddddddddmmmm
+		clk              : in std_logic;
+		updating_data_in : in std_logic; -- if encoder has data do encode, is used to keep encoder index at 0 when no needed
+		tari             : in std_logic_vector(11 downto 0); -- the value expected is 1e8 times greater than the real one, tari goes normaly btw 6.25 µs and 25µs
+		data_in          : in std_logic_vector((data_width + mask_width)-1 downto 0); -- format expected : ddddddddmmmm
 		
-		data_out : out std_logic; 
-		is_free  : out std_logic
+		data_out                 : out std_logic; 
+		finished_releasing_data  : out std_logic
 		
 	);
 
@@ -30,7 +30,6 @@ architecture arch of FM0_encoder is
 	--		reduce clock to desirable speed (will be used to move data to output)
 	--		move encoded data to output, at correct time intervals
 	--		add logic to inform FIFO that Im free and can receive data
-	--		test if logic to keep encoder index at 0 and "is_free" is working
 	--		make the maths to burn the correct amount of clocks
 	--		make this shit compile
 
@@ -46,7 +45,6 @@ architecture arch of FM0_encoder is
 	signal data : std_logic_vector(data_width-1 downto 0) := data_in((data_width + mask_width)-1 downto mask_width);
 	signal mask : std_logic_vector(mask_width-1 downto 0) := data_in(mask_width-1 downto 0);
 	
-	
 	signal encoded_data        : std_logic_vector(2*data_width - 1 downto 0) := (others => '0');
 	signal tmp_data_out        : std_logic := '0';
 	signal reduced_clk         : std_logic := '0';
@@ -54,7 +52,9 @@ architecture arch of FM0_encoder is
 	
 	signal mask_value          : integer := to_integer(unsigned(mask));
 	signal clock_tari_over_two : integer := 2; -- to_integer(unsigned(tari)) / 2e8 * clk_f;
-		
+	
+	signal flag_released_data_insider : std_logic_vector(0 downto 0) := "0";
+	
 	
 	begin
 		data_encoder : process( clk )
@@ -70,7 +70,6 @@ architecture arch of FM0_encoder is
 						current_start_value <= not current_start_value; -- default value only change when a '1' is current data bit
 					end if ;
 
-					data_i_out <= data(i);
 					i := i + 1;
 					if (i = mask_value) then
 						i := 0;
@@ -95,21 +94,43 @@ architecture arch of FM0_encoder is
 
 		
 
-		sending_data : process( reduced_clk )
+		sending_data : process( reduced_clk, updating_data_in )
 			variable i3 : integer range 0 to 15 := 0;
-			begin
-				if (rising_edge(reduced_clk)) then
-					i3 := i3 + 1;
-					tmp_data_out <= encoded_data(i3);
+			variable flag_release_data : integer range 0 to 1 := 0; -- flag used to inform if we already released the current package on data_out
 
-					if (i3 = mask_value) then
-						i3 := 0;
+			begin
+				if (flag_release_data = 0) then
+					if (rising_edge(reduced_clk)) then
+						i3 := i3 + 1;
+						tmp_data_out <= encoded_data(i3);
+						
+						if (i3 = mask_value) then
+							i3 := 0;
+							flag_release_data := 1;
+						end if ;
 					end if ;
+				else
+					if (rising_edge(updating_data_in)) then
+						flag_release_data := 0;
+					end if;
 				end if ;
+				flag_released_data_insider <= std_logic_vector(to_unsigned(flag_release_data, 1));
 		end process ; -- sending_data
 		
 		
 		
+--		update_data_in : process( updating_data_in )
+--			begin
+--				-- test if need to have rising edge, if we dont need, nice fifo only flips updating_data_in when changing data_in
+--				-- 		if we need, fifo can keep this value normaly low and when it updates data_in, it set`s updating_data_in hight for a few clock cycles
+--
+--				-- if (rising_edge(updating_data_in)) then
+--				flag_release_data <= '0';
+--				-- end if ;
+--		end process ; -- update_data_in
+		
 		data_out <= tmp_data_out;
+
+		finished_releasing_data <= '1' when  flag_released_data_insider = "1" else '0';
 
 end arch ; -- arch
