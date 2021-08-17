@@ -14,13 +14,6 @@ entity FM0_encoder is
 		need_to_process : in std_logic; -- if encoder has data do encode, is used to keep encoder index at 0 when no needed
 		tari            : in std_logic_vector(11 downto 0); -- the value expected is 1e8 times greater than the real one, tari goes normaly btw 6.25 µs and 25µs
 		data_in         : in std_logic_vector((data_width + mask_width)-1 downto 0); -- format expected : ddddddddmmmm
-
-		
-		reduced_clk_out  : out std_logic;
-		reset_i_out      : out std_logic;
-		encoded_data_out : out std_logic_vector(data_width*2 -1 downto 0);
-		not_encoded_data_out : out std_logic_vector(data_width-1 downto 0);
-		mask_out : out std_logic_vector(mask_width -1 downto 0);
 		
 		data_out : out std_logic; 
 		is_free  : out std_logic
@@ -50,18 +43,18 @@ architecture arch of FM0_encoder is
 	-- because we cant use floats: x = (tari / 2e8) * clk_f
 	-- if we burn x clocks, the new clock will tick at the correct speed
 
-	signal data : std_logic_vector((data_width + mask_width)-1 downto mask_width) := data_in((data_width + mask_width)-1 downto mask_width);
+	signal data : std_logic_vector(data_width-1 downto 0) := data_in((data_width + mask_width)-1 downto mask_width);
 	signal mask : std_logic_vector(mask_width-1 downto 0) := data_in(mask_width-1 downto 0);
-	signal mask_value   : integer := to_integer(unsigned(mask));
-	signal encoded_data : std_logic_vector(2*data_width - 1 downto 0) := (others => '0');
-	signal tmp_data_out : std_logic := '0';
-	signal reduced_clk  : std_logic := '0';
+	
+	
+	signal encoded_data        : std_logic_vector(2*data_width - 1 downto 0) := (others => '0');
+	signal tmp_data_out        : std_logic := '0';
+	signal reduced_clk         : std_logic := '0';
 	signal current_start_value : std_logic := '1'; -- current value when a new bit is going to be modulated
+	
+	signal mask_value          : integer := to_integer(unsigned(mask));
 	signal clock_tari_over_two : integer := 2; -- to_integer(unsigned(tari)) / 2e8 * clk_f;
-	
-	
-	signal aa : std_logic := '0';
-	
+		
 	
 	begin
 		data_encoder : process( clk )
@@ -69,25 +62,23 @@ architecture arch of FM0_encoder is
 			begin
 				if (rising_edge(clk)) then
 					encoded_data(2*i) <= current_start_value;
-					if (data(i) = '0') then						
+					if (data(i) = '0') then
 						encoded_data(2*i+1) <= not current_start_value;
 					else
 						encoded_data(2*i+1) <= current_start_value;
 						
 						current_start_value <= not current_start_value; -- default value only change when a '1' is current data bit
 					end if ;
-					
-					reset_i_out <= data(i);
-					mask_out <= std_logic_vector(to_unsigned(i, 4));
+
+					data_i_out <= data(i);
 					i := i + 1;
 					if (i = mask_value) then
 						i := 0;
-						aa <= not aa;
 					end if;
 				end if ;
 		
 		end process ; -- data_encoder
-
+		
 		
 
 		clock_reducer : process( clk )
@@ -118,12 +109,7 @@ architecture arch of FM0_encoder is
 		end process ; -- sending_data
 		
 		
+		
 		data_out <= tmp_data_out;
-		
-		encoded_data_out <= encoded_data;
-		reduced_clk_out <= reduced_clk;
-		
---		reset_i_out <= aa;
-		not_encoded_data_out <= data;
 
 end arch ; -- arch

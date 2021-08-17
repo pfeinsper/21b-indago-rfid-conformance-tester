@@ -10,7 +10,7 @@ z2
 cModel Technology
 Z0 dC:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/simulation/qsim
 Efm0_encoder
-Z1 w1629147424
+Z1 w1629159014
 Z2 DPx8 cyclonev 18 cyclonev_atom_pack 0 22 3HQPc5MVbmOPN?>a5EBYj2
 Z3 DPx8 cyclonev 19 cyclonev_components 0 22 jZ]H46BQLgIP5mfRTO`3B1
 Z4 DPx12 altera_lnsim 23 altera_lnsim_components 0 22 ^Ch;U@;bMk1;>A2B<UV`k2
@@ -20,19 +20,19 @@ Z7 DPx4 ieee 12 vital_timing 0 22 J>EBealN09f8GzldA[z2>3
 Z8 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
 Z9 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
 Z10 DPx6 altera 28 altera_primitives_components 0 22 ca:ehlQAg4;_gVV:^8MAg3
-!i122 92
+!i122 120
 R0
 Z11 8rfid-conformance-tester.vho
 Z12 Frfid-conformance-tester.vho
 l0
 L39 1
-VfI5=C_RPK3`EW^V4F@S4Q1
-!s100 ;oU`KL_VKDoQQ8jo;Xo`W1
+VoR1GKW0HH40nESa;im37m2
+!s100 n2K?a]jh`R8M4OJgV5egW0
 Z13 OV;C;2020.1;71
 32
-Z14 !s110 1629147425
+Z14 !s110 1629159016
 !i10b 1
-Z15 !s108 1629147425.000000
+Z15 !s108 1629159015.000000
 Z16 !s90 -work|work|rfid-conformance-tester.vho|
 Z17 !s107 rfid-conformance-tester.vho|
 !i113 1
@@ -48,12 +48,12 @@ R7
 R8
 R9
 R10
-DEx4 work 11 fm0_encoder 0 22 fI5=C_RPK3`EW^V4F@S4Q1
-!i122 92
-l320
-L116 2719
-VZfbA;;M9d2fHZbjm_WPR71
-!s100 =HP75MSD7LLESi4RT51CK2
+DEx4 work 11 fm0_encoder 0 22 oR1GKW0HH40nESa;im37m2
+!i122 120
+l321
+L116 2681
+VVW9c8B>:m@4FXKXdJAO0[3
+!s100 _I7VkJOm?2`WX^_Zi:NWk2
 R13
 32
 R14
@@ -65,10 +65,10 @@ R17
 R18
 R19
 Efm0_encoder_vhd_vec_tst
-Z20 w1629147423
+Z20 w1629159012
 R8
 R9
-!i122 93
+!i122 121
 R0
 Z21 8Waveform.vwf.vht
 Z22 FWaveform.vwf.vht
@@ -80,28 +80,28 @@ R13
 32
 R14
 !i10b 1
-R15
-Z23 !s90 -work|work|Waveform.vwf.vht|
-Z24 !s107 Waveform.vwf.vht|
+Z23 !s108 1629159016.000000
+Z24 !s90 -work|work|Waveform.vwf.vht|
+Z25 !s107 Waveform.vwf.vht|
 !i113 1
 R18
 R19
 Afm0_encoder_arch
 R8
 R9
-Z25 DEx4 work 23 fm0_encoder_vhd_vec_tst 0 22 Dn4_C1N_UV;jgXfN=hR0X3
-!i122 93
+Z26 DEx4 work 23 fm0_encoder_vhd_vec_tst 0 22 Dn4_C1N_UV;jgXfN=hR0X3
+!i122 121
 l63
-Z26 L34 209
-VZ5GZ6D5YZliAK6DGa7eaL2
-!s100 W]jjffc14lClLn^Ki^JG=1
+Z27 L34 209
+Z28 VC<ogO3A]ZIER`z6SJd8V=0
+Z29 !s100 g>O@Bh;@VJdLeO_glX[Cn2
 R13
 32
 R14
 !i10b 1
-R15
 R23
 R24
+R25
 !i113 1
 R18
 R19

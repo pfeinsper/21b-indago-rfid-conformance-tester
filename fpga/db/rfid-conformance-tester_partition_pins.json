@@ -8,7 +8,7 @@
 					"strict" : false
 				},
 				{
-					"name" : "reset_i_out",
+					"name" : "data_i_out",
 					"strict" : false
 				},
 				{
@@ -105,22 +105,6 @@
 				},
 				{
 					"name" : "not_encoded_data_out[7]",
-					"strict" : false
-				},
-				{
-					"name" : "mask_out[0]",
-					"strict" : false
-				},
-				{
-					"name" : "mask_out[1]",
-					"strict" : false
-				},
-				{
-					"name" : "mask_out[2]",
-					"strict" : false
-				},
-				{
-					"name" : "mask_out[3]",
 					"strict" : false
 				},
 				{
