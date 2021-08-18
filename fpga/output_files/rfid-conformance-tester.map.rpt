@@ -1,5 +1,5 @@
 Analysis & Synthesis report for rfid-conformance-tester
-Tue Aug 17 11:42:41 2021
+Tue Aug 17 18:02:38 2021
 Quartus Prime Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
 
 
@@ -10,7 +10,15 @@ Quartus Prime Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
   2. Analysis & Synthesis Summary
   3. Analysis & Synthesis Settings
   4. Parallel Compilation
-  5. Analysis & Synthesis Messages
+  5. Analysis & Synthesis Source Files Read
+  6. Analysis & Synthesis Resource Usage Summary
+  7. Analysis & Synthesis Resource Utilization by Entity
+  8. General Register Statistics
+  9. Inverted Register Statistics
+ 10. Parameter Settings for User Entity Instance: Top-level Entity: |FM0_encoder
+ 11. Post-Synthesis Netlist Statistics for Top Partition
+ 12. Elapsed Time Per Partition
+ 13. Analysis & Synthesis Messages
 
 
 
@@ -34,22 +42,27 @@ https://fpgasoftware.intel.com/eula.
 
 
 
-+---------------------------------------------------------------------------+
-; Analysis & Synthesis Summary                                              ;
-+-----------------------------+---------------------------------------------+
-; Analysis & Synthesis Status ; Failed - Tue Aug 17 11:42:41 2021           ;
-; Quartus Prime Version       ; 20.1.1 Build 720 11/11/2020 SJ Lite Edition ;
-; Revision Name               ; rfid-conformance-tester                     ;
-; Top-level Entity Name       ; FM0_encoder                                 ;
-; Family                      ; Cyclone V                                   ;
-; Logic utilization (in ALMs) ; N/A until Partition Merge                   ;
-; Total registers             ; N/A until Partition Merge                   ;
-; Total pins                  ; N/A until Partition Merge                   ;
-; Total virtual pins          ; N/A until Partition Merge                   ;
-; Total block memory bits     ; N/A until Partition Merge                   ;
-; Total PLLs                  ; N/A until Partition Merge                   ;
-; Total DLLs                  ; N/A until Partition Merge                   ;
-+-----------------------------+---------------------------------------------+
++-------------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                                  ;
++---------------------------------+---------------------------------------------+
+; Analysis & Synthesis Status     ; Successful - Tue Aug 17 18:02:38 2021       ;
+; Quartus Prime Version           ; 20.1.1 Build 720 11/11/2020 SJ Lite Edition ;
+; Revision Name                   ; rfid-conformance-tester                     ;
+; Top-level Entity Name           ; FM0_encoder                                 ;
+; Family                          ; Cyclone V                                   ;
+; Logic utilization (in ALMs)     ; N/A                                         ;
+; Total registers                 ; 37                                          ;
+; Total pins                      ; 45                                          ;
+; Total virtual pins              ; 0                                           ;
+; Total block memory bits         ; 0                                           ;
+; Total DSP Blocks                ; 0                                           ;
+; Total HSSI RX PCSs              ; 0                                           ;
+; Total HSSI PMA RX Deserializers ; 0                                           ;
+; Total HSSI TX PCSs              ; 0                                           ;
+; Total HSSI PMA TX Serializers   ; 0                                           ;
+; Total PLLs                      ; 0                                           ;
+; Total DLLs                      ; 0                                           ;
++---------------------------------+---------------------------------------------+
 
 
 +--------------------------------------------------------------------------------------------------------------------------------+
@@ -148,11 +161,134 @@ https://fpgasoftware.intel.com/eula.
 ; Maximum allowed            ; 4           ;
 ;                            ;             ;
 ; Average used               ; 1.00        ;
-; Maximum used               ; 1           ;
+; Maximum used               ; 4           ;
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
+;     Processor 2            ;   0.0%      ;
+;     Processors 3-4         ;   0.0%      ;
 +----------------------------+-------------+
+
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                                                     ;
++----------------------------------+-----------------+-----------------+-------------------------------------------------------------------------------------------+---------+
+; File Name with User-Entered Path ; Used in Netlist ; File Type       ; File Name with Absolute Path                                                              ; Library ;
++----------------------------------+-----------------+-----------------+-------------------------------------------------------------------------------------------+---------+
+; FM0_encoder.vhd                  ; yes             ; User VHDL File  ; C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd ;         ;
++----------------------------------+-----------------+-----------------+-------------------------------------------------------------------------------------------+---------+
+
+
++---------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary             ;
++---------------------------------------------+-----------+
+; Resource                                    ; Usage     ;
++---------------------------------------------+-----------+
+; Estimate of Logic utilization (ALMs needed) ; 33        ;
+;                                             ;           ;
+; Combinational ALUT usage for logic          ; 51        ;
+;     -- 7 input functions                    ; 2         ;
+;     -- 6 input functions                    ; 11        ;
+;     -- 5 input functions                    ; 2         ;
+;     -- 4 input functions                    ; 6         ;
+;     -- <=3 input functions                  ; 30        ;
+;                                             ;           ;
+; Dedicated logic registers                   ; 37        ;
+;                                             ;           ;
+; I/O pins                                    ; 45        ;
+;                                             ;           ;
+; Total DSP Blocks                            ; 0         ;
+;                                             ;           ;
+; Maximum fan-out node                        ; clk~input ;
+; Maximum fan-out                             ; 32        ;
+; Total fan-out                               ; 338       ;
+; Average fan-out                             ; 1.90      ;
++---------------------------------------------+-----------+
+
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                    ;
++----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------+-------------+--------------+
+; Compilation Hierarchy Node ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name ; Entity Name ; Library Name ;
++----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------+-------------+--------------+
+; |FM0_encoder               ; 51 (51)             ; 37 (37)                   ; 0                 ; 0          ; 45   ; 0            ; |FM0_encoder        ; FM0_encoder ; work         ;
++----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------+-------------+--------------+
+Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
+
+
++------------------------------------------------------+
+; General Register Statistics                          ;
++----------------------------------------------+-------+
+; Statistic                                    ; Value ;
++----------------------------------------------+-------+
+; Total registers                              ; 37    ;
+; Number of registers using Synchronous Clear  ; 10    ;
+; Number of registers using Synchronous Load   ; 0     ;
+; Number of registers using Asynchronous Clear ; 0     ;
+; Number of registers using Asynchronous Load  ; 0     ;
+; Number of registers using Clock Enable       ; 16    ;
+; Number of registers using Preset             ; 0     ;
++----------------------------------------------+-------+
+
+
++--------------------------------------------------+
+; Inverted Register Statistics                     ;
++----------------------------------------+---------+
+; Inverted Register                      ; Fan out ;
++----------------------------------------+---------+
+; current_start_value                    ; 9       ;
+; Total number of inverted registers = 1 ;         ;
++----------------------------------------+---------+
+
+
++-----------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: Top-level Entity: |FM0_encoder ;
++----------------+----------+-------------------------------------------------+
+; Parameter Name ; Value    ; Type                                            ;
++----------------+----------+-------------------------------------------------+
+; clk_f          ; 50000000 ; Signed Integer                                  ;
+; data_width     ; 8        ; Signed Integer                                  ;
+; mask_width     ; 4        ; Signed Integer                                  ;
++----------------+----------+-------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-----------------------------------------------------+
+; Post-Synthesis Netlist Statistics for Top Partition ;
++-----------------------+-----------------------------+
+; Type                  ; Count                       ;
++-----------------------+-----------------------------+
+; arriav_ff             ; 37                          ;
+;     ENA               ; 16                          ;
+;     SCLR              ; 10                          ;
+;     plain             ; 11                          ;
+; arriav_lcell_comb     ; 52                          ;
+;     arith             ; 10                          ;
+;         1 data inputs ; 10                          ;
+;     extend            ; 2                           ;
+;         7 data inputs ; 2                           ;
+;     normal            ; 40                          ;
+;         0 data inputs ; 1                           ;
+;         1 data inputs ; 8                           ;
+;         2 data inputs ; 2                           ;
+;         3 data inputs ; 10                          ;
+;         4 data inputs ; 6                           ;
+;         5 data inputs ; 2                           ;
+;         6 data inputs ; 11                          ;
+; boundary_port         ; 45                          ;
+;                       ;                             ;
+; Max LUT depth         ; 3.50                        ;
+; Average LUT depth     ; 2.27                        ;
++-----------------------+-----------------------------+
+
+
++-------------------------------+
+; Elapsed Time Per Partition    ;
++----------------+--------------+
+; Partition Name ; Elapsed Time ;
++----------------+--------------+
+; Top            ; 00:00:00     ;
++----------------+--------------+
 
 
 +-------------------------------+
@@ -161,28 +297,48 @@ https://fpgasoftware.intel.com/eula.
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
-    Info: Processing started: Tue Aug 17 11:42:31 2021
+    Info: Processing started: Tue Aug 17 18:02:29 2021
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off rfid-conformance-tester -c rfid-conformance-tester
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
 Info (12021): Found 0 design units, including 0 entities, in source file rfid-conformance-tester.vhd
 Info (12021): Found 2 design units, including 1 entities, in source file fm0_encoder.vhd
-    Info (12022): Found design unit 1: FM0_encoder-arch File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 26
+    Info (12022): Found design unit 1: FM0_encoder-arch File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 30
     Info (12023): Found entity 1: FM0_encoder File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 5
 Info (12127): Elaborating entity "FM0_encoder" for the top level hierarchy
-Warning (10540): VHDL Signal Declaration warning at FM0_encoder.vhd(45): used explicit default value for signal "data" because signal was never assigned a value File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 45
-Warning (10540): VHDL Signal Declaration warning at FM0_encoder.vhd(46): used explicit default value for signal "mask" because signal was never assigned a value File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 46
-Warning (10540): VHDL Signal Declaration warning at FM0_encoder.vhd(53): used explicit default value for signal "mask_value" because signal was never assigned a value File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 53
-Warning (10540): VHDL Signal Declaration warning at FM0_encoder.vhd(54): used explicit default value for signal "clock_tari_over_two" because signal was never assigned a value File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 54
-Error (10821): HDL error at FM0_encoder.vhd(102): can't infer register for "sending_data:flag_release_data" because its behavior does not match any supported register model File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 102
-Info (10041): Inferred latch for "sending_data:flag_release_data" at FM0_encoder.vhd(102) File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 102
-Error (10822): HDL error at FM0_encoder.vhd(103): couldn't implement registers for assignments on this clock edge File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 103
-Error (10822): HDL error at FM0_encoder.vhd(113): couldn't implement registers for assignments on this clock edge File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 113
-Error (12153): Can't elaborate top-level user hierarchy
-Error: Quartus Prime Analysis & Synthesis was unsuccessful. 4 errors, 5 warnings
-    Error: Peak virtual memory: 4836 megabytes
-    Error: Processing ended: Tue Aug 17 11:42:41 2021
-    Error: Elapsed time: 00:00:10
-    Error: Total CPU time (on all processors): 00:00:24
+Warning (10541): VHDL Signal Declaration warning at FM0_encoder.vhd(23): used implicit default value for signal "finished_releasing_data" because signal was never assigned a value or an explicit default value. Use of implicit default value may introduce unintended design optimizations. File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 23
+Warning (10540): VHDL Signal Declaration warning at FM0_encoder.vhd(49): used explicit default value for signal "data" because signal was never assigned a value File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 49
+Warning (10540): VHDL Signal Declaration warning at FM0_encoder.vhd(50): used explicit default value for signal "mask" because signal was never assigned a value File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 50
+Warning (10540): VHDL Signal Declaration warning at FM0_encoder.vhd(57): used explicit default value for signal "mask_value" because signal was never assigned a value File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 57
+Warning (10540): VHDL Signal Declaration warning at FM0_encoder.vhd(58): used explicit default value for signal "clock_tari_over_two" because signal was never assigned a value File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 58
+Warning (10036): Verilog HDL or VHDL warning at FM0_encoder.vhd(103): object "flag_release_data" assigned a value but never read File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 103
+Warning (13024): Output pins are stuck at VCC or GND
+    Warning (13410): Pin "finished_releasing_data" is stuck at GND File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 23
+Info (286030): Timing-Driven Synthesis is running
+Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
+    Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
+Warning (21074): Design contains 13 input pin(s) that do not drive logic
+    Warning (15610): No output dependent on input pin "updating_data_in" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 14
+    Warning (15610): No output dependent on input pin "tari[0]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
+    Warning (15610): No output dependent on input pin "tari[1]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
+    Warning (15610): No output dependent on input pin "tari[2]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
+    Warning (15610): No output dependent on input pin "tari[3]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
+    Warning (15610): No output dependent on input pin "tari[4]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
+    Warning (15610): No output dependent on input pin "tari[5]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
+    Warning (15610): No output dependent on input pin "tari[6]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
+    Warning (15610): No output dependent on input pin "tari[7]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
+    Warning (15610): No output dependent on input pin "tari[8]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
+    Warning (15610): No output dependent on input pin "tari[9]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
+    Warning (15610): No output dependent on input pin "tari[10]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
+    Warning (15610): No output dependent on input pin "tari[11]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
+Info (21057): Implemented 115 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 26 input pins
+    Info (21059): Implemented 19 output pins
+    Info (21061): Implemented 70 logic cells
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 23 warnings
+    Info: Peak virtual memory: 4869 megabytes
+    Info: Processing ended: Tue Aug 17 18:02:38 2021
+    Info: Elapsed time: 00:00:09
+    Info: Total CPU time (on all processors): 00:00:20
 
 

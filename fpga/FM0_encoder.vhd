@@ -10,13 +10,17 @@ entity FM0_encoder is
 	);
 	
 	port ( 
-		clk              : in std_logic;
-		updating_data_in : in std_logic; -- if encoder has data do encode, is used to keep encoder index at 0 when no needed
-		tari             : in std_logic_vector(11 downto 0); -- the value expected is 1e8 times greater than the real one, tari goes normaly btw 6.25 µs and 25µs
-		data_in          : in std_logic_vector((data_width + mask_width)-1 downto 0); -- format expected : ddddddddmmmm
+		clk           : in std_logic;
+		is_fifo_empty : in std_logic;
+		tari          : in std_logic_vector(11 downto 0); -- the value expected is 1e8 times greater than the real one, tari goes normaly btw 6.25 µs and 25µs
+		data_in       : in std_logic_vector((data_width + mask_width)-1 downto 0); -- format expected : ddddddddmmmm
 		
-		data_out                 : out std_logic; 
-		finished_releasing_data  : out std_logic
+		
+		-- encoded_data_out : out std_logic_vector(15 downto 0);
+		-- reduced_clk_out : out std_logic;
+		
+		data_out                    : out std_logic; 
+		finished_releasing_data_out : out std_logic
 		
 	);
 
@@ -51,10 +55,11 @@ architecture arch of FM0_encoder is
 	signal current_start_value : std_logic := '1'; -- current value when a new bit is going to be modulated
 	
 	signal mask_value          : integer := to_integer(unsigned(mask));
-	signal clock_tari_over_two : integer := 2; -- to_integer(unsigned(tari)) / 2e8 * clk_f;
+	signal clock_tari_over_two : integer := 2; -- to_integer(unsigned(tari)) / 2e8 * clk_f;	
 	
-	signal flag_released_data_insider : std_logic_vector(0 downto 0) := "0";
-	
+	signal finished_releasing_data : std_logic := '0';
+	signal request_new_data : std_logic := '0';
+	signal out_flip_flop : std_logic := '0';
 	
 	begin
 		data_encoder : process( clk )
@@ -94,43 +99,40 @@ architecture arch of FM0_encoder is
 
 		
 
-		sending_data : process( reduced_clk, updating_data_in )
+		sending_data : process( reduced_clk )
 			variable i3 : integer range 0 to 15 := 0;
-			variable flag_release_data : integer range 0 to 1 := 0; -- flag used to inform if we already released the current package on data_out
-
+			
 			begin
-				if (flag_release_data = 0) then
-					if (rising_edge(reduced_clk)) then
+				if (rising_edge(reduced_clk)) then
+					if (finished_releasing_data_f = '0') then
+						
 						i3 := i3 + 1;
 						tmp_data_out <= encoded_data(i3);
-						
+					
 						if (i3 = mask_value) then
 							i3 := 0;
-							flag_release_data := 1;
+							finished_releasing_data <= '1';
 						end if ;
-					end if ;
-				else
-					if (rising_edge(updating_data_in)) then
-						flag_release_data := 0;
 					end if;
 				end if ;
-				flag_released_data_insider <= std_logic_vector(to_unsigned(flag_release_data, 1));
+
 		end process ; -- sending_data
-		
-		
-		
---		update_data_in : process( updating_data_in )
---			begin
---				-- test if need to have rising edge, if we dont need, nice fifo only flips updating_data_in when changing data_in
---				-- 		if we need, fifo can keep this value normaly low and when it updates data_in, it set`s updating_data_in hight for a few clock cycles
---
---				-- if (rising_edge(updating_data_in)) then
---				flag_release_data <= '0';
---				-- end if ;
---		end process ; -- update_data_in
+
+		flipflop_request_new_data: entity work.flipflop
+		port map(d => finished_releasing_data,
+				 clk <= clk,
+				 rst => request_new_data and not is_fifo_empty,
+				 q => request_new_data);
+
+		flipflop_finished_releasing_data: entity work.flipflop
+		port map(d => finished_releasing_data,
+				 clk <= clk,
+				 rst => request_new_data,
+				 q => finished_releasing_data_f);
 		
 		data_out <= tmp_data_out;
-
-		finished_releasing_data <= '1' when  flag_released_data_insider = "1" else '0';
+		
+		-- encoded_data_out <= encoded_data;
+		-- reduced_clk_out <= reduced_clk;
 
 end arch ; -- arch

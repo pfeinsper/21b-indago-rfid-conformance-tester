@@ -26,11 +26,15 @@ Info: Running Quartus Prime EDA Netlist Writer
     Info: Intel and sold by Intel or its authorized distributors.  Please
     Info: refer to the applicable agreement for further details, at
     Info: https://fpgasoftware.intel.com/eula.
-    Info: Processing started: Mon Aug 16 21:10:11 2021
+    Info: Processing started: Tue Aug 17 18:03:59 2021
 Info: Command: quartus_eda --gen_testbench --tool=modelsim_oem --format=vhdl --write_settings_files=off rfid-conformance-tester -c rfid-conformance-tester --vector_source=C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/Waveform.vwf --testbench_file=C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/simulation/qsim/Waveform.vwf.vht
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 
-n writing test bench files
+nfo: Quartus Prime EDA Netlist Writer was successful. 0 errors, 20 warnings
+    Info: Peak virtual memory: 4718 megabytes
+    Info: Processing ended: Tue Aug 17 18:04:00 2021
+    Info: Elapsed time: 00:00:01
+    Info: Total CPU time (on all processors): 00:00:01
 
 Completed successfully. 
 
@@ -55,13 +59,13 @@ Info: Running Quartus Prime EDA Netlist Writer
     Info: Intel and sold by Intel or its authorized distributors.  Please
     Info: refer to the applicable agreement for further details, at
     Info: https://fpgasoftware.intel.com/eula.
-    Info: Processing started: Mon Aug 16 21:10:13 2021
+    Info: Processing started: Tue Aug 17 18:04:01 2021
 Info: Command: quartus_eda --write_settings_files=off --simulation=on --functional=on --flatten_buses=off --tool=modelsim_oem --format=vhdl --output_directory=C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/simulation/qsim/ rfid-conformance-tester -c rfid-conformance-tester
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (204019): Generated file rfid-conformance-tester.vho in folder "C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/simulation/qsim//" for EDA simulation tool
 Info: Quartus Prime EDA Netlist Writer was successful. 0 errors, 1 warning
-    Info: Peak virtual memory: 4729 megabytes
-    Info: Processing ended: Mon Aug 16 21:10:14 2021
+    Info: Peak virtual memory: 4727 megabytes
+    Info: Processing ended: Tue Aug 17 18:04:02 2021
     Info: Elapsed time: 00:00:01
     Info: Total CPU time (on all processors): 00:00:01
 
@@ -79,14 +83,13 @@ C:/intelFPGA/20.1/modelsim_ase/win32aloem/vsim -c -do rfid-conformance-tester.do
 
 Reading pref.tcl
 
-
 # 2020.1
 
 # do rfid-conformance-tester.do
 
 # ** Warning: (vlib-34) Library already exists at "work".
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 21:10:15 on Aug 16,2021
+# Start time: 18:04:02 on Aug 17,2021
 # vcom -work work rfid-conformance-tester.vho 
 
 # -- Loading package STANDARD
@@ -102,10 +105,10 @@ Reading pref.tcl
 # -- Compiling entity FM0_encoder
 # -- Compiling architecture structure of FM0_encoder
 
-# End time: 21:10:16 on Aug 16,2021, Elapsed time: 0:00:01
+# End time: 18:04:03 on Aug 17,2021, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 21:10:16 on Aug 16,2021
+# Start time: 18:04:03 on Aug 17,2021
 # vcom -work work Waveform.vwf.vht 
 
 # -- Loading package STANDARD
@@ -113,11 +116,11 @@ Reading pref.tcl
 # -- Loading package std_logic_1164
 # -- Compiling entity FM0_encoder_vhd_vec_tst
 # -- Compiling architecture FM0_encoder_arch of FM0_encoder_vhd_vec_tst
-# End time: 21:10:16 on Aug 16,2021, Elapsed time: 0:00:00
+# End time: 18:04:03 on Aug 17,2021, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 
 # vsim -c -t 1ps -L cyclonev -L altera -L altera_mf -L 220model -L sgate -L altera_lnsim work.FM0_encoder_vhd_vec_tst 
-# Start time: 21:10:16 on Aug 16,2021
+# Start time: 18:04:03 on Aug 17,2021
 # Loading std.standard
 # Loading std.textio(body)
 # Loading ieee.std_logic_1164(body)
@@ -136,11 +139,11 @@ Reading pref.tcl
 # Loading cyclonev.cyclonev_clkena(behavior)
 # Loading cyclonev.cyclonev_lcell_comb(vital_lcell_comb)
 # Loading altera.dffeas(vital_dffeas)
-# ** Warning: Design size of 23680 statements exceeds ModelSim-Intel FPGA Starter Edition recommended capacity.
+# ** Warning: Design size of 21723 statements exceeds ModelSim-Intel FPGA Starter Edition recommended capacity.
 # Expect performance to be adversely affected.
 # after#34
 
-# End time: 21:10:17 on Aug 16,2021, Elapsed time: 0:00:01
+# End time: 18:04:04 on Aug 17,2021, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 1
 
 Completed successfully. 
@@ -153,7 +156,7 @@ Reading C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpg
 
 Processing channel transitions... 
 
-Writing the resulting VWF to C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/simulation/qsim/rfid-conformance-tester_20210816211017.sim.vwf
+Writing the resulting VWF to C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/simulation/qsim/rfid-conformance-tester_20210817180404.sim.vwf
 
 Finished VCD to VWF conversion.
 

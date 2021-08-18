@@ -19,7 +19,7 @@
 -- the top level entity of the current Quartus project .The user can use this   
 -- testbench to simulate his design using a third-party simulation tool .       
 -- *****************************************************************************
--- Generated on "08/16/2021 21:10:12"
+-- Generated on "08/17/2021 18:04:00"
                                                              
 -- Vhdl Test Bench(with test vectors) for design  :          FM0_encoder
 -- 
@@ -35,29 +35,23 @@ ARCHITECTURE FM0_encoder_arch OF FM0_encoder_vhd_vec_tst IS
 -- constants                                                 
 -- signals                                                   
 SIGNAL clk : STD_LOGIC;
-SIGNAL data_i_out : STD_LOGIC;
 SIGNAL data_in : STD_LOGIC_VECTOR(11 DOWNTO 0);
 SIGNAL data_out : STD_LOGIC;
 SIGNAL encoded_data_out : STD_LOGIC_VECTOR(15 DOWNTO 0);
-SIGNAL is_free : STD_LOGIC;
-SIGNAL mask_out : STD_LOGIC_VECTOR(3 DOWNTO 0);
-SIGNAL need_to_process : STD_LOGIC;
-SIGNAL not_encoded_data_out : STD_LOGIC_VECTOR(7 DOWNTO 0);
+SIGNAL finished_releasing_data : STD_LOGIC;
 SIGNAL reduced_clk_out : STD_LOGIC;
 SIGNAL tari : STD_LOGIC_VECTOR(11 DOWNTO 0);
+SIGNAL updating_data_in : STD_LOGIC;
 COMPONENT FM0_encoder
 	PORT (
 	clk : IN STD_LOGIC;
-	data_i_out : OUT STD_LOGIC;
 	data_in : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
 	data_out : OUT STD_LOGIC;
 	encoded_data_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
-	is_free : OUT STD_LOGIC;
-	mask_out : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
-	need_to_process : IN STD_LOGIC;
-	not_encoded_data_out : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
+	finished_releasing_data : OUT STD_LOGIC;
 	reduced_clk_out : OUT STD_LOGIC;
-	tari : IN STD_LOGIC_VECTOR(11 DOWNTO 0)
+	tari : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
+	updating_data_in : IN STD_LOGIC
 	);
 END COMPONENT;
 BEGIN
@@ -65,16 +59,13 @@ BEGIN
 	PORT MAP (
 -- list connections between master ports and signals
 	clk => clk,
-	data_i_out => data_i_out,
 	data_in => data_in,
 	data_out => data_out,
 	encoded_data_out => encoded_data_out,
-	is_free => is_free,
-	mask_out => mask_out,
-	need_to_process => need_to_process,
-	not_encoded_data_out => not_encoded_data_out,
+	finished_releasing_data => finished_releasing_data,
 	reduced_clk_out => reduced_clk_out,
-	tari => tari
+	tari => tari,
+	updating_data_in => updating_data_in
 	);
 
 -- clk
@@ -97,13 +88,13 @@ END PROCESS t_prcs_data_in_11;
 -- data_in[10]
 t_prcs_data_in_10: PROCESS
 BEGIN
-	data_in(10) <= '0';
+	data_in(10) <= '1';
 WAIT;
 END PROCESS t_prcs_data_in_10;
 -- data_in[9]
 t_prcs_data_in_9: PROCESS
 BEGIN
-	data_in(9) <= '0';
+	data_in(9) <= '1';
 WAIT;
 END PROCESS t_prcs_data_in_9;
 -- data_in[8]
@@ -115,7 +106,7 @@ END PROCESS t_prcs_data_in_8;
 -- data_in[7]
 t_prcs_data_in_7: PROCESS
 BEGIN
-	data_in(7) <= '0';
+	data_in(7) <= '1';
 WAIT;
 END PROCESS t_prcs_data_in_7;
 -- data_in[6]
@@ -139,19 +130,19 @@ END PROCESS t_prcs_data_in_4;
 -- data_in[3]
 t_prcs_data_in_3: PROCESS
 BEGIN
-	data_in(3) <= '0';
+	data_in(3) <= '1';
 WAIT;
 END PROCESS t_prcs_data_in_3;
 -- data_in[2]
 t_prcs_data_in_2: PROCESS
 BEGIN
-	data_in(2) <= '1';
+	data_in(2) <= '0';
 WAIT;
 END PROCESS t_prcs_data_in_2;
 -- data_in[1]
 t_prcs_data_in_1: PROCESS
 BEGIN
-	data_in(1) <= '1';
+	data_in(1) <= '0';
 WAIT;
 END PROCESS t_prcs_data_in_1;
 -- data_in[0]
@@ -160,83 +151,4 @@ BEGIN
 	data_in(0) <= '0';
 WAIT;
 END PROCESS t_prcs_data_in_0;
-
--- need_to_process
-t_prcs_need_to_process: PROCESS
-BEGIN
-	need_to_process <= '0';
-WAIT;
-END PROCESS t_prcs_need_to_process;
--- tari[11]
-t_prcs_tari_11: PROCESS
-BEGIN
-	tari(11) <= '0';
-WAIT;
-END PROCESS t_prcs_tari_11;
--- tari[10]
-t_prcs_tari_10: PROCESS
-BEGIN
-	tari(10) <= '0';
-WAIT;
-END PROCESS t_prcs_tari_10;
--- tari[9]
-t_prcs_tari_9: PROCESS
-BEGIN
-	tari(9) <= '0';
-WAIT;
-END PROCESS t_prcs_tari_9;
--- tari[8]
-t_prcs_tari_8: PROCESS
-BEGIN
-	tari(8) <= '0';
-WAIT;
-END PROCESS t_prcs_tari_8;
--- tari[7]
-t_prcs_tari_7: PROCESS
-BEGIN
-	tari(7) <= '0';
-WAIT;
-END PROCESS t_prcs_tari_7;
--- tari[6]
-t_prcs_tari_6: PROCESS
-BEGIN
-	tari(6) <= '0';
-WAIT;
-END PROCESS t_prcs_tari_6;
--- tari[5]
-t_prcs_tari_5: PROCESS
-BEGIN
-	tari(5) <= '0';
-WAIT;
-END PROCESS t_prcs_tari_5;
--- tari[4]
-t_prcs_tari_4: PROCESS
-BEGIN
-	tari(4) <= '0';
-WAIT;
-END PROCESS t_prcs_tari_4;
--- tari[3]
-t_prcs_tari_3: PROCESS
-BEGIN
-	tari(3) <= '0';
-WAIT;
-END PROCESS t_prcs_tari_3;
--- tari[2]
-t_prcs_tari_2: PROCESS
-BEGIN
-	tari(2) <= '0';
-WAIT;
-END PROCESS t_prcs_tari_2;
--- tari[1]
-t_prcs_tari_1: PROCESS
-BEGIN
-	tari(1) <= '0';
-WAIT;
-END PROCESS t_prcs_tari_1;
--- tari[0]
-t_prcs_tari_0: PROCESS
-BEGIN
-	tari(0) <= '0';
-WAIT;
-END PROCESS t_prcs_tari_0;
 END FM0_encoder_arch;
