@@ -1,5 +1,5 @@
 Analysis & Synthesis report for rfid-conformance-tester
-Tue Aug 17 18:02:38 2021
+Fri Aug 20 15:44:27 2021
 Quartus Prime Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
 
 
@@ -13,12 +13,16 @@ Quartus Prime Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
   5. Analysis & Synthesis Source Files Read
   6. Analysis & Synthesis Resource Usage Summary
   7. Analysis & Synthesis Resource Utilization by Entity
-  8. General Register Statistics
-  9. Inverted Register Statistics
- 10. Parameter Settings for User Entity Instance: Top-level Entity: |FM0_encoder
- 11. Post-Synthesis Netlist Statistics for Top Partition
- 12. Elapsed Time Per Partition
- 13. Analysis & Synthesis Messages
+  8. State Machine - |FM0_encoder|state_sender
+  9. State Machine - |FM0_encoder|state_controller
+ 10. Registers Removed During Synthesis
+ 11. Removed Registers Triggering Further Register Optimizations
+ 12. General Register Statistics
+ 13. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 14. Parameter Settings for User Entity Instance: Top-level Entity: |FM0_encoder
+ 15. Post-Synthesis Netlist Statistics for Top Partition
+ 16. Elapsed Time Per Partition
+ 17. Analysis & Synthesis Messages
 
 
 
@@ -45,14 +49,14 @@ https://fpgasoftware.intel.com/eula.
 +-------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                  ;
 +---------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Tue Aug 17 18:02:38 2021       ;
+; Analysis & Synthesis Status     ; Successful - Fri Aug 20 15:44:27 2021       ;
 ; Quartus Prime Version           ; 20.1.1 Build 720 11/11/2020 SJ Lite Edition ;
 ; Revision Name                   ; rfid-conformance-tester                     ;
 ; Top-level Entity Name           ; FM0_encoder                                 ;
 ; Family                          ; Cyclone V                                   ;
 ; Logic utilization (in ALMs)     ; N/A                                         ;
-; Total registers                 ; 37                                          ;
-; Total pins                      ; 45                                          ;
+; Total registers                 ; 38                                          ;
+; Total pins                      ; 33                                          ;
 ; Total virtual pins              ; 0                                           ;
 ; Total block memory bits         ; 0                                           ;
 ; Total DSP Blocks                ; 0                                           ;
@@ -165,8 +169,7 @@ https://fpgasoftware.intel.com/eula.
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processor 2            ;   0.0%      ;
-;     Processors 3-4         ;   0.0%      ;
+;     Processors 2-4         ;   0.0%      ;
 +----------------------------+-------------+
 
 
@@ -184,25 +187,25 @@ https://fpgasoftware.intel.com/eula.
 +---------------------------------------------+-----------+
 ; Resource                                    ; Usage     ;
 +---------------------------------------------+-----------+
-; Estimate of Logic utilization (ALMs needed) ; 33        ;
+; Estimate of Logic utilization (ALMs needed) ; 44        ;
 ;                                             ;           ;
-; Combinational ALUT usage for logic          ; 51        ;
+; Combinational ALUT usage for logic          ; 73        ;
 ;     -- 7 input functions                    ; 2         ;
-;     -- 6 input functions                    ; 11        ;
-;     -- 5 input functions                    ; 2         ;
-;     -- 4 input functions                    ; 6         ;
-;     -- <=3 input functions                  ; 30        ;
+;     -- 6 input functions                    ; 12        ;
+;     -- 5 input functions                    ; 17        ;
+;     -- 4 input functions                    ; 7         ;
+;     -- <=3 input functions                  ; 35        ;
 ;                                             ;           ;
-; Dedicated logic registers                   ; 37        ;
+; Dedicated logic registers                   ; 38        ;
 ;                                             ;           ;
-; I/O pins                                    ; 45        ;
+; I/O pins                                    ; 33        ;
 ;                                             ;           ;
 ; Total DSP Blocks                            ; 0         ;
 ;                                             ;           ;
 ; Maximum fan-out node                        ; clk~input ;
-; Maximum fan-out                             ; 32        ;
-; Total fan-out                               ; 338       ;
-; Average fan-out                             ; 1.90      ;
+; Maximum fan-out                             ; 38        ;
+; Total fan-out                               ; 440       ;
+; Average fan-out                             ; 2.49      ;
 +---------------------------------------------+-----------+
 
 
@@ -211,9 +214,66 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------+-------------+--------------+
 ; Compilation Hierarchy Node ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name ; Entity Name ; Library Name ;
 +----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------+-------------+--------------+
-; |FM0_encoder               ; 51 (51)             ; 37 (37)                   ; 0                 ; 0          ; 45   ; 0            ; |FM0_encoder        ; FM0_encoder ; work         ;
+; |FM0_encoder               ; 73 (73)             ; 38 (38)                   ; 0                 ; 0          ; 33   ; 0            ; |FM0_encoder        ; FM0_encoder ; work         ;
 +----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------+-------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
+
+
+Encoding Type:  One-Hot
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; State Machine - |FM0_encoder|state_sender                                                                                                                                                                                                 ;
++------------------------------+--------------------+------------------------+------------------------------+------------------------+------------------------------+------------------------+------------------------+---------------------+
+; Name                         ; state_sender.s_end ; state_sender.s_send_s4 ; state_sender.s_send_s3_part2 ; state_sender.s_send_s3 ; state_sender.s_send_s2_part2 ; state_sender.s_send_s2 ; state_sender.s_send_s1 ; state_sender.s_wait ;
++------------------------------+--------------------+------------------------+------------------------------+------------------------+------------------------------+------------------------+------------------------+---------------------+
+; state_sender.s_wait          ; 0                  ; 0                      ; 0                            ; 0                      ; 0                            ; 0                      ; 0                      ; 0                   ;
+; state_sender.s_send_s1       ; 0                  ; 0                      ; 0                            ; 0                      ; 0                            ; 0                      ; 1                      ; 1                   ;
+; state_sender.s_send_s2       ; 0                  ; 0                      ; 0                            ; 0                      ; 0                            ; 1                      ; 0                      ; 1                   ;
+; state_sender.s_send_s2_part2 ; 0                  ; 0                      ; 0                            ; 0                      ; 1                            ; 0                      ; 0                      ; 1                   ;
+; state_sender.s_send_s3       ; 0                  ; 0                      ; 0                            ; 1                      ; 0                            ; 0                      ; 0                      ; 1                   ;
+; state_sender.s_send_s3_part2 ; 0                  ; 0                      ; 1                            ; 0                      ; 0                            ; 0                      ; 0                      ; 1                   ;
+; state_sender.s_send_s4       ; 0                  ; 1                      ; 0                            ; 0                      ; 0                            ; 0                      ; 0                      ; 1                   ;
+; state_sender.s_end           ; 1                  ; 0                      ; 0                            ; 0                      ; 0                            ; 0                      ; 0                      ; 1                   ;
++------------------------------+--------------------+------------------------+------------------------------+------------------------+------------------------------+------------------------+------------------------+---------------------+
+
+
+Encoding Type:  One-Hot
++----------------------------------------------------------------------------------------------------------------------------------------------+
+; State Machine - |FM0_encoder|state_controller                                                                                                ;
++------------------------------+------------------------------+----------------------------+-------------------------+-------------------------+
+; Name                         ; state_controller.c_wait_tari ; state_controller.c_request ; state_controller.c_send ; state_controller.c_wait ;
++------------------------------+------------------------------+----------------------------+-------------------------+-------------------------+
+; state_controller.c_wait      ; 0                            ; 0                          ; 0                       ; 0                       ;
+; state_controller.c_send      ; 0                            ; 0                          ; 1                       ; 1                       ;
+; state_controller.c_request   ; 0                            ; 1                          ; 0                       ; 1                       ;
+; state_controller.c_wait_tari ; 1                            ; 0                          ; 0                       ; 1                       ;
++------------------------------+------------------------------+----------------------------+-------------------------+-------------------------+
+
+
++---------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                              ;
++----------------------------------------+----------------------------------------+
+; Register name                          ; Reason for Removal                     ;
++----------------------------------------+----------------------------------------+
+; request_new_data~reg0                  ; Stuck at GND due to stuck port data_in ;
+; tari_CS_start                          ; Stuck at GND due to stuck port data_in ;
+; tari_CS_end                            ; Stuck at GND due to stuck port data_in ;
+; \wait_CS_tari:i3[0..10]                ; Stuck at GND due to stuck port clock   ;
+; state_controller.c_request             ; Lost fanout                            ;
+; state_controller.c_send                ; Lost fanout                            ;
+; state_controller.c_wait_tari           ; Lost fanout                            ;
+; Total Number of Removed Registers = 17 ;                                        ;
++----------------------------------------+----------------------------------------+
+
+
++---------------------------------------------------------------------------------------------------------------------------------+
+; Removed Registers Triggering Further Register Optimizations                                                                     ;
++---------------+---------------------------+-------------------------------------------------------------------------------------+
+; Register name ; Reason for Removal        ; Registers Removed due to This Register                                              ;
++---------------+---------------------------+-------------------------------------------------------------------------------------+
+; tari_CS_start ; Stuck at GND              ; tari_CS_end, \wait_CS_tari:i3[10], \wait_CS_tari:i3[9], \wait_CS_tari:i3[8],        ;
+;               ; due to stuck port data_in ; \wait_CS_tari:i3[7], \wait_CS_tari:i3[6], \wait_CS_tari:i3[5], \wait_CS_tari:i3[4], ;
+;               ;                           ; \wait_CS_tari:i3[3], \wait_CS_tari:i3[2], \wait_CS_tari:i3[1], \wait_CS_tari:i3[0]  ;
++---------------+---------------------------+-------------------------------------------------------------------------------------+
 
 
 +------------------------------------------------------+
@@ -221,24 +281,25 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 37    ;
-; Number of registers using Synchronous Clear  ; 10    ;
+; Total registers                              ; 38    ;
+; Number of registers using Synchronous Clear  ; 20    ;
 ; Number of registers using Synchronous Load   ; 0     ;
-; Number of registers using Asynchronous Clear ; 0     ;
+; Number of registers using Asynchronous Clear ; 12    ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 16    ;
+; Number of registers using Clock Enable       ; 25    ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
 
 
-+--------------------------------------------------+
-; Inverted Register Statistics                     ;
-+----------------------------------------+---------+
-; Inverted Register                      ; Fan out ;
-+----------------------------------------+---------+
-; current_start_value                    ; 9       ;
-; Total number of inverted registers = 1 ;         ;
-+----------------------------------------+---------+
++------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                       ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output             ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------------------+
+; 7:1                ; 3 bits    ; 12 LEs        ; 3 LEs                ; 9 LEs                  ; Yes        ; |FM0_encoder|\data_sender:index_bit[0] ;
+; 6:1                ; 2 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; No         ; |FM0_encoder|Selector3                 ;
+; 6:1                ; 2 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; No         ; |FM0_encoder|Selector4                 ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------------------+
 
 
 +-----------------------------------------------------------------------------+
@@ -258,27 +319,28 @@ Note: In order to hide this table in the UI and the text report file, please set
 +-----------------------+-----------------------------+
 ; Type                  ; Count                       ;
 +-----------------------+-----------------------------+
-; arriav_ff             ; 37                          ;
-;     ENA               ; 16                          ;
-;     SCLR              ; 10                          ;
-;     plain             ; 11                          ;
-; arriav_lcell_comb     ; 52                          ;
-;     arith             ; 10                          ;
-;         1 data inputs ; 10                          ;
+; arriav_ff             ; 38                          ;
+;     CLR               ; 10                          ;
+;     ENA               ; 3                           ;
+;     ENA CLR           ; 2                           ;
+;     ENA SCLR          ; 20                          ;
+;     plain             ; 3                           ;
+; arriav_lcell_comb     ; 74                          ;
+;     arith             ; 20                          ;
+;         1 data inputs ; 20                          ;
 ;     extend            ; 2                           ;
 ;         7 data inputs ; 2                           ;
-;     normal            ; 40                          ;
+;     normal            ; 52                          ;
 ;         0 data inputs ; 1                           ;
-;         1 data inputs ; 8                           ;
-;         2 data inputs ; 2                           ;
-;         3 data inputs ; 10                          ;
-;         4 data inputs ; 6                           ;
-;         5 data inputs ; 2                           ;
-;         6 data inputs ; 11                          ;
-; boundary_port         ; 45                          ;
+;         2 data inputs ; 9                           ;
+;         3 data inputs ; 6                           ;
+;         4 data inputs ; 7                           ;
+;         5 data inputs ; 17                          ;
+;         6 data inputs ; 12                          ;
+; boundary_port         ; 33                          ;
 ;                       ;                             ;
-; Max LUT depth         ; 3.50                        ;
-; Average LUT depth     ; 2.27                        ;
+; Max LUT depth         ; 4.00                        ;
+; Average LUT depth     ; 2.99                        ;
 +-----------------------+-----------------------------+
 
 
@@ -297,47 +359,31 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
-    Info: Processing started: Tue Aug 17 18:02:29 2021
+    Info: Processing started: Fri Aug 20 15:44:18 2021
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off rfid-conformance-tester -c rfid-conformance-tester
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
+Warning (12019): Can't analyze file -- file flipflop.vhd is missing
 Info (12021): Found 0 design units, including 0 entities, in source file rfid-conformance-tester.vhd
 Info (12021): Found 2 design units, including 1 entities, in source file fm0_encoder.vhd
-    Info (12022): Found design unit 1: FM0_encoder-arch File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 30
-    Info (12023): Found entity 1: FM0_encoder File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 5
+    Info (12022): Found design unit 1: FM0_encoder-arch File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 40
+    Info (12023): Found entity 1: FM0_encoder File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 13
+Info (12021): Found 0 design units, including 0 entities, in source file fm0_encoder_tb.vhd
 Info (12127): Elaborating entity "FM0_encoder" for the top level hierarchy
-Warning (10541): VHDL Signal Declaration warning at FM0_encoder.vhd(23): used implicit default value for signal "finished_releasing_data" because signal was never assigned a value or an explicit default value. Use of implicit default value may introduce unintended design optimizations. File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 23
-Warning (10540): VHDL Signal Declaration warning at FM0_encoder.vhd(49): used explicit default value for signal "data" because signal was never assigned a value File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 49
-Warning (10540): VHDL Signal Declaration warning at FM0_encoder.vhd(50): used explicit default value for signal "mask" because signal was never assigned a value File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 50
-Warning (10540): VHDL Signal Declaration warning at FM0_encoder.vhd(57): used explicit default value for signal "mask_value" because signal was never assigned a value File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 57
-Warning (10540): VHDL Signal Declaration warning at FM0_encoder.vhd(58): used explicit default value for signal "clock_tari_over_two" because signal was never assigned a value File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 58
-Warning (10036): Verilog HDL or VHDL warning at FM0_encoder.vhd(103): object "flag_release_data" assigned a value but never read File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 103
+Warning (10540): VHDL Signal Declaration warning at FM0_encoder.vhd(52): used explicit default value for signal "data_sender_end" because signal was never assigned a value File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 52
 Warning (13024): Output pins are stuck at VCC or GND
-    Warning (13410): Pin "finished_releasing_data" is stuck at GND File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 23
+    Warning (13410): Pin "request_new_data" is stuck at GND File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 31
 Info (286030): Timing-Driven Synthesis is running
+Info (17049): 3 registers lost all their fanouts during netlist optimizations.
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
-Warning (21074): Design contains 13 input pin(s) that do not drive logic
-    Warning (15610): No output dependent on input pin "updating_data_in" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 14
-    Warning (15610): No output dependent on input pin "tari[0]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
-    Warning (15610): No output dependent on input pin "tari[1]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
-    Warning (15610): No output dependent on input pin "tari[2]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
-    Warning (15610): No output dependent on input pin "tari[3]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
-    Warning (15610): No output dependent on input pin "tari[4]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
-    Warning (15610): No output dependent on input pin "tari[5]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
-    Warning (15610): No output dependent on input pin "tari[6]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
-    Warning (15610): No output dependent on input pin "tari[7]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
-    Warning (15610): No output dependent on input pin "tari[8]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
-    Warning (15610): No output dependent on input pin "tari[9]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
-    Warning (15610): No output dependent on input pin "tari[10]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
-    Warning (15610): No output dependent on input pin "tari[11]" File: C:/Users/rafae/Desktop/insper/pfe/21b-indago-rfid-conformance-tester/fpga/FM0_encoder.vhd Line: 15
-Info (21057): Implemented 115 device resources after synthesis - the final resource count might be different
-    Info (21058): Implemented 26 input pins
-    Info (21059): Implemented 19 output pins
-    Info (21061): Implemented 70 logic cells
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 23 warnings
-    Info: Peak virtual memory: 4869 megabytes
-    Info: Processing ended: Tue Aug 17 18:02:38 2021
+Info (21057): Implemented 128 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 31 input pins
+    Info (21059): Implemented 2 output pins
+    Info (21061): Implemented 95 logic cells
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 5 warnings
+    Info: Peak virtual memory: 4846 megabytes
+    Info: Processing ended: Fri Aug 20 15:44:27 2021
     Info: Elapsed time: 00:00:09
     Info: Total CPU time (on all processors): 00:00:20
 

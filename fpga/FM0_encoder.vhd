@@ -1,3 +1,11 @@
+
+	---------------------------------
+	--       FM0 COMPONENT         --
+	-- Projeto final de Engenharia --
+	--    Professor Orientador     --
+	-- Projeto final de Engenharia --
+	---------------------------------
+
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -8,20 +16,22 @@ entity FM0_encoder is
 		data_width : natural := 8;
 		mask_width : natural := 4
 	);
-	
-	port ( 
+
+	port (
+		-- flags
 		clk           : in std_logic;
-		is_fifo_empty : in std_logic;
-		tari          : in std_logic_vector(11 downto 0); -- the value expected is 1e8 times greater than the real one, tari goes normaly btw 6.25 µs and 25µs
-		data_in       : in std_logic_vector((data_width + mask_width)-1 downto 0); -- format expected : ddddddddmmmm
-		
-		
-		-- encoded_data_out : out std_logic_vector(15 downto 0);
-		-- reduced_clk_out : out std_logic;
-		
-		data_out                    : out std_logic; 
-		finished_releasing_data_out : out std_logic
-		
+		rst           : in std_logic;
+
+		-- config
+		tari          : in std_logic_vector(15 downto 0);
+
+		-- fifo data
+		is_fifo_empty    : in std_logic;
+		data_in          : in std_logic_vector((data_width + mask_width)-1 downto 0); -- format expected : ddddddddmmmm
+		request_new_data : out std_logic;
+
+		-- output
+		data_out      : out std_logic
 	);
 
 end entity;
@@ -29,110 +39,273 @@ end entity;
 
 architecture arch of FM0_encoder is
 
-	-- TODO
-	--		encode data using clock full speed
-	--		reduce clock to desirable speed (will be used to move data to output)
-	--		move encoded data to output, at correct time intervals
-	--		add logic to inform FIFO that Im free and can receive data
-	--		make the maths to burn the correct amount of clocks
-	--		make this shit compile
+	signal data       : std_logic_vector(data_width-1 downto 0);
+	signal mask       : std_logic_vector(mask_width-1 downto 0);
+	signal mask_value : integer;
+	signal tari_value : integer;
 
-	-- assumindo tari = 7 µs 
-	-- 2 tari = 14 µs = 1/14e-6 Hz = 71428.57142857143 Hz
 
-	-- 1 clock takes 1/clk_f seconds
-	-- tari/2 = x * clk_f
-	-- x = (tari / 2) * clk_f
-	-- because we cant use floats: x = (tari / 2e8) * clk_f
-	-- if we burn x clocks, the new clock will tick at the correct speed
+	------------------------------
+	--          flags           --
+	------------------------------
+	signal data_sender_start : std_logic := '0';
+	signal data_sender_end   : std_logic := '0';
 
-	signal data : std_logic_vector(data_width-1 downto 0) := data_in((data_width + mask_width)-1 downto mask_width);
-	signal mask : std_logic_vector(mask_width-1 downto 0) := data_in(mask_width-1 downto 0);
-	
-	signal encoded_data        : std_logic_vector(2*data_width - 1 downto 0) := (others => '0');
-	signal tmp_data_out        : std_logic := '0';
-	signal reduced_clk         : std_logic := '0';
-	signal current_start_value : std_logic := '1'; -- current value when a new bit is going to be modulated
-	
-	signal mask_value          : integer := to_integer(unsigned(mask));
-	signal clock_tari_over_two : integer := 2; -- to_integer(unsigned(tari)) / 2e8 * clk_f;	
-	
-	signal finished_releasing_data : std_logic := '0';
-	signal request_new_data : std_logic := '0';
-	signal out_flip_flop : std_logic := '0';
-	
+	signal half_tari_start, half_tari_end : std_logic := '0';
+    signal full_tari_start, full_tari_end : std_logic := '0';
+    signal tari_CS_start, tari_CS_end     : std_logic := '0';
+
+
+	------------------------------
+	--          states          --
+	------------------------------
+	type state_type_controller is (c_wait, c_send, c_request, c_wait_tari);
+    signal state_controller	   : state_type_controller := c_wait;
+
+	type state_type_encoder is (e_wait, e_encoding, e_end);
+    signal state_encoder	   : state_type_encoder := e_wait;
+
+	type state_type_sender is (s_wait, s_send_s1, s_send_s2, s_send_s2_part2, s_send_s3, s_send_s3_part2, s_send_s4, s_end);
+    signal state_sender	       : state_type_sender := s_wait;
+
+
 	begin
-		data_encoder : process( clk )
-			variable i : integer range 0 to 15 := 0;
+
+		------------------------------
+		--          update          --
+		------------------------------
+		data       <= data_in((data_width + mask_width)-1 downto mask_width);
+		mask       <= data_in(mask_width-1 downto 0);
+		mask_value <= to_integer(unsigned(mask));
+		tari_value <= to_integer(unsigned(tari));
+
+
+		------------------------------
+		--        controller        --
+		------------------------------
+		fm0_controller: process ( clk, rst )
+			begin
+				if (rst = '1') then
+					data_sender_start <= '0';
+					state_controller  <= c_wait;
+	
+				elsif (rising_edge(clk)) then
+					case state_controller is
+						when c_wait =>
+							request_new_data <= '0';
+							
+							if (is_fifo_empty = '0') then
+								state_controller <= c_send;
+								data_sender_start <= '1';
+							end if;
+
+						when c_send =>
+							if (data_sender_end = '1') then
+								data_sender_start <= '0';
+								state_controller <= c_request;
+							end if;
+						
+						when c_request =>
+							request_new_data <= '1';
+							
+							if (is_fifo_empty = '1') then
+								tari_CS_start <= '1';
+								state_controller <= c_wait_tari;
+							else
+								state_controller <= c_send;
+							end if;
+						
+						when c_wait_tari =>
+							if (tari_CS_end = '1') then
+								tari_CS_start <= '0';
+								state_controller <= c_wait;
+							end if;
+
+						when others =>
+							state_controller <= c_wait;
+       				end case;
+				end if;
+		end process;
+
+
+		------------------------------
+		--          sender          --
+		------------------------------
+		data_sender :  process( clk, rst )
+			variable index_bit : integer range 0 to 7;
+			begin
+				if (rst = '1') then
+					state_sender <= s_wait;
+					half_tari_start <= '0';
+					full_tari_start <= '0';
+
+				elsif (rising_edge(clk)) then
+					
+					case state_sender is
+
+						when s_wait =>
+							if (data_sender_start = '1') then
+								index_bit := 0;
+								if (data(index_bit) = '1') then
+									state_sender <= s_send_s1;
+									full_tari_start <= '1';
+								else
+									half_tari_start <= '1';
+									state_sender <= s_send_s3;
+								end if;
+							end if;
+
+						when s_send_s1 => -- data 1, out 1 1
+							data_out <= '1';
+
+							if (full_tari_end = '1') then
+								full_tari_start <= '0';
+								index_bit := index_bit + 1;
+								if (index_bit <= mask_value) then
+									if (data(index_bit) = '1') then
+										full_tari_start <= '1';
+										state_sender <= s_send_s4;
+									else
+										half_tari_start <= '1';
+										state_sender <= s_send_s3;
+									end if;
+								else
+									state_sender <= s_end;
+								end if;
+							end if;
+						------------------------------------
+						when s_send_s2 => -- data 0, out 1 0
+							data_out <= '1';
+							if (half_tari_end = '1') then
+								half_tari_start <= '0';
+								half_tari_start <= '1';
+								state_sender    <= s_send_s2_part2;
+							end if;
+
+						when s_send_s2_part2 => -- data 0, out 1 0
+							data_out <= '0';
+							if (half_tari_end = '1') then
+								half_tari_start <= '0';
+								index_bit := index_bit + 1;
+								if (index_bit <= mask_value) then
+									if (data(index_bit) = '1') then
+										full_tari_start <= '1';
+										state_sender <= s_send_s1;
+									else
+										half_tari_start <= '1';
+										state_sender <= s_send_s2;
+									end if;
+								else
+									state_sender <= s_end;
+								end if;
+							end if;
+						------------------------------------
+						when s_send_s3 => -- data 0, out 0 1
+							data_out <= '0';
+							if (half_tari_end = '1') then
+								half_tari_start <= '0';
+								half_tari_start <= '1';
+								state_sender    <= s_send_s3_part2;
+							end if;
+
+						when s_send_s3_part2 =>  -- data 0, out 0 1
+							data_out <= '1';
+						
+							if (half_tari_end = '1') then
+								half_tari_start <= '0';
+								index_bit := index_bit + 1;
+								if (index_bit <= mask_value) then
+									if (data(index_bit) = '1') then
+										full_tari_start <= '1';
+										state_sender <= s_send_s4;
+									else
+										half_tari_start <= '1';
+										state_sender <= s_send_s3;
+									end if;
+								else
+									state_sender <= s_end;
+								end if;
+							end if;
+						------------------------------------
+						when s_send_s4 =>  -- data 1, out 0 0
+							data_out <= '0';
+							if (full_tari_end = '1') then
+								full_tari_start <= '0';
+								index_bit := index_bit + 1;
+								if (index_bit <= mask_value) then
+									if (data(index_bit) = '1') then
+										full_tari_start <= '1';
+										state_sender <= s_send_s1;
+
+									else
+										half_tari_start <= '1';
+										state_sender <= s_send_s2;
+
+									end if;
+
+								else
+									state_sender <= s_end;
+									
+								end if;
+							end if;
+						------------------------------------
+						when s_end =>
+							half_tari_start <= '0';
+							full_tari_start <= '0';
+							state_sender <= s_wait;
+
+						when others =>
+							state_sender <= s_wait;
+					end case;
+				end if;
+
+		end process;
+
+		half_tari : process ( clk, rst )
+			variable i : integer range 0 to 700 := 0;
 			begin
 				if (rising_edge(clk)) then
-					encoded_data(2*i) <= current_start_value;
-					if (data(i) = '0') then
-						encoded_data(2*i+1) <= not current_start_value;
-					else
-						encoded_data(2*i+1) <= current_start_value;
-						
-						current_start_value <= not current_start_value; -- default value only change when a '1' is current data bit
-					end if ;
-
-					i := i + 1;
-					if (i = mask_value) then
-						i := 0;
+					half_tari_end <= '0';
+					
+					if(	half_tari_start = '1') then
+						i := i + 1;
+						if (i = tari_value / 2) then
+							i := 0;
+							half_tari_end <= '1';
+						end if;
 					end if;
-				end if ;
-		
-		end process ; -- data_encoder
-		
-		
+				end if;
+		end process;
 
-		clock_reducer : process( clk )
+		full_tari : process ( clk, rst )
 			variable i2 : integer range 0 to 700 := 0;
 			begin
 				if (rising_edge(clk)) then
-					i2 := i2 + 1;
-					if (i2 = clock_tari_over_two) then
-						i2 := 0;
-						reduced_clk <= not reduced_clk;
-					end if ;
-				end if ;
-		end process ; -- clock_reducer
-
-		
-
-		sending_data : process( reduced_clk )
-			variable i3 : integer range 0 to 15 := 0;
-			
-			begin
-				if (rising_edge(reduced_clk)) then
-					if (finished_releasing_data_f = '0') then
-						
-						i3 := i3 + 1;
-						tmp_data_out <= encoded_data(i3);
-					
-						if (i3 = mask_value) then
-							i3 := 0;
-							finished_releasing_data <= '1';
-						end if ;
+					full_tari_end <= '0';
+					if(	full_tari_start = '1') then
+						i2 := i2 + 1;
+						if (i2 = tari_value) then
+							i2 := 0;
+							full_tari_end <= '1';
+						end if;
 					end if;
-				end if ;
+				end if;
 
-		end process ; -- sending_data
+		end process;
 
-		flipflop_request_new_data: entity work.flipflop
-		port map(d => finished_releasing_data,
-				 clk <= clk,
-				 rst => request_new_data and not is_fifo_empty,
-				 q => request_new_data);
-
-		flipflop_finished_releasing_data: entity work.flipflop
-		port map(d => finished_releasing_data,
-				 clk <= clk,
-				 rst => request_new_data,
-				 q => finished_releasing_data_f);
-		
-		data_out <= tmp_data_out;
-		
-		-- encoded_data_out <= encoded_data;
-		-- reduced_clk_out <= reduced_clk;
+		wait_CS_tari : process ( clk, rst )
+			variable i3 : integer range 0 to 1600 := 0;
+			begin
+				if (rising_edge(clk)) then
+					tari_CS_end <= '0';
+					if(	tari_CS_start = '1') then
+						i3 := i3 + 1;
+						if (i3 = tari_value + tari_value) then
+							i3 := 0;
+							tari_CS_end <= '1';
+						end if;
+					end if;
+				end if;
+		end process;
 
 end arch ; -- arch
