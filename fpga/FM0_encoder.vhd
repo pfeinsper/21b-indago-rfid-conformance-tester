@@ -1,10 +1,14 @@
 
-	---------------------------------
-	--       FM0 COMPONENT         --
-	-- Projeto final de Engenharia --
-	--    Professor Orientador     --
-	-- Projeto final de Engenharia --
-	---------------------------------
+	----------------------------------------
+	--            FM0 COMPONENT           --
+	-- Projeto final de Engenharia        --
+	-- Professor Orientador: Rafael Corsi --
+	-- Alunos:                            --
+	-- 		Alexandre                     --
+	-- 		Bruno kbc                     --
+	-- 		Lucas Legal                   --
+	-- 		Rafael Santos                 --
+	----------------------------------------
 
 library ieee;
 use ieee.std_logic_1164.all;
@@ -14,6 +18,7 @@ entity FM0_encoder is
 	generic (
 		clk_f      : natural := 50e6; -- Hz
 		data_width : natural := 8;
+		tari_width : natural := 16;
 		mask_width : natural := 4
 	);
 
@@ -23,7 +28,7 @@ entity FM0_encoder is
 		rst           : in std_logic;
 
 		-- config
-		tari          : in std_logic_vector(15 downto 0);
+		tari          : in std_logic_vector(tari_width-1 downto 0);
 
 		-- fifo data
 		is_fifo_empty    : in std_logic;
@@ -258,13 +263,21 @@ architecture arch of FM0_encoder is
 							state_sender <= s_wait;
 					end case;
 				end if;
-
 		end process;
+
+
+		------------------------------
+		--          timers          --
+		------------------------------
 
 		half_tari : process ( clk, rst )
 			variable i : integer range 0 to 700 := 0;
 			begin
-				if (rising_edge(clk)) then
+				if (rst = '1') then
+					i := 0;
+					half_tari_end <= '0';
+
+				elsif (rising_edge(clk)) then
 					half_tari_end <= '0';
 					
 					if(	half_tari_start = '1') then
@@ -280,7 +293,11 @@ architecture arch of FM0_encoder is
 		full_tari : process ( clk, rst )
 			variable i2 : integer range 0 to 700 := 0;
 			begin
-				if (rising_edge(clk)) then
+				if (rst = '1') then
+					i2 := 0;
+					half_tari_end <= '0';
+
+				elsif (rising_edge(clk)) then
 					full_tari_end <= '0';
 					if(	full_tari_start = '1') then
 						i2 := i2 + 1;
@@ -296,7 +313,11 @@ architecture arch of FM0_encoder is
 		wait_CS_tari : process ( clk, rst )
 			variable i3 : integer range 0 to 1600 := 0;
 			begin
-				if (rising_edge(clk)) then
+				if (rst = '1') then
+					i3 := 0;
+					half_tari_end <= '0';
+
+				elsif (rising_edge(clk)) then
 					tari_CS_end <= '0';
 					if(	tari_CS_start = '1') then
 						i3 := i3 + 1;
