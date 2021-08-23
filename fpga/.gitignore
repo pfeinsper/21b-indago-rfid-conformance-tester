@@ -15,9 +15,11 @@
 db/
 greybox_tmp/
 incremental_db/
+output_files/
 simulation/
 testbench/
 timing/
+work/
 
 # ignore Quartus II generated files
 *_generation_script*
@@ -43,8 +45,9 @@ timing/
 *.sopc_builder
 *.summary
 *.tcl
-*.txt # Explicitly add any text files used
+*.txt
 *~
 *example*
 *sopc_*
-PLLJ_PLLSPE_INFO.txt # The generated PLL specification file
+PLLJ_PLLSPE_INFO.txt
+transcript
