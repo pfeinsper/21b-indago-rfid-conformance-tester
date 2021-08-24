@@ -1,15 +1,15 @@
 
-	----------------------------------------
-	--            FM0 COMPONENT           --
-	-- Projeto final de Engenharia        --
-	-- Professor Orientador: Rafael Corsi --
-	-- Orientador: Shephard               --
-	-- Alunos:                            --
-	-- 		Alexandre                     --
-	-- 		Bruno kbc                     --
-	-- 		Lucas Legal                   --
+	-----------------------------------------
+	--            FM0 COMPONENT            --
+	-- Projeto Final de Engenharia         --
+	-- Professor Orientador: Rafael Corsi  --
+	-- Orientador: Shephard                --
+	-- Alunos:                             --
+	-- 		Alexandre Edington            --
+	-- 		Bruno Domingues               --
+	-- 		Lucas Leal                    --
 	-- 		Rafael Santos                 --
-	----------------------------------------
+	-----------------------------------------
 
 library ieee;
 use ieee.std_logic_1164.all;
@@ -308,7 +308,7 @@ architecture arch of FM0_encoder is
 			begin
 				if (rst = '1') then
 					i2 := 0;
-					half_tari_end <= '0';
+					full_tari_end <= '0';
 
 				elsif (rising_edge(clk)) then
 					full_tari_end <= '0';
@@ -328,7 +328,7 @@ architecture arch of FM0_encoder is
 			begin
 				if (rst = '1') then
 					i3 := 0;
-					half_tari_end <= '0';
+					tari_CS_end <= '0';
 
 				elsif (rising_edge(clk)) then
 					tari_CS_end <= '0';
