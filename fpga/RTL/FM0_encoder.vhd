@@ -3,6 +3,7 @@
 	--            FM0 COMPONENT           --
 	-- Projeto final de Engenharia        --
 	-- Professor Orientador: Rafael Corsi --
+	-- Orientador: Shephard               --
 	-- Alunos:                            --
 	-- 		Alexandre                     --
 	-- 		Bruno kbc                     --
@@ -16,6 +17,7 @@ use ieee.numeric_std.all;
 
 entity FM0_encoder is
 	generic (
+		-- defining size of data in and clock speed
 		clk_f      : natural := 50e6; -- Hz
 		data_width : natural := 8;
 		tari_width : natural := 16;
@@ -24,11 +26,11 @@ entity FM0_encoder is
 
 	port (
 		-- flags
-		clk           : in std_logic;
-		rst           : in std_logic;
+		clk : in std_logic;
+		rst : in std_logic;
 
 		-- config
-		tari          : in std_logic_vector(tari_width-1 downto 0);
+		tari : in std_logic_vector(tari_width-1 downto 0);
 
 		-- fifo data
 		is_fifo_empty    : in std_logic;
@@ -36,14 +38,16 @@ entity FM0_encoder is
 		request_new_data : out std_logic;
 
 		-- output
-		data_out      : out std_logic
+		data_out : out std_logic
 	);
 
 end entity;
 
 
 architecture arch of FM0_encoder is
-
+	------------------------------
+	--          values          --
+	------------------------------
 	signal data       : std_logic_vector(data_width-1 downto 0);
 	signal mask       : std_logic_vector(mask_width-1 downto 0);
 	signal mask_value : integer;
@@ -64,6 +68,10 @@ architecture arch of FM0_encoder is
 	------------------------------
 	--          states          --
 	------------------------------
+	-- This controller is created using four states, we followed the diagram present in 
+	-- the documentention of rfid (https://www.gs1.org/sites/default/files/docs/epc/Gen2_Protocol_Standard.pdf) page 32
+	-- So we designed a Miller-Signaling State Diagram as suggested by the doc.
+
 	type state_type_controller is (c_wait, c_send, c_request, c_wait_tari);
     signal state_controller	   : state_type_controller := c_wait;
 
@@ -88,6 +96,8 @@ architecture arch of FM0_encoder is
 		------------------------------
 		--        controller        --
 		------------------------------
+		-- State machine using this diagram
+		-- (https://raw.githubusercontent.com/pfeinsper/21b-indago-rfid-conformance-tester/main/Diagrams/diagram-FM0-encoder.png)
 		fm0_controller: process ( clk, rst )
 			begin
 				if (rst = '1') then
@@ -136,6 +146,7 @@ architecture arch of FM0_encoder is
 		------------------------------
 		--          sender          --
 		------------------------------
+		-- This section is responsable to encode and send the date received using the Miller-Signaling State Diagram mentioned before --
 		data_sender :  process( clk, rst )
 			variable index_bit : integer range 0 to 7;
 			begin
@@ -269,7 +280,9 @@ architecture arch of FM0_encoder is
 		------------------------------
 		--          timers          --
 		------------------------------
-
+        -- tari is the time unit used to syncronize our data send and receive, here the chip clock speed is used to to simulate 
+		-- this tari pulse, as a full, half and a waitTari. the full represents a cycle, the half tari a half cycle and the
+		-- wait Tari is the time that flags the state machine that the command ended --
 		half_tari : process ( clk, rst )
 			variable i : integer range 0 to 700 := 0;
 			begin
