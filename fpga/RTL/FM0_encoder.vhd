@@ -68,10 +68,9 @@ architecture arch of FM0_encoder is
 	------------------------------
 	--          states          --
 	------------------------------
-	-- This controller is created using four states, we followed the diagram present in ---------------------------------
-	-- the documentention of rfid (https://www.gs1.org/sites/default/files/docs/epc/Gen2_Protocol_Standard.pdf) page 32--
-	-- So we designed a Miller-Signaling State Diagram as suggested by the doc.                                                         --
-	---------------------------------------------------------------------------------------------------------------------
+	-- This controller is created using four states, we followed the diagram present in 
+	-- the documentention of rfid (https://www.gs1.org/sites/default/files/docs/epc/Gen2_Protocol_Standard.pdf) page 32
+	-- So we designed a Miller-Signaling State Diagram as suggested by the doc.
 
 	type state_type_controller is (c_wait, c_send, c_request, c_wait_tari);
     signal state_controller	   : state_type_controller := c_wait;
@@ -98,7 +97,7 @@ architecture arch of FM0_encoder is
 		--        controller        --
 		------------------------------
 		-- State machine using this diagram
-		-- (https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/Diagrams/diagram-FM0-encoder.png)
+		-- (https://raw.githubusercontent.com/pfeinsper/21b-indago-rfid-conformance-tester/main/Diagrams/diagram-FM0-encoder.png)
 		fm0_controller: process ( clk, rst )
 			begin
 				if (rst = '1') then
