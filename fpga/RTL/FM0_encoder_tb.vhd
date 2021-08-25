@@ -33,9 +33,9 @@ architecture tb of fm0_tb is
 
  end component;
 
-	signal clk, data_out, is_fifo_empty, request_new_data : std_logic;
-	constant CLK_PERIOD : time := 20 ns;
-	constant one_package : time := 10 * 8 us;
+	signal clk, data_out, is_fifo_empty, request_new_data : std_logic := '0';
+	signal data_in : std_logic_vector(11 downto 0) := "111111111000";
+	constant clk_period : time := 20 ns;
 
 
 	begin
@@ -49,12 +49,25 @@ architecture tb of fm0_tb is
 		end process;
 
 		
-		set_is_fifo_empty : process
+		fifo : process ( request_new_data )
+		variable quant_packages : integer range 0 to 3 := 3;
 		begin
-			is_fifo_empty <= '0';
-			wait for one_package;
-			is_fifo_empty <= '1';
-			wait;
+			if (rising_edge(request_new_data)) then
+				if (quant_packages > 0) then
+					is_fifo_empty <= '0';
+					if (quant_packages = 3) then
+						data_in <= "111011111000";
+					elsif (quant_packages = 2) then
+						data_in <= "111010101000";
+					elsif (quant_packages = 1) then
+						data_in <= "000010100100";
+					end if;
+					quant_packages := quant_packages - 1;
+				else
+					is_fifo_empty <= '1';
+				end if;
+			end if;
+			
 		end process;
 
 
@@ -64,7 +77,7 @@ architecture tb of fm0_tb is
 			tari => "0000000111110100", -- tari = 10 us
 			data_out => data_out,
 			is_fifo_empty => is_fifo_empty,
-			data_in => "100000101000",
+			data_in => data_in,
 			request_new_data => request_new_data  );
 
 end tb;

@@ -49,5 +49,6 @@ work/
 *~
 *example*
 *sopc_*
+*.wlf
 PLLJ_PLLSPE_INFO.txt
 transcript

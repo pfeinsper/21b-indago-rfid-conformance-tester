@@ -61,8 +61,10 @@ architecture arch of FM0_encoder is
 	signal data_sender_end   : std_logic := '0';
 
 	signal half_tari_start, half_tari_end : std_logic := '0';
-    signal full_tari_start, full_tari_end : std_logic := '0';
-    signal tari_CS_start, tari_CS_end     : std_logic := '0';
+	signal full_tari_start, full_tari_end : std_logic := '0';
+    	signal tari_CS_start, tari_CS_end     : std_logic := '0';
+
+	signal index : integer range 0 to 15 := 0;
 
 
 	------------------------------
@@ -73,13 +75,10 @@ architecture arch of FM0_encoder is
 	-- So we designed a Miller-Signaling State Diagram as suggested by the doc.
 
 	type state_type_controller is (c_wait, c_send, c_request, c_wait_tari);
-    signal state_controller	   : state_type_controller := c_wait;
-
-	type state_type_encoder is (e_wait, e_encoding, e_end);
-    signal state_encoder	   : state_type_encoder := e_wait;
+	signal state_controller	: state_type_controller := c_wait;
 
 	type state_type_sender is (s_wait, s_send_s1, s_send_s2, s_send_s2_part2, s_send_s3, s_send_s3_part2, s_send_s4, s_end);
-    signal state_sender	       : state_type_sender := s_wait;
+	signal state_sender     : state_type_sender := s_wait;
 
 
 	begin
@@ -127,10 +126,11 @@ architecture arch of FM0_encoder is
 								tari_CS_start <= '1';
 								state_controller <= c_wait_tari;
 							else
-								state_controller <= c_send;
+								state_controller <= c_wait;
 							end if;
 						
 						when c_wait_tari =>
+							request_new_data <= '0';
 							if (tari_CS_end = '1') then
 								tari_CS_start <= '0';
 								state_controller <= c_wait;
@@ -148,7 +148,8 @@ architecture arch of FM0_encoder is
 		------------------------------
 		-- This section is responsable to encode and send the date received using the Miller-Signaling State Diagram mentioned before --
 		data_sender :  process( clk, rst )
-			variable index_bit : integer range 0 to 7;
+			variable index_bit : integer range 0 to 10;
+			variable last_state_bit : state_type_sender := s_send_s1;
 			begin
 				if (rst = '1') then
 					state_sender <= s_wait;
@@ -160,24 +161,45 @@ architecture arch of FM0_encoder is
 					case state_sender is
 
 						when s_wait =>
+							data_sender_end <= '0';
 							if (data_sender_start = '1') then
 								index_bit := 0;
 								if (data(index_bit) = '1') then
-									state_sender <= s_send_s1;
+									if (last_state_bit = s_send_s1) then
+										state_sender <= s_send_s4;
+									elsif (last_state_bit = s_send_s2) then
+										state_sender <= s_send_s1;
+									elsif (last_state_bit = s_send_s3) then
+										state_sender <= s_send_s4;
+									elsif (last_state_bit = s_send_s4) then
+										state_sender <= s_send_s1;
+									end if ;
 									full_tari_start <= '1';
 								else
+									if (last_state_bit = s_send_s1) then
+										state_sender <= s_send_s3;
+									elsif (last_state_bit = s_send_s2) then
+										state_sender <= s_send_s2;
+									elsif (last_state_bit = s_send_s3) then
+										state_sender <= s_send_s3;
+									elsif (last_state_bit = s_send_s4) then
+										state_sender <= s_send_s2;
+									end if ;
 									half_tari_start <= '1';
-									state_sender <= s_send_s3;
 								end if;
 							end if;
 
 						when s_send_s1 => -- data 1, out 1 1
 							data_out <= '1';
+							last_state_bit := s_send_s1;
 
 							if (full_tari_end = '1') then
 								full_tari_start <= '0';
 								index_bit := index_bit + 1;
-								if (index_bit <= mask_value) then
+								index <= index_bit;
+								if (index_bit = mask_value) then
+									state_sender <= s_end;
+								else
 									if (data(index_bit) = '1') then
 										full_tari_start <= '1';
 										state_sender <= s_send_s4;
@@ -185,12 +207,11 @@ architecture arch of FM0_encoder is
 										half_tari_start <= '1';
 										state_sender <= s_send_s3;
 									end if;
-								else
-									state_sender <= s_end;
 								end if;
 							end if;
 						------------------------------------
 						when s_send_s2 => -- data 0, out 1 0
+							last_state_bit := s_send_s2;
 							data_out <= '1';
 							if (half_tari_end = '1') then
 								half_tari_start <= '0';
@@ -200,10 +221,14 @@ architecture arch of FM0_encoder is
 
 						when s_send_s2_part2 => -- data 0, out 1 0
 							data_out <= '0';
+
 							if (half_tari_end = '1') then
 								half_tari_start <= '0';
 								index_bit := index_bit + 1;
-								if (index_bit <= mask_value) then
+								index <= index_bit;
+								if (index_bit = mask_value) then
+									state_sender <= s_end;
+								else
 									if (data(index_bit) = '1') then
 										full_tari_start <= '1';
 										state_sender <= s_send_s1;
@@ -211,12 +236,12 @@ architecture arch of FM0_encoder is
 										half_tari_start <= '1';
 										state_sender <= s_send_s2;
 									end if;
-								else
-									state_sender <= s_end;
 								end if;
 							end if;
 						------------------------------------
 						when s_send_s3 => -- data 0, out 0 1
+							last_state_bit := s_send_s3;
+
 							data_out <= '0';
 							if (half_tari_end = '1') then
 								half_tari_start <= '0';
@@ -226,11 +251,13 @@ architecture arch of FM0_encoder is
 
 						when s_send_s3_part2 =>  -- data 0, out 0 1
 							data_out <= '1';
-						
 							if (half_tari_end = '1') then
 								half_tari_start <= '0';
 								index_bit := index_bit + 1;
-								if (index_bit <= mask_value) then
+								index <= index_bit;
+								if (index_bit = mask_value) then
+									state_sender <= s_end;
+								else
 									if (data(index_bit) = '1') then
 										full_tari_start <= '1';
 										state_sender <= s_send_s4;
@@ -238,38 +265,39 @@ architecture arch of FM0_encoder is
 										half_tari_start <= '1';
 										state_sender <= s_send_s3;
 									end if;
-								else
-									state_sender <= s_end;
 								end if;
 							end if;
+							
 						------------------------------------
 						when s_send_s4 =>  -- data 1, out 0 0
+							last_state_bit := s_send_s4;
+
 							data_out <= '0';
+
 							if (full_tari_end = '1') then
 								full_tari_start <= '0';
 								index_bit := index_bit + 1;
-								if (index_bit <= mask_value) then
+								index <= index_bit;
+								if (index_bit = mask_value) then
+									state_sender <= s_end;
+								else
 									if (data(index_bit) = '1') then
 										full_tari_start <= '1';
 										state_sender <= s_send_s1;
-
 									else
 										half_tari_start <= '1';
 										state_sender <= s_send_s2;
-
 									end if;
-
-								else
-									state_sender <= s_end;
-									
-								end if;
+								end if ;
 							end if;
 						------------------------------------
 						when s_end =>
 							half_tari_start <= '0';
 							full_tari_start <= '0';
+							data_sender_end <= '1';
+							index_bit := 0;
+							index <= index_bit;
 							state_sender <= s_wait;
-
 						when others =>
 							state_sender <= s_wait;
 					end case;
