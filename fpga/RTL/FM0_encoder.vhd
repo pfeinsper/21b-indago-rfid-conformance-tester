@@ -158,6 +158,8 @@ architecture arch of FM0_encoder is
 					half_tari_start <= '0';
 					full_tari_start <= '0';
 
+					
+
 				elsif (rising_edge(clk)) then
 					
 					case state_sender is
@@ -213,6 +215,7 @@ architecture arch of FM0_encoder is
 									end if;
 								end if;
 							end if;
+
 						------------------------------------
 						when s_send_s2 => -- data 0, out 1 0
 							last_state_bit := s_send_s2;
