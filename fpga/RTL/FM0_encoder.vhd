@@ -62,10 +62,7 @@ architecture arch of FM0_encoder is
 
 	signal half_tari_start, half_tari_end : std_logic := '0';
 	signal full_tari_start, full_tari_end : std_logic := '0';
-    	signal tari_CS_start, tari_CS_end     : std_logic := '0';
-
-	signal index : integer range 0 to 15 := 0;
-
+    signal tari_CS_start, tari_CS_end     : std_logic := '0';
 
 	------------------------------
 	--          states          --
@@ -116,25 +113,30 @@ architecture arch of FM0_encoder is
 						when c_send =>
 							if (data_sender_end = '1') then
 								data_sender_start <= '0';
+								request_new_data <= '1';
 								state_controller <= c_request;
 							end if;
 						
 						when c_request =>
-							request_new_data <= '1';
-							
+							data_sender_start <= '0';
 							if (is_fifo_empty = '1') then
 								tari_CS_start <= '1';
 								state_controller <= c_wait_tari;
 							else
 								state_controller <= c_wait;
 							end if;
-						
+							-- state_controller <= c_request2;
+
 						when c_wait_tari =>
 							request_new_data <= '0';
 							if (tari_CS_end = '1') then
 								tari_CS_start <= '0';
 								state_controller <= c_wait;
 							end if;
+							
+
+						-- when c_request2 =>
+							
 
 						when others =>
 							state_controller <= c_wait;
@@ -165,6 +167,7 @@ architecture arch of FM0_encoder is
 							if (data_sender_start = '1') then
 								index_bit := 0;
 								if (data(index_bit) = '1') then
+									-- going to the correct state to maintain FM0 when data_in is updated
 									if (last_state_bit = s_send_s1) then
 										state_sender <= s_send_s4;
 									elsif (last_state_bit = s_send_s2) then
@@ -176,6 +179,7 @@ architecture arch of FM0_encoder is
 									end if ;
 									full_tari_start <= '1';
 								else
+									-- going to the correct state to maintain FM0 when data_in is updated
 									if (last_state_bit = s_send_s1) then
 										state_sender <= s_send_s3;
 									elsif (last_state_bit = s_send_s2) then
@@ -196,9 +200,9 @@ architecture arch of FM0_encoder is
 							if (full_tari_end = '1') then
 								full_tari_start <= '0';
 								index_bit := index_bit + 1;
-								index <= index_bit;
 								if (index_bit = mask_value) then
 									state_sender <= s_end;
+									data_sender_end <= '1';
 								else
 									if (data(index_bit) = '1') then
 										full_tari_start <= '1';
@@ -225,9 +229,9 @@ architecture arch of FM0_encoder is
 							if (half_tari_end = '1') then
 								half_tari_start <= '0';
 								index_bit := index_bit + 1;
-								index <= index_bit;
 								if (index_bit = mask_value) then
 									state_sender <= s_end;
+									data_sender_end <= '1';
 								else
 									if (data(index_bit) = '1') then
 										full_tari_start <= '1';
@@ -254,9 +258,9 @@ architecture arch of FM0_encoder is
 							if (half_tari_end = '1') then
 								half_tari_start <= '0';
 								index_bit := index_bit + 1;
-								index <= index_bit;
 								if (index_bit = mask_value) then
 									state_sender <= s_end;
+									data_sender_end <= '1';
 								else
 									if (data(index_bit) = '1') then
 										full_tari_start <= '1';
@@ -277,9 +281,9 @@ architecture arch of FM0_encoder is
 							if (full_tari_end = '1') then
 								full_tari_start <= '0';
 								index_bit := index_bit + 1;
-								index <= index_bit;
 								if (index_bit = mask_value) then
 									state_sender <= s_end;
+									data_sender_end <= '1';
 								else
 									if (data(index_bit) = '1') then
 										full_tari_start <= '1';
@@ -294,10 +298,11 @@ architecture arch of FM0_encoder is
 						when s_end =>
 							half_tari_start <= '0';
 							full_tari_start <= '0';
-							data_sender_end <= '1';
 							index_bit := 0;
-							index <= index_bit;
-							state_sender <= s_wait;
+							state_sender <= s_end2;
+							data_sender_end <= '0';
+
+
 						when others =>
 							state_sender <= s_wait;
 					end case;
@@ -321,7 +326,7 @@ architecture arch of FM0_encoder is
 				elsif (rising_edge(clk)) then
 					half_tari_end <= '0';
 					
-					if(	half_tari_start = '1') then
+					if (half_tari_start = '1') then
 						i := i + 1;
 						if (i = tari_value / 2) then
 							i := 0;

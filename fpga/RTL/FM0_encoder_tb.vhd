@@ -67,7 +67,6 @@ architecture tb of fm0_tb is
 					is_fifo_empty <= '1';
 				end if;
 			end if;
-			
 		end process;
 
 
