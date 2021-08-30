@@ -28,7 +28,7 @@ entity FM0_encoder is
 		-- flags
 		clk : in std_logic;
 		rst : in std_logic;
-
+		enable : in std_logic;
 		-- config
 		tari : in std_logic_vector(tari_width-1 downto 0);
 
@@ -302,7 +302,7 @@ architecture arch of FM0_encoder is
 							half_tari_start <= '0';
 							full_tari_start <= '0';
 							index_bit := 0;
-							state_sender <= s_end2;
+							state_sender <= s_wait;
 							data_sender_end <= '0';
 
 

@@ -1,37 +1,39 @@
-library IEEE;
-use IEEE.std_logic_1164.all;
+library ieee;
+use ieee.std_logic_1164.all;
 
 entity fm0_tb is
 end entity fm0_tb;
 
 architecture tb of fm0_tb is
 
-  component fm0_encoder
-	generic (
-			-- defining size of data in and clock speed
-			clk_f      : natural := 50e6; -- Hz
-			data_width : natural := 8;
-			tari_width : natural := 16;
-			mask_width : natural := 4
+	component fm0_encoder
+		generic (
+				-- defining size of data in and clock speed
+				clk_f      : natural := 50e6; -- Hz
+				data_width : natural := 8;
+				tari_width : natural := 16;
+				mask_width : natural := 4
 		);
-	port (
-		-- flags
-		clk : in std_logic;
-		rst : in std_logic;
+		port (
+			-- flags 
+			clk : in std_logic;
+			rst : in std_logic;
+			enable : in std_logic;
 
-		-- config
-		tari : in std_logic_vector(tari_width-1 downto 0);
 
-		-- fifo data
-		is_fifo_empty    : in std_logic;
-		data_in          : in std_logic_vector((data_width + mask_width)-1 downto 0); -- format expected : ddddddddmmmm
-		request_new_data : out std_logic;
+			-- config
+			tari : in std_logic_vector(tari_width-1 downto 0);
 
-		-- output
-		data_out : out std_logic
-	);
+			-- fifo data
+			is_fifo_empty    : in std_logic;
+			data_in          : in std_logic_vector((data_width + mask_width)-1 downto 0); -- format expected : ddddddddmmmm
+			request_new_data : out std_logic;
 
- end component;
+			-- output
+			data_out : out std_logic
+		);
+
+	end component;
 
 	signal clk, data_out, is_fifo_empty, request_new_data : std_logic := '0';
 	signal data_in : std_logic_vector(11 downto 0) := "111111111000";
@@ -73,10 +75,11 @@ architecture tb of fm0_tb is
 		u0 : fm0_encoder port map (
 			clk => clk,
 			rst => '0',
+			enable => '1',
 			tari => "0000000111110100", -- tari = 10 us
 			data_out => data_out,
 			is_fifo_empty => is_fifo_empty,
 			data_in => data_in,
 			request_new_data => request_new_data  );
-
+	
 end tb;
