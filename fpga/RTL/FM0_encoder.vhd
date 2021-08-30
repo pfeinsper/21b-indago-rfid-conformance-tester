@@ -100,7 +100,7 @@ architecture arch of FM0_encoder is
 					data_sender_start <= '0';
 					state_controller  <= c_wait;
 	
-				elsif (rising_edge(clk)) then
+				elsif (rising_edge(clk) and enable = '1') then
 					case state_controller is
 						when c_wait =>
 							request_new_data <= '0';
@@ -160,7 +160,7 @@ architecture arch of FM0_encoder is
 
 					
 
-				elsif (rising_edge(clk)) then
+				elsif (rising_edge(clk) and enable = '1') then
 					
 					case state_sender is
 
@@ -326,7 +326,7 @@ architecture arch of FM0_encoder is
 					i := 0;
 					half_tari_end <= '0';
 
-				elsif (rising_edge(clk)) then
+				elsif (rising_edge(clk) and enable = '1') then
 					half_tari_end <= '0';
 					
 					if (half_tari_start = '1') then
@@ -346,7 +346,7 @@ architecture arch of FM0_encoder is
 					i2 := 0;
 					full_tari_end <= '0';
 
-				elsif (rising_edge(clk)) then
+				elsif (rising_edge(clk) and enable = '1') then
 					full_tari_end <= '0';
 					if(	full_tari_start = '1') then
 						i2 := i2 + 1;
@@ -366,7 +366,7 @@ architecture arch of FM0_encoder is
 					i3 := 0;
 					tari_CS_end <= '0';
 
-				elsif (rising_edge(clk)) then
+				elsif (rising_edge(clk) and enable = '1') then
 					tari_CS_end <= '0';
 					if(	tari_CS_start = '1') then
 						i3 := i3 + 1;
