@@ -5,10 +5,10 @@
 	-- Professor Orientador: Rafael Corsi  --
 	-- Orientador: Shephard                --
 	-- Alunos:                             --
-	-- 		Alexandre Edington            --
-	-- 		Bruno Domingues               --
-	-- 		Lucas Leal                    --
-	-- 		Rafael Santos                 --
+	-- 		Alexandre Edington             --
+	-- 		Bruno Domingues                --
+	-- 		Lucas Leal                     --
+	-- 		Rafael Santos                  --
 	-----------------------------------------
 
 library ieee;
