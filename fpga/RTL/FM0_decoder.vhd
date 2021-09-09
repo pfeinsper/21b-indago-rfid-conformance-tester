@@ -62,7 +62,7 @@ architecture arch of FM0_decoder is
 	signal data_receiver_start : std_logic := '0';
 	signal data_receiver_end   : std_logic := '0';
 
-	signal clock_start, clock_end, clear_counter, kabum_clock : std_logic := '0';
+	signal clock_start, clock_end, clock_kabum, clear_counter : std_logic := '0';
 	
 	signal prev_bit_c, prev_bit_d : std_logic := '0';
 	signal clocks_counted : integer range 0 to 1000;
@@ -99,6 +99,7 @@ architecture arch of FM0_decoder is
 					case state_controller is
 						when c_wait =>
 							if (prev_bit_c /= data_in) then
+								
 								prev_bit_c <= data_in;
 								state_controller <= c_decode;
 								data_receiver_start <= '1';
@@ -139,7 +140,7 @@ architecture arch of FM0_decoder is
 							if (data_in /= prev_bit_d) then
 								prev_bit_d <= data_in;
 								clock_start <= '0';
-							elsif (kabum_clock = '1') then
+							elsif (clock_kabum = '1') then
 								clock_start <= '0';
 								state_decoder <= d_pass_1_01_tari;
 							elsif (clock_end = '1') then
@@ -166,7 +167,7 @@ architecture arch of FM0_decoder is
 						-- Continue Counter -> as half tari has passed, now we need to wait for another half tari
                         when d_continue_counter =>
 							clock_start <= '1';
-							if (kabum_clock = '1') then
+							if (clock_kabum = '1') then
 								clock_start <= '0';
 								state_decoder <= d_pass_1_01_tari;
 							elsif(data_in /= prev_bit_d) then
@@ -210,17 +211,17 @@ architecture arch of FM0_decoder is
 		end process;
 
 		counter : process( clk, rst )
-		variable
+		
 		begin
-			if (rst) then
+			if (rst = '1') then
 				clocks_counted <= 0;
-				clock_kabum = '0';
-				clock_end = '0';
+				clock_kabum <= '0';
+				clock_end <= '0';
 			elsif (rising_edge(clk)) then
 				if (clear_counter = '1') then
 					clocks_counted <= 0;
 				end if ;
-				if (clk_start = '1') then
+				if (clock_start = '1') then
 					clock_kabum <= '0';
 					clocks_counted <= clocks_counted + 1;
 					if (clocks_counted > tari_1010_value) then
