@@ -60,13 +60,15 @@ architecture tb of fm0_decoder_tb is
 		data_in : in std_logic;
 
 		-- output
+		data_ready : out std_logic;
+
 		data_out : out std_logic
 	);
 
 	end component;
 
 	signal clk, eop, error_out, data_out, is_fifo_empty, request_new_data, encoded_data : std_logic := '0';
-	signal data : std_logic_vector(11 downto 0) := "111111111000";
+	signal data : std_logic_vector(11 downto 0) := "100110100101";
 	constant clk_period : time := 20 ns;
 
 
@@ -81,7 +83,7 @@ architecture tb of fm0_decoder_tb is
 		end process;
 
 		fifo : process ( request_new_data )
-		variable quant_packages : integer range 0 to 3 := 3;
+		variable quant_packages : integer range 0 to 3 := 0;
 		begin
 			if (rising_edge(request_new_data)) then
 				if (quant_packages > 0) then

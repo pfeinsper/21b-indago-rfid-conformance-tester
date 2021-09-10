@@ -40,6 +40,7 @@ entity FM0_decoder is
 		data_in : in std_logic;
 
 		-- output
+		data_ready : out std_logic;
 		data_out : out std_logic
 	);
 
@@ -65,7 +66,7 @@ architecture arch of FM0_decoder is
 	signal clock_start, clock_end, clock_kabum, clear_counter : std_logic := '0';
 	
 	signal prev_bit_c, prev_bit_d : std_logic := '0';
-	signal clocks_counted : integer range 0 to 1000;
+	signal clocks_counted : integer range 0 to 10000;
 
 	------------------------------
 	--          states          --
@@ -73,7 +74,7 @@ architecture arch of FM0_decoder is
 	type state_type_controller is (c_wait, c_decode);
 	signal state_controller	: state_type_controller := c_wait;
 	
-	type state_type_decoder is (d_wait, d_start_counter, d_stop_counter, d_continue_counter, d_error, d_pass_1_01_tari, d_counter_cs);
+	type state_type_decoder is (d_wait, d_start_counter, d_start_counter2, d_wait_counter, d_wait_counter2, d_check_counter,d_check_counter2,  d_continue_counter, d_error, d_pass_1_01_tari, d_counter_cs);
 	signal state_decoder     : state_type_decoder := d_wait;
 
 
@@ -94,12 +95,11 @@ architecture arch of FM0_decoder is
 			begin
 				if (rst = '1') then
 					state_controller  <= c_wait;
-	
+				
 				elsif (rising_edge(clk) and enable = '1') then
 					case state_controller is
 						when c_wait =>
 							if (prev_bit_c /= data_in) then
-								
 								prev_bit_c <= data_in;
 								state_controller <= c_decode;
 								data_receiver_start <= '1';
@@ -127,57 +127,78 @@ architecture arch of FM0_decoder is
 				elsif (rising_edge(clk) and enable = '1') then
 					case state_decoder is
 						when d_wait =>
+							data_ready        <= '0';
 							data_receiver_end <= '0';
-							
+							clear_counter     <= '1'; 				
 							if (data_receiver_start = '1') then
 								prev_bit_d <= data_in;
 								state_decoder <= d_start_counter;
 							end if;
+
 						-- Start Counter
 						when d_start_counter =>
-							clock_start <= '1';
+							clock_start   <= '1';
 							clear_counter <= '0';
-							if (data_in /= prev_bit_d) then
-								prev_bit_d <= data_in;
-								clock_start <= '0';
-							elsif (clock_kabum = '1') then
-								clock_start <= '0';
+							state_decoder <= d_wait_counter;
+
+						when d_wait_counter =>
+							if (clocks_counted > tari_1010_value) then
 								state_decoder <= d_pass_1_01_tari;
-							elsif (clock_end = '1') then
-								clock_start <= '0';
-								state_decoder <= d_stop_counter;
+							elsif (data_in /= prev_bit_d) then
+								prev_bit_d    <= data_in;
+								state_decoder <= d_check_counter;		
+							else
+								state_decoder <= d_wait_counter;
 							end if;
-						-- Stop counter -> checks counter for a half or full tari
-						when d_stop_counter =>
+
+						-- checks counter for a half or full tari
+						when d_check_counter =>
 							-- checks if counted clocks is b/w 0.495tari and 0.505tari to be a 0
-							if (tari_0495_value < clocks_counted and clocks_counted < tari_0505_value) then
-								state_decoder <= d_continue_counter;
-								prev_bit_d <= data_in;
-								data_out <= '0';
+							if (tari_0495_value <= clocks_counted and clocks_counted <= tari_0505_value) then
+								prev_bit_d    <= data_in;
+								state_decoder <= d_wait_counter2;
+
 							-- checks if counted clocks is b/w 0.99tari and 1.01tari to be a 1
-                            elsif (clocks_counted > tari_0990_value and clocks_counted < tari_1010_value ) then 
+                            elsif (clocks_counted >= tari_0990_value and clocks_counted <= tari_1010_value ) then 
                                 clear_counter <= '1';
-                                state_decoder <= d_wait;
-								data_out <= '1';
+								clock_start   <= '0';
+								data_out	  <= '1';
+								data_ready 	  <= '1';
+								state_decoder <= d_wait;
+
 							else
 								clock_start <= '0';
                                 clear_counter <= '1';
 								state_decoder <= d_error;
 							end if;
+
 						-- Continue Counter -> as half tari has passed, now we need to wait for another half tari
-                        when d_continue_counter =>
-							clock_start <= '1';
-							if (clock_kabum = '1') then
-								clock_start <= '0';
+						when d_wait_counter2 =>
+							if (clocks_counted > tari_1010_value) then
 								state_decoder <= d_pass_1_01_tari;
-							elsif(data_in /= prev_bit_d) then
-								prev_bit_d <= data_in;
+							elsif (data_in /= prev_bit_d) then
+								prev_bit_d    <= data_in;
+								state_decoder <= d_check_counter2;		
+							else
+								state_decoder <= d_wait_counter2;
+							end if;
+
+							
+						-- checks counter for a half or full tari
+						when d_check_counter2 =>
+							-- checks if counted clocks is b/w 0.99tari and 1.01tari to be a 1
+                            if (clocks_counted >= tari_0990_value and clocks_counted <= tari_1010_value ) then 
+                                clear_counter <= '1';
+								clock_start   <= '0';
+								data_out	  <= '0';
+								data_ready 	  <= '1';
+								state_decoder <= d_wait;
+							else
 								clock_start <= '0';
-								if (tari_0990_value < clocks_counted and clocks_counted < tari_1010_value) then 
-									clear_counter <= '1';
-									state_decoder <= d_wait;
-								end if ;
-							end if ;
+                                clear_counter <= '1';
+								state_decoder <= d_error;
+							end if;
+							
 						-- Error -> if there is change in the data signal before or after the margin of error, this state should handle it
 						when d_error =>
 							if (clr_err = '1') then
@@ -186,6 +207,7 @@ architecture arch of FM0_decoder is
 							else
 								err <= '1';
 							end if ;
+							
 						-- pass 1.01 tari -> if there is no change in the data signal, for over 1.01tari, this states signals if it is an error or an end of command.
 						when d_pass_1_01_tari =>
 							if (data_in = '1') then
@@ -224,9 +246,6 @@ architecture arch of FM0_decoder is
 				if (clock_start = '1') then
 					clock_kabum <= '0';
 					clocks_counted <= clocks_counted + 1;
-					if (clocks_counted > tari_1010_value) then
-						clock_kabum <= '1';
-					end if ;
 				end if ;
 			end if ;
 			

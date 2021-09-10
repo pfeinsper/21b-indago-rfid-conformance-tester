@@ -38,7 +38,7 @@ entity FM0_encoder is
 		request_new_data : out std_logic;
 
 		-- output
-		data_out : out std_logic
+		data_out : out std_logic:= '0'
 	);
 
 end entity;
@@ -99,7 +99,7 @@ architecture arch of FM0_encoder is
 				if (rst = '1') then
 					data_sender_start <= '0';
 					state_controller  <= c_wait;
-	
+					
 				elsif (rising_edge(clk) and enable = '1') then
 					case state_controller is
 						when c_wait =>
@@ -151,14 +151,14 @@ architecture arch of FM0_encoder is
 		-- This section is responsable to encode and send the date received using the Miller-Signaling State Diagram mentioned before --
 		data_sender :  process( clk, rst )
 			variable index_bit : integer range 0 to 10;
-			variable last_state_bit : state_type_sender := s_send_s1;
+			variable last_state_bit : state_type_sender := s_send_s2;
 			begin
 				if (rst = '1') then
 					state_sender <= s_wait;
 					half_tari_start <= '0';
 					full_tari_start <= '0';
-
-					
+					data_out <= '0';
+					last_state_bit := s_send_s2;
 
 				elsif (rising_edge(clk) and enable = '1') then
 					
