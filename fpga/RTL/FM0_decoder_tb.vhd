@@ -68,7 +68,9 @@ architecture tb of fm0_decoder_tb is
 	end component;
 
 	signal clk, eop, error_out, data_out, is_fifo_empty, request_new_data, encoded_data : std_logic := '0';
-	signal data : std_logic_vector(11 downto 0) := "100110100101";
+	constant mask : std_logic_vector(3 downto 0) := "0101";
+	constant data_a : std_logic_vector(7 downto 0) := "UUU10110";
+	signal data : std_logic_vector(11 downto 0) := data_a & mask;
 	constant clk_period : time := 20 ns;
 
 
@@ -83,7 +85,7 @@ architecture tb of fm0_decoder_tb is
 		end process;
 
 		fifo : process ( request_new_data )
-		variable quant_packages : integer range 0 to 3 := 0;
+		variable quant_packages : integer range 0 to 3 := 1;
 		begin
 			if (rising_edge(request_new_data)) then
 				if (quant_packages > 0) then
@@ -93,7 +95,7 @@ architecture tb of fm0_decoder_tb is
 					elsif (quant_packages = 2) then
 						data <= "111010101000";
 					elsif (quant_packages = 1) then
-						data <= "100010100101";
+						data <= "UUUUUUUU0000";
 					end if;
 					quant_packages := quant_packages - 1;
 				else
@@ -107,7 +109,7 @@ architecture tb of fm0_decoder_tb is
 			rst => '0',
 			enable => '1',
 			clr_err => '0',
-			tari_101 => "0000000111111001", -- (16-len(bin(int(0.99*tari*f))[2:]))*"0" + bin(int(1.584*tari*f))[2:]
+			tari_101 => "0000000111111001", -- (16-len(bin(int(0.99*tari*f))[2:]))*"0" + bin(int(0.99*tari*f))[2:]
 			tari_099 => "0000000111101111",
 			tari_1616 => "0000001100101000",
 			tari_1584 => "0000001100011000", -- freq/tari = clocks cycles

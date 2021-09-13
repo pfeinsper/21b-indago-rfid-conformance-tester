@@ -28,8 +28,8 @@ entity FM0_decoder is
 		enable : in std_logic;
 		clr_err : in std_logic;
 
-		err : out std_logic;
-		eop : out std_logic;
+		err : out std_logic := '0';
+		eop : out std_logic := '0';
 
 		-- config
 		tari_101 : in std_logic_vector(tari_width-1 downto 0); -- 1% above tari
@@ -37,11 +37,11 @@ entity FM0_decoder is
 		tari_1616 : in std_logic_vector(tari_width-1 downto 0); -- 1% above 1.6 tari
 		tari_1584 : in std_logic_vector(tari_width-1 downto 0); -- 1% below 1.6 tari
 
-		data_in : in std_logic;
+		data_in : in std_logic := '0';
 
 		-- output
-		data_ready : out std_logic;
-		data_out : out std_logic
+		data_ready : out std_logic := '0';
+		data_out : out std_logic := '0'
 	);
 
 end entity;
@@ -63,7 +63,7 @@ architecture arch of FM0_decoder is
 	signal data_receiver_start : std_logic := '0';
 	signal data_receiver_end   : std_logic := '0';
 
-	signal clock_start, clock_end, clock_kabum, clear_counter : std_logic := '0';
+	signal clock_start, clock_kabum, clear_counter : std_logic := '0';
 	
 	signal prev_bit_c, prev_bit_d : std_logic := '0';
 	signal clocks_counted : integer range 0 to 10000;
@@ -106,10 +106,10 @@ architecture arch of FM0_decoder is
 							end if;
 						
 						when c_decode =>
+							prev_bit_c <= prev_bit_d;
 							if (data_receiver_end = '1') then
 								data_receiver_start <= '0';
 								state_controller <= c_wait;
-								prev_bit_c <= prev_bit_d;
 							end if;
 
 						when others =>
@@ -222,9 +222,10 @@ architecture arch of FM0_decoder is
 							if (tari_1584_value < clocks_counted and clocks_counted < tari_1616_value) then
 								state_decoder <= d_wait;
 								eop <= '1';
-							else 
+								data_receiver_end <= '1';
+							elsif (data_in /= prev_bit_d) then
 								state_decoder <= d_error;
-							end if ;
+							end if;
 							
 						when others =>
 							state_decoder <= d_wait;
@@ -238,7 +239,6 @@ architecture arch of FM0_decoder is
 			if (rst = '1') then
 				clocks_counted <= 0;
 				clock_kabum <= '0';
-				clock_end <= '0';
 			elsif (rising_edge(clk)) then
 				if (clear_counter = '1') then
 					clocks_counted <= 0;
