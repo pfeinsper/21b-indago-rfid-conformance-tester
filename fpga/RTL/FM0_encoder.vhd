@@ -76,6 +76,7 @@ architecture arch of FM0_encoder is
 
 	type state_type_sender is (s_wait, s_send_s1, s_send_s2, s_send_s2_part2, s_send_s3, s_send_s3_part2, s_send_s4, s_end);
 	signal state_sender     : state_type_sender := s_wait;
+	signal last_state_bitaa : state_type_sender;
 
 
 	begin
@@ -125,7 +126,6 @@ architecture arch of FM0_encoder is
 							else
 								state_controller <= c_wait;
 							end if;
-							-- state_controller <= c_request2;
 
 						when c_wait_tari =>
 							request_new_data <= '0';
@@ -133,9 +133,6 @@ architecture arch of FM0_encoder is
 								tari_CS_start <= '0';
 								state_controller <= c_wait;
 							end if;
-							
-
-						-- when c_request2 =>
 							
 
 						when others =>
@@ -166,7 +163,12 @@ architecture arch of FM0_encoder is
 
 						when s_wait =>
 							data_sender_end <= '0';
-							if (data_sender_start = '1') then
+							if (mask_value = 0) then
+								last_state_bit := s_send_s1;
+								data_out <= '0';
+								data_sender_end <= '1';
+								state_sender <= s_end;
+							elsif (data_sender_start = '1') then
 								index_bit := 0;
 								if (data(index_bit) = '1') then
 									-- going to the correct state to maintain FM0 when data_in is updated
@@ -309,6 +311,7 @@ architecture arch of FM0_encoder is
 						when others =>
 							state_sender <= s_wait;
 					end case;
+					last_state_bitaa <= last_state_bit;
 				end if;
 		end process;
 
