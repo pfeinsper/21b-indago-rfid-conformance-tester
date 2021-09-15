@@ -30,14 +30,21 @@
                 -- fm0
             rst : in std_logic;
             enable : in std_logic;
+
+            -- Avalion Memmory Mapped Slave
+            avs_address     : in  std_logic_vector(2 downto 0)  := (others => '0');
+            avs_read        : in  std_logic                     := '0';
+            avs_readdata    : out std_logic_vector(31 downto 0) := (others => '0');
+            avs_write       : in  std_logic                     := '0';
+            avs_writedata   : in  std_logic_vector(31 downto 0) := (others => '0');
       
-            -- -- config
-            tari : in std_logic_vector(tari_width-1 downto 0);
-    
+           
             -- -- data
             data_in_sender : in std_logic_vector(data_size-1 downto 0);
 
-            data_out_receiver : in std_logic_vector(data_size-1 downto 0)
+            data_out_receiver : out std_logic_vector(data_size-1 downto 0)
+
+            
             -- -- output
             -- q : out std_logic
         );
@@ -103,68 +110,43 @@
             -- q : out std_logic
         -- );
         -- end component;
-
-        -- component register_bank
-        -- generic (
-            -- defining size of data in and clock speed
-            -- data_width : natural := 8;
-            -- tari_width : natural := 16;
-            -- mask_width : natural := 4
-        -- );
-    
-        -- port (
-            -- flags
-            -- clk : in std_logic;
-            --     -- fm0
-            -- rst_fm0 : in std_logic;
-            -- enable_fm0 : in std_logic;
-            --     -- fifo
-            -- clear_fifo : in std_logic;
-            -- fifo_write_req : in std_logic;
-            -- is_fifo_full : out std_logic;
-    
-            -- -- config
-            -- tari : in std_logic_vector(tari_width-1 downto 0);
-    
-            -- -- data
-            -- data : in std_logic_vector(31 downto 0);
-    
-            -- -- output
-            -- q : out std_logic
-        -- );
-        -- end component;
         
-         signal enable_fm0, clear_fifo, fifo_write_req, is_fifo_full, rst_fm0, q    : std_logic;
+        -- signal enable_fm0, clear_fifo, fifo_write_req, is_fifo_full, rst_fm0, q    : std_logic;
+        signal reg_settings : std_logic_vector(31 downto 0);
+        signal reg_send_tari : std_logic_vector(15 downto 0);
 
         begin
-            sender_rfid : sender port map (
-                clk            => clk,
-                rst_fm0        => rst_fm0,
-                enable_fm0     => enable_fm0,
-                clear_fifo     => clear_fifo,
-                fifo_write_req => fifo_write_req,
-                is_fifo_full   => is_fifo_full,
-                tari           => tari,
-                data           => data_in_sender,
-                q              => q  );
+            
             
             -- receiver_rfid : receiver port map (
                 
             -- );
 
-            -- register_bank_rfid : register_bank port map (
-                
-            -- );
+            -- signal enable_fm0, clear_fifo, fifo_write_req, is_fifo_full, rst_fm0, q    : std_logic;
             process(clk)
             begin
-              if (reset = '1') then
-                LEDs <= (others => '0');
-              elsif(rising_edge(clk)) then
-                  if(avs_address = "0001") then                  -- REG_DATA
-                      if(avs_write = '1') then
-                        LEDs <= avs_writedata(LEN - 1 downto 0);
-                      end if;
-                  end if;
-              end if;
+              if (rising_edge(clk)) then
+                if (rst = '1') then
+                    reg_settings <= (others => '0');
+                else
+                  if (avs_write = '1') then
+                      case avs_address is
+                        when "000" => 
+                        reg_settings  <= avs_writedata;
+                        when "001" => 
+                        reg_send_tari <=  avs_writedata(15 downto 0);
+                        
             end process;
+    
+            sender_rfid : sender port map (
+        clk            => clk,
+        rst_fm0        => reg_settings(0), -- rst_fm0,
+        enable_fm0     => reg_settings(1), -- enable_fm0,
+        clear_fifo     => reg_settings(2), -- clear_fifo,
+        fifo_write_req => reg_settings(3),-- fifo_write_req,
+        is_fifo_full   => reg_settings(4),-- is_fifo_full,
+        tari           =>  reg_send_tari,
+        data           =>  data_in_sender,
+        q              =>  reg_settings(5) );-- q  );
+
     end arch ; -- arch
