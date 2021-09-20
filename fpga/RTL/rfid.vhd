@@ -18,7 +18,7 @@
 
     entity rfid is
         generic (
-            -- defining size of data in and clock speed
+            -- defining size of data in and clock speed     
             data_width : natural := 8;
             tari_width : natural := 16;
             mask_width : natural := 4;
@@ -129,13 +129,19 @@
                 if (rst = '1') then
                     reg_settings <= (others => '0');
                 else
-                  if (avs_write = '1') then
-                      case avs_address is
-                        when "000" => 
-                        reg_settings  <= avs_writedata;
-                        when "001" => 
-                        reg_send_tari <=  avs_writedata(15 downto 0);
-                        
+                    if (avs_write = '1') then
+                        case avs_address is
+                        when "000" =>
+                            reg_settings  <= avs_writedata(5 downto 0);
+                        when "001" =>
+                            reg_send_tari <=  avs_writedata(15 downto 0);
+                        when "010" =>
+                            data_in_sender <= avs_writedata(data_size-1 downto 0);
+                    
+                    else if(avs_read = '1') then
+                        case avs_address is
+                        when "000" =>
+                            reg_settings <= avs_readdata(10 downto 6);
             end process;
     
             sender_rfid : sender port map (
