@@ -202,7 +202,6 @@ architecture arch of FM0_encoder is
 							last_state_bit := s_send_s1;
 
 							if (full_tari_end = '1') then
-								full_tari_start <= '0';
 								index_bit := index_bit + 1;
 								if (index_bit = mask_value) then
 									state_sender <= s_end;
