@@ -1,0 +1,13 @@
+// Mandatory Commands
+#include "query_rep.h"
+#include "ack.h"
+#include "query.h"
+#include "query_adjust.h"
+#include "select.h"
+#include "nak.h"
+#include "req_rn.h"
+#include "read.h"
+#include "write.h"
+#include "kill.h"
+#include "lock.h"
+#include "rn16.h"
