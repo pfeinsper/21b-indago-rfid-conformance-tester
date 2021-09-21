@@ -43,7 +43,7 @@ architecture arch of package_constructor is
 	------------------------------
 	--          values          --
 	------------------------------
-    signal data : std_logic_vector(data_width-1 downto 0) := (others => '0');
+    signal data : std_logic_vector(data_width-1 downto 0) := (others => '1');
     signal mask : std_logic_vector(mask_width-1 downto 0) := (others => '0');
     signal package_out : std_logic_vector((data_width + mask_width)-1 downto 0);
     signal mask_integer : integer := 0;
@@ -52,29 +52,25 @@ architecture arch of package_constructor is
 	    LL: process ( clk, rst )
             begin
                 if (rst = '1') then
-                    --printf("chora")
+                    write_request_out <= '0';
+                    data <= (others => '0');
                 elsif rising_edge(clk) then
                     write_request_out <= '0';
+                    
                     if (eop = '1') then
-                        package_out <= data & mask;
                         write_request_out<= '1';
-                        data_out <= package_out;
-                        mask <= (others => '0');
-                        data_out <= (others => '0');
-                    end if;
-
-                    if (data_ready = '1') then
+                        mask_integer <= 0;
+                    elsif (data_ready = '1') then
+                        mask_integer <= mask_integer + 1;
                         data <= data(6 downto 0) & data_in;
-                        mask_integer <= to_integer(unsigned(mask)) + 1;
-                        mask <= std_logic_vector(to_unsigned(mask_integer, mask'length));
-                        if (to_integer(unsigned(mask)) = 8) then
-                            package_out <= data & mask;
+                        if (mask_integer = 8) then
                             write_request_out<= '1';
-                            data_out <= package_out;
-                            mask <= (others => '0');
-                            data_out <= (others => '0');          
+                            mask_integer <= 1;
                         end if;                  
                     end if;
                 end if;
         end process;
+
+        mask <= std_logic_vector(to_unsigned(mask_integer, mask'length));
+        data_out <= data & mask;
 end arch ; -- arch
