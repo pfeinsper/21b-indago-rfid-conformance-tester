@@ -10,7 +10,7 @@
 #define BASE_REG_FIFO 2
 #define BASE_ID 7
 #define PACKET_STD_SIZE 12
-
+#define data_package 8
 // int package_ack = 0b101101011000;
 int tari_test = 0b111110100;
 
@@ -21,59 +21,72 @@ unsigned int int_to_int(unsigned int k)
 }
 void send_package(int pacote, int size)
 {
-
-  if (size > 8)
+  int remain_bits_to_send = size;
+  int remain_package = pacote;
+  int last_package_size = size % data_package;
+  if (remain_bits_to_send > data_package)
   {
-    int iter = size / 16;
-    int last_package_size = size % 8;
+    //int iter = size / 16;
+    
     // to_fifo exemple: xxxx dddd dddd mmmm xxxx dddd dddd mmmm
-
-    for (int i = 0; i < iter; i++)
+    //int bits_send = 0;
+    //for (int i = 0; i < iter; i++)
+    while(remain_bits_to_send >= 0)
     {
-      if (i == iter - 1)
-      {
-        int last_to_fifo_size = size % 16;
 
-        if (last_to_fifo_size > 8)
+        if (remain_bits_to_send > data_package && remain_bits_to_send < 16)
         {
-          int sliced_package = pacote >> 8;
-          int32_t to_fifo0 = sliced_package & 0xb1111111111111111;
-
-          int sliced_package2 = pacote >> last_package_size;
-          int mask = int_to_int(last_package_size);
-          int32_t to_fifo1 = sliced_package2 & 0xb1111111111111111;
-
-          int32_t to_fifo2 = (to_fifo0 << 8) | to_fifo1;
-          int32_t command_new_mask = (0xb0000111111111000000011111111 << 4) | mask;
+          int to_fifo0 = remain_package &  0b11111111;
+          //int32_t to_fifo0 = sliced_package & 0xFFFF;
+          remain_package = remain_package >> 8;
+          int sliced_package2 = remain_package >> last_package_size;
+          int mask_package = int_to_int(last_package_size);
+          int32_t to_fifo1 = sliced_package2 & 0xFFFF;
+          remain_package = remain_package >>last_package_size ;
+          int32_t to_fifo2 = (to_fifo0 << data_package) | to_fifo1;
+          int32_t command_new_mask = 0b00001111111110000000111111110000 | mask_package;
           to_fifo2 = to_fifo2 & command_new_mask;
-
+          remain_bits_to_send -= (data_package + last_package_size);
+          
           IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_FIFO << 2, to_fifo2);
         }
-        else if (last_package_size != 0 && last_package_size < 8)
+        else if (remain_bits_to_send > 0 && remain_bits_to_send < data_package)
         {
-          int sliced_package = pacote >> last_package_size;
-          int mask = int_to_int(last_package_size);
-          int32_t command_new_mask = (0xb0000111111111000000011111111 << 4) | mask;
+          int sliced_package = remain_package >> last_package_size;
+          remain_package = remain_package >>last_package_size ;
+          int mask_package = int_to_int(last_package_size);
+          int32_t command_new_mask = 0b00001111111110000000111111110000 | mask_package;
           int32_t to_fifo2 = sliced_package & command_new_mask;
+          remain_bits_to_send -= last_package_size;
           IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_FIFO << 2, to_fifo2);
         }
-      }
-      else
-      {
-        int sliced_package = pacote >> 8;
-        int32_t to_fifo0 = sliced_package & 0xb1111111111111111;
-
-        int sliced_package2 = pacote >> 8;
-        int32_t to_fifo1 = sliced_package2 & 0xb1111111111111111;
-
-        int32_t to_fifo2 = (to_fifo0 << 8) | to_fifo1;
-        to_fifo2 = to_fifo2 & 0xb00001111111110000000111111111000;
-
-        IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_FIFO << 2, to_fifo2);
-      }
+        else
+        {
+          int to_fifo0 = remain_package &  0b11111111;
+          //int32_t to_fifo0 = remain_package & 0b1111111111111111;
+          remain_package = remain_package >> 8;
+          int to_fifo1 = remain_package &  0b11111111;
+          //int32_t to_fifo1 = sliced_package2 & 0b1111111111111111;
+          remain_package = remain_package >> 8;
+          int32_t to_fifo2 = (to_fifo0 << data_package) | to_fifo1;
+          to_fifo2 = to_fifo2 & 0xb00001111111110000000111111111000;
+          remain_bits_to_send -= 16;
+          IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_FIFO << 2, to_fifo2);
+        }
+      
+      
     }
   }
-}   
+  else
+  {
+    int sliced_package = remain_package >> last_package_size;
+    int mask_package = int_to_int(last_package_size);
+    remain_package = remain_package >> last_package_size;
+    int32_t command_new_mask = 0b00001111111110000000111111110000 | mask_package;
+    int32_t to_fifo2 = sliced_package & command_new_mask;
+    IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_FIFO << 2, to_fifo2);
+  }
+}
 
 int main()
 {
