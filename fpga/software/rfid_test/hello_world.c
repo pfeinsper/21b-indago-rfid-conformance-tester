@@ -15,27 +15,63 @@
 int tari_test = 0b111110100;
 
 ack command_ack;
-
-void check_command(int pacote, int size)
+unsigned int int_to_int(unsigned int k)
 {
-
+  return (k == 0 || k == 1 ? k : ((k % 2) + 10 * int_to_int(k / 2)));
 }
-
 void send_package(int pacote, int size)
 {
-  if (size > 16)
+
+  if (size > 8)
   {
-    int iter = size / 32;
-    uint32_t sliced_package = pacote & 0xb1111111111111111;
-    for (int i = 0; i <= iter; i++)
+    int iter = size / 16;
+    int last_package_size = size % 8;
+    // to_fifo exemple: xxxx dddd dddd mmmm xxxx dddd dddd mmmm
+
+    for (int i = 0; i < iter; i++)
     {
-      IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_FIFO << 2, sliced_package);
-      sliced_package = pacote >> 16;
+      if (i == iter - 1)
+      {
+        int last_to_fifo_size = size % 16;
+
+        if (last_to_fifo_size > 8)
+        {
+          int sliced_package = pacote >> 8;
+          int32_t to_fifo0 = sliced_package & 0xb1111111111111111;
+
+          int sliced_package2 = pacote >> last_package_size;
+          int mask = int_to_int(last_package_size);
+          int32_t to_fifo1 = sliced_package2 & 0xb1111111111111111;
+
+          int32_t to_fifo2 = (to_fifo0 << 8) | to_fifo1;
+          int32_t command_new_mask = (0xb0000111111111000000011111111 << 4) | mask;
+          to_fifo2 = to_fifo2 & command_new_mask;
+
+          IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_FIFO << 2, to_fifo2);
+        }
+        else if (last_package_size != 0 && last_package_size < 8)
+        {
+          int sliced_package = pacote >> last_package_size;
+          int mask = int_to_int(last_package_size);
+          int32_t command_new_mask = (0xb0000111111111000000011111111 << 4) | mask;
+          int32_t to_fifo2 = sliced_package & command_new_mask;
+          IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_FIFO << 2, to_fifo2);
+        }
+      }
+      else
+      {
+        int sliced_package = pacote >> 8;
+        int32_t to_fifo0 = sliced_package & 0xb1111111111111111;
+
+        int sliced_package2 = pacote >> 8;
+        int32_t to_fifo1 = sliced_package2 & 0xb1111111111111111;
+
+        int32_t to_fifo2 = (to_fifo0 << 8) | to_fifo1;
+        to_fifo2 = to_fifo2 & 0xb00001111111110000000111111111000;
+
+        IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_FIFO << 2, to_fifo2);
+      }
     }
-  }
-  else
-  {
-    IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_FIFO << 2, pacote);
   }
 }
 

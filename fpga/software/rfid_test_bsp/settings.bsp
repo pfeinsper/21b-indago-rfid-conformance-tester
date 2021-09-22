@@ -2,9 +2,9 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>hal</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>20/09/2021 10:57:09</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1632146229605</BspGeneratedUnixTimeStamp>
-        <BspGeneratedLocation>C:\Users\Lucas\Documents\21b-indago-rfid-conformance-tester\fpga\software\rfid_test_bsp</BspGeneratedLocation>
+        <BspGeneratedTimeStamp>Sep 22, 2021 8:57:25 AM</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1632311845751</BspGeneratedUnixTimeStamp>
+        <BspGeneratedLocation>C:\Users\Lucas\Documents\PFE\21b-indago-rfid-conformance-tester\21b-indago-rfid-conformance-tester\fpga\software\rfid_test_bsp</BspGeneratedLocation>
         <BspSettingsFile>settings.bsp</BspSettingsFile>
         <SopcDesignFile>..\..\RFID_NIOS.sopcinfo</SopcDesignFile>
         <JdiFile>default</JdiFile>
