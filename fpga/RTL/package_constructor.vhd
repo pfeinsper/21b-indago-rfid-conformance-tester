@@ -62,7 +62,7 @@ architecture arch of package_constructor is
                         mask_integer <= 0;
                     elsif (data_ready = '1') then
                         mask_integer <= mask_integer + 1;
-                        data <= data(6 downto 0) & data_in;
+                        data <= data_in & data(data_width-1 downto 1);
                         if (mask_integer = 8) then
                             write_request_out<= '1';
                             mask_integer <= 1;
