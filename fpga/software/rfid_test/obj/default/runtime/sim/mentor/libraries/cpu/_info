@@ -1,0 +1,142 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Users/Lucas/Documents/21b-indago-rfid-conformance-tester/fpga/software/rfid_test/obj/default/runtime/sim/mentor
+vRFID_NIOS_nios2_gen2_0_cpu
+!s110 1632146565
+!i10b 1
+!s100 ^0DLiPnhD1J^X8kcLoDoF3
+IfaW]o[l5aWkbA`gkLcaE;1
+Z1 VDg1SIo80bB@j0V0VzS_@n1
+R0
+Z2 w1632145196
+8C:/Users/Lucas/Documents/21b-indago-rfid-conformance-tester/fpga/RFID_NIOS/testbench/RFID_NIOS_tb/simulation/submodules/RFID_NIOS_nios2_gen2_0_cpu.vo
+FC:/Users/Lucas/Documents/21b-indago-rfid-conformance-tester/fpga/RFID_NIOS/testbench/RFID_NIOS_tb/simulation/submodules/RFID_NIOS_nios2_gen2_0_cpu.vo
+L0 31
+Z3 OV;L;10.5b;63
+r1
+!s85 0
+31
+Z4 !s108 1632146565.000000
+!s107 C:/Users/Lucas/Documents/21b-indago-rfid-conformance-tester/fpga/RFID_NIOS/testbench/RFID_NIOS_tb/simulation/submodules/RFID_NIOS_nios2_gen2_0_cpu.vo|
+!s90 -reportprogress|300|C:/Users/Lucas/Documents/21b-indago-rfid-conformance-tester/fpga/RFID_NIOS/testbench/RFID_NIOS_tb/simulation/submodules/RFID_NIOS_nios2_gen2_0_cpu.vo|-work|cpu|
+!i113 1
+Z5 o-work cpu
+Z6 tCvgOpt 0
+n@r@f@i@d_@n@i@o@s_nios2_gen2_0_cpu
+vRFID_NIOS_nios2_gen2_0_cpu_debug_slave_sysclk
+Z7 !s110 1632146566
+!i10b 1
+!s100 X8fb[0Rf]JNQd:JNzGjh<2
+Iji>ak:WZ=>cdjlT010X>P3
+R1
+R0
+R2
+8C:/Users/Lucas/Documents/21b-indago-rfid-conformance-tester/fpga/RFID_NIOS/testbench/RFID_NIOS_tb/simulation/submodules/RFID_NIOS_nios2_gen2_0_cpu_debug_slave_sysclk.v
+FC:/Users/Lucas/Documents/21b-indago-rfid-conformance-tester/fpga/RFID_NIOS/testbench/RFID_NIOS_tb/simulation/submodules/RFID_NIOS_nios2_gen2_0_cpu_debug_slave_sysclk.v
+Z8 L0 21
+R3
+r1
+!s85 0
+31
+R4
+!s107 C:/Users/Lucas/Documents/21b-indago-rfid-conformance-tester/fpga/RFID_NIOS/testbench/RFID_NIOS_tb/simulation/submodules/RFID_NIOS_nios2_gen2_0_cpu_debug_slave_sysclk.v|
+!s90 -reportprogress|300|C:/Users/Lucas/Documents/21b-indago-rfid-conformance-tester/fpga/RFID_NIOS/testbench/RFID_NIOS_tb/simulation/submodules/RFID_NIOS_nios2_gen2_0_cpu_debug_slave_sysclk.v|-work|cpu|
+!i113 1
+R5
+R6
+n@r@f@i@d_@n@i@o@s_nios2_gen2_0_cpu_debug_slave_sysclk
+vRFID_NIOS_nios2_gen2_0_cpu_debug_slave_tck
+R7
+!i10b 1
+!s100 7E:K2:9;zm3>ZMM;Kd^6k3
+I`8nE53Ic3LQeiTkDki4aO1
+R1
+R0
+R2
+8C:/Users/Lucas/Documents/21b-indago-rfid-conformance-tester/fpga/RFID_NIOS/testbench/RFID_NIOS_tb/simulation/submodules/RFID_NIOS_nios2_gen2_0_cpu_debug_slave_tck.v
+FC:/Users/Lucas/Documents/21b-indago-rfid-conformance-tester/fpga/RFID_NIOS/testbench/RFID_NIOS_tb/simulation/submodules/RFID_NIOS_nios2_gen2_0_cpu_debug_slave_tck.v
+R8
+R3
+r1
+!s85 0
+31
+Z9 !s108 1632146566.000000
+!s107 C:/Users/Lucas/Documents/21b-indago-rfid-conformance-tester/fpga/RFID_NIOS/testbench/RFID_NIOS_tb/simulation/submodules/RFID_NIOS_nios2_gen2_0_cpu_debug_slave_tck.v|
+!s90 -reportprogress|300|C:/Users/Lucas/Documents/21b-indago-rfid-conformance-tester/fpga/RFID_NIOS/testbench/RFID_NIOS_tb/simulation/submodules/RFID_NIOS_nios2_gen2_0_cpu_debug_slave_tck.v|-work|cpu|
+!i113 1
+R5
+R6
+n@r@f@i@d_@n@i@o@s_nios2_gen2_0_cpu_debug_slave_tck
+vRFID_NIOS_nios2_gen2_0_cpu_debug_slave_wrapper
+R7
+!i10b 1
+!s100 PVH9:2BnOMPMPmGnBU_O92
+Iae]S0ZM@`kF9AW:_Pe?z:0
+R1
+R0
+R2
+8C:/Users/Lucas/Documents/21b-indago-rfid-conformance-tester/fpga/RFID_NIOS/testbench/RFID_NIOS_tb/simulation/submodules/RFID_NIOS_nios2_gen2_0_cpu_debug_slave_wrapper.v
+FC:/Users/Lucas/Documents/21b-indago-rfid-conformance-tester/fpga/RFID_NIOS/testbench/RFID_NIOS_tb/simulation/submodules/RFID_NIOS_nios2_gen2_0_cpu_debug_slave_wrapper.v
+R8
+R3
+r1
+!s85 0
+31
+R9
+!s107 C:/Users/Lucas/Documents/21b-indago-rfid-conformance-tester/fpga/RFID_NIOS/testbench/RFID_NIOS_tb/simulation/submodules/RFID_NIOS_nios2_gen2_0_cpu_debug_slave_wrapper.v|
+!s90 -reportprogress|300|C:/Users/Lucas/Documents/21b-indago-rfid-conformance-tester/fpga/RFID_NIOS/testbench/RFID_NIOS_tb/simulation/submodules/RFID_NIOS_nios2_gen2_0_cpu_debug_slave_wrapper.v|-work|cpu|
+!i113 1
+R5
+R6
+n@r@f@i@d_@n@i@o@s_nios2_gen2_0_cpu_debug_slave_wrapper
+vRFID_NIOS_nios2_gen2_0_cpu_mult_cell
+R7
+!i10b 1
+!s100 94i92IaU>2>_1QdgNKYc>3
+IQEWJ?15;7naa4[0Bz:Tle0
+R1
+R0
+R2
+8C:/Users/Lucas/Documents/21b-indago-rfid-conformance-tester/fpga/RFID_NIOS/testbench/RFID_NIOS_tb/simulation/submodules/RFID_NIOS_nios2_gen2_0_cpu_mult_cell.v
+FC:/Users/Lucas/Documents/21b-indago-rfid-conformance-tester/fpga/RFID_NIOS/testbench/RFID_NIOS_tb/simulation/submodules/RFID_NIOS_nios2_gen2_0_cpu_mult_cell.v
+R8
+R3
+r1
+!s85 0
+31
+R9
+!s107 C:/Users/Lucas/Documents/21b-indago-rfid-conformance-tester/fpga/RFID_NIOS/testbench/RFID_NIOS_tb/simulation/submodules/RFID_NIOS_nios2_gen2_0_cpu_mult_cell.v|
+!s90 -reportprogress|300|C:/Users/Lucas/Documents/21b-indago-rfid-conformance-tester/fpga/RFID_NIOS/testbench/RFID_NIOS_tb/simulation/submodules/RFID_NIOS_nios2_gen2_0_cpu_mult_cell.v|-work|cpu|
+!i113 1
+R5
+R6
+n@r@f@i@d_@n@i@o@s_nios2_gen2_0_cpu_mult_cell
+vRFID_NIOS_nios2_gen2_0_cpu_test_bench
+R7
+!i10b 1
+!s100 R07zF^o49_A<?T>?`Vjcz1
+I<GcMgidSlcZ^0Red3D2mD0
+R1
+R0
+R2
+8C:/Users/Lucas/Documents/21b-indago-rfid-conformance-tester/fpga/RFID_NIOS/testbench/RFID_NIOS_tb/simulation/submodules/RFID_NIOS_nios2_gen2_0_cpu_test_bench.v
+FC:/Users/Lucas/Documents/21b-indago-rfid-conformance-tester/fpga/RFID_NIOS/testbench/RFID_NIOS_tb/simulation/submodules/RFID_NIOS_nios2_gen2_0_cpu_test_bench.v
+R8
+R3
+r1
+!s85 0
+31
+R9
+!s107 C:/Users/Lucas/Documents/21b-indago-rfid-conformance-tester/fpga/RFID_NIOS/testbench/RFID_NIOS_tb/simulation/submodules/RFID_NIOS_nios2_gen2_0_cpu_test_bench.v|
+!s90 -reportprogress|300|C:/Users/Lucas/Documents/21b-indago-rfid-conformance-tester/fpga/RFID_NIOS/testbench/RFID_NIOS_tb/simulation/submodules/RFID_NIOS_nios2_gen2_0_cpu_test_bench.v|-work|cpu|
+!i113 1
+R5
+R6
+n@r@f@i@d_@n@i@o@s_nios2_gen2_0_cpu_test_bench

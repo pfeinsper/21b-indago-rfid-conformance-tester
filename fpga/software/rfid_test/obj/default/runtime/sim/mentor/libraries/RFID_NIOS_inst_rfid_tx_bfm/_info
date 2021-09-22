@@ -1,0 +1,91 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Users/Lucas/Documents/21b-indago-rfid-conformance-tester/fpga/software/rfid_test/obj/default/runtime/sim/mentor
+Ealtera_conduit_bfm
+Z1 w1632145179
+Z2 DPx4 work 27 altera_conduit_bfm_vhdl_pkg 0 22 191]EgzLTeYl@4ohW=1L:2
+Z3 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z4 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
+R0
+Z5 8C:/Users/Lucas/Documents/21b-indago-rfid-conformance-tester/fpga/RFID_NIOS/testbench/RFID_NIOS_tb/simulation/submodules/altera_conduit_bfm.vhd
+Z6 FC:/Users/Lucas/Documents/21b-indago-rfid-conformance-tester/fpga/RFID_NIOS/testbench/RFID_NIOS_tb/simulation/submodules/altera_conduit_bfm.vhd
+l0
+L42
+Vl3H1T;[T;8ZO_oMa6X`oF2
+!s100 I[j3a=[Yo@74P]U1l8jeG0
+Z7 OV;C;10.5b;63
+32
+Z8 !s110 1632146567
+!i10b 1
+Z9 !s108 1632146567.000000
+Z10 !s90 -reportprogress|300|C:/Users/Lucas/Documents/21b-indago-rfid-conformance-tester/fpga/RFID_NIOS/testbench/RFID_NIOS_tb/simulation/submodules/altera_conduit_bfm.vhd|-work|RFID_NIOS_inst_rfid_tx_bfm|
+Z11 !s107 C:/Users/Lucas/Documents/21b-indago-rfid-conformance-tester/fpga/RFID_NIOS/testbench/RFID_NIOS_tb/simulation/submodules/altera_conduit_bfm.vhd|
+!i113 1
+Z12 o-work RFID_NIOS_inst_rfid_tx_bfm
+Z13 tExplicit 1 CvgOpt 0
+Aaltera_conduit_bfm_arch
+R2
+R3
+R4
+Z14 DEx4 work 18 altera_conduit_bfm 0 22 l3H1T;[T;8ZO_oMa6X`oF2
+l52
+L50
+Z15 V0K]S[ZM2^Q8G_TXmUN_OV1
+Z16 !s100 bbk4n>?jRD]Mj;8Bc<7cU2
+R7
+32
+R8
+!i10b 1
+R9
+R10
+R11
+!i113 1
+R12
+R13
+Paltera_conduit_bfm_vhdl_pkg
+R3
+R4
+R1
+R0
+Z17 8C:/Users/Lucas/Documents/21b-indago-rfid-conformance-tester/fpga/RFID_NIOS/testbench/RFID_NIOS_tb/simulation/submodules/altera_conduit_bfm_vhdl_pkg.vhd
+Z18 FC:/Users/Lucas/Documents/21b-indago-rfid-conformance-tester/fpga/RFID_NIOS/testbench/RFID_NIOS_tb/simulation/submodules/altera_conduit_bfm_vhdl_pkg.vhd
+l0
+L42
+V191]EgzLTeYl@4ohW=1L:2
+!s100 fXnTD91BZADhf<6VRL8>V1
+R7
+32
+b1
+R8
+!i10b 1
+R9
+Z19 !s90 -reportprogress|300|C:/Users/Lucas/Documents/21b-indago-rfid-conformance-tester/fpga/RFID_NIOS/testbench/RFID_NIOS_tb/simulation/submodules/altera_conduit_bfm_vhdl_pkg.vhd|-work|RFID_NIOS_inst_rfid_tx_bfm|
+Z20 !s107 C:/Users/Lucas/Documents/21b-indago-rfid-conformance-tester/fpga/RFID_NIOS/testbench/RFID_NIOS_tb/simulation/submodules/altera_conduit_bfm_vhdl_pkg.vhd|
+!i113 1
+R12
+R13
+Bbody
+R2
+R3
+R4
+l0
+L61
+VQh2Sk66EG7XW@NEJRg@QJ1
+!s100 Le_aSL18[n5TTHX@Pi7S_0
+R7
+32
+R8
+!i10b 1
+R9
+R19
+R20
+!i113 1
+R12
+R13
