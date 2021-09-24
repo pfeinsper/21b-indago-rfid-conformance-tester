@@ -107,6 +107,8 @@
                                 avs_readdata <= reg_settings;
                             when "001" =>
                                 avs_readdata(15 downto 0) <= reg_send_tari;
+                            when "011" => 
+                                avs_readdata <= reg_status;
                             when "111" =>
                                 avs_readdata <= x"FF0055FF";
                             when others => null;
@@ -124,7 +126,7 @@
             clear_fifo     => reg_settings(2), 
             fifo_write_req => fifo_write_req,
             data           => fifo_data_in,
-            is_fifo_full   => reg_status(4),
+            is_fifo_full   => reg_status(0),
             tari           => reg_send_tari,
             q              => q );
 
