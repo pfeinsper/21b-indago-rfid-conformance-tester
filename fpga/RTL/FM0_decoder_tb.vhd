@@ -9,10 +9,9 @@ architecture tb of fm0_decoder_tb is
 	component fm0_encoder
 		generic (
 				-- defining size of data in and clock speed
-				clk_f      : natural := 50e6; -- Hz
-				data_width : natural := 8;
+				data_width : natural := 26;
 				tari_width : natural := 16;
-				mask_width : natural := 4
+				mask_width : natural := 6
 		);
 		port (
 			-- flags 
@@ -68,9 +67,9 @@ architecture tb of fm0_decoder_tb is
 	end component;
 
 	signal clk, eop, error_out, data_out, is_fifo_empty, request_new_data, encoded_data : std_logic := '0';
-	constant mask : std_logic_vector(3 downto 0) := "0101";
-	constant data_a : std_logic_vector(7 downto 0) := "UUU10110";
-	signal data : std_logic_vector(11 downto 0) := data_a & mask;
+	signal data : std_logic_vector(25 downto 0) := (others => '1');
+	signal data_in : std_logic_vector(31 downto 0) := (others => '0');
+	signal mask : std_logic_vector(5 downto 0) := "011010";
 	constant clk_period : time := 20 ns;
 
 
@@ -85,17 +84,20 @@ architecture tb of fm0_decoder_tb is
 		end process;
 
 		fifo : process ( request_new_data )
-		variable quant_packages : integer range 0 to 3 := 1;
+		variable quant_packages : integer range 0 to 3 := 3;
 		begin
 			if (rising_edge(request_new_data)) then
 				if (quant_packages > 0) then
 					is_fifo_empty <= '0';
 					if (quant_packages = 3) then
-						data <= "111011111000";
+						data <= "01011101111010111001110101";
+						mask <= "011010";
 					elsif (quant_packages = 2) then
-						data <= "111010101000";
+						data <= "10111101010010110110001101";
+						mask <= "011010";
 					elsif (quant_packages = 1) then
-						data <= "UUUUUUUU0000";
+						data <= "00000001010001001000100111";
+						mask <= "000000";
 					end if;
 					quant_packages := quant_packages - 1;
 				else
@@ -125,10 +127,10 @@ architecture tb of fm0_decoder_tb is
 			tari => "0000000111110100", -- tari = 10 us
 			data_out => encoded_data,
 			is_fifo_empty => is_fifo_empty,
-			data_in => data,
+			data_in => data_in,
 			request_new_data => request_new_data  );
 		
 	   
-		
+		data_in <= data & mask;
 	
 end tb;

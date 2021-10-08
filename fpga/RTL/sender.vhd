@@ -19,18 +19,20 @@
     entity sender is
         generic (
             -- defining size of data in and clock speed
-            data_width : natural := 8;
+            data_width : natural := 11;
             tari_width : natural := 16;
-            mask_width : natural := 4
+            mask_width : natural := 5
         );
     
         port (
             -- flags
             clk : in std_logic;
-                -- fm0
+            finished_sending : out std_logic;
+
+            -- fm0
             rst_fm0 : in std_logic;
             enable_fm0 : in std_logic;
-                -- fifo
+            -- fifo
             clear_fifo : in std_logic;
             fifo_write_req : in std_logic;
             is_fifo_full : out std_logic;
@@ -52,9 +54,9 @@
         component FIFO_FM0
             generic (
                 -- defining size of data in and clock speed
-                data_width : natural := 8;
+                data_width : natural := 11;
                 tari_width : natural := 16;
-                mask_width : natural := 4
+                mask_width : natural := 5
             );
         
             port (
@@ -83,6 +85,7 @@
             fifo_fm0_c : fifo_fm0 port map (
                 clk            => clk,
                 rst_fm0        => rst_fm0,
+                finished_sending_fm0 => finished_sending,
                 enable_fm0     => enable_fm0,
                 clear_fifo     => clear_fifo,
                 fifo_write_req => fifo_write_req,

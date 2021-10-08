@@ -17,9 +17,9 @@ use ieee.numeric_std.all;
 entity FIFO_FM0 is
     generic (
         -- defining size of data in and clock speed
-        data_width : natural := 8;
+        data_width : natural := 11;
         tari_width : natural := 16;
-        mask_width : natural := 4
+        mask_width : natural := 5
     );
 
     port (
@@ -28,6 +28,8 @@ entity FIFO_FM0 is
             -- fm0
         rst_fm0 : in std_logic;
         enable_fm0 : in std_logic;
+		finished_sending_fm0 : out std_logic;
+
             -- fifo
         clear_fifo : in std_logic;
         fifo_write_req : in std_logic;
@@ -59,6 +61,7 @@ architecture arch of FIFO_FM0 is
             clk : in std_logic;
             rst : in std_logic;
             enable : in std_logic;
+            finished_sending : out std_logic;
 
             -- config
             tari : in std_logic_vector(tari_width-1 downto 0);
@@ -107,6 +110,7 @@ architecture arch of FIFO_FM0 is
         fm0 : fm0_encoder port map (
             clk => clk,
             rst => rst_fm0,
+            finished_sending => finished_sending_fm0,
             enable => enable_fm0,
             tari => tari,
             data_out => data_out,

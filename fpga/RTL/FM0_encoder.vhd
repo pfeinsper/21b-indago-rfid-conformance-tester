@@ -18,10 +18,9 @@ use ieee.numeric_std.all;
 entity FM0_encoder is
 	generic (
 		-- defining size of data in and clock speed
-		clk_f      : natural := 50e6; -- Hz
-		data_width : natural := 8;
+		data_width : natural := 26;
 		tari_width : natural := 16;
-		mask_width : natural := 4
+		mask_width : natural := 6
 	);
 
 	port (
@@ -29,16 +28,18 @@ entity FM0_encoder is
 		clk : in std_logic;
 		rst : in std_logic;
 		enable : in std_logic;
+		finished_sending : out std_logic;
+
 		-- config
 		tari : in std_logic_vector(tari_width-1 downto 0);
 
 		-- fifo data
 		is_fifo_empty    : in std_logic;
-		data_in          : in std_logic_vector((data_width + mask_width)-1 downto 0); -- format expected : ddddddddmmmm
+		data_in          : in std_logic_vector((data_width + mask_width)-1 downto 0); -- format expected : dddddddddddmmmmm
 		request_new_data : out std_logic;
 
 		-- output
-		data_out : out std_logic:= '0'
+		data_out : out std_logic := '0'
 	);
 
 end entity;
@@ -76,7 +77,6 @@ architecture arch of FM0_encoder is
 
 	type state_type_sender is (s_wait, s_send_s1, s_send_s2, s_send_s2_part2, s_send_s3, s_send_s3_part2, s_send_s4, s_end);
 	signal state_sender     : state_type_sender := s_wait;
-	signal last_state_bitaa : state_type_sender;
 
 
 	begin
@@ -147,7 +147,7 @@ architecture arch of FM0_encoder is
 		------------------------------
 		-- This section is responsable to encode and send the date received using the Miller-Signaling State Diagram mentioned before --
 		data_sender :  process( clk, rst )
-			variable index_bit : integer range 0 to 10;
+			variable index_bit : integer range 0 to data_width + 1;
 			variable last_state_bit : state_type_sender := s_send_s2;
 			begin
 				if (rst = '1') then
@@ -163,11 +163,14 @@ architecture arch of FM0_encoder is
 
 						when s_wait =>
 							data_sender_end <= '0';
+							finished_sending <= '0';
 							if (mask_value = 0) then
 								last_state_bit := s_send_s1;
 								data_out <= '0';
 								data_sender_end <= '1';
 								state_sender <= s_end;
+								finished_sending <= '1';
+
 							elsif (data_sender_start = '1') then
 								index_bit := 0;
 								if (data(index_bit) = '1') then
@@ -310,7 +313,6 @@ architecture arch of FM0_encoder is
 						when others =>
 							state_sender <= s_wait;
 					end case;
-					last_state_bitaa <= last_state_bit;
 				end if;
 		end process;
 

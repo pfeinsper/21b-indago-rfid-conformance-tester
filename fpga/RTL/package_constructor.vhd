@@ -18,9 +18,8 @@ use ieee.numeric_std.all;
 entity package_constructor is
 	generic (
 		-- defining size of data in and clock speed
-		data_width : natural := 8;
-		mask_width : natural := 4
-
+		data_width : natural := 26;
+		mask_width : natural := 6,
 	);
 
 	port (
@@ -46,7 +45,7 @@ architecture arch of package_constructor is
     signal data : std_logic_vector(data_width-1 downto 0) := (others => '1');
     signal mask : std_logic_vector(mask_width-1 downto 0) := (others => '0');
     signal package_out : std_logic_vector((data_width + mask_width)-1 downto 0);
-    signal mask_integer : integer := 0;
+    signal mask_integer : integer range 0 to data_width + mask_width + 1 := 0;
 
 	begin
 	    LL: process ( clk, rst )
@@ -54,6 +53,7 @@ architecture arch of package_constructor is
                 if (rst = '1') then
                     write_request_out <= '0';
                     data <= (others => '0');
+                    mask <= (others => '0');
                 elsif rising_edge(clk) then
                     write_request_out <= '0';
                     
@@ -63,7 +63,7 @@ architecture arch of package_constructor is
                     elsif (data_ready = '1') then
                         mask_integer <= mask_integer + 1;
                         data <= data_in & data(data_width-1 downto 1);
-                        if (mask_integer = 8) then
+                        if (mask_integer = data_width) then
                             write_request_out<= '1';
                             mask_integer <= 1;
                         end if;                  

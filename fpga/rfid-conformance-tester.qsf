@@ -71,3 +71,4 @@ set_global_assignment -name QIP_FILE RTL/fifo_32.qip
 set_global_assignment -name VHDL_FILE RTL/FM0_encoder.vhd
 set_global_assignment -name VECTOR_WAVEFORM_FILE Waveform.vwf
 set_global_assignment -name QIP_FILE fifo_32.qip
+set_global_assignment -name QIP_FILE fifo_32_32.qip

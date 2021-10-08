@@ -9,8 +9,8 @@ architecture tb of package_constructor_tb is
     component package_constructor
 	    generic (
             -- defining size of data in and clock speed
-            data_width : natural := 8;
-            mask_width : natural := 4
+            data_width : natural := 26;
+            mask_width : natural := 6
 
         );
         port (
