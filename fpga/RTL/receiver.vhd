@@ -57,8 +57,8 @@
             full  : out std_logic;
             
             -- data output
-            data_out_fifo : std_logic_vector(31 downto 0);
-            usedw	      : std_logic_vector(7 downto 0)
+            data_out_fifo : out std_logic_vector(31 downto 0);
+            usedw	      : out std_logic_vector(7 downto 0)
         );
     
     end entity;
