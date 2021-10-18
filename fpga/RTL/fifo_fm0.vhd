@@ -76,36 +76,36 @@ architecture arch of FIFO_FM0 is
         );
     end component;
 
-    component fifo_32
-        port
-        (
-            aclr		: in std_logic  := '0';
-            data		: in std_logic_vector (31 downto 0);
-            rdclk		: in std_logic ;
-            rdreq		: in std_logic ;
-            wrclk		: in std_logic ;
-            wrreq		: in std_logic ;
-            
-            q		    : out std_logic_vector (15 downto 0);
-            rdempty		: out std_logic ;
-            wrfull		: out std_logic 
-        );
-    end component;
+    component fifo_32_32 IS
+            port
+                (
+                    clock		: IN STD_LOGIC ;
+                    data		: IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+                    rdreq		: IN STD_LOGIC ;
+                    sclr		: IN STD_LOGIC ;
+                    wrreq		: IN STD_LOGIC ;
+                    empty		: OUT STD_LOGIC ;
+                    full		: OUT STD_LOGIC ;
+                    q		    : OUT STD_LOGIC_VECTOR (31 DOWNTO 0);
+                    usedw		: OUT STD_LOGIC_VECTOR (7 DOWNTO 0)
+                );
+        end component;
 
-    signal fifo_out : std_logic_vector(15 downto 0);
+    signal fifo_out : std_logic_vector(31 downto 0);
     signal is_fifo_empty, request_new_data, data_out, wrfull : std_logic := '0';
-
+	 signal usedw : std_logic_vector(7 downto 0);
+		
     begin
-        fifo : fifo_32 port map (
-			aclr    => clear_fifo,
+        fifo : fifo_32_32 port map (
+			sclr    => clear_fifo,
 			data    => data,
-			rdclk   => clk,
-			wrclk   => clk,
+			clock   => clk,
 			wrreq   => fifo_write_req,
 			rdreq   => request_new_data,
             q       => fifo_out,
-            rdempty => is_fifo_empty,
-            wrfull  => wrfull  );
+            empty   => is_fifo_empty,
+            full    => wrfull,
+            usedw   => usedw  );
 
         fm0 : fm0_encoder port map (
             clk => clk,

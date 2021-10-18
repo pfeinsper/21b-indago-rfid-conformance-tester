@@ -22,7 +22,8 @@
             data_width : natural := 8;
             tari_width : natural := 16;
             mask_width : natural := 4;
-            data_size  : natural :=32
+            data_size  : natural :=32;
+            loopback   : std_logic := '0'
         );
         port (
             
@@ -37,11 +38,15 @@
             avs_writedata   : in  std_logic_vector(31 downto 0) := (others => '0');
       
             -- -- output
-            q : out std_logic
+            rfid_tx : out std_logic;
+            rfid_rx : in  std_logic
         );
     end entity;
 
     architecture arch of rfid is
+
+        
+
         component FIFO_FM0
         generic (
             -- defining size of data in and clock speed
@@ -119,7 +124,7 @@
         
         end component;
         ----------------------------------------------------------------
-            
+                    
         signal reg_settings : std_logic_vector(31 downto 0);
 		signal reg_status : std_logic_vector(31 downto 0);
         signal reg_send_tari, reg_send_tari_101, reg_send_tari_099, reg_send_tari_1616, reg_send_tari_1584 : std_logic_vector(15 downto 0);
@@ -128,8 +133,14 @@
         signal receiver_data_out : std_logic_vector(31 downto 0);
         signal receiver_usedw : std_logic_vector(7 downto 0);
 
+        signal pin_tx, pin_rx : std_logic;
 
         begin      
+
+        -- enable loopback mode
+        pin_rx <= rfid_rx when loopback = '0' else
+                  pin_tx;
+        rfid_tx <= pin_tx;
             
             process(clk)
             begin
@@ -194,7 +205,7 @@
             data           => fifo_data_in,
             is_fifo_full   => reg_status(0),
             tari           => reg_send_tari,
-            q              => receiver_data_DUT );
+            q              => pin_tx );
 
         -- reg_settings is available from 11 to 31 for receiver
         rfid_receiver: receiver port map(
@@ -203,7 +214,7 @@
             rst      => reg_settings(11), -- done
             enable   => reg_settings(12), -- done
             -- data in from DUT 
-            data_DUT => receiver_data_DUT, -- EDITAR PARA A ENTRADA DA TAG
+            data_DUT => pin_rx, -- EDITAR PARA A ENTRADA DA TAG
             -----------------------------------
             -- DECODER
             -- config

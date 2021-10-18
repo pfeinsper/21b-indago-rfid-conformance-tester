@@ -115,7 +115,7 @@
             generic (
                 -- defining size of data in and clock speed
                 data_width : natural := 26;
-                mask_width : natural := 6,
+                mask_width : natural := 6
             );
         
             port (
@@ -136,7 +136,7 @@
 
         signal data_out_pc : std_logic_vector(31 downto 0) := (others => '0');
         
-        signal write_request, data_ready, eop, data_out_decoder : std_logic := '0'; 
+        signal write_request, data_ready, eop, data_out_decoder,wrreq : std_logic := '0'; 
         
         begin
             fifo : fifo_32_32 port map (
@@ -147,7 +147,7 @@
                 wrreq	=> wrreq,
                 empty	=> empty,
                 full	=> full,
-                q		=> data_out_fifo
+                q		=> data_out_fifo,
                 usedw	=> usedw
             );
             
