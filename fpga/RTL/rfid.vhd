@@ -124,7 +124,7 @@
 		signal reg_status : std_logic_vector(31 downto 0);
         signal reg_send_tari, reg_send_tari_101, reg_send_tari_099, reg_send_tari_1616, reg_send_tari_1584 : std_logic_vector(15 downto 0);
         signal fifo_data_in : std_logic_vector(data_size-1 downto 0);
-        signal fifo_write_req, receiver_err_decoder, receiver_data_DUT: std_logic;
+        signal fifo_write_req, receiver_err_decoder: std_logic;
         signal receiver_data_out : std_logic_vector(31 downto 0);
         signal receiver_usedw : std_logic_vector(7 downto 0);
 
@@ -201,8 +201,8 @@
             clk      => clk, --done
             rst      => reg_settings(11), -- done
             enable   => reg_settings(12), -- done
-            -- data in from DUT
-            data_DUT => receiver_data_DUT,
+            -- data in from DUT 
+            data_DUT => q, -- EDITAR PARA A ENTRADA DA TAG
             -----------------------------------
             -- DECODER
             -- config

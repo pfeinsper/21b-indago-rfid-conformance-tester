@@ -6,11 +6,16 @@
 
 #define MASK_RST (1 << 0)
 #define MASK_EN (1 << 1)
+#define MASK_RST_RECEIVER (1<< 10)
+#define MASK_EN_RECEIVER (1<< 11)
+#define MASK_EMPTY_RECEIVER (1<< 13)
+#define BASE_IS_FIFO_FULL (1<<1)
 #define MASK_CLR_FIFO 1 << 2
 #define BASE_REG_SET 0
 #define BASE_REG_TARI 1
 #define BASE_REG_FIFO 2
 #define BASE_REG_STATUS 3
+#define BASE_RECEIVER_DATA 4
 #define BASE_ID 7
 #define PACKET_STD_SIZE 12
 #define data_package_size 26
@@ -20,7 +25,7 @@
 int tari_test = 0b111110100;
 void rfid_set_tari(int tari_value){IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_TARI << 2, tari_value);}
 
-int  sender_check_fifo_full() { return IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_STATUS << 3) & 1; }
+int  sender_check_fifo_full() { return IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_STATUS << 3) & BASE_IS_FIFO_FULL; }
 void sender_enable(int EN){IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 2, EN);}
 void sender_send_package(int package) { IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_FIFO << 2, package); }
 void sender_send_end_of_package() { IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_FIFO << 2, eop); }
@@ -75,6 +80,17 @@ void sender_select_package(int *commands, int size)
     }
 }
 
+
+void receiver_enable(int EN){IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 2, EN);}
+int receiver_get_package(){
+    return IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_RECEIVER_DATA);
+}
+
+int receiver_empty(){
+    return IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_STATUS << 3) & MASK_EMPTY_RECEIVER;
+}
+    
+
 int main()
 {
     rfid_set_tari(tari_test);
@@ -87,5 +103,16 @@ int main()
     commands[3] = 0b010101010101010101010101010101;   //30
     int commands_size = sizeof(commands) / sizeof(int);
     sender_select_package(commands, commands_size);
+
+    receiver_enable(MASK_EN_RECEIVER);
+    
+    int data_received[10];
+    int i = 0;
+    while(!receiver_empty()){
+        data_received[i] = receiver_get_package();
+        i++;
+
+    }
+
     return 0;
 }
