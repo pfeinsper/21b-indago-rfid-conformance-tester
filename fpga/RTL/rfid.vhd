@@ -124,9 +124,9 @@
 		signal reg_status : std_logic_vector(31 downto 0);
         signal reg_send_tari, reg_send_tari_101, reg_send_tari_099, reg_send_tari_1616, reg_send_tari_1584 : std_logic_vector(15 downto 0);
         signal fifo_data_in : std_logic_vector(data_size-1 downto 0);
-        signal fifo_write_req : std_logic;
-
-
+        signal fifo_write_req, receiver_err_decoder, receiver_data_DUT: std_logic;
+        signal receiver_data_out : std_logic_vector(31 downto 0);
+        signal receiver_usedw : std_logic_vector(7 downto 0);
 
         begin      
             
@@ -169,7 +169,11 @@
                             when "011" => 
                                 avs_readdata <= reg_status;
                             when "100" =>
-                                avs_readdata <= 
+                                avs_readdata <= receiver_data_out;
+                            --when "101" =>
+                               -- avs_readdata(1 downto 0) <= receiver_err_decoder;
+                            when "110" =>
+                                avs_readdata(7 downto 0) <= receiver_usedw;    
                             when "111" =>
                                 avs_readdata <= x"FF0055FF";
                             when others => null;
@@ -194,30 +198,30 @@
         -- reg_settings is available from 11 to 31 for receiver
         rfid_receiver: receiver port map(
             -- flags
-            clk      => clk,
-            rst      => reg_settings(11),
-            enable   => reg_settings(12),
+            clk      => clk, --done
+            rst      => reg_settings(11), -- done
+            enable   => reg_settings(12), -- done
             -- data in from DUT
-            data_DUT => data_DUT,
+            data_DUT => receiver_data_DUT,
             -----------------------------------
             -- DECODER
             -- config
-            tari_101  => reg_send_tari_101,-- 1% above tari
-            tari_099  => reg_send_tari_099,-- 1% below tari
-            tari_1616 => reg_send_tari_1616,-- 1% above 1.6 tari
-            tari_1584 => reg_send_tari_1584,-- 1% below 1.6 tari
+            tari_101  => reg_send_tari_101,-- 1% above tari done
+            tari_099  => reg_send_tari_099,-- 1% below tari done
+            tari_1616 => reg_send_tari_1616,-- 1% above 1.6 tari done 
+            tari_1584 => reg_send_tari_1584,-- 1% below 1.6 tari done
             -- flag
             clr_err_decoder => reg_status(10),
-            err_decoder     => err_decoder,
+            err_decoder     => receiver_err_decoder,
             -----------------------------------
             -- FIFO
             -- flags
-            rdreq => reg_status(11),
-            sclr  => reg_status(12),
-            empty => reg_status(13),
-            full  => reg_status(14),
+            rdreq => reg_status(11), -- done
+            sclr  => reg_status(12), -- done
+            empty => reg_status(13), -- done
+            full  => reg_status(14), -- done
             -- data output
-            data_out_fifo => data_out_fifo,
-            usedw         => usedw
+            data_out_fifo => receiver_data_out,
+            usedw         => receiver_usedw
         );
-    end arch ; 
+    end arch ;   

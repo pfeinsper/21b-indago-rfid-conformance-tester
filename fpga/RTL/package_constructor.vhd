@@ -19,7 +19,7 @@ entity package_constructor is
 	generic (
 		-- defining size of data in and clock speed
 		data_width : natural := 26;
-		mask_width : natural := 6,
+		mask_width : natural := 6
 	);
 
 	port (
