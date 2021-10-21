@@ -22,8 +22,8 @@
             data_width : natural := 8;
             tari_width : natural := 16;
             mask_width : natural := 4;
-            data_size  : natural :=32;
-            loopback   : std_logic := '0'
+            data_size  : natural :=32
+            
         );
         port (
             
@@ -118,8 +118,8 @@
                 full  : out std_logic;
                 
                 -- data output
-                data_out_fifo : std_logic_vector(31 downto 0);
-                usedw	      : std_logic_vector(7 downto 0)
+                data_out_fifo  : out std_logic_vector(31 downto 0);
+                usedw	       : out std_logic_vector(7 downto 0)
             );
         
         end component;
@@ -129,12 +129,12 @@
 		signal reg_status : std_logic_vector(31 downto 0);
         signal reg_send_tari, reg_send_tari_101, reg_send_tari_099, reg_send_tari_1616, reg_send_tari_1584 : std_logic_vector(15 downto 0);
         signal fifo_data_in : std_logic_vector(data_size-1 downto 0);
-        signal fifo_write_req, receiver_err_decoder, receiver_data_DUT: std_logic;
+        signal fifo_write_req, receiver_err_decoder: std_logic := '0';
         signal receiver_data_out : std_logic_vector(31 downto 0);
         signal receiver_usedw : std_logic_vector(7 downto 0);
 
-        signal pin_tx, pin_rx : std_logic;
-
+        signal pin_tx, pin_rx : std_logic := '0';
+        signal loopback   : std_logic := '1';
         begin      
 
         -- enable loopback mode

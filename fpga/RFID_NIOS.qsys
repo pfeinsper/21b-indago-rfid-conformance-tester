@@ -388,7 +388,7 @@
    enabled="1">
   <parameter name="data_size" value="32" />
   <parameter name="data_width" value="8" />
-  <parameter name="loopback" value="false" />
+  <parameter name="loopback" value="true" />
   <parameter name="mask_width" value="4" />
   <parameter name="tari_width" value="16" />
  </module>

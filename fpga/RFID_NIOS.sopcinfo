@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <EnsembleReport name="RFID_NIOS" kind="RFID_NIOS" version="1.0" fabric="QSYS">
  <!-- Format version 18.1 625 (Future versions may contain additional information.) -->
- <!-- 2021.10.18.20:01:08 -->
+ <!-- 2021.10.20.20:09:19 -->
  <!-- A collection of modules and connections -->
  <parameter name="AUTO_GENERATION_ID">
   <type>java.lang.Integer</type>
-  <value>1634594468</value>
+  <value>1634767759</value>
   <derived>false</derived>
   <enabled>true</enabled>
   <visible>false</visible>
@@ -4471,14 +4471,6 @@ the requested settings for a module instance. -->
    <visible>true</visible>
    <valid>true</valid>
   </parameter>
-  <parameter name="loopback">
-   <type>boolean</type>
-   <value>false</value>
-   <derived>false</derived>
-   <enabled>true</enabled>
-   <visible>true</visible>
-   <valid>true</valid>
-  </parameter>
   <parameter name="deviceFamily">
    <type>java.lang.String</type>
    <value>UNKNOWN</value>
@@ -5883,7 +5875,7 @@ the requested settings for a module instance. -->
   </assignment>
   <assignment>
    <name>embeddedsw.CMacro.TIMESTAMP</name>
-   <value>1634594468</value>
+   <value>1634767759</value>
   </assignment>
   <assignment>
    <name>embeddedsw.dts.compatible</name>
@@ -5903,7 +5895,7 @@ the requested settings for a module instance. -->
   </assignment>
   <assignment>
    <name>embeddedsw.dts.params.timestamp</name>
-   <value>1634594468</value>
+   <value>1634767759</value>
   </assignment>
   <assignment>
    <name>embeddedsw.dts.vendor</name>
@@ -5919,7 +5911,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="timestamp">
    <type>int</type>
-   <value>1634594468</value>
+   <value>1634767759</value>
    <derived>true</derived>
    <enabled>false</enabled>
    <visible>false</visible>

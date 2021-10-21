@@ -13,6 +13,10 @@
 #define MASK_CLR_FIFO 1 << 2
 #define BASE_REG_SET 0
 #define BASE_REG_TARI 1
+#define BASE_REG_TARI_101 3
+#define BASE_REG_TARI_099 4
+#define BASE_REG_TARI_1616 5
+#define BASE_REG_TARI_1584 6
 #define BASE_REG_FIFO 2
 #define BASE_REG_STATUS 3
 #define BASE_RECEIVER_DATA 4
@@ -22,8 +26,24 @@
 #define data_mask_size 6
 #define eop 0b00000000000000000000000000000000
 
-int tari_test = 0b111110100;
+int tari_test = 0b0000000111110100;
+int tari_101  = 0b0000000111111001;
+int	tari_099  = 0b0000000111101111;
+int tari_1616 = 0b0000001100101000;
+int tari_1584 = 0b0000001100011000;
+
 void rfid_set_tari(int tari_value){IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_TARI << 2, tari_value);}
+
+void rfid_set_tari_bounderies(int tari_101, int tari_099, int tari_1616, int tari_1584)
+{
+	IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_TARI_101 << 2, tari_101);
+	IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_TARI_099 << 2, tari_099);
+	IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_TARI_1616 << 2, tari_1616);
+	IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_TARI_1584 << 2, tari_1584);
+}
+
+
+
 
 int  sender_check_fifo_full() { return IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_STATUS << 3) & BASE_IS_FIFO_FULL; }
 void sender_enable(int EN){IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 2, EN);}
@@ -82,6 +102,7 @@ void sender_select_package(int *commands, int size)
 
 
 void receiver_enable(int EN){IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 2, EN);}
+
 int receiver_get_package(){
     return IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_RECEIVER_DATA);
 }
@@ -96,6 +117,7 @@ int main()
     rfid_set_tari(tari_test);
     sender_enable(MASK_EN);
 
+    rfid_set_tari_bounderies(tari_101,tari_099,tari_1616,tari_1584);
     int commands[4];
     commands[0] = 0b11111111111111111111111111111111; //32
     commands[1] = 0b00000000;                         //8
@@ -105,7 +127,7 @@ int main()
     sender_select_package(commands, commands_size);
 
     receiver_enable(MASK_EN_RECEIVER);
-    
+
     int data_received[10];
     int i = 0;
     while(!receiver_empty()){
