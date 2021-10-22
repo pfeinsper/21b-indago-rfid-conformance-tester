@@ -19,9 +19,9 @@
     entity rfid is
         generic (
             -- defining size of data in and clock speed     
-            data_width : natural := 8;
+            data_width : natural := 26;
             tari_width : natural := 16;
-            mask_width : natural := 4;
+            mask_width : natural := 6;
             data_size  : natural :=32
             
         );
@@ -50,9 +50,9 @@
         component FIFO_FM0
         generic (
             -- defining size of data in and clock speed
-            data_width : natural := 8;
+            data_width : natural := 26;
             tari_width : natural := 16;
-            mask_width : natural := 4
+            mask_width : natural := 6
         );
     
         port (

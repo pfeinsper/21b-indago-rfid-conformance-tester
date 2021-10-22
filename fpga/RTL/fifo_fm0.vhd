@@ -17,9 +17,9 @@ use ieee.numeric_std.all;
 entity FIFO_FM0 is
     generic (
         -- defining size of data in and clock speed
-        data_width : natural := 11;
+        data_width : natural := 26;
         tari_width : natural := 16;
-        mask_width : natural := 5
+        mask_width : natural := 6
     );
 
     port (

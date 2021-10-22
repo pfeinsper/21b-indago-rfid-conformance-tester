@@ -7,7 +7,7 @@
 #define MASK_RST (1 << 0)
 #define MASK_EN (1 << 1)
 #define MASK_RST_RECEIVER (1<< 10)
-#define MASK_EN_RECEIVER (1<< 11)
+#define MASK_EN_RECEIVER (1<< 12)
 #define MASK_EMPTY_RECEIVER (1<< 13)
 #define BASE_IS_FIFO_FULL (1<<1)
 #define MASK_CLR_FIFO 1 << 2
@@ -101,7 +101,7 @@ void sender_select_package(int *commands, int size)
 }
 
 
-void receiver_enable(int EN){IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 2, EN);}
+//void receiver_enable(int EN){IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 2, EN);}
 
 int receiver_get_package(){
     return IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_RECEIVER_DATA);
@@ -118,6 +118,7 @@ int main()
     sender_enable(MASK_EN);
 
     rfid_set_tari_bounderies(tari_101,tari_099,tari_1616,tari_1584);
+    //receiver_enable(MASK_EN_RECEIVER);
     int commands[4];
     commands[0] = 0b11111111111111111111111111111111; //32
     commands[1] = 0b00000000;                         //8
@@ -126,7 +127,7 @@ int main()
     int commands_size = sizeof(commands) / sizeof(int);
     sender_select_package(commands, commands_size);
 
-    receiver_enable(MASK_EN_RECEIVER);
+
 
     int data_received[10];
     int i = 0;
