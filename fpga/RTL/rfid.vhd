@@ -134,7 +134,7 @@
         signal receiver_usedw : std_logic_vector(7 downto 0);
 
         signal pin_tx, pin_rx : std_logic := '0';
-        signal loopback   : std_logic := '1';
+        signal loopback   : std_logic := '0';
         begin      
 
         -- enable loopback mode
@@ -153,20 +153,21 @@
 
                         if (avs_write = '1') then
                             case avs_address is
-                            when "000" =>
+                            when "000" => --0
                                 reg_settings  <= avs_writedata;
-                            when "001" =>
+                                loopback <= reg_settings(4);
+                            when "001" => -- 1
                                 reg_send_tari <=  avs_writedata(15 downto 0);
-                            when "010" =>
+                            when "010" => -- 2
                                 fifo_data_in <= avs_writedata(data_size-1 downto 0);
                                 fifo_write_req <= '1';
-                            when "011" =>
+                            when "011" => -- 3
                                 reg_send_tari_101 <=  avs_writedata(15 downto 0);
-                            when "100" =>
+                            when "100" => -- 4
                                 reg_send_tari_099 <=  avs_writedata(15 downto 0);
-                            when "101" =>
+                            when "101" => -- 5
                                 reg_send_tari_1616 <=  avs_writedata(15 downto 0);
-                            when "110" =>
+                            when "110" => -- 6
                                 reg_send_tari_1584 <=  avs_writedata(15 downto 0);
                         
                             when others => null;
@@ -174,19 +175,19 @@
                         
                         elsif(avs_read = '1') then
                             case avs_address is
-                            when "000" =>
+                            when "000" => -- 0
                                 avs_readdata <= reg_settings;
-                            when "001" =>
+                            when "001" => -- 1
                                 avs_readdata(15 downto 0) <= reg_send_tari;
-                            when "011" => 
+                            when "011" => -- 3
                                 avs_readdata <= reg_status;
-                            when "100" =>
+                            when "100" => -- 4
                                 avs_readdata <= receiver_data_out;
                             --when "101" =>
                                -- avs_readdata(1 downto 0) <= receiver_err_decoder;
-                            when "110" =>
+                            when "110" => -- 6
                                 avs_readdata(7 downto 0) <= receiver_usedw;    
-                            when "111" =>
+                            when "111" => -- 7
                                 avs_readdata <= x"FF0055FF";
                             when others => null;
                             end case;
