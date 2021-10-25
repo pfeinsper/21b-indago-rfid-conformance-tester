@@ -1,124 +1,124 @@
-	-----------------------------------------
-	--              FIFO FM0               --
-	-- Projeto Final de Engenharia         --
-	-- Professor Orientador: Rafael Corsi  --
-	-- Orientador: Shephard                --
-	-- Alunos:                             --
-	-- 		Alexandre Edington             --
-	-- 		Bruno Domingues                --
-	-- 		Lucas Leal                     --
-	-- 		Rafael Santos                  --
-	-----------------------------------------
+-----------------------------------------
+--              FIFO FM0               --
+-- Projeto Final de Engenharia         --
+-- Professor Orientador: Rafael Corsi  --
+-- Orientador: Shephard                --
+-- Alunos:                             --
+-- 		Alexandre Edington             --
+-- 		Bruno Domingues                --
+-- 		Lucas Leal                     --
+-- 		Rafael Santos                  --
+-----------------------------------------
 
-library ieee;
-use ieee.std_logic_1164.all;
-use ieee.numeric_std.all;
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+USE ieee.numeric_std.ALL;
 
-entity FIFO_FM0 is
-    generic (
+ENTITY FIFO_FM0 IS
+    GENERIC (
         -- defining size of data in and clock speed
-        data_width : natural := 26;
-        tari_width : natural := 16;
-        mask_width : natural := 6
+        data_width : NATURAL := 26;
+        tari_width : NATURAL := 16;
+        mask_width : NATURAL := 6
     );
 
-    port (
+    PORT (
         -- flags
-        clk : in std_logic;
+        clk : IN STD_LOGIC;
+
         -- fm0
-        rst_fm0 : in std_logic;
-        enable_fm0 : in std_logic;
-		encoder_ended : out std_logic;
+        rst_fm0 : IN STD_LOGIC;
+        enable_fm0 : IN STD_LOGIC;
+        encoder_ended : OUT STD_LOGIC;
 
         -- fifo
-        clear_fifo : in std_logic;
-        fifo_write_req : in std_logic;
-        is_fifo_full : out std_logic;
+        clear_fifo : IN STD_LOGIC;
+        fifo_write_req : IN STD_LOGIC;
+        is_fifo_full : OUT STD_LOGIC;
 
         -- config
-        tari : in std_logic_vector(tari_width-1 downto 0);
+        tari : IN STD_LOGIC_VECTOR(tari_width - 1 DOWNTO 0);
 
         -- data
-        data : in std_logic_vector(31 downto 0);
+        data : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
 
         -- output
-        q : out std_logic
+        q : OUT STD_LOGIC
     );
 
-end entity;
-
-
-architecture arch of FIFO_FM0 is
-    component fm0_encoder
-        generic (
-                -- defining size of data in and clock speed
-                data_width : natural := data_width;
-                tari_width : natural := tari_width;
-                mask_width : natural := mask_width
+END ENTITY;
+ARCHITECTURE arch OF FIFO_FM0 IS
+    COMPONENT fm0_encoder
+        GENERIC (
+            -- defining size of data in and clock speed
+            data_width : NATURAL := data_width;
+            tari_width : NATURAL := tari_width;
+            mask_width : NATURAL := mask_width
         );
-        port (
+
+        PORT (
             -- flags 
-            clk : in std_logic;
-            rst : in std_logic;
-            enable : in std_logic;
-            finished_sending : out std_logic;
+            clk : IN STD_LOGIC;
+            rst : IN STD_LOGIC;
+            enable : IN STD_LOGIC;
+            finished_sending : OUT STD_LOGIC;
 
             -- config
-            tari : in std_logic_vector(tari_width-1 downto 0);
+            tari : IN STD_LOGIC_VECTOR(tari_width - 1 DOWNTO 0);
 
             -- fifo data
-            is_fifo_empty    : in std_logic;
-            data_in          : in std_logic_vector((data_width + mask_width)-1 downto 0); -- format expected : ddddddddmmmm
-            request_new_data : out std_logic;
+            is_fifo_empty : IN STD_LOGIC;
+            data_in : IN STD_LOGIC_VECTOR((data_width + mask_width) - 1 DOWNTO 0); -- format expected : ddddddddmmmm
+            request_new_data : OUT STD_LOGIC;
 
             -- output
-            data_out : out std_logic
+            data_out : OUT STD_LOGIC
         );
-    end component;
+    END COMPONENT;
 
-    component fifo_32_32 IS
-            port
-                (
-                    clock		: IN STD_LOGIC ;
-                    data		: IN STD_LOGIC_VECTOR (31 DOWNTO 0);
-                    rdreq		: IN STD_LOGIC ;
-                    sclr		: IN STD_LOGIC ;
-                    wrreq		: IN STD_LOGIC ;
-                    empty		: OUT STD_LOGIC ;
-                    full		: OUT STD_LOGIC ;
-                    q		    : OUT STD_LOGIC_VECTOR (31 DOWNTO 0);
-                    usedw		: OUT STD_LOGIC_VECTOR (7 DOWNTO 0)
-                );
-        end component;
+    COMPONENT fifo_32_32 IS
+        PORT (
+            clock : IN STD_LOGIC;
+            data : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+            rdreq : IN STD_LOGIC;
+            sclr : IN STD_LOGIC;
+            wrreq : IN STD_LOGIC;
+            empty : OUT STD_LOGIC;
+            full : OUT STD_LOGIC;
+            q : OUT STD_LOGIC_VECTOR (31 DOWNTO 0)
+            -- usedw		: OUT STD_LOGIC_VECTOR (7 DOWNTO 0)
+        );
+    END COMPONENT;
 
-    signal fifo_out : std_logic_vector(31 downto 0);
-    signal is_fifo_empty, request_new_data, data_out, wrfull : std_logic := '0';
-	 signal usedw : std_logic_vector(7 downto 0);
-		
-    begin
-        fifo : fifo_32_32 port map (
-			sclr    => clear_fifo,
-			data    => data,
-			clock   => clk,
-			wrreq   => fifo_write_req,
-			rdreq   => request_new_data,
-            q       => fifo_out,
-            empty   => is_fifo_empty,
-            full    => wrfull,
-            usedw   => usedw  );
+    SIGNAL fifo_out : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL is_fifo_empty, request_new_data, data_out, wrfull : STD_LOGIC := '0';
+    -- signal usedw : std_logic_vector(7 downto 0);
 
-        fm0 : fm0_encoder port map (
-            clk => clk,
-            rst => rst_fm0,
-            finished_sending => encoder_ended,
-            enable => enable_fm0,
-            tari => tari,
-            data_out => data_out,
-            is_fifo_empty => is_fifo_empty,
-            data_in => fifo_out((data_width+mask_width)-1 downto 0),
-            request_new_data => request_new_data  );
+BEGIN
+    fifo : fifo_32_32 PORT MAP(
+        sclr => clear_fifo,
+        data => data,
+        clock => clk,
+        wrreq => fifo_write_req,
+        rdreq => request_new_data,
+        q => fifo_out,
+        empty => is_fifo_empty,
+        full => wrfull
+        -- usedw   => usedw  
+    );
 
-        q <= data_out;
-        is_fifo_full <= wrfull;
+    fm0 : fm0_encoder PORT MAP(
+        clk => clk,
+        rst => rst_fm0,
+        finished_sending => encoder_ended,
+        enable => enable_fm0,
+        tari => tari,
+        data_out => data_out,
+        is_fifo_empty => is_fifo_empty,
+        data_in => fifo_out((data_width + mask_width) - 1 DOWNTO 0),
+        request_new_data => request_new_data);
 
-end arch ; -- arch
+    q <= data_out;
+    is_fifo_full <= wrfull;
+
+END arch; -- arch
