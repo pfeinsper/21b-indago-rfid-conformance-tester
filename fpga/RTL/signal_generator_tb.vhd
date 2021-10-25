@@ -1,12 +1,12 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
-entity transmit_mask_tb is
-end entity transmit_mask_tb;
+entity signal_generator_tb is
+end entity signal_generator_tb;
 
-architecture tb of transmit_mask_tb is
+architecture tb of signal_generator_tb is
 
-	component transmit_mask is
+	component signal_generator is
         generic (
             -- defining size of data in and clock speed
             tari_width       : natural := 16;
@@ -71,7 +71,7 @@ architecture tb of transmit_mask_tb is
 			wait;
 		end process;
 
-		generator : transmit_mask port map (
+		generator : signal_generator port map (
 			clk => clk,
 			rst => '0',
 			enable => '1',

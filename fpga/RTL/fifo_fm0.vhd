@@ -25,12 +25,12 @@ entity FIFO_FM0 is
     port (
         -- flags
         clk : in std_logic;
-            -- fm0
+        -- fm0
         rst_fm0 : in std_logic;
         enable_fm0 : in std_logic;
-		finished_sending_fm0 : out std_logic;
+		encoder_ended : out std_logic;
 
-            -- fifo
+        -- fifo
         clear_fifo : in std_logic;
         fifo_write_req : in std_logic;
         is_fifo_full : out std_logic;
@@ -110,7 +110,7 @@ architecture arch of FIFO_FM0 is
         fm0 : fm0_encoder port map (
             clk => clk,
             rst => rst_fm0,
-            finished_sending => finished_sending_fm0,
+            finished_sending => encoder_ended,
             enable => enable_fm0,
             tari => tari,
             data_out => data_out,

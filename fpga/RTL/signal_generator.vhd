@@ -15,7 +15,7 @@
     use ieee.std_logic_1164.all;
     use ieee.numeric_std.all;
     
-    entity transmit_mask is
+    entity Signal_Generator is
         generic (
             -- defining size of data in and clock speed
             tari_width       : natural := 16;
@@ -48,7 +48,7 @@
     end entity;
     
     
-    architecture arch of transmit_mask is
+    architecture arch of Signal_Generator is
         ------------------------------
         --          values          --
         ------------------------------
