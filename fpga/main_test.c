@@ -68,9 +68,7 @@ int main()
 
     while (1)
     {
-        int is_connected = rfid_start_default_communication();
-
-        if (is_connected)
+        if (rfid_start_default_communication())
         {
             // Test the tag and stores its data or even edit it inside rfid_start_test
             rfid_start_test();

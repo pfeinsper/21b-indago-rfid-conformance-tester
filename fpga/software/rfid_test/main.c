@@ -33,6 +33,7 @@
 #define data_mask_size      6
 #define data_package_size   26
 #define eop                 0b00000000000000000000000000000000
+#define bits26              0b11111111111111111111111111
 
 int tari_test = 0x1f4;
 int tari_101  = 0x1f9;
@@ -49,7 +50,7 @@ void rfid_set_tari_bounderies(int tari_101, int tari_099, int tari_1616, int tar
 	IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_TARI_1616 << 2, tari_1616);
 	IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_TARI_1584 << 2, tari_1584);
 }
-void rfid_set_loopback(int EN_LOOPBACK){IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 2, EN_LOOPBACK);}
+//void rfid_set_loopback(int EN_LOOPBACK){IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET, EN_LOOPBACK);}
 
 
 
@@ -69,7 +70,7 @@ void sender_mount_package(int command, int size)
         if (remain_bits_to_send > data_package_size)
         {
 
-            int data_to_fifo = remain_package & 0b11111111111111111111111111; // 26 bits, ive tried in hex but got an error might be the conversion
+            int data_to_fifo = remain_package & bits26; // 26 bits, ive tried in hex but got an error might be the conversion
             remain_package = remain_package >> 0x1A;
             int32_t to_fifo = data_to_fifo << 6 | 0x1A;
 
@@ -126,7 +127,7 @@ int main()
 {
     rfid_set_tari(tari_test);
     sender_enable(MASK_EN);
-    rfid_set_loopback(MASK_EN_LOOPBACK);
+    //rfid_set_loopback(MASK_EN_LOOPBACK);
     rfid_set_tari_bounderies(tari_101,tari_099,tari_1616,tari_1584);
     //receiver_enable(MASK_EN_RECEIVER);
     int commands[4];
