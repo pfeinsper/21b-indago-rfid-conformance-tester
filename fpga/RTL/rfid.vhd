@@ -137,6 +137,8 @@
         signal loopback   : std_logic := '0';
         begin      
 
+        -- rfid_tx
+        -- rfid_rx w
         -- enable loopback mode
         pin_rx <= rfid_rx when loopback = '0' else
                   pin_tx;
@@ -215,7 +217,7 @@
             rst      => reg_settings(11), -- done
             enable   => reg_settings(12), -- done
             -- data in from DUT 
-            data_DUT => pin_rx, -- EDITAR PARA A ENTRADA DA TAG
+            data_DUT => rfid_rx, -- EDITAR PARA A ENTRADA DA TAG
             -----------------------------------
             -- DECODER
             -- config
