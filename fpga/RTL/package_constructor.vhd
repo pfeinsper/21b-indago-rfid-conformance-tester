@@ -53,7 +53,7 @@ architecture arch of package_constructor is
                 if (rst = '1') then
                     write_request_out <= '0';
                     data <= (others => '0');
-                    mask <= (others => '0');
+                    mask_integer <= 0;
                 elsif rising_edge(clk) then
                     write_request_out <= '0';
                     
