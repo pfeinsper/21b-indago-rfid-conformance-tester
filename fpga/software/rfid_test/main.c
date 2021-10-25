@@ -5,31 +5,33 @@
 #include "sys/wait.h"
 
 // REGISTER STATUS
-#define BASE_REG_STATUS     3
+
 #define BASE_IS_FIFO_FULL   (1<<1)
 #define MASK_EMPTY_RECEIVER (1 << 13)
 // REGISTER SETTINGS
-#define BASE_REG_SET        0
+#define BASE_REG_SET        0        // can be read in the same address 
 #define MASK_RST            (1 << 0)
 #define MASK_EN             (1 << 1)
 #define MASK_RST_RECEIVER   (1<< 10)
 #define MASK_EN_RECEIVER    (1<< 12)
 #define MASK_CLR_FIFO       (1 << 2)
-// RFID
-#define MASK_EN_LOOPBACK    (1 << 3)
-#define BASE_REG_TARI       1
+// RFID - WRITE
+#define BASE_REG_TARI       1        // can be read in the same address 
 #define BASE_REG_FIFO       2
 #define BASE_REG_TARI_101   3
 #define BASE_REG_TARI_099   4
-#define BASE_RECEIVER_DATA  4
 #define BASE_REG_TARI_1616  5
 #define BASE_REG_TARI_1584  6
-
-
+// RFID - READ
+#define MASK_EN_LOOPBACK    (1 << 3)
+#define BASE_REG_STATUS     3
+#define BASE_RECEIVER_DATA  4
+#define BASE_RECEIVER_USEDW 6
 #define BASE_ID             7
-#define PACKET_STD_SIZE     12
-#define data_package_size   26
+
+// package defines
 #define data_mask_size      6
+#define data_package_size   26
 #define eop                 0b00000000000000000000000000000000
 
 int tari_test = 0x1f4;
@@ -66,7 +68,8 @@ void sender_mount_package(int command, int size)
     {
         if (remain_bits_to_send > data_package_size)
         {
-            int data_to_fifo = remain_package & 0x1A;
+
+            int data_to_fifo = remain_package & 0b11111111111111111111111111; // 26 bits, ive tried in hex but got an error might be the conversion
             remain_package = remain_package >> 0x1A;
             int32_t to_fifo = data_to_fifo << 6 | 0x1A;
 
@@ -127,7 +130,7 @@ int main()
     rfid_set_tari_bounderies(tari_101,tari_099,tari_1616,tari_1584);
     //receiver_enable(MASK_EN_RECEIVER);
     int commands[4];
-    commands[0] = 0b11111111111111111111111111111111; //32
+    commands[0] = 0b111111111111111111111111111; //32
 
     int commands_size = sizeof(commands) / sizeof(int);
     sender_select_package(commands, commands_size);
