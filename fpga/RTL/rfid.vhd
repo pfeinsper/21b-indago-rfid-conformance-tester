@@ -127,7 +127,7 @@ architecture arch of rfid is
     
         -- reg
     signal reg_settings : std_logic_vector(31 downto 0) := (others => '0');
-        signal reg_status   : std_logic_vector(31 downto 0) := (others => '0');
+    signal reg_status   : std_logic_vector(31 downto 0) := (others => '0');
     signal reg_send_tari, reg_send_tari_101, reg_send_tari_099, reg_send_tari_1616, reg_send_tari_1584 : std_logic_vector(15 downto 0);
         
         -- fifo
@@ -140,7 +140,7 @@ architecture arch of rfid is
 
         -- other signals
     signal pin_tx, pin_rx : std_logic := '0';
-    signal loopback       : std_logic := '0';
+    signal loopback       : std_logic := '1';
         
     begin      
 
@@ -163,7 +163,7 @@ architecture arch of rfid is
                         case avs_address is
                         when "000" => --0
                             reg_settings  <= avs_writedata;
-                            loopback <= reg_settings(4);
+                            --loopback <= reg_settings(4);
                         when "001" => -- 1
                             reg_send_tari <=  avs_writedata(15 downto 0);
                         when "010" => -- 2
