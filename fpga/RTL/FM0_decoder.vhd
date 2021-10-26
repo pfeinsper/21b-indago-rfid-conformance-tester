@@ -90,7 +90,6 @@ architecture arch of FM0_decoder is
 		tari_0505_value <= to_integer(unsigned(tari_101(tari_width-1 downto 1)));
 		tari_0495_value <= to_integer(unsigned(tari_099(tari_width-1 downto 1)));
 
-
 		decoder_controller: process ( clk, rst, enable )
 			begin
 				if (rst = '1') then
