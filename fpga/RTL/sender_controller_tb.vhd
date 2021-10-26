@@ -94,7 +94,6 @@ architecture tb of sender_controller_tb is
             wait for 20 us;
             encoder_ended <= '1';
             wait for clk_period;
-
             
         end process ; -- encoder
 

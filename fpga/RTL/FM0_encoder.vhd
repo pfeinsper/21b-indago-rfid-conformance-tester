@@ -27,6 +27,7 @@ entity FM0_encoder is
         clk : in std_logic;
         rst : in std_logic;
         enable : in std_logic;
+        start_encoder : in std_logic;
         finished_sending : out std_logic;
 
         -- config
@@ -104,8 +105,9 @@ architecture arch of FM0_encoder is
                     case state_controller is
                         when c_wait =>
                             request_new_data <= '0';
-                            
-                            if (is_fifo_empty = '0') then
+                            -- might be an issue if start encoder is 1 and is fifo empty is 1 too, because sender
+                            -- controller will wait eternaly for a flag (Arfel)
+                            if (is_fifo_empty = '0' and start_encoder = '1') then
                                 state_controller <= c_send;
                                 data_sender_start <= '1';
                             end if;

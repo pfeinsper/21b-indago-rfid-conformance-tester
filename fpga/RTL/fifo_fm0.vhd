@@ -28,6 +28,7 @@ entity FIFO_FM0 is
         -- fm0
         rst_fm0 : in std_logic;
         enable_fm0 : in std_logic;
+        start_encoder : in std_logic;
 		encoder_ended : out std_logic;
 
         -- fifo
@@ -62,6 +63,7 @@ architecture arch of FIFO_FM0 is
             clk : in std_logic;
             rst : in std_logic;
             enable : in std_logic;
+            start_encoder : in std_logic;
             finished_sending : out std_logic;
 
             -- config
@@ -105,7 +107,8 @@ architecture arch of FIFO_FM0 is
             q       => fifo_out,
             empty   => is_fifo_empty,
             full    => wrfull,
-            usedw   => usedw  );
+            usedw   => usedw
+        );
 
         fm0 : fm0_encoder port map (
             clk => clk,
@@ -116,7 +119,9 @@ architecture arch of FIFO_FM0 is
             data_out => data_out,
             is_fifo_empty => is_fifo_empty,
             data_in => fifo_out((data_width+mask_width)-1 downto 0),
-            request_new_data => request_new_data  );
+            request_new_data => request_new_data,
+            start_encoder => start_encoder
+        );
 
         q <= data_out;
         is_fifo_full <= wrfull;

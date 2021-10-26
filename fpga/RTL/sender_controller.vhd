@@ -17,18 +17,19 @@
     entity sender_controller is
         port (
             -- flags
-            clk : in std_logic;
-            rst : in std_logic;
-            enable : in std_logic;
-            start : in std_logic;
+            clk                    : in std_logic;
+            rst                    : in std_logic;
+            enable                 : in std_logic;
+            start                  : in std_logic;
             signal_generator_ended : in std_logic;
-            encoder_ended : in std_logic;
-            has_gen : in std_logic;
-            clr_finished_sending : in std_logic;
+            encoder_ended          : in std_logic;
+            has_gen                : in std_logic;
+            clr_finished_sending   : in std_logic;
+            mux                    : in std_logic;
             
             finished_sending : out std_logic := '0';
-            start_encoder : out std_logic := '0';
-            start_generator : out std_logic := '0'
+            start_encoder    : out std_logic := '0';
+            start_generator  : out std_logic := '0'
         );
     
     end entity;
@@ -61,6 +62,7 @@
                         end if ;
                     
                     when c_wait_generator =>
+                        mux <= '0';
                         start_generator <= '0';
                         if (signal_generator_ended = '1') then
                             state_controller <= c_wait_encoder;
@@ -68,6 +70,7 @@
                         end if ;
 
                     when c_wait_encoder =>
+                        mux <= '1';
                         start_encoder <= '0';
                         if (encoder_ended = '1') then
                             state_controller <= c_wait;

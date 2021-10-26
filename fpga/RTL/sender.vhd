@@ -82,7 +82,9 @@
                 -- fm0
                 rst_fm0 : in std_logic;
                 enable_fm0 : in std_logic;
+                start_encoder : in std_logic;
                 encoder_ended : out std_logic;
+
                 -- fifo
                 clear_fifo : in std_logic;
                 fifo_write_req : in std_logic;
@@ -151,7 +153,7 @@
         
         end component;
 
-        signal encoder_ended, generator_ended, generator_out, encoder_out, signal_generator_ended, start_encoder, start_generator : std_logic := '0';
+        signal encoder_ended, generator_ended, generator_out, encoder_out, signal_generator_ended, start_encoder, start_generator, mux : std_logic := '0';
     
         begin
             controller: sender_controller port map (
@@ -165,7 +167,8 @@
                 start_generator => start_generator,
                 clr_finished_sending => clr_finished_sending,
                 finished_sending => finished_sending,
-                start => start_controller
+                start => start_controller,
+                mux => mux
             );
 
 
@@ -196,7 +199,11 @@
                 tari           => tari,
                 data           => data,
                 usedw          => usedw,
-                q              => encoder_out  
+                q              => encoder_out,
+                start_encoder  => start_encoder 
             );
+
+            q <= encoder_out when mux = '1' else
+                 generator_out;
     
     end arch ; -- arch
