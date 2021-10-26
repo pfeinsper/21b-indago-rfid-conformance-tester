@@ -41,6 +41,7 @@
             clear_fifo : in std_logic;
             fifo_write_req : in std_logic;
             is_fifo_full : out std_logic;
+            usedw : out std_logic_vector(7 downto 0);
 
             -- controller
             has_gen : in std_logic;
@@ -54,13 +55,7 @@
             pw   : in std_logic_vector(pw_width-1 downto 0);
             delimiter   : in std_logic_vector(delimiter_width-1 downto 0);
             RTcal   : in std_logic_vector(RTcal_width-1 downto 0);
-            TRcal   : in std_logic_vector(TRcal_width-1 downto 0);
-
-
-
-
-
-            
+            TRcal   : in std_logic_vector(TRcal_width-1 downto 0);           
     
             -- data
             data : in std_logic_vector(31 downto 0);
@@ -92,6 +87,7 @@
                 clear_fifo : in std_logic;
                 fifo_write_req : in std_logic;
                 is_fifo_full : out std_logic;
+                usedw : out std_logic_vector(7 downto 0);
         
                 -- config
                 tari : in std_logic_vector(tari_width-1 downto 0);
@@ -199,6 +195,7 @@
                 is_fifo_full   => is_fifo_full,
                 tari           => tari,
                 data           => data,
+                usedw          => usedw,
                 q              => encoder_out  
             );
     
