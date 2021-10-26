@@ -65,12 +65,12 @@ architecture tb of fm0_decoder_tb is
 	);
 
 	end component;
+	-- 11001001100100101101010101100111
 
-	signal clk, eop, error_out, data_out, is_fifo_empty, request_new_data, encoded_data : std_logic := '0';
-	signal data : std_logic_vector(25 downto 0) := (others => '1');
-	signal data_in : std_logic_vector(31 downto 0) := (others => '0');
-	signal mask : std_logic_vector(5 downto 0) := "011010";
+	signal clk, eop, error_out, data_out, data_DUT, current_bit : std_logic := '0';
+	constant data_to_be_received : std_logic_vector(31 downto 0) := "11001001100100101101010101100111";
 	constant clk_period : time := 20 ns;
+	constant tari : time := 10 us;
 
 
 	begin
@@ -83,28 +83,30 @@ architecture tb of fm0_decoder_tb is
 			wait for clk_period/2;  --for next 0.5 ns signal is '1'.
 		end process;
 
-		fifo : process ( request_new_data )
-		variable quant_packages : integer range 0 to 3 := 3;
+		DUT : process
+		variable i : integer range 0 to 40 := 0;
+		variable prev_value : std_logic := '1';
 		begin
-			if (rising_edge(request_new_data)) then
-				if (quant_packages > 0) then
-					is_fifo_empty <= '0';
-					if (quant_packages = 3) then
-						data <= "01011101111010111001110101";
-						mask <= "011010";
-					elsif (quant_packages = 2) then
-						data <= "10111101010010110110001101";
-						mask <= "011010";
-					elsif (quant_packages = 1) then
-						data <= "00000001010001001000100111";
-						mask <= "000000";
-					end if;
-					quant_packages := quant_packages - 1;
-				else
-					is_fifo_empty <= '1';
-				end if;
-			end if;
-		end process;
+			current_bit <= data_to_be_received(i); 
+			if (current_bit = '1') then
+				data_DUT <= prev_value;
+				wait for tari;
+				prev_value := not prev_value;
+			else
+				data_DUT <= prev_value;
+				wait for tari/2;
+				data_DUT <= not prev_value;
+				wait for tari/2;
+			end if ;
+			i := i + 1;
+			if (i = 32) then
+				current_bit <= '0';
+				data_DUT <= '0';
+				wait;
+			end if ;
+			
+			
+		end process ; -- DUT
 		
 		decoder : fm0_decoder port map (
 			clk => clk,
@@ -118,19 +120,6 @@ architecture tb of fm0_decoder_tb is
 			data_out => data_out,
 			eop => eop,
 			err => error_out,
-			data_in => encoded_data );
-		
-		encoder : fm0_encoder port map (
-			clk => clk,
-			rst => '0',
-			enable => '1',
-			tari => "0000000111110100", -- tari = 10 us
-			data_out => encoded_data,
-			is_fifo_empty => is_fifo_empty,
-			data_in => data_in,
-			request_new_data => request_new_data  );
-		
-	   
-		data_in <= data & mask;
-	
+			data_in => data_DUT );
+			
 end tb;

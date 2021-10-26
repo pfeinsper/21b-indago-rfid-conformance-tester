@@ -66,7 +66,7 @@ architecture arch of FM0_decoder is
 	signal clock_start, clear_counter : std_logic := '0';
 	
 	signal prev_bit_c, prev_bit_d : std_logic := '0';
-	signal clocks_counted : integer range 0 to 10000;
+	signal clocks_counted : integer range 0 to 50000;
 
 	------------------------------
 	--          states          --
@@ -128,7 +128,8 @@ architecture arch of FM0_decoder is
 						when d_wait =>
 							data_ready        <= '0';
 							data_receiver_end <= '0';
-							clear_counter     <= '1'; 				
+							clear_counter     <= '1';
+							eop <= '0';			
 							if (data_receiver_start = '1') then
 								prev_bit_d <= data_in;
 								state_decoder <= d_start_counter;
