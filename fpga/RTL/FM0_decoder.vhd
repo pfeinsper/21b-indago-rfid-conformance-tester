@@ -63,7 +63,7 @@ architecture arch of FM0_decoder is
 	signal data_receiver_start : std_logic := '0';
 	signal data_receiver_end   : std_logic := '0';
 
-	signal clock_start, clock_kabum, clear_counter : std_logic := '0';
+	signal clock_start, clear_counter : std_logic := '0';
 	
 	signal prev_bit_c, prev_bit_d : std_logic := '0';
 	signal clocks_counted : integer range 0 to 10000;
@@ -91,7 +91,7 @@ architecture arch of FM0_decoder is
 		tari_0495_value <= to_integer(unsigned(tari_099(tari_width-1 downto 1)));
 
 
-		decoder_controller: process ( clk, rst )
+		decoder_controller: process ( clk, rst, enable )
 			begin
 				if (rst = '1') then
 					state_controller  <= c_wait;
@@ -119,7 +119,7 @@ architecture arch of FM0_decoder is
 		end process;
 
 		-- Decoder State Machine -> based on our diagram available in the github diagrams folder
-		decoder_data: process ( clk, rst )
+		decoder_data: process ( clk, rst, enable )
 			begin
 				if (rst = '1') then
 					state_decoder  <= d_wait;
@@ -238,13 +238,11 @@ architecture arch of FM0_decoder is
 		begin
 			if (rst = '1') then
 				clocks_counted <= 0;
-				clock_kabum <= '0';
 			elsif (rising_edge(clk)) then
 				if (clear_counter = '1') then
 					clocks_counted <= 0;
 				end if ;
 				if (clock_start = '1') then
-					clock_kabum <= '0';
 					clocks_counted <= clocks_counted + 1;
 				end if ;
 			end if ;
