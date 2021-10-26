@@ -25,8 +25,8 @@
             encoder_ended          : in std_logic;
             has_gen                : in std_logic;
             clr_finished_sending   : in std_logic;
-            mux                    : in std_logic;
             
+            mux              : out std_logic;
             finished_sending : out std_logic := '0';
             start_encoder    : out std_logic := '0';
             start_generator  : out std_logic := '0'

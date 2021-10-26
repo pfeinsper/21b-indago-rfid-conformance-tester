@@ -30,32 +30,32 @@
     
         port (
             -- flags
-            clk : in std_logic;
+            clk                  : in std_logic;
             clr_finished_sending : in std_logic;
-            enable : in std_logic;
-            rst : in std_logic;
+            enable               : in std_logic;
+            rst                  : in std_logic;
 
             finished_sending : out std_logic;
 
             -- fifo
-            clear_fifo : in std_logic;
+            clear_fifo     : in std_logic;
             fifo_write_req : in std_logic;
-            is_fifo_full : out std_logic;
-            usedw : out std_logic_vector(7 downto 0);
+            is_fifo_full   : out std_logic;
+            usedw          : out std_logic_vector(7 downto 0);
 
             -- controller
-            has_gen : in std_logic;
+            has_gen          : in std_logic;
             start_controller : in std_logic;
 
             -- generator
             is_preamble : in std_logic;
     
             -- config
-            tari : in std_logic_vector(tari_width-1 downto 0);
-            pw   : in std_logic_vector(pw_width-1 downto 0);
-            delimiter   : in std_logic_vector(delimiter_width-1 downto 0);
-            RTcal   : in std_logic_vector(RTcal_width-1 downto 0);
-            TRcal   : in std_logic_vector(TRcal_width-1 downto 0);           
+            tari      : in std_logic_vector(tari_width-1 downto 0);
+            pw        : in std_logic_vector(pw_width-1 downto 0);
+            delimiter : in std_logic_vector(delimiter_width-1 downto 0);
+            RTcal     : in std_logic_vector(RTcal_width-1 downto 0);
+            TRcal     : in std_logic_vector(TRcal_width-1 downto 0);           
     
             -- data
             data : in std_logic_vector(31 downto 0);
@@ -79,17 +79,18 @@
             port (
                 -- flags
                 clk : in std_logic;
+
                 -- fm0
-                rst_fm0 : in std_logic;
-                enable_fm0 : in std_logic;
+                rst_fm0       : in std_logic;
+                enable_fm0    : in std_logic;
                 start_encoder : in std_logic;
                 encoder_ended : out std_logic;
 
                 -- fifo
-                clear_fifo : in std_logic;
+                clear_fifo     : in std_logic;
                 fifo_write_req : in std_logic;
-                is_fifo_full : out std_logic;
-                usedw : out std_logic_vector(7 downto 0);
+                is_fifo_full   : out std_logic;
+                usedw          : out std_logic_vector(7 downto 0);
         
                 -- config
                 tari : in std_logic_vector(tari_width-1 downto 0);
@@ -105,18 +106,19 @@
         component sender_controller is
             port (
                 -- flags
-                clk : in std_logic;
-                rst : in std_logic;
-                enable : in std_logic;
+                clk                    : in std_logic;
+                rst                    : in std_logic;
+                enable                 : in std_logic;
                 signal_generator_ended : in std_logic;
-                encoder_ended : in std_logic;
-                has_gen : in std_logic;
-                clr_finished_sending : in std_logic;
-                start : in std_logic;
+                encoder_ended          : in std_logic;
+                has_gen                : in std_logic;
+                clr_finished_sending   : in std_logic;
+                start                  : in std_logic;
                 
+                mux              : out std_logic;
                 finished_sending : out std_logic;
-                start_encoder : out std_logic;
-                start_generator : out std_logic
+                start_encoder    : out std_logic;
+                start_generator  : out std_logic
             );
         
         end component;
@@ -133,10 +135,10 @@
         
             port (
                 -- flags
-                clk : in std_logic;
-                rst : in std_logic;
-                enable : in std_logic;
-                start_send : in std_logic;
+                clk         : in std_logic;
+                rst         : in std_logic;
+                enable      : in std_logic;
+                start_send  : in std_logic;
                 is_preamble : in std_logic; -- if 1 is preamble, else is frame - sync 
     
                 -- config
@@ -148,7 +150,7 @@
                 
                 -- output
                 has_ended : out std_logic := '0';
-                data_out : out std_logic := '0'
+                data_out  : out std_logic := '0'
             );
         
         end component;
@@ -157,34 +159,34 @@
     
         begin
             controller: sender_controller port map (
-                clk => clk,
-                rst => rst,
-                enable => '1',
+                clk                    => clk,
+                rst                    => rst,
+                enable                 => enable,
                 signal_generator_ended => signal_generator_ended,
-                encoder_ended => encoder_ended,
-                has_gen => has_gen,
-                start_encoder => start_encoder,
-                start_generator => start_generator,
-                clr_finished_sending => clr_finished_sending,
-                finished_sending => finished_sending,
-                start => start_controller,
-                mux => mux
+                encoder_ended          => encoder_ended,
+                has_gen                => has_gen,
+                start_encoder          => start_encoder,
+                start_generator        => start_generator,
+                mux                    => mux,
+                clr_finished_sending   => clr_finished_sending,
+                finished_sending       => finished_sending,
+                start                  => start_controller
             );
 
 
             generator : signal_generator port map (
-                clk => clk,
-                rst => rst,
-                enable => enable,
-                start_send => start_generator,
+                clk         => clk,
+                rst         => rst,
+                enable      => enable,
+                start_send  => start_generator,
                 is_preamble => is_preamble,
-                tari => tari,
-                pw => pw,
-                delimiter => delimiter,
-                RTcal => RTcal,
-                TRcal => TRcal,
-                has_ended => signal_generator_ended,
-                data_out => generator_out
+                tari        => tari,
+                pw          => pw,
+                delimiter   => delimiter,
+                RTcal       => RTcal,
+                TRcal       => TRcal,
+                has_ended   => signal_generator_ended,
+                data_out    => generator_out
             );
 
 

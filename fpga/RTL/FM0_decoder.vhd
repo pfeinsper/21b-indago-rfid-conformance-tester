@@ -23,17 +23,17 @@ entity FM0_decoder is
 
 	port (
 		-- flags
-		clk : in std_logic;
-		rst : in std_logic;
-		enable : in std_logic;
+		clk     : in std_logic;
+		rst     : in std_logic;
+		enable  : in std_logic;
 		clr_err : in std_logic;
-
+ 
 		err : out std_logic := '0';
 		eop : out std_logic := '0';
 
 		-- config
-		tari_101 : in std_logic_vector(tari_width-1 downto 0); -- 1% above tari
-		tari_099 : in std_logic_vector(tari_width-1 downto 0); -- 1% below tari
+		tari_101  : in std_logic_vector(tari_width-1 downto 0); -- 1% above tari
+		tari_099  : in std_logic_vector(tari_width-1 downto 0); -- 1% below tari
 		tari_1616 : in std_logic_vector(tari_width-1 downto 0); -- 1% above 1.6 tari
 		tari_1584 : in std_logic_vector(tari_width-1 downto 0); -- 1% below 1.6 tari
 
@@ -41,7 +41,7 @@ entity FM0_decoder is
 
 		-- output
 		data_ready : out std_logic := '0';
-		data_out : out std_logic := '0'
+		data_out   : out std_logic := '0'
 	);
 
 end entity;
@@ -66,7 +66,7 @@ architecture arch of FM0_decoder is
 	signal clock_start, clear_counter : std_logic := '0';
 	
 	signal prev_bit_c, prev_bit_d : std_logic := '0';
-	signal clocks_counted : integer range 0 to 50000;
+	signal clocks_counted         : integer range 0 to 50000;
 
 	------------------------------
 	--          states          --
@@ -75,7 +75,7 @@ architecture arch of FM0_decoder is
 	signal state_controller	: state_type_controller := c_wait;
 	
 	type state_type_decoder is (d_wait, d_start_counter, d_start_counter2, d_wait_counter, d_wait_counter2, d_check_counter,d_check_counter2,  d_continue_counter, d_error, d_pass_1_01_tari, d_counter_cs);
-	signal state_decoder     : state_type_decoder := d_wait;
+	signal state_decoder    : state_type_decoder := d_wait;
 
 
 	begin

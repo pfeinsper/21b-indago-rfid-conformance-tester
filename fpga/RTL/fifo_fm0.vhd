@@ -111,16 +111,16 @@ architecture arch of FIFO_FM0 is
         );
 
         fm0 : fm0_encoder port map (
-            clk => clk,
-            rst => rst_fm0,
+            clk              => clk,
+            rst              => rst_fm0,
             finished_sending => encoder_ended,
-            enable => enable_fm0,
-            tari => tari,
-            data_out => data_out,
-            is_fifo_empty => is_fifo_empty,
-            data_in => fifo_out((data_width+mask_width)-1 downto 0),
+            enable           => enable_fm0,
+            tari             => tari,
+            data_out         => data_out,
+            is_fifo_empty    => is_fifo_empty,
+            data_in          => fifo_out((data_width+mask_width)-1 downto 0),
             request_new_data => request_new_data,
-            start_encoder => start_encoder
+            start_encoder    => start_encoder
         );
 
         q <= data_out;

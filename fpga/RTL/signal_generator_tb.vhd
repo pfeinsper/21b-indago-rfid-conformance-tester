@@ -72,18 +72,18 @@ architecture tb of signal_generator_tb is
 		end process;
 
 		generator : signal_generator port map (
-			clk => clk,
-			rst => '0',
-			enable => '1',
-			start_send => start_send,
+			clk         => clk,
+			rst         => '0',
+			enable      => '1',
+			start_send  => start_send,
 			is_preamble => is_preamble,
-			tari => "0000000111110100",
-			pw => "0000000011111010",
-			delimiter => "0000001001110001",
-			RTcal => "0000010101000110",
-			TRcal => "0000010101000110",
-			has_ended => has_ended,
-			data_out => data_out
+			tari        => "0000000111110100",
+			pw          => "0000000011111010",
+			delimiter   => "0000001001110001",
+			RTcal       => "0000010101000110",
+			TRcal       => "0000010101000110",
+			has_ended   => has_ended,
+			data_out    => data_out
 		);
 
 end tb;

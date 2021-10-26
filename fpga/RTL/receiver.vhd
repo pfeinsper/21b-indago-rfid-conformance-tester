@@ -28,18 +28,18 @@
             -- GENERAL
             
             -- flags
-            clk : in std_logic;
-            rst : in std_logic;
+            clk    : in std_logic;
+            rst    : in std_logic;
             enable : in std_logic;
-
+ 
             -- data in from DUT
             data_DUT : in std_logic;
             -----------------------------------
             -- DECODER
 
             -- config
-            tari_101 : in std_logic_vector(tari_width-1 downto 0); -- 1% above tari
-            tari_099 : in std_logic_vector(tari_width-1 downto 0); -- 1% below tari
+            tari_101  : in std_logic_vector(tari_width-1 downto 0); -- 1% above tari
+            tari_099  : in std_logic_vector(tari_width-1 downto 0); -- 1% below tari
             tari_1616 : in std_logic_vector(tari_width-1 downto 0); -- 1% above 1.6 tari
             tari_1584 : in std_logic_vector(tari_width-1 downto 0); -- 1% below 1.6 tari
             
@@ -73,17 +73,17 @@
         
             port (
                 -- flags
-                clk : in std_logic;
-                rst : in std_logic;
-                enable : in std_logic;
+                clk     : in std_logic;
+                rst     : in std_logic;
+                enable  : in std_logic;
                 clr_err : in std_logic;
         
                 err : out std_logic := '0';
                 eop : out std_logic := '0';
         
                 -- config
-                tari_101 : in std_logic_vector(tari_width-1 downto 0); -- 1% above tari
-                tari_099 : in std_logic_vector(tari_width-1 downto 0); -- 1% below tari
+                tari_101  : in std_logic_vector(tari_width-1 downto 0); -- 1% above tari
+                tari_099  : in std_logic_vector(tari_width-1 downto 0); -- 1% below tari
                 tari_1616 : in std_logic_vector(tari_width-1 downto 0); -- 1% above 1.6 tari
                 tari_1584 : in std_logic_vector(tari_width-1 downto 0); -- 1% below 1.6 tari
         
@@ -91,7 +91,7 @@
         
                 -- output
                 data_ready : out std_logic := '0';
-                data_out : out std_logic := '0'
+                data_out   : out std_logic := '0'
             );
         
         end component;
@@ -99,15 +99,15 @@
         component fifo_32_32 IS
             port
                 (
-                    clock		: IN STD_LOGIC ;
-                    data		: IN STD_LOGIC_VECTOR (31 DOWNTO 0);
-                    rdreq		: IN STD_LOGIC ;
-                    sclr		: IN STD_LOGIC ;
-                    wrreq		: IN STD_LOGIC ;
-                    empty		: OUT STD_LOGIC ;
-                    full		: OUT STD_LOGIC ;
-                    q		    : OUT STD_LOGIC_VECTOR (31 DOWNTO 0);
-                    usedw		: OUT STD_LOGIC_VECTOR (7 DOWNTO 0)
+                    clock		: in std_logic ;
+                    data		: in std_logic_vector (31 downto 0);
+                    rdreq		: in std_logic ;
+                    sclr		: in std_logic ;
+                    wrreq		: in std_logic ;
+                    empty		: out std_logic ;
+                    full		: out std_logic ;
+                    q		    : out std_logic_vector (31 downto 0);
+                    usedw		: out std_logic_vector (7 downto 0)
                 );
         end component;
 
@@ -129,7 +129,7 @@
         
                 -- output
                 write_request_out : out std_logic := '0';
-                data_out       : out std_logic_vector((data_width + mask_width)-1 downto 0)
+                data_out          : out std_logic_vector((data_width + mask_width)-1 downto 0)
             );
         
         end component;
