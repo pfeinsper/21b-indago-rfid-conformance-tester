@@ -221,7 +221,7 @@ architecture arch of rfid is
         -- flags
         clk      => clk, --done
         rst      => reg_settings(11), -- done
-        enable   => reg_settings(12), -- done
+        enable   => reg_settings(4), -- done
         -- data in from DUT 
         data_DUT => pin_rx, -- EDITAR PARA A ENTRADA DA TAG
         -----------------------------------

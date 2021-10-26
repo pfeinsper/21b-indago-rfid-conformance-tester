@@ -12,8 +12,8 @@
 #define BASE_REG_SET        0        // can be read in the same address 
 #define MASK_RST            (1 << 0)
 #define MASK_EN             (1 << 1)
-#define MASK_RST_RECEIVER   (1<< 10)
-#define MASK_EN_RECEIVER    (1<< 12)
+#define MASK_RST_RECEIVER   (1 << 10)
+#define MASK_EN_RECEIVER    1 << 4
 #define MASK_CLR_FIFO       (1 << 2)
 // RFID - WRITE
 #define BASE_REG_TARI       1        // can be read in the same address 
@@ -50,13 +50,13 @@ void rfid_set_tari_bounderies(int tari_101, int tari_099, int tari_1616, int tar
 	IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_TARI_1616 << 2, tari_1616);
 	IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_TARI_1584 << 2, tari_1584);
 }
-//void rfid_set_loopback(int EN_LOOPBACK){IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 3, EN_LOOPBACK);}
+//void rfid_set_loopback(int EN_LOOPBACK){IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 2, EN_LOOPBACK | MASK_EN | MASK_EN_RECEIVER);}
 
 
 
 
 int  sender_check_fifo_full() { return IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_STATUS << 3) & BASE_IS_FIFO_FULL; }
-void sender_enable(int EN){IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 2, EN);}
+void sender_enable(){IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 2, MASK_EN);}
 void sender_send_package(int package) { IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_FIFO << 2, package); }
 void sender_send_end_of_package() { IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_FIFO << 2, eop); }
 void sender_mount_package(int command, int size)
@@ -112,7 +112,7 @@ void sender_select_package(int *commands, int size)
 }
 
 
-//void receiver_enable(int EN){IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 2, EN);}
+void receiver_enable(){IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 2 , MASK_EN | MASK_EN_RECEIVER);}
 
 int receiver_get_package(){
     return IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_RECEIVER_DATA);
@@ -126,10 +126,11 @@ int receiver_empty(){
 int main()
 {
     rfid_set_tari(tari_test);
-    sender_enable(MASK_EN);
+    sender_enable();
     //rfid_set_loopback(MASK_EN_LOOPBACK);
+    receiver_enable();
     rfid_set_tari_bounderies(tari_101,tari_099,tari_1616,tari_1584);
-    //receiver_enable(MASK_EN_RECEIVER);
+
     int commands[4];
     commands[0] = 0b111111111111111111111111111; //32
 
