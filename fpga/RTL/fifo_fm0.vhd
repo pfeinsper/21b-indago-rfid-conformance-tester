@@ -1,14 +1,14 @@
-	-----------------------------------------
-	--              FIFO FM0               --
-	-- Projeto Final de Engenharia         --
-	-- Professor Orientador: Rafael Corsi  --
-	-- Orientador: Shephard                --
-	-- Alunos:                             --
-	-- 		Alexandre Edington             --
-	-- 		Bruno Domingues                --
-	-- 		Lucas Leal                     --
-	-- 		Rafael Santos                  --
-	-----------------------------------------
+-----------------------------------------
+--              FIFO FM0               --
+-- Projeto Final de Engenharia         --
+-- Professor Orientador: Rafael Corsi  --
+-- Orientador: Shephard                --
+-- Alunos:                             --
+-- 		Alexandre Edington             --
+-- 		Bruno Domingues                --
+-- 		Lucas Leal                     --
+-- 		Rafael Santos                  --
+-----------------------------------------
 
 library ieee;
 use ieee.std_logic_1164.all;
@@ -34,6 +34,7 @@ entity FIFO_FM0 is
         clear_fifo : in std_logic;
         fifo_write_req : in std_logic;
         is_fifo_full : out std_logic;
+        usedw : out std_logic_vector(7 downto 0);
 
         -- config
         tari : in std_logic_vector(tari_width-1 downto 0);
@@ -79,21 +80,20 @@ architecture arch of FIFO_FM0 is
     component fifo_32_32 IS
             port
                 (
-                    clock		: IN STD_LOGIC ;
-                    data		: IN STD_LOGIC_VECTOR (31 DOWNTO 0);
-                    rdreq		: IN STD_LOGIC ;
-                    sclr		: IN STD_LOGIC ;
-                    wrreq		: IN STD_LOGIC ;
-                    empty		: OUT STD_LOGIC ;
-                    full		: OUT STD_LOGIC ;
-                    q		    : OUT STD_LOGIC_VECTOR (31 DOWNTO 0);
-                    usedw		: OUT STD_LOGIC_VECTOR (7 DOWNTO 0)
+                    clock		: in std_logic ;
+                    data		: in std_logic_vector (31 downto 0);
+                    rdreq		: in std_logic ;
+                    sclr		: in std_logic ;
+                    wrreq		: in std_logic ;
+                    empty		: out std_logic ;
+                    full		: out std_logic ;
+                    q		    : out std_logic_vector (31 downto 0);
+                    usedw		: out std_logic_vector (7 downto 0)
                 );
         end component;
 
     signal fifo_out : std_logic_vector(31 downto 0);
     signal is_fifo_empty, request_new_data, data_out, wrfull : std_logic := '0';
-	 signal usedw : std_logic_vector(7 downto 0);
 		
     begin
         fifo : fifo_32_32 port map (

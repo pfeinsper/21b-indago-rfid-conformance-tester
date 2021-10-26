@@ -11,6 +11,7 @@
 # *.sdc
 
 # ignore Quartus II generated folders
+.qsys_edit/
 *_sim/
 db/
 greybox_tmp/
