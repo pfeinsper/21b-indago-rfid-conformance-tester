@@ -30,7 +30,7 @@ architecture tb of package_constructor_tb is
     end component;
 
 	signal clk, eop, data_in_constructor, write_request_out, data_ready : std_logic := '0';
-    signal data_constructor_out : std_logic_vector (11 downto 0);
+    signal data_constructor_out : std_logic_vector (31 downto 0);
 	constant clk_period : time := 20 ns;
 	constant tari_period : time := 10 us;
 
@@ -121,12 +121,182 @@ architecture tb of package_constructor_tb is
 			wait for clk_period;
 			data_ready <= '0';
 			wait for tari_period;
+
+			data_in_constructor <= '1';
+			data_ready <= '1';
+			wait for clk_period;
+			data_ready <= '0';
+			wait for tari_period;
+			
+			data_in_constructor <= '1';
+			data_ready <= '1';
+			wait for clk_period;
+			data_ready <= '0';
+			wait for tari_period;
+			
+			data_in_constructor <= '1';
+			data_ready <= '1';
+			wait for clk_period;
+			data_ready <= '0';
+			wait for tari_period;
+			
+			data_in_constructor <= '0';
+			data_ready <= '1';
+			wait for clk_period;
+			data_ready <= '0';
+			wait for tari_period;
+			
+			data_in_constructor <= '1';
+			data_ready <= '1';
+			wait for clk_period;
+			data_ready <= '0';
+			wait for tari_period;
+			
+			data_in_constructor <= '1';
+			data_ready <= '1';
+			wait for clk_period;
+			data_ready <= '0';
+			wait for tari_period;
+			
+			data_in_constructor <= '1';
+			data_ready <= '1';
+			wait for clk_period;
+			data_ready <= '0';
+			wait for tari_period;
+
+			data_in_constructor <= '1';
+			data_ready <= '1';
+			wait for clk_period;
+			data_ready <= '0';
+			wait for tari_period;
+			
+			data_in_constructor <= '1';
+			data_ready <= '1';
+			wait for clk_period;
+			data_ready <= '0';
+			wait for tari_period;
+			
+			data_in_constructor <= '1';
+			data_ready <= '1';
+			wait for clk_period;
+			data_ready <= '0';
+			wait for tari_period;
+			
+			data_in_constructor <= '0';
+			data_ready <= '1';
+			wait for clk_period;
+			data_ready <= '0';
+			wait for tari_period;
+			
+			data_in_constructor <= '1';
+			data_ready <= '1';
+			wait for clk_period;
+			data_ready <= '0';
+			wait for tari_period;
+			
+			data_in_constructor <= '1';
+			data_ready <= '1';
+			wait for clk_period;
+			data_ready <= '0';
+			wait for tari_period;
+			
+			data_in_constructor <= '1';
+			data_ready <= '1';
+			wait for clk_period;
+			data_ready <= '0';
+			wait for tari_period;
+
+			data_in_constructor <= '1';
+			data_ready <= '1';
+			wait for clk_period;
+			data_ready <= '0';
+			wait for tari_period;
+			
+			data_in_constructor <= '1';
+			data_ready <= '1';
+			wait for clk_period;
+			data_ready <= '0';
+			wait for tari_period;
+			
+			data_in_constructor <= '1';
+			data_ready <= '1';
+			wait for clk_period;
+			data_ready <= '0';
+			wait for tari_period;
+			
+			data_in_constructor <= '0';
+			data_ready <= '1';
+			wait for clk_period;
+			data_ready <= '0';
+			wait for tari_period;
+			
+			data_in_constructor <= '1';
+			data_ready <= '1';
+			wait for clk_period;
+			data_ready <= '0';
+			wait for tari_period;
+			
+			data_in_constructor <= '1';
+			data_ready <= '1';
+			wait for clk_period;
+			data_ready <= '0';
+			wait for tari_period;
+			
+			data_in_constructor <= '1';
+			data_ready <= '1';
+			wait for clk_period;
+			data_ready <= '0';
+			wait for tari_period;
+
+			data_in_constructor <= '1';
+			data_ready <= '1';
+			wait for clk_period;
+			data_ready <= '0';
+			wait for tari_period;
+			
+			data_in_constructor <= '1';
+			data_ready <= '1';
+			wait for clk_period;
+			data_ready <= '0';
+			wait for tari_period;
+			
+			data_in_constructor <= '1';
+			data_ready <= '1';
+			wait for clk_period;
+			data_ready <= '0';
+			wait for tari_period;
+			
+			data_in_constructor <= '0';
+			data_ready <= '1';
+			wait for clk_period;
+			data_ready <= '0';
+			wait for tari_period;
+			
+			data_in_constructor <= '1';
+			data_ready <= '1';
+			wait for clk_period;
+			data_ready <= '0';
+			wait for tari_period;
+			
+			data_in_constructor <= '1';
+			data_ready <= '1';
+			wait for clk_period;
+			data_ready <= '0';
+			wait for tari_period;
+			
+			data_in_constructor <= '1';
+			data_ready <= '1';
+			wait for clk_period;
+			data_ready <= '0';
+			wait for tari_period;
 			
 			data_in_constructor <= '1';
 			data_ready <= '1';
 			wait for clk_period;
 			data_ready <= '0';
 			wait for tari_period * 1.6;
+
+			
 
 			eop <= '1';
 			wait for clk_period;
