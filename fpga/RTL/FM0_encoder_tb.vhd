@@ -1,10 +1,10 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
-entity fm0_tb is
-end entity fm0_tb;
+entity fm0_encoder_tb is
+end entity fm0_encoder_tb;
 
-architecture tb of fm0_tb is
+architecture tb of fm0_encoder_tb is
 
 	component fm0_encoder
 		generic (
@@ -14,27 +14,27 @@ architecture tb of fm0_tb is
 				mask_width : natural := 6
 		);
 		port (
-			-- flags 
 			clk : in std_logic;
 			rst : in std_logic;
 			enable : in std_logic;
-
-
+			start_encoder : in std_logic;
+			finished_sending : out std_logic;
+	
 			-- config
 			tari : in std_logic_vector(tari_width-1 downto 0);
-
+	
 			-- fifo data
 			is_fifo_empty    : in std_logic;
-			data_in          : in std_logic_vector((data_width + mask_width)-1 downto 0); -- format expected : ddddddddmmmm
+			data_in          : in std_logic_vector((data_width + mask_width)-1 downto 0); -- format expected : dddddddddddmmmmm
 			request_new_data : out std_logic;
-
+	
 			-- output
-			data_out : out std_logic
+			data_out : out std_logic := '0'
 		);
 
 	end component;
 
-	signal clk, data_out, is_fifo_empty, request_new_data : std_logic := '0';
+	signal clk, data_out, is_fifo_empty, request_new_data, start_encoder, finished_sending : std_logic := '0';
 	signal data : std_logic_vector(25 downto 0) := (others => '1');
 	signal data_in : std_logic_vector(31 downto 0) := (others => '0');
 	signal mask : std_logic_vector(5 downto 0) := "011010";
@@ -51,6 +51,15 @@ architecture tb of fm0_tb is
 			wait for clk_period/2;  --for next 0.5 ns signal is '1'.
 		end process;
 
+
+		controller: process
+		begin
+			start_encoder <= '1';
+			wait until (finished_sending = '1');
+			start_encoder <= '0';
+			wait;
+		end process;
+
 		
 		fifo : process ( request_new_data )
 		variable quant_packages : integer range 0 to 3 := 3;
@@ -63,10 +72,10 @@ architecture tb of fm0_tb is
 						mask <= "011010";
 					elsif (quant_packages = 2) then
 						data <= "10111101010010110110001101";
-						mask <= "011010";
+						mask <= "000100";
 					elsif (quant_packages = 1) then
-						data <= "00000001010001001000100111";
-						mask <= "000000";
+						data <= (others => '0');
+						mask <= (others => '0');
 					end if;
 					quant_packages := quant_packages - 1;
 				else
@@ -76,7 +85,7 @@ architecture tb of fm0_tb is
 		end process;
 
 
-		u0 : fm0_encoder port map (
+		encoder : fm0_encoder port map (
 			clk => clk,
 			rst => '0',
 			enable => '1',
@@ -84,7 +93,10 @@ architecture tb of fm0_tb is
 			data_out => data_out,
 			is_fifo_empty => is_fifo_empty,
 			data_in => data_in,
-			request_new_data => request_new_data  );
+			request_new_data => request_new_data,
+			start_encoder => start_encoder,
+			finished_sending => finished_sending
+		);
 
 		data_in <= data & mask;
 	
