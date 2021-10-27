@@ -140,14 +140,13 @@ architecture arch of rfid is
 
         -- other signals
     signal pin_tx, pin_rx : std_logic := '0';
-    signal loopback       : std_logic := '1';
         
     begin      
 
     -- rfid_tx
     -- rfid_rx w
     -- enable loopback mode
-    pin_rx <= rfid_rx when loopback = '0' else pin_tx;
+    pin_rx <= rfid_rx when reg_settings(8) = '0' else pin_tx;
     rfid_tx <= pin_tx;
         
         process(clk)
@@ -163,7 +162,6 @@ architecture arch of rfid is
                         case avs_address is
                         when "000" => --0
                             reg_settings  <= avs_writedata;
-                            --loopback <= reg_settings(4);
                         when "001" => -- 1
                             reg_send_tari <=  avs_writedata(15 downto 0);
                         when "010" => -- 2
