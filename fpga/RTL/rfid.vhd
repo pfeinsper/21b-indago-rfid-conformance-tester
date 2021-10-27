@@ -31,7 +31,7 @@ entity rfid is
         rst : in std_logic;
         
         -- Avalion Memmory Mapped Slave
-        avs_address     : in  std_logic_vector(2 downto 0)  := (others => '0');
+        avs_address     : in  std_logic_vector(3 downto 0)  := (others => '0');
         avs_read        : in  std_logic                     := '0';
         avs_readdata    : out std_logic_vector(31 downto 0) := (others => '0');
         avs_write       : in  std_logic                     := '0';
@@ -47,34 +47,53 @@ architecture arch of rfid is
 
     
 
-    component FIFO_FM0
+    component sender
     generic (
-        -- defining size of data in and clock speed
-        data_width : natural := 26;
-        tari_width : natural := 16;
-        mask_width : natural := 6
-    );
+            -- defining size of data in and clock speed
+            data_width       : natural := 26;
+            tari_width       : natural := 16;
+            pw_width         : natural := 16;
+            delimiter_width  : natural := 16;
+            RTcal_width      : natural := 16;
+            TRcal_width      : natural := 16;
+            mask_width       : natural := 6
+        );
+    
+        port (
+            -- flags
+            clk                  : in std_logic;
+            clr_finished_sending : in std_logic;
+            enable               : in std_logic;
+            rst                  : in std_logic;
 
-    port (
-        -- flags
-        clk : in std_logic;
-            -- fm0
-        rst_fm0 : in std_logic;
-        enable_fm0 : in std_logic;
+            finished_sending : out std_logic;
+
             -- fifo
-        clear_fifo : in std_logic;
-        fifo_write_req : in std_logic;
-        is_fifo_full : out std_logic;
+            clear_fifo     : in std_logic;
+            fifo_write_req : in std_logic;
+            is_fifo_full   : out std_logic;
+            usedw          : out std_logic_vector(7 downto 0);
 
-        -- config
-        tari : in std_logic_vector(tari_width-1 downto 0);
+            -- controller
+            has_gen          : in std_logic;
+            start_controller : in std_logic;
 
-        -- data
-        data : in std_logic_vector(31 downto 0);
-
-        -- output
-        q : out std_logic
-    );
+            -- generator
+            is_preamble : in std_logic;
+    
+            -- config
+            tari      : in std_logic_vector(tari_width-1 downto 0);
+            pw        : in std_logic_vector(pw_width-1 downto 0);
+            delimiter : in std_logic_vector(delimiter_width-1 downto 0);
+            RTcal     : in std_logic_vector(RTcal_width-1 downto 0);
+            TRcal     : in std_logic_vector(TRcal_width-1 downto 0);           
+    
+            -- data
+            data : in std_logic_vector(31 downto 0);
+    
+            -- output
+            q : out std_logic
+        );
     end component;
     ----------------------------------------------------------------
     
@@ -128,15 +147,19 @@ architecture arch of rfid is
         -- reg
     signal reg_settings : std_logic_vector(31 downto 0) := (others => '0');
     signal reg_status   : std_logic_vector(31 downto 0) := (others => '0');
-    signal reg_send_tari, reg_send_tari_101, reg_send_tari_099, reg_send_tari_1616, reg_send_tari_1584 : std_logic_vector(15 downto 0);
+    signal reg_send_tari, reg_send_tari_101, reg_send_tari_099, reg_send_tari_1616, reg_send_tari_1584,reg_send_pw ,reg_send_delimiter, reg_send_RTcal, reg_send_TRcal : std_logic_vector(15 downto 0);
         
         -- fifo
     signal fifo_data_in : std_logic_vector(data_size-1 downto 0);
     signal fifo_write_req, receiver_err_decoder: std_logic := '0';
         
         -- receiver
-    signal receiver_data_out : std_logic_vector(31 downto 0);
-    signal receiver_usedw    : std_logic_vector(7 downto 0);
+    signal receiver_data_out       : std_logic_vector(31 downto 0);
+    signal reg_read_usedw_receiver : std_logic_vector(7 downto 0);
+
+        -- sender
+    signal reg_read_usedw_sender : std_logic_vector(7 downto 0);
+
 
         -- other signals
     signal pin_tx, pin_rx : std_logic := '0';
@@ -160,40 +183,49 @@ architecture arch of rfid is
 
                     if (avs_write = '1') then
                         case avs_address is
-                        when "000" => --0
+                        when "0000" => --0
                             reg_settings  <= avs_writedata;
-                        when "001" => -- 1
+                        when "0001" => -- 1
                             reg_send_tari <=  avs_writedata(15 downto 0);
-                        when "010" => -- 2
+                        when "0010" => -- 2
                             fifo_data_in <= avs_writedata(data_size-1 downto 0);
                             fifo_write_req <= '1';
-                        when "011" => -- 3
+                        when "0011" => -- 3
                             reg_send_tari_101 <=  avs_writedata(15 downto 0);
-                        when "100" => -- 4
+                        when "0100" => -- 4
                             reg_send_tari_099 <=  avs_writedata(15 downto 0);
-                        when "101" => -- 5
+                        when "0101" => -- 5
                             reg_send_tari_1616 <=  avs_writedata(15 downto 0);
-                        when "110" => -- 6
+                        when "0110" => -- 6
                             reg_send_tari_1584 <=  avs_writedata(15 downto 0);
-                    
+                        when "0111" => -- 7
+                            reg_send_pw <= avs_writedata(15 downto 0);
+                        when "1000" => -- 8
+                            reg_send_delimiter <= avs_writedata(15 downto 0);
+                        when "1001" => -- 9
+                            reg_send_RTcal <= avs_writedata(15 downto 0);  
+                        when "1010" => -- 10
+                            reg_send_TRcal <= avs_writedata(15 downto 0);
                         when others => null;
                         end case;
                     
                     elsif(avs_read = '1') then
                         case avs_address is
-                        when "000" => -- 0
+                        when "0000" => -- 0
                             avs_readdata <= reg_settings;
-                        when "001" => -- 1
+                        when "0001" => -- 1
                             avs_readdata(15 downto 0) <= reg_send_tari;
-                        when "011" => -- 3
+                        when "0011" => -- 3
                             avs_readdata <= reg_status;
-                        when "100" => -- 4
+                        when "0100" => -- 4
                             avs_readdata <= receiver_data_out;
                         --when "101" =>
                             -- avs_readdata(1 downto 0) <= receiver_err_decoder;
-                        when "110" => -- 6
-                            avs_readdata(7 downto 0) <= receiver_usedw;    
-                        when "111" => -- 7
+                        when "0101" =>
+                            avs_readdata(7 downto 0) <= reg_read_usedw_sender;
+                        when "0110" => -- 6
+                            avs_readdata(7 downto 0) <= reg_read_usedw_receiver;    
+                        when "0111" => -- 7
                             avs_readdata <= x"FF0055FF";
                         when others => null;
                         end case;
@@ -202,17 +234,28 @@ architecture arch of rfid is
             end if;
         end process;
 
-    -- reg_settings is available from 0 to 10 for sender
-    fm0: FIFO_FM0 port map (
-        clk            => clk,
-        rst_fm0        => reg_settings(0),
-        enable_fm0     => reg_settings(1), 
-        clear_fifo     => reg_settings(2), 
-        fifo_write_req => fifo_write_req,
-        data           => fifo_data_in,
-        is_fifo_full   => reg_status(0),
-        tari           => reg_send_tari,
-        q              => pin_tx );
+    rfid_sender: sender port map(
+        clk                   => clk,
+        clr_finished_sending  => reg_status(1), -- escrita quando terminou o pacote pulsar esse fio
+        enable                => reg_settings(1),
+        rst                   => reg_settings(0),
+        finished_sending      => reg_status(2), -- leitura termino de envio de pacote
+        clear_fifo            => reg_settings(2),
+        fifo_write_req        => fifo_write_req,
+        is_fifo_full          => reg_status(0),
+        usedw                 => reg_read_usedw_sender,
+        has_gen               => reg_settings(5), -- nios escrita - preamble/framesync 1  0 se n vai usar
+        start_controller      => reg_settings(6), -- nios escrita enable pulso to send package
+        is_preamble           => reg_settings(7), -- nios escrita 1 preamble 0 fs
+        tari                  => reg_send_tari,
+        pw                    => reg_send_pw, -- ver desenhos
+        delimiter             => reg_send_delimiter, -- e testbench
+        RTcal                 => reg_send_RTcal, -- 
+        TRcal                 => reg_send_TRcal, -- 
+        data                  => fifo_data_in,
+        q                     => pin_tx
+    );
+
 
     -- reg_settings is available from 11 to 31 for receiver
     rfid_receiver: receiver port map(
@@ -241,6 +284,6 @@ architecture arch of rfid is
         full  => reg_status(14), -- done
         -- data output
         data_out_fifo => receiver_data_out,
-        usedw         => receiver_usedw
+        usedw         => reg_read_usedw_receiver
     );
 end arch ;   
