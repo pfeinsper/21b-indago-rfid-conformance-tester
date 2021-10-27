@@ -1,36 +1,36 @@
-LIBRARY IEEE;
-USE IEEE.std_logic_1164.ALL;
+library ieee;
+use ieee.std_logic_1164.all;
 
-ENTITY rfid_nios_HW IS
-    PORT (
-        -- Gloabals
-        fpga_clk_50 : IN STD_LOGIC; -- clock.clk
+entity rfid_nios_hw is
+    port (
+        -- gloabals
+        fpga_clk_50 : in std_logic; -- clock.clk
 
-        -- I/Os
-        pin_rx : IN STD_LOGIC;
-        pin_tx : OUT STD_LOGIC
+        -- i/os
+        pin_rx : in std_logic;
+        pin_tx : out std_logic
     );
-END ENTITY rfid_nios_HW;
+end entity rfid_nios_hw;
 
-ARCHITECTURE hw OF rfid_nios_HW IS
+architecture hw of rfid_nios_hw is
 
-    COMPONENT RFID_NIOS IS
-        PORT (
-            clk_clk : IN STD_LOGIC := 'X'; -- clk
-            pins_rx : IN STD_LOGIC := 'X'; -- rx
-            pins_tx : OUT STD_LOGIC; -- tx
-            reset_reset_n : IN STD_LOGIC := 'X' -- reset_n
+    component rfid_nios is
+        port (
+            clk_clk : in std_logic := 'X'; -- clk
+            pins_rx : in std_logic := 'X'; -- rx
+            pins_tx : out std_logic; -- tx
+            reset_reset_n : in std_logic := 'X' -- reset_n
         );
-    END COMPONENT RFID_NIOS;
+    end component rfid_nios;
 
-BEGIN
+begin
 
-    u0 : COMPONENT RFID_NIOS
-        PORT MAP(
+    u0 : component rfid_nios
+        port map(
             clk_clk => fpga_clk_50, --  clk.clk
             pins_rx => pin_rx, --  pins.rx
             pins_tx => pin_tx, --  pins.tx
             reset_reset_n => '1' --  reset.reset_n
         );
 
-    END hw;
+end hw;
