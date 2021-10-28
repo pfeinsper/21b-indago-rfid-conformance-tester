@@ -151,7 +151,7 @@ architecture arch of rfid is
         
         -- fifo
     signal fifo_data_in : std_logic_vector(data_size-1 downto 0);
-    signal fifo_write_req, receiver_err_decoder: std_logic := '0';
+    signal fifo_write_req, fifo_write : std_logic := '0';
         
         -- receiver
     signal receiver_data_out       : std_logic_vector(31 downto 0);
@@ -219,8 +219,6 @@ architecture arch of rfid is
                             avs_readdata <= reg_status;
                         when "0100" => -- 4
                             avs_readdata <= receiver_data_out;
-                        --when "101" =>
-                            -- avs_readdata(1 downto 0) <= receiver_err_decoder;
                         when "0101" =>
                             avs_readdata(7 downto 0) <= reg_read_usedw_sender;
                         when "0110" => -- 6
@@ -233,6 +231,22 @@ architecture arch of rfid is
                 end if;
             end if;
         end process;
+		  
+	 aa : process( clk, fifo_write_req )
+        variable already_seted : std_logic := '0';
+        begin
+            if (rising_edge(clk)) then
+
+                fifo_write <= '0';
+
+                if (fifo_write_req = '1' and already_seted = '0') then
+                    fifo_write <= '1';
+						  already_seted := '1';
+					 elsif (fifo_write_req = '0') then
+						  already_seted := '0';
+					 end if;
+            end if ;
+        end process ; -- aa
 
     rfid_sender: sender port map(
         clk                   => clk,
@@ -241,7 +255,7 @@ architecture arch of rfid is
         rst                   => reg_settings(0),
         finished_sending      => reg_status(2), -- leitura termino de envio de pacote
         clear_fifo            => reg_settings(2),
-        fifo_write_req        => fifo_write_req,
+        fifo_write_req        => fifo_write,
         is_fifo_full          => reg_status(0),
         usedw                 => reg_read_usedw_sender,
         has_gen               => reg_settings(5), -- nios escrita - preamble/framesync 1  0 se n vai usar
@@ -274,7 +288,7 @@ architecture arch of rfid is
         tari_1584 => reg_send_tari_1584,-- 1% below 1.6 tari done
         -- flag
         clr_err_decoder => reg_status(10),
-        err_decoder     => receiver_err_decoder,
+        err_decoder     => reg_status(9),
         -----------------------------------
         -- FIFO
         -- flags
