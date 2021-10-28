@@ -52,7 +52,7 @@
         ------------------------------
         --          values          --
         ------------------------------
-        signal tari_value, pw_value, delimiter_value, RTcal_value, TRcal_value, c: integer := 0;
+        signal tari_value, pw_value, delimiter_value, RTcal_value, TRcal_value: integer := 0;
 
         type state_type_generator is (g_wait, g_delimiter, g_data0, g_data0_PW, g_RTcal, g_RTcal_PW, g_TRcal, g_TRcal_PW);
         signal state_generator : state_type_generator := g_wait;
@@ -65,7 +65,7 @@
             RTcal_value     <= to_integer(unsigned(RTcal));
             TRcal_value     <= to_integer(unsigned(TRcal));
 
-            delimiter_generator: process ( clk, rst )
+            delimiter_generator: process ( clk, rst, enable )
             variable counter : integer range 0 to 2000 := 0;
             begin
                 if (rst = '1') then
@@ -136,7 +136,7 @@
                                         
                         when g_TRcal =>
                             data_out <= '1';
-                            if (counter = RTcal_value - pw_value) then
+                            if (counter = TRcal_value - pw_value) then
                                 counter := 0;
                                 state_generator <= g_TRcal_PW;
                             else
@@ -157,7 +157,6 @@
                             state_generator <= g_wait;
                         
                     end case;
-                    c <= counter;
                 end if;
 		    end process;
 
