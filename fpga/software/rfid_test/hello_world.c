@@ -3,7 +3,7 @@
 #include "stdint.h"
 #include "helpers/commands/commands.h"
 #include "sys/wait.h"
-
+#include "stdio.h"
 // REGISTER STATUS
 
 #define BASE_IS_FIFO_FULL    (1<<1)
@@ -15,7 +15,7 @@
 #define MASK_RST_RECEIVER    (1 << 10)
 #define MASK_EN_RECEIVER     (1 << 4)
 #define MASK_CLR_FIFO        (1 << 2)
-#define MASK_LOOPBACK        (0 << 8)
+#define MASK_LOOPBACK        (1 << 8)
 #define MASK_CLR_FINISHED    1 << 1
 #define MASK_CLR_FINISHED_0  0 << 1
 #define SENDER_HAS_GEN       1 << 5 // DURANTE PACOTE
@@ -174,15 +174,23 @@ int main()
     int commands_size = sizeof(commands) / sizeof(int);
     sender_has_gen(1);
     sender_is_preamble();
+
+    while(1)
+    	sender_send_package(0xFFFFFFF);
+
+
     sender_select_package(commands, commands_size);
+
 
     int data_received[10];
     int i = 0;
     while(!receiver_empty()){
         data_received[i] = receiver_get_package();
+        printf("confirming pack received from IP %04X \n",IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_ID << 2));
+        printf("	data received = %04X\n",data_received[i]);
         i++;
 
     }
-
+    printf("End of Comunication with IP = %04X \n",IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_ID));
     return 0;
 }
