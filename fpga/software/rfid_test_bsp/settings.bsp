@@ -2,8 +2,8 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>hal</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>Oct 28, 2021 3:44:43 PM</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1635443083816</BspGeneratedUnixTimeStamp>
+        <BspGeneratedTimeStamp>28/10/2021 20:01:49</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1635458509923</BspGeneratedUnixTimeStamp>
         <BspGeneratedLocation>D:\21b-indago-rfid-conformance-tester\fpga\software\rfid_test_bsp</BspGeneratedLocation>
         <BspSettingsFile>settings.bsp</BspSettingsFile>
         <SopcDesignFile>..\..\RFID_NIOS.sopcinfo</SopcDesignFile>
@@ -899,26 +899,26 @@
                 <Group xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
         </Setting>
         <MemoryMap>
-                <slaveDescriptor>nios_rfid_peripheral_0</slaveDescriptor>
-                <addressRange>0x00000000 - 0x0000003F</addressRange>
-                <addressSpan>64</addressSpan>
-                <attributes/>
-        </MemoryMap>
-        <MemoryMap>
                 <slaveDescriptor>onchip_memory2_0</slaveDescriptor>
                 <addressRange>0x00020000 - 0x0003C1FF</addressRange>
                 <addressSpan>115200</addressSpan>
                 <attributes>memory</attributes>
         </MemoryMap>
         <MemoryMap>
+                <slaveDescriptor>nios_rfid_peripheral_0</slaveDescriptor>
+                <addressRange>0x00041000 - 0x0004103F</addressRange>
+                <addressSpan>64</addressSpan>
+                <attributes/>
+        </MemoryMap>
+        <MemoryMap>
                 <slaveDescriptor>sysid_qsys_0</slaveDescriptor>
-                <addressRange>0x00041020 - 0x00041027</addressRange>
+                <addressRange>0x00041040 - 0x00041047</addressRange>
                 <addressSpan>8</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
                 <slaveDescriptor>jtag_uart_0</slaveDescriptor>
-                <addressRange>0x00041028 - 0x0004102F</addressRange>
+                <addressRange>0x00041048 - 0x0004104F</addressRange>
                 <addressSpan>8</addressSpan>
                 <attributes>printable</attributes>
         </MemoryMap>

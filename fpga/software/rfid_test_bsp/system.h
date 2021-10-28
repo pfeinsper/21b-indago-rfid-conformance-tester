@@ -4,7 +4,7 @@
  * Machine generated for CPU 'nios2_gen2_0' in SOPC Builder design 'RFID_NIOS'
  * SOPC Builder design path: ../../RFID_NIOS.sopcinfo
  *
- * Generated: Thu Oct 28 15:17:33 BRST 2021
+ * Generated: Thu Oct 28 20:01:51 BRST 2021
  */
 
 /*
@@ -164,19 +164,19 @@
 #define ALT_NUM_INTERNAL_INTERRUPT_CONTROLLERS 1
 #define ALT_NUM_INTERRUPT_CONTROLLERS 1
 #define ALT_STDERR "/dev/jtag_uart_0"
-#define ALT_STDERR_BASE 0x41028
+#define ALT_STDERR_BASE 0x41048
 #define ALT_STDERR_DEV jtag_uart_0
 #define ALT_STDERR_IS_JTAG_UART
 #define ALT_STDERR_PRESENT
 #define ALT_STDERR_TYPE "altera_avalon_jtag_uart"
 #define ALT_STDIN "/dev/jtag_uart_0"
-#define ALT_STDIN_BASE 0x41028
+#define ALT_STDIN_BASE 0x41048
 #define ALT_STDIN_DEV jtag_uart_0
 #define ALT_STDIN_IS_JTAG_UART
 #define ALT_STDIN_PRESENT
 #define ALT_STDIN_TYPE "altera_avalon_jtag_uart"
 #define ALT_STDOUT "/dev/jtag_uart_0"
-#define ALT_STDOUT_BASE 0x41028
+#define ALT_STDOUT_BASE 0x41048
 #define ALT_STDOUT_DEV jtag_uart_0
 #define ALT_STDOUT_IS_JTAG_UART
 #define ALT_STDOUT_PRESENT
@@ -201,7 +201,7 @@
  */
 
 #define ALT_MODULE_CLASS_jtag_uart_0 altera_avalon_jtag_uart
-#define JTAG_UART_0_BASE 0x41028
+#define JTAG_UART_0_BASE 0x41048
 #define JTAG_UART_0_IRQ 0
 #define JTAG_UART_0_IRQ_INTERRUPT_CONTROLLER_ID 0
 #define JTAG_UART_0_NAME "/dev/jtag_uart_0"
@@ -219,7 +219,7 @@
  */
 
 #define ALT_MODULE_CLASS_nios_rfid_peripheral_0 nios_rfid_peripheral
-#define NIOS_RFID_PERIPHERAL_0_BASE 0x0
+#define NIOS_RFID_PERIPHERAL_0_BASE 0x41000
 #define NIOS_RFID_PERIPHERAL_0_IRQ -1
 #define NIOS_RFID_PERIPHERAL_0_IRQ_INTERRUPT_CONTROLLER_ID -1
 #define NIOS_RFID_PERIPHERAL_0_NAME "/dev/nios_rfid_peripheral_0"
@@ -262,13 +262,13 @@
  */
 
 #define ALT_MODULE_CLASS_sysid_qsys_0 altera_avalon_sysid_qsys
-#define SYSID_QSYS_0_BASE 0x41020
+#define SYSID_QSYS_0_BASE 0x41040
 #define SYSID_QSYS_0_ID 255
 #define SYSID_QSYS_0_IRQ -1
 #define SYSID_QSYS_0_IRQ_INTERRUPT_CONTROLLER_ID -1
 #define SYSID_QSYS_0_NAME "/dev/sysid_qsys_0"
 #define SYSID_QSYS_0_SPAN 8
-#define SYSID_QSYS_0_TIMESTAMP 1635441134
+#define SYSID_QSYS_0_TIMESTAMP 1635443510
 #define SYSID_QSYS_0_TYPE "altera_avalon_sysid_qsys"
 
 #endif /* __SYSTEM_H_ */
