@@ -66,6 +66,8 @@ set_location_assignment PIN_AA12 -to pin_rx
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to pin_rx
 set_location_assignment PIN_W15 -to pin_tx
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to pin_tx
+set_global_assignment -name VHDL_FILE RTL/signal_generator.vhd
+set_global_assignment -name VHDL_FILE RTL/sender_controller.vhd
 set_global_assignment -name QIP_FILE RFID_NIOS/synthesis/RFID_NIOS.qip
 set_global_assignment -name VHDL_FILE RTL/sender.vhd
 set_global_assignment -name VHDL_FILE RTL/receiver.vhd
