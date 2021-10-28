@@ -3,10 +3,10 @@ use ieee.std_logic_1164.all;
 
 entity rfid_nios_hw is
     port (
-        -- gloabals
+        -- globals
         fpga_clk_50 : in std_logic; -- clock.clk
 
-        -- i/os
+        -- I/Os
         pin_rx : in std_logic;
         pin_tx : out std_logic
     );
