@@ -104,24 +104,30 @@ architecture arch of FM0_encoder is
                 elsif (rising_edge(clk) and enable = '1') then
                     case state_controller is
                         when c_wait =>
+                            finished_sending <= '0';
                             request_new_data <= '0';
                             -- might be an issue if start encoder is 1 and is fifo empty is 1 too, because sender
                             -- controller will wait eternaly for a flag (Arfel)
-                            if (is_fifo_empty = '0' and start_encoder = '1') then
+                            if (start_encoder = '1') then
                                 state_controller <= c_send;
                                 data_sender_start <= '1';
+                                if (mask_value = 0 and unsigned(data) = 0) then
+                                    request_new_data <= '1';
+                                end if ;
                             end if;
+                            
 
                         when c_send =>
+                            request_new_data <= '0';
                             if (data_sender_end = '1') then
                                 data_sender_start <= '0';
-                                request_new_data <= '1';
                                 state_controller <= c_request;
                             end if;
                         
                         when c_request =>
+                            request_new_data <= '1';
                             data_sender_start <= '0';
-                            if (is_fifo_empty = '1') then
+                            if (mask_value = 0 and unsigned(data) = 0) then
                                 tari_CS_start <= '1';
                                 state_controller <= c_wait_tari;
                             else
@@ -133,6 +139,7 @@ architecture arch of FM0_encoder is
                             if (tari_CS_end = '1') then
                                 tari_CS_start <= '0';
                                 state_controller <= c_wait;
+                                finished_sending <= '1';
                             end if;
                             
 
@@ -164,13 +171,10 @@ architecture arch of FM0_encoder is
 
                         when s_wait =>
                             data_sender_end <= '0';
-                            finished_sending <= '0';
-                            if (mask_value = 0) then
+                            if (mask_value = 0 and unsigned(data) = 0) then
                                 last_state_bit := s_send_s1;
                                 data_out <= '0';
-                                data_sender_end <= '1';
-                                state_sender <= s_end;
-                                finished_sending <= '1';
+                                data_sender_end <= '1';                                
 
                             elsif (data_sender_start = '1') then
                                 index_bit := 0;

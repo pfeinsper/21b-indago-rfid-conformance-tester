@@ -71,9 +71,9 @@
 
                     when c_wait_encoder =>
                         mux <= '1';
-                        start_encoder <= '0';
                         if (encoder_ended = '1') then
                             state_controller <= c_wait;
+                            start_encoder <= '0';
                             finished_sending <= '1';
                         end if ;
 
