@@ -1,0 +1,1063 @@
+Archive member included to satisfy reference by file (symbol)
+
+c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0\libgcc.a(lib2-divmod.o)
+                              obj/default/hello_world.o (__modsi3)
+../rfid_test_bsp/\libhal_bsp.a(alt_load.o)
+                              ../rfid_test_bsp//obj/HAL/src/crt0.o (alt_load)
+../rfid_test_bsp/\libhal_bsp.a(alt_main.o)
+                              ../rfid_test_bsp//obj/HAL/src/crt0.o (alt_main)
+../rfid_test_bsp/\libhal_bsp.a(alt_sys_init.o)
+                              ../rfid_test_bsp/\libhal_bsp.a(alt_main.o) (alt_irq_init)
+../rfid_test_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_fd.o)
+                              ../rfid_test_bsp/\libhal_bsp.a(alt_sys_init.o) (altera_avalon_jtag_uart_read_fd)
+../rfid_test_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_read.o)
+                              ../rfid_test_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_fd.o) (altera_avalon_jtag_uart_read)
+../rfid_test_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_write.o)
+                              ../rfid_test_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_fd.o) (altera_avalon_jtag_uart_write)
+../rfid_test_bsp/\libhal_bsp.a(alt_close.o)
+                              ../rfid_test_bsp/\libhal_bsp.a(alt_main.o) (close)
+../rfid_test_bsp/\libhal_bsp.a(alt_dcache_flush_all.o)
+                              ../rfid_test_bsp/\libhal_bsp.a(alt_load.o) (alt_dcache_flush_all)
+../rfid_test_bsp/\libhal_bsp.a(alt_dev.o)
+                              ../rfid_test_bsp/\libhal_bsp.a(alt_sys_init.o) (alt_dev_list)
+../rfid_test_bsp/\libhal_bsp.a(alt_dev_llist_insert.o)
+                              ../rfid_test_bsp/\libhal_bsp.a(alt_sys_init.o) (alt_dev_llist_insert)
+../rfid_test_bsp/\libhal_bsp.a(alt_do_ctors.o)
+                              ../rfid_test_bsp/\libhal_bsp.a(alt_main.o) (_do_ctors)
+../rfid_test_bsp/\libhal_bsp.a(alt_do_dtors.o)
+                              ../rfid_test_bsp/\libhal_bsp.a(alt_main.o) (_do_dtors)
+../rfid_test_bsp/\libhal_bsp.a(alt_errno.o)
+                              ../rfid_test_bsp/\libhal_bsp.a(alt_close.o) (alt_errno)
+../rfid_test_bsp/\libhal_bsp.a(alt_icache_flush_all.o)
+                              ../rfid_test_bsp/\libhal_bsp.a(alt_load.o) (alt_icache_flush_all)
+../rfid_test_bsp/\libhal_bsp.a(alt_io_redirect.o)
+                              ../rfid_test_bsp/\libhal_bsp.a(alt_main.o) (alt_io_redirect)
+../rfid_test_bsp/\libhal_bsp.a(alt_open.o)
+                              ../rfid_test_bsp/\libhal_bsp.a(alt_io_redirect.o) (open)
+../rfid_test_bsp/\libhal_bsp.a(alt_release_fd.o)
+                              ../rfid_test_bsp/\libhal_bsp.a(alt_close.o) (alt_release_fd)
+../rfid_test_bsp/\libhal_bsp.a(altera_nios2_gen2_irq.o)
+                              ../rfid_test_bsp/\libhal_bsp.a(alt_sys_init.o) (altera_nios2_gen2_irq_init)
+../rfid_test_bsp/\libhal_bsp.a(alt_find_dev.o)
+                              ../rfid_test_bsp/\libhal_bsp.a(alt_open.o) (alt_find_dev)
+../rfid_test_bsp/\libhal_bsp.a(alt_find_file.o)
+                              ../rfid_test_bsp/\libhal_bsp.a(alt_open.o) (alt_find_file)
+../rfid_test_bsp/\libhal_bsp.a(alt_get_fd.o)
+                              ../rfid_test_bsp/\libhal_bsp.a(alt_open.o) (alt_get_fd)
+../rfid_test_bsp/\libhal_bsp.a(alt_icache_flush.o)
+                              ../rfid_test_bsp/\libhal_bsp.a(alt_icache_flush_all.o) (alt_icache_flush)
+c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-atexit.o)
+                              ../rfid_test_bsp/\libhal_bsp.a(alt_main.o) (atexit)
+c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-exit.o)
+                              ../rfid_test_bsp/\libhal_bsp.a(alt_main.o) (exit)
+c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-impure.o)
+                              c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-exit.o) (_global_impure_ptr)
+c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-int_errno.o)
+                              ../rfid_test_bsp/\libhal_bsp.a(alt_close.o) (errno)
+c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-memcmp.o)
+                              ../rfid_test_bsp/\libhal_bsp.a(alt_find_dev.o) (memcmp)
+c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-strlen.o)
+                              ../rfid_test_bsp/\libhal_bsp.a(alt_find_dev.o) (strlen)
+c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-__atexit.o)
+                              c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-atexit.o) (__register_exitproc)
+c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-__call_atexit.o)
+                              c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-exit.o) (__call_exitprocs)
+../rfid_test_bsp/\libhal_bsp.a(alt_exit.o)
+                              c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-exit.o) (_exit)
+
+Allocating common symbols
+Common symbol       size              file
+
+errno               0x4               c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-int_errno.o)
+crc_table           0x200             obj/default/helpers/crc.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+reset            0x0000000000020000 0x0000000000000020
+onchip_memory2_0 0x0000000000020020 0x000000000001c1e0
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+LOAD ../rfid_test_bsp//obj/HAL/src/crt0.o
+LOAD obj/default/hello_world.o
+LOAD obj/default/helpers/commands/ack.o
+LOAD obj/default/helpers/commands/kill.o
+LOAD obj/default/helpers/commands/lock.o
+LOAD obj/default/helpers/commands/nak.o
+LOAD obj/default/helpers/commands/query.o
+LOAD obj/default/helpers/commands/query_adjust.o
+LOAD obj/default/helpers/commands/query_rep.o
+LOAD obj/default/helpers/commands/read.o
+LOAD obj/default/helpers/commands/req_rn.o
+LOAD obj/default/helpers/commands/rn16.o
+LOAD obj/default/helpers/commands/select.o
+LOAD obj/default/helpers/commands/write.o
+LOAD obj/default/helpers/crc.o
+LOAD c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libstdc++.a
+LOAD c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libm.a
+LOAD c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0\libgcc.a
+START GROUP
+LOAD c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a
+LOAD c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0\libgcc.a
+LOAD ../rfid_test_bsp/\libhal_bsp.a
+LOAD c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libm.a
+END GROUP
+LOAD c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0\libgcc.a
+                0x0000000000020000                __alt_mem_onchip_memory2_0 = 0x20000
+
+.entry          0x0000000000020000       0x20
+ *(.entry)
+ .entry         0x0000000000020000       0x20 ../rfid_test_bsp//obj/HAL/src/crt0.o
+                0x0000000000020000                __reset
+
+.exceptions     0x0000000000020020        0x0
+                0x0000000000020020                PROVIDE (__ram_exceptions_start, ABSOLUTE (.))
+                0x0000000000020020                . = ALIGN (0x20)
+ *(.irq)
+ *(.exceptions.entry.label)
+ *(.exceptions.entry.user)
+ *(.exceptions.entry.ecc_fatal)
+ *(.exceptions.entry)
+ *(.exceptions.irqtest.user)
+ *(.exceptions.irqtest)
+ *(.exceptions.irqhandler.user)
+ *(.exceptions.irqhandler)
+ *(.exceptions.irqreturn.user)
+ *(.exceptions.irqreturn)
+ *(.exceptions.notirq.label)
+ *(.exceptions.notirq.user)
+ *(.exceptions.notirq)
+ *(.exceptions.soft.user)
+ *(.exceptions.soft)
+ *(.exceptions.unknown.user)
+ *(.exceptions.unknown)
+ *(.exceptions.exit.label)
+ *(.exceptions.exit.user)
+ *(.exceptions.exit)
+ *(.exceptions)
+                0x0000000000020020                PROVIDE (__ram_exceptions_end, ABSOLUTE (.))
+                0x0000000000020020                PROVIDE (__flash_exceptions_start, LOADADDR (.exceptions))
+
+.text           0x0000000000020020     0x2e98
+                [!provide]                        PROVIDE (stext, ABSOLUTE (.))
+ *(.interp)
+ *(.hash)
+ *(.dynsym)
+ *(.dynstr)
+ *(.gnu.version)
+ *(.gnu.version_d)
+ *(.gnu.version_r)
+ *(.rel.init)
+ *(.rela.init)
+ *(.rel.text .rel.text.* .rel.gnu.linkonce.t.*)
+ *(.rela.text .rela.text.* .rela.gnu.linkonce.t.*)
+ *(.rel.fini)
+ *(.rela.fini)
+ *(.rel.rodata .rel.rodata.* .rel.gnu.linkonce.r.*)
+ *(.rela.rodata .rela.rodata.* .rela.gnu.linkonce.r.*)
+ *(.rel.data .rel.data.* .rel.gnu.linkonce.d.*)
+ *(.rela.data .rela.data.* .rela.gnu.linkonce.d.*)
+ *(.rel.tdata .rel.tdata.* .rel.gnu.linkonce.td.*)
+ *(.rela.tdata .rela.tdata.* .rela.gnu.linkonce.td.*)
+ *(.rel.tbss .rel.tbss.* .rel.gnu.linkonce.tb.*)
+ *(.rela.tbss .rela.tbss.* .rela.gnu.linkonce.tb.*)
+ *(.rel.ctors)
+ *(.rela.ctors)
+ *(.rel.dtors)
+ *(.rela.dtors)
+ *(.rel.got)
+ *(.rela.got)
+ *(.rel.sdata .rel.sdata.* .rel.gnu.linkonce.s.*)
+ *(.rela.sdata .rela.sdata.* .rela.gnu.linkonce.s.*)
+ *(.rel.sbss .rel.sbss.* .rel.gnu.linkonce.sb.*)
+ *(.rela.sbss .rela.sbss.* .rela.gnu.linkonce.sb.*)
+ *(.rel.sdata2 .rel.sdata2.* .rel.gnu.linkonce.s2.*)
+ *(.rela.sdata2 .rela.sdata2.* .rela.gnu.linkonce.s2.*)
+ *(.rel.sbss2 .rel.sbss2.* .rel.gnu.linkonce.sb2.*)
+ *(.rela.sbss2 .rela.sbss2.* .rela.gnu.linkonce.sb2.*)
+ *(.rel.bss .rel.bss.* .rel.gnu.linkonce.b.*)
+ *(.rela.bss .rela.bss.* .rela.gnu.linkonce.b.*)
+ *(.rel.plt)
+ *(.rela.plt)
+ *(.rel.dyn)
+ *(.init)
+ *(.plt)
+ *(.text .stub .text.* .gnu.linkonce.t.*)
+ .text          0x0000000000020020       0x4c ../rfid_test_bsp//obj/HAL/src/crt0.o
+                0x0000000000020020                _start
+ .text          0x000000000002006c      0x600 obj/default/hello_world.o
+                0x000000000002006c                enable_loopback
+                0x0000000000020098                rfid_set_tari
+                0x00000000000200c8                rfid_set_tari_bounderies
+                0x0000000000020158                sender_check_fifo_full
+                0x0000000000020180                sender_enable
+                0x00000000000201ac                sender_send_package
+                0x00000000000201dc                sender_send_end_of_package
+                0x0000000000020208                sender_Start_Ctrl
+                0x0000000000020240                sender_write_clr_finished_sending
+                0x0000000000020278                sender_read_finished_send
+                0x00000000000202a0                sender_mount_package
+                0x00000000000203c8                sender_select_package
+                0x000000000002048c                sender_has_gen
+                0x00000000000204c4                sender_is_preamble
+                0x00000000000204f0                receiver_enable
+                0x000000000002051c                receiver_get_package
+                0x0000000000020540                receiver_empty
+                0x0000000000020568                main
+ .text          0x000000000002066c      0x11c obj/default/helpers/commands/ack.o
+                0x000000000002066c                ack_init
+                0x00000000000206bc                ack_build
+                0x000000000002072c                ack_validate
+ .text          0x0000000000020788      0x170 obj/default/helpers/commands/kill.o
+                0x0000000000020788                kill_init
+                0x0000000000020810                kill_build
+ .text          0x00000000000208f8      0x130 obj/default/helpers/commands/lock.o
+                0x00000000000208f8                lock_init
+                0x000000000002096c                lock_build
+ .text          0x0000000000020a28       0xd4 obj/default/helpers/commands/nak.o
+                0x0000000000020a28                nak_init
+                0x0000000000020a64                nak_build
+                0x0000000000020a98                nak_validate
+ .text          0x0000000000020afc      0x310 obj/default/helpers/commands/query.o
+                0x0000000000020afc                query_init
+                0x0000000000020bc4                query_build
+                0x0000000000020d68                query_validate
+ .text          0x0000000000020e0c       0xf8 obj/default/helpers/commands/query_adjust.o
+                0x0000000000020e0c                query_adjust_init
+                0x0000000000020e70                query_adjust_command
+ .text          0x0000000000020f04       0xc0 obj/default/helpers/commands/query_rep.o
+                0x0000000000020f04                query_rep_init
+                0x0000000000020f50                query_rep_build
+ .text          0x0000000000020fc4      0x1b0 obj/default/helpers/commands/read.o
+                0x0000000000020fc4                read_init
+                0x0000000000021064                read_build
+ .text          0x0000000000021174      0x2b0 obj/default/helpers/commands/req_rn.o
+                0x0000000000021174                req_rn_init
+                0x00000000000211d0                req_rn_build
+                0x0000000000021328                req_rn_validate
+ .text          0x0000000000021424       0x20 obj/default/helpers/commands/rn16.o
+                0x0000000000021424                rn16_generate
+ .text          0x0000000000021444      0x25c obj/default/helpers/commands/select.o
+                0x0000000000021444                select_init
+                0x000000000002151c                select_build
+ .text          0x00000000000216a0      0x1b0 obj/default/helpers/commands/write.o
+                0x00000000000216a0                write_init
+                0x0000000000021740                write_build
+ .text          0x0000000000021850      0x200 obj/default/helpers/crc.o
+                0x0000000000021850                crc_16_ccitt_init
+                0x000000000002191c                crc_16_ccitt
+                0x00000000000219c4                crc5
+ .text          0x0000000000021a50      0x1b4 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0\libgcc.a(lib2-divmod.o)
+                0x0000000000021a50                __divsi3
+                0x0000000000021ad4                __modsi3
+                0x0000000000021b48                __udivsi3
+                0x0000000000021bac                __umodsi3
+ .text          0x0000000000021c04       0xec ../rfid_test_bsp/\libhal_bsp.a(alt_load.o)
+                0x0000000000021c6c                alt_load
+ .text          0x0000000000021cf0       0x7c ../rfid_test_bsp/\libhal_bsp.a(alt_main.o)
+                0x0000000000021cf0                alt_main
+ .text          0x0000000000021d6c       0xa4 ../rfid_test_bsp/\libhal_bsp.a(alt_sys_init.o)
+                0x0000000000021da0                alt_irq_init
+                0x0000000000021dd8                alt_sys_init
+ .text          0x0000000000021e10       0xc0 ../rfid_test_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_fd.o)
+                0x0000000000021e10                altera_avalon_jtag_uart_read_fd
+                0x0000000000021e70                altera_avalon_jtag_uart_write_fd
+ .text          0x0000000000021ed0       0xec ../rfid_test_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_read.o)
+                0x0000000000021ed0                altera_avalon_jtag_uart_read
+ .text          0x0000000000021fbc       0x94 ../rfid_test_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_write.o)
+                0x0000000000021fbc                altera_avalon_jtag_uart_write
+ .text          0x0000000000022050      0x10c ../rfid_test_bsp/\libhal_bsp.a(alt_close.o)
+                0x000000000002208c                close
+ .text          0x000000000002215c       0x48 ../rfid_test_bsp/\libhal_bsp.a(alt_dcache_flush_all.o)
+                0x000000000002215c                alt_dcache_flush_all
+ .text          0x00000000000221a4       0x2c ../rfid_test_bsp/\libhal_bsp.a(alt_dev.o)
+ .text          0x00000000000221d0       0xe0 ../rfid_test_bsp/\libhal_bsp.a(alt_dev_llist_insert.o)
+                0x000000000002220c                alt_dev_llist_insert
+ .text          0x00000000000222b0       0x60 ../rfid_test_bsp/\libhal_bsp.a(alt_do_ctors.o)
+                0x00000000000222b0                _do_ctors
+ .text          0x0000000000022310       0x60 ../rfid_test_bsp/\libhal_bsp.a(alt_do_dtors.o)
+                0x0000000000022310                _do_dtors
+ .text          0x0000000000022370        0x0 ../rfid_test_bsp/\libhal_bsp.a(alt_errno.o)
+ .text          0x0000000000022370       0x34 ../rfid_test_bsp/\libhal_bsp.a(alt_icache_flush_all.o)
+                0x0000000000022370                alt_icache_flush_all
+ .text          0x00000000000223a4      0x140 ../rfid_test_bsp/\libhal_bsp.a(alt_io_redirect.o)
+                0x0000000000022468                alt_io_redirect
+ .text          0x00000000000224e4      0x254 ../rfid_test_bsp/\libhal_bsp.a(alt_open.o)
+                0x00000000000225e4                open
+ .text          0x0000000000022738       0x64 ../rfid_test_bsp/\libhal_bsp.a(alt_release_fd.o)
+                0x0000000000022738                alt_release_fd
+ .text          0x000000000002279c       0x24 ../rfid_test_bsp/\libhal_bsp.a(altera_nios2_gen2_irq.o)
+                0x000000000002279c                altera_nios2_gen2_irq_init
+ .text          0x00000000000227c0       0x90 ../rfid_test_bsp/\libhal_bsp.a(alt_find_dev.o)
+                0x00000000000227c0                alt_find_dev
+ .text          0x0000000000022850      0x108 ../rfid_test_bsp/\libhal_bsp.a(alt_find_file.o)
+                0x0000000000022850                alt_find_file
+ .text          0x0000000000022958       0xa4 ../rfid_test_bsp/\libhal_bsp.a(alt_get_fd.o)
+                0x0000000000022958                alt_get_fd
+ .text          0x00000000000229fc       0x90 ../rfid_test_bsp/\libhal_bsp.a(alt_icache_flush.o)
+                0x00000000000229fc                alt_icache_flush
+ .text          0x0000000000022a8c        0x0 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-atexit.o)
+ .text.atexit   0x0000000000022a8c       0x14 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-atexit.o)
+                0x0000000000022a8c                atexit
+ .text          0x0000000000022aa0        0x0 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-exit.o)
+ .text.exit     0x0000000000022aa0       0x38 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-exit.o)
+                0x0000000000022aa0                exit
+ .text          0x0000000000022ad8        0x0 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-impure.o)
+ .text          0x0000000000022ad8        0x0 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-int_errno.o)
+ .text          0x0000000000022ad8        0x0 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-memcmp.o)
+ .text.memcmp   0x0000000000022ad8       0x7c c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-memcmp.o)
+                0x0000000000022ad8                memcmp
+ .text          0x0000000000022b54        0x0 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-strlen.o)
+ .text.strlen   0x0000000000022b54       0x98 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-strlen.o)
+                0x0000000000022b54                strlen
+ .text          0x0000000000022bec        0x0 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-__atexit.o)
+ .text.__register_exitproc
+                0x0000000000022bec      0x118 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-__atexit.o)
+                0x0000000000022bec                __register_exitproc
+ .text          0x0000000000022d04        0x0 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-__call_atexit.o)
+ .text.__call_exitprocs
+                0x0000000000022d04      0x180 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-__call_atexit.o)
+                0x0000000000022d04                __call_exitprocs
+ .text          0x0000000000022e84       0x34 ../rfid_test_bsp/\libhal_bsp.a(alt_exit.o)
+                0x0000000000022e84                _exit
+ *(.gnu.warning.*)
+ *(.fini)
+                [!provide]                        PROVIDE (__etext, ABSOLUTE (.))
+                [!provide]                        PROVIDE (_etext, ABSOLUTE (.))
+                [!provide]                        PROVIDE (etext, ABSOLUTE (.))
+ *(.eh_frame_hdr)
+                0x0000000000022eb8                . = ALIGN (0x4)
+                [!provide]                        PROVIDE (__preinit_array_start, ABSOLUTE (.))
+ *(.preinit_array)
+                [!provide]                        PROVIDE (__preinit_array_end, ABSOLUTE (.))
+                [!provide]                        PROVIDE (__init_array_start, ABSOLUTE (.))
+ *(.init_array)
+                [!provide]                        PROVIDE (__init_array_end, ABSOLUTE (.))
+                [!provide]                        PROVIDE (__fini_array_start, ABSOLUTE (.))
+ *(.fini_array)
+                [!provide]                        PROVIDE (__fini_array_end, ABSOLUTE (.))
+ *(.eh_frame)
+ *(.gcc_except_table .gcc_except_table.*)
+ *(.dynamic)
+                0x0000000000022eb8                PROVIDE (__CTOR_LIST__, ABSOLUTE (.))
+ *(.ctors)
+ *(SORT(.ctors.*))
+                0x0000000000022eb8                PROVIDE (__CTOR_END__, ABSOLUTE (.))
+                0x0000000000022eb8                PROVIDE (__DTOR_LIST__, ABSOLUTE (.))
+ *(.dtors)
+ *(SORT(.dtors.*))
+                0x0000000000022eb8                PROVIDE (__DTOR_END__, ABSOLUTE (.))
+ *(.jcr)
+                0x0000000000022eb8                . = ALIGN (0x4)
+
+.rodata         0x0000000000022eb8       0x38
+                0x0000000000022eb8                PROVIDE (__ram_rodata_start, ABSOLUTE (.))
+                0x0000000000022eb8                . = ALIGN (0x4)
+ *(.rodata .rodata.* .gnu.linkonce.r.*)
+ .rodata        0x0000000000022eb8       0x11 ../rfid_test_bsp/\libhal_bsp.a(alt_main.o)
+ *fill*         0x0000000000022ec9        0x3 
+ .rodata        0x0000000000022ecc       0x11 ../rfid_test_bsp/\libhal_bsp.a(alt_sys_init.o)
+ *fill*         0x0000000000022edd        0x3 
+ .rodata        0x0000000000022ee0        0xa ../rfid_test_bsp/\libhal_bsp.a(alt_dev.o)
+ *fill*         0x0000000000022eea        0x2 
+ .rodata.str1.4
+                0x0000000000022eec        0x4 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-impure.o)
+                                          0x2 (size before relaxing)
+ *(.rodata1)
+                0x0000000000022ef0                . = ALIGN (0x4)
+                0x0000000000022ef0                PROVIDE (__ram_rodata_end, ABSOLUTE (.))
+                0x0000000000022eb8                PROVIDE (__flash_rodata_start, LOADADDR (.rodata))
+
+.rwdata         0x0000000000022ef0      0x63c load address 0x000000000002352c
+                0x0000000000022ef0                PROVIDE (__ram_rwdata_start, ABSOLUTE (.))
+                0x0000000000022ef0                . = ALIGN (0x4)
+ *(.got.plt)
+ *(.got)
+ *(.data1)
+ *(.data .data.* .gnu.linkonce.d.*)
+ .data          0x0000000000022ef0        0x0 ../rfid_test_bsp//obj/HAL/src/crt0.o
+ .data          0x0000000000022ef0        0x0 obj/default/hello_world.o
+ .data          0x0000000000022ef0        0x0 obj/default/helpers/commands/ack.o
+ .data          0x0000000000022ef0        0x0 obj/default/helpers/commands/kill.o
+ .data          0x0000000000022ef0        0x0 obj/default/helpers/commands/lock.o
+ .data          0x0000000000022ef0        0x0 obj/default/helpers/commands/nak.o
+ .data          0x0000000000022ef0        0x0 obj/default/helpers/commands/query.o
+ .data          0x0000000000022ef0        0x0 obj/default/helpers/commands/query_adjust.o
+ .data          0x0000000000022ef0        0x0 obj/default/helpers/commands/query_rep.o
+ .data          0x0000000000022ef0        0x0 obj/default/helpers/commands/read.o
+ .data          0x0000000000022ef0        0x0 obj/default/helpers/commands/req_rn.o
+ .data          0x0000000000022ef0        0x0 obj/default/helpers/commands/rn16.o
+ .data          0x0000000000022ef0        0x0 obj/default/helpers/commands/select.o
+ .data          0x0000000000022ef0        0x0 obj/default/helpers/commands/write.o
+ .data          0x0000000000022ef0        0x0 obj/default/helpers/crc.o
+ .data          0x0000000000022ef0        0x0 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0\libgcc.a(lib2-divmod.o)
+ .data          0x0000000000022ef0        0x0 ../rfid_test_bsp/\libhal_bsp.a(alt_load.o)
+ .data          0x0000000000022ef0        0x0 ../rfid_test_bsp/\libhal_bsp.a(alt_main.o)
+ .data          0x0000000000022ef0       0x2c ../rfid_test_bsp/\libhal_bsp.a(alt_sys_init.o)
+ .data          0x0000000000022f1c        0x0 ../rfid_test_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_fd.o)
+ .data          0x0000000000022f1c        0x0 ../rfid_test_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_read.o)
+ .data          0x0000000000022f1c        0x0 ../rfid_test_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_write.o)
+ .data          0x0000000000022f1c        0x0 ../rfid_test_bsp/\libhal_bsp.a(alt_close.o)
+ .data          0x0000000000022f1c        0x0 ../rfid_test_bsp/\libhal_bsp.a(alt_dcache_flush_all.o)
+ .data          0x0000000000022f1c      0x1a8 ../rfid_test_bsp/\libhal_bsp.a(alt_dev.o)
+                0x0000000000022f1c                alt_dev_null
+                0x0000000000022f44                alt_fd_list
+ .data          0x00000000000230c4        0x0 ../rfid_test_bsp/\libhal_bsp.a(alt_dev_llist_insert.o)
+ .data          0x00000000000230c4        0x0 ../rfid_test_bsp/\libhal_bsp.a(alt_do_ctors.o)
+ .data          0x00000000000230c4        0x0 ../rfid_test_bsp/\libhal_bsp.a(alt_do_dtors.o)
+ .data          0x00000000000230c4        0x0 ../rfid_test_bsp/\libhal_bsp.a(alt_errno.o)
+ .data          0x00000000000230c4        0x0 ../rfid_test_bsp/\libhal_bsp.a(alt_icache_flush_all.o)
+ .data          0x00000000000230c4        0x0 ../rfid_test_bsp/\libhal_bsp.a(alt_io_redirect.o)
+ .data          0x00000000000230c4        0x0 ../rfid_test_bsp/\libhal_bsp.a(alt_open.o)
+ .data          0x00000000000230c4        0x0 ../rfid_test_bsp/\libhal_bsp.a(alt_release_fd.o)
+ .data          0x00000000000230c4        0x0 ../rfid_test_bsp/\libhal_bsp.a(altera_nios2_gen2_irq.o)
+ .data          0x00000000000230c4        0x0 ../rfid_test_bsp/\libhal_bsp.a(alt_find_dev.o)
+ .data          0x00000000000230c4        0x0 ../rfid_test_bsp/\libhal_bsp.a(alt_find_file.o)
+ .data          0x00000000000230c4        0x0 ../rfid_test_bsp/\libhal_bsp.a(alt_get_fd.o)
+ .data          0x00000000000230c4        0x0 ../rfid_test_bsp/\libhal_bsp.a(alt_icache_flush.o)
+ .data          0x00000000000230c4        0x0 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-atexit.o)
+ .data          0x00000000000230c4        0x0 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-exit.o)
+ .data          0x00000000000230c4        0x0 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-impure.o)
+ .data.impure_data
+                0x00000000000230c4      0x424 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-impure.o)
+ .data          0x00000000000234e8        0x0 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-int_errno.o)
+ .data          0x00000000000234e8        0x0 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-memcmp.o)
+ .data          0x00000000000234e8        0x0 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-strlen.o)
+ .data          0x00000000000234e8        0x0 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-__atexit.o)
+ .data          0x00000000000234e8        0x0 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-__call_atexit.o)
+ .data          0x00000000000234e8        0x0 ../rfid_test_bsp/\libhal_bsp.a(alt_exit.o)
+                0x000000000002b4e8                _gp = ABSOLUTE ((. + 0x8000))
+                [!provide]                        PROVIDE (gp, _gp)
+ *(.rwdata .rwdata.*)
+ *(.sdata .sdata.* .gnu.linkonce.s.*)
+ .sdata         0x00000000000234e8       0x24 obj/default/hello_world.o
+                0x00000000000234e8                tari_test
+                0x00000000000234ec                tari_101
+                0x00000000000234f0                tari_099
+                0x00000000000234f4                tari_1616
+                0x00000000000234f8                tari_1584
+                0x00000000000234fc                pw
+                0x0000000000023500                delimiter
+                0x0000000000023504                RTcal
+                0x0000000000023508                TRcal
+ .sdata         0x000000000002350c       0x14 ../rfid_test_bsp/\libhal_bsp.a(alt_dev.o)
+                0x000000000002350c                alt_fs_list
+                0x0000000000023514                alt_dev_list
+                0x000000000002351c                alt_max_fd
+ .sdata         0x0000000000023520        0x4 ../rfid_test_bsp/\libhal_bsp.a(alt_errno.o)
+                0x0000000000023520                alt_errno
+ .sdata._global_impure_ptr
+                0x0000000000023524        0x4 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-impure.o)
+                0x0000000000023524                _global_impure_ptr
+ .sdata._impure_ptr
+                0x0000000000023528        0x4 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-impure.o)
+                0x0000000000023528                _impure_ptr
+ *(.sdata2 .sdata2.* .gnu.linkonce.s2.*)
+                0x000000000002352c                . = ALIGN (0x4)
+                0x000000000002352c                _edata = ABSOLUTE (.)
+                [!provide]                        PROVIDE (edata, ABSOLUTE (.))
+                0x000000000002352c                PROVIDE (__ram_rwdata_end, ABSOLUTE (.))
+                0x000000000002352c                PROVIDE (__flash_rwdata_start, LOADADDR (.rwdata))
+
+.bss            0x0000000000023b68      0x210
+                0x0000000000023b68                __bss_start = ABSOLUTE (.)
+                [!provide]                        PROVIDE (__sbss_start, ABSOLUTE (.))
+                [!provide]                        PROVIDE (___sbss_start, ABSOLUTE (.))
+ *(.dynsbss)
+ *(.sbss .sbss.* .gnu.linkonce.sb.*)
+ .sbss          0x0000000000023b68        0xc ../rfid_test_bsp/\libhal_bsp.a(alt_main.o)
+                0x0000000000023b68                alt_argc
+                0x0000000000023b6c                alt_argv
+                0x0000000000023b70                alt_envp
+ .sbss          0x0000000000023b74        0x4 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-int_errno.o)
+                0x0000000000023b74                errno
+ *(.sbss2 .sbss2.* .gnu.linkonce.sb2.*)
+ *(.scommon)
+                [!provide]                        PROVIDE (__sbss_end, ABSOLUTE (.))
+                [!provide]                        PROVIDE (___sbss_end, ABSOLUTE (.))
+ *(.dynbss)
+ *(.bss .bss.* .gnu.linkonce.b.*)
+ .bss           0x0000000000023b78        0x0 ../rfid_test_bsp//obj/HAL/src/crt0.o
+ .bss           0x0000000000023b78        0x0 obj/default/hello_world.o
+ .bss           0x0000000000023b78        0x0 obj/default/helpers/commands/ack.o
+ .bss           0x0000000000023b78        0x0 obj/default/helpers/commands/kill.o
+ .bss           0x0000000000023b78        0x0 obj/default/helpers/commands/lock.o
+ .bss           0x0000000000023b78        0x0 obj/default/helpers/commands/nak.o
+ .bss           0x0000000000023b78        0x0 obj/default/helpers/commands/query.o
+ .bss           0x0000000000023b78        0x0 obj/default/helpers/commands/query_adjust.o
+ .bss           0x0000000000023b78        0x0 obj/default/helpers/commands/query_rep.o
+ .bss           0x0000000000023b78        0x0 obj/default/helpers/commands/read.o
+ .bss           0x0000000000023b78        0x0 obj/default/helpers/commands/req_rn.o
+ .bss           0x0000000000023b78        0x0 obj/default/helpers/commands/rn16.o
+ .bss           0x0000000000023b78        0x0 obj/default/helpers/commands/select.o
+ .bss           0x0000000000023b78        0x0 obj/default/helpers/commands/write.o
+ .bss           0x0000000000023b78        0x0 obj/default/helpers/crc.o
+ .bss           0x0000000000023b78        0x0 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0\libgcc.a(lib2-divmod.o)
+ .bss           0x0000000000023b78        0x0 ../rfid_test_bsp/\libhal_bsp.a(alt_load.o)
+ .bss           0x0000000000023b78        0x0 ../rfid_test_bsp/\libhal_bsp.a(alt_main.o)
+ .bss           0x0000000000023b78        0x0 ../rfid_test_bsp/\libhal_bsp.a(alt_sys_init.o)
+ .bss           0x0000000000023b78        0x0 ../rfid_test_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_fd.o)
+ .bss           0x0000000000023b78        0x0 ../rfid_test_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_read.o)
+ .bss           0x0000000000023b78        0x0 ../rfid_test_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_write.o)
+ .bss           0x0000000000023b78        0x0 ../rfid_test_bsp/\libhal_bsp.a(alt_close.o)
+ .bss           0x0000000000023b78        0x0 ../rfid_test_bsp/\libhal_bsp.a(alt_dcache_flush_all.o)
+ .bss           0x0000000000023b78        0x0 ../rfid_test_bsp/\libhal_bsp.a(alt_dev.o)
+ .bss           0x0000000000023b78        0x0 ../rfid_test_bsp/\libhal_bsp.a(alt_dev_llist_insert.o)
+ .bss           0x0000000000023b78        0x0 ../rfid_test_bsp/\libhal_bsp.a(alt_do_ctors.o)
+ .bss           0x0000000000023b78        0x0 ../rfid_test_bsp/\libhal_bsp.a(alt_do_dtors.o)
+ .bss           0x0000000000023b78        0x0 ../rfid_test_bsp/\libhal_bsp.a(alt_errno.o)
+ .bss           0x0000000000023b78        0x0 ../rfid_test_bsp/\libhal_bsp.a(alt_icache_flush_all.o)
+ .bss           0x0000000000023b78        0x0 ../rfid_test_bsp/\libhal_bsp.a(alt_io_redirect.o)
+ .bss           0x0000000000023b78        0x0 ../rfid_test_bsp/\libhal_bsp.a(alt_open.o)
+ .bss           0x0000000000023b78        0x0 ../rfid_test_bsp/\libhal_bsp.a(alt_release_fd.o)
+ .bss           0x0000000000023b78        0x0 ../rfid_test_bsp/\libhal_bsp.a(altera_nios2_gen2_irq.o)
+ .bss           0x0000000000023b78        0x0 ../rfid_test_bsp/\libhal_bsp.a(alt_find_dev.o)
+ .bss           0x0000000000023b78        0x0 ../rfid_test_bsp/\libhal_bsp.a(alt_find_file.o)
+ .bss           0x0000000000023b78        0x0 ../rfid_test_bsp/\libhal_bsp.a(alt_get_fd.o)
+ .bss           0x0000000000023b78        0x0 ../rfid_test_bsp/\libhal_bsp.a(alt_icache_flush.o)
+ .bss           0x0000000000023b78        0x0 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-atexit.o)
+ .bss           0x0000000000023b78        0x0 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-exit.o)
+ .bss           0x0000000000023b78        0x0 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-impure.o)
+ .bss           0x0000000000023b78        0x0 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-int_errno.o)
+ .bss           0x0000000000023b78        0x0 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-memcmp.o)
+ .bss           0x0000000000023b78        0x0 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-strlen.o)
+ .bss           0x0000000000023b78        0x0 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-__atexit.o)
+ .bss           0x0000000000023b78        0x0 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-__call_atexit.o)
+ .bss           0x0000000000023b78        0x0 ../rfid_test_bsp/\libhal_bsp.a(alt_exit.o)
+ *(COMMON)
+ COMMON         0x0000000000023b78      0x200 obj/default/helpers/crc.o
+                0x0000000000023b78                crc_table
+                0x0000000000023d78                . = ALIGN (0x4)
+                0x0000000000023d78                __bss_end = ABSOLUTE (.)
+
+.onchip_memory2_0
+                0x0000000000023d78        0x0
+                [!provide]                        PROVIDE (_alt_partition_onchip_memory2_0_start, ABSOLUTE (.))
+ *(.onchip_memory2_0 .onchip_memory2_0. onchip_memory2_0.*)
+                0x0000000000023d78                . = ALIGN (0x4)
+                [!provide]                        PROVIDE (_alt_partition_onchip_memory2_0_end, ABSOLUTE (.))
+                0x0000000000023d78                _end = ABSOLUTE (.)
+                0x0000000000023d78                end = ABSOLUTE (.)
+                0x0000000000023d78                __alt_stack_base = ABSOLUTE (.)
+                [!provide]                        PROVIDE (_alt_partition_onchip_memory2_0_load_addr, LOADADDR (.onchip_memory2_0))
+
+.stab
+ *(.stab)
+
+.stabstr
+ *(.stabstr)
+
+.stab.excl
+ *(.stab.excl)
+
+.stab.exclstr
+ *(.stab.exclstr)
+
+.stab.index
+ *(.stab.index)
+
+.stab.indexstr
+ *(.stab.indexstr)
+
+.comment        0x0000000000000000       0x23
+ *(.comment)
+ .comment       0x0000000000000000       0x23 obj/default/hello_world.o
+                                         0x24 (size before relaxing)
+ .comment       0x0000000000000023       0x24 obj/default/helpers/commands/ack.o
+ .comment       0x0000000000000023       0x24 obj/default/helpers/commands/kill.o
+ .comment       0x0000000000000023       0x24 obj/default/helpers/commands/lock.o
+ .comment       0x0000000000000023       0x24 obj/default/helpers/commands/nak.o
+ .comment       0x0000000000000023       0x24 obj/default/helpers/commands/query.o
+ .comment       0x0000000000000023       0x24 obj/default/helpers/commands/query_adjust.o
+ .comment       0x0000000000000023       0x24 obj/default/helpers/commands/query_rep.o
+ .comment       0x0000000000000023       0x24 obj/default/helpers/commands/read.o
+ .comment       0x0000000000000023       0x24 obj/default/helpers/commands/req_rn.o
+ .comment       0x0000000000000023       0x24 obj/default/helpers/commands/rn16.o
+ .comment       0x0000000000000023       0x24 obj/default/helpers/commands/select.o
+ .comment       0x0000000000000023       0x24 obj/default/helpers/commands/write.o
+ .comment       0x0000000000000023       0x24 obj/default/helpers/crc.o
+ .comment       0x0000000000000023       0x24 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0\libgcc.a(lib2-divmod.o)
+ .comment       0x0000000000000023       0x24 ../rfid_test_bsp/\libhal_bsp.a(alt_load.o)
+ .comment       0x0000000000000023       0x24 ../rfid_test_bsp/\libhal_bsp.a(alt_main.o)
+ .comment       0x0000000000000023       0x24 ../rfid_test_bsp/\libhal_bsp.a(alt_sys_init.o)
+ .comment       0x0000000000000023       0x24 ../rfid_test_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_fd.o)
+ .comment       0x0000000000000023       0x24 ../rfid_test_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_read.o)
+ .comment       0x0000000000000023       0x24 ../rfid_test_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_write.o)
+ .comment       0x0000000000000023       0x24 ../rfid_test_bsp/\libhal_bsp.a(alt_close.o)
+ .comment       0x0000000000000023       0x24 ../rfid_test_bsp/\libhal_bsp.a(alt_dcache_flush_all.o)
+ .comment       0x0000000000000023       0x24 ../rfid_test_bsp/\libhal_bsp.a(alt_dev.o)
+ .comment       0x0000000000000023       0x24 ../rfid_test_bsp/\libhal_bsp.a(alt_dev_llist_insert.o)
+ .comment       0x0000000000000023       0x24 ../rfid_test_bsp/\libhal_bsp.a(alt_do_ctors.o)
+ .comment       0x0000000000000023       0x24 ../rfid_test_bsp/\libhal_bsp.a(alt_do_dtors.o)
+ .comment       0x0000000000000023       0x24 ../rfid_test_bsp/\libhal_bsp.a(alt_errno.o)
+ .comment       0x0000000000000023       0x24 ../rfid_test_bsp/\libhal_bsp.a(alt_icache_flush_all.o)
+ .comment       0x0000000000000023       0x24 ../rfid_test_bsp/\libhal_bsp.a(alt_io_redirect.o)
+ .comment       0x0000000000000023       0x24 ../rfid_test_bsp/\libhal_bsp.a(alt_open.o)
+ .comment       0x0000000000000023       0x24 ../rfid_test_bsp/\libhal_bsp.a(alt_release_fd.o)
+ .comment       0x0000000000000023       0x24 ../rfid_test_bsp/\libhal_bsp.a(altera_nios2_gen2_irq.o)
+ .comment       0x0000000000000023       0x24 ../rfid_test_bsp/\libhal_bsp.a(alt_find_dev.o)
+ .comment       0x0000000000000023       0x24 ../rfid_test_bsp/\libhal_bsp.a(alt_find_file.o)
+ .comment       0x0000000000000023       0x24 ../rfid_test_bsp/\libhal_bsp.a(alt_get_fd.o)
+ .comment       0x0000000000000023       0x24 ../rfid_test_bsp/\libhal_bsp.a(alt_icache_flush.o)
+ .comment       0x0000000000000023       0x24 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-atexit.o)
+ .comment       0x0000000000000023       0x24 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-exit.o)
+ .comment       0x0000000000000023       0x24 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-impure.o)
+ .comment       0x0000000000000023       0x24 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-int_errno.o)
+ .comment       0x0000000000000023       0x24 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-memcmp.o)
+ .comment       0x0000000000000023       0x24 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-strlen.o)
+ .comment       0x0000000000000023       0x24 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-__atexit.o)
+ .comment       0x0000000000000023       0x24 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-__call_atexit.o)
+ .comment       0x0000000000000023       0x24 ../rfid_test_bsp/\libhal_bsp.a(alt_exit.o)
+
+.debug
+ *(.debug)
+
+.line
+ *(.line)
+
+.debug_srcinfo
+ *(.debug_srcinfo)
+
+.debug_sfnames
+ *(.debug_sfnames)
+
+.debug_aranges  0x0000000000000000      0x5d0
+ *(.debug_aranges)
+ .debug_aranges
+                0x0000000000000000       0x28 ../rfid_test_bsp//obj/HAL/src/crt0.o
+ .debug_aranges
+                0x0000000000000028       0x20 obj/default/hello_world.o
+ .debug_aranges
+                0x0000000000000048       0x20 obj/default/helpers/commands/ack.o
+ .debug_aranges
+                0x0000000000000068       0x20 obj/default/helpers/commands/kill.o
+ .debug_aranges
+                0x0000000000000088       0x20 obj/default/helpers/commands/lock.o
+ .debug_aranges
+                0x00000000000000a8       0x20 obj/default/helpers/commands/nak.o
+ .debug_aranges
+                0x00000000000000c8       0x20 obj/default/helpers/commands/query.o
+ .debug_aranges
+                0x00000000000000e8       0x20 obj/default/helpers/commands/query_adjust.o
+ .debug_aranges
+                0x0000000000000108       0x20 obj/default/helpers/commands/query_rep.o
+ .debug_aranges
+                0x0000000000000128       0x20 obj/default/helpers/commands/read.o
+ .debug_aranges
+                0x0000000000000148       0x20 obj/default/helpers/commands/req_rn.o
+ .debug_aranges
+                0x0000000000000168       0x20 obj/default/helpers/commands/rn16.o
+ .debug_aranges
+                0x0000000000000188       0x20 obj/default/helpers/commands/select.o
+ .debug_aranges
+                0x00000000000001a8       0x20 obj/default/helpers/commands/write.o
+ .debug_aranges
+                0x00000000000001c8       0x20 obj/default/helpers/crc.o
+ .debug_aranges
+                0x00000000000001e8       0x20 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0\libgcc.a(lib2-divmod.o)
+ .debug_aranges
+                0x0000000000000208       0x20 ../rfid_test_bsp/\libhal_bsp.a(alt_load.o)
+ .debug_aranges
+                0x0000000000000228       0x20 ../rfid_test_bsp/\libhal_bsp.a(alt_main.o)
+ .debug_aranges
+                0x0000000000000248       0x20 ../rfid_test_bsp/\libhal_bsp.a(alt_sys_init.o)
+ .debug_aranges
+                0x0000000000000268       0x20 ../rfid_test_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_fd.o)
+ .debug_aranges
+                0x0000000000000288       0x20 ../rfid_test_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_read.o)
+ .debug_aranges
+                0x00000000000002a8       0x20 ../rfid_test_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_write.o)
+ .debug_aranges
+                0x00000000000002c8       0x20 ../rfid_test_bsp/\libhal_bsp.a(alt_close.o)
+ .debug_aranges
+                0x00000000000002e8       0x20 ../rfid_test_bsp/\libhal_bsp.a(alt_dcache_flush_all.o)
+ .debug_aranges
+                0x0000000000000308       0x20 ../rfid_test_bsp/\libhal_bsp.a(alt_dev.o)
+ .debug_aranges
+                0x0000000000000328       0x20 ../rfid_test_bsp/\libhal_bsp.a(alt_dev_llist_insert.o)
+ .debug_aranges
+                0x0000000000000348       0x20 ../rfid_test_bsp/\libhal_bsp.a(alt_do_ctors.o)
+ .debug_aranges
+                0x0000000000000368       0x20 ../rfid_test_bsp/\libhal_bsp.a(alt_do_dtors.o)
+ .debug_aranges
+                0x0000000000000388       0x18 ../rfid_test_bsp/\libhal_bsp.a(alt_errno.o)
+ .debug_aranges
+                0x00000000000003a0       0x20 ../rfid_test_bsp/\libhal_bsp.a(alt_icache_flush_all.o)
+ .debug_aranges
+                0x00000000000003c0       0x20 ../rfid_test_bsp/\libhal_bsp.a(alt_io_redirect.o)
+ .debug_aranges
+                0x00000000000003e0       0x20 ../rfid_test_bsp/\libhal_bsp.a(alt_open.o)
+ .debug_aranges
+                0x0000000000000400       0x20 ../rfid_test_bsp/\libhal_bsp.a(alt_release_fd.o)
+ .debug_aranges
+                0x0000000000000420       0x20 ../rfid_test_bsp/\libhal_bsp.a(altera_nios2_gen2_irq.o)
+ .debug_aranges
+                0x0000000000000440       0x20 ../rfid_test_bsp/\libhal_bsp.a(alt_find_dev.o)
+ .debug_aranges
+                0x0000000000000460       0x20 ../rfid_test_bsp/\libhal_bsp.a(alt_find_file.o)
+ .debug_aranges
+                0x0000000000000480       0x20 ../rfid_test_bsp/\libhal_bsp.a(alt_get_fd.o)
+ .debug_aranges
+                0x00000000000004a0       0x20 ../rfid_test_bsp/\libhal_bsp.a(alt_icache_flush.o)
+ .debug_aranges
+                0x00000000000004c0       0x20 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-atexit.o)
+ .debug_aranges
+                0x00000000000004e0       0x20 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-exit.o)
+ .debug_aranges
+                0x0000000000000500       0x18 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-impure.o)
+ .debug_aranges
+                0x0000000000000518       0x18 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-int_errno.o)
+ .debug_aranges
+                0x0000000000000530       0x20 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-memcmp.o)
+ .debug_aranges
+                0x0000000000000550       0x20 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-strlen.o)
+ .debug_aranges
+                0x0000000000000570       0x20 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-__atexit.o)
+ .debug_aranges
+                0x0000000000000590       0x20 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-__call_atexit.o)
+ .debug_aranges
+                0x00000000000005b0       0x20 ../rfid_test_bsp/\libhal_bsp.a(alt_exit.o)
+
+.debug_pubnames
+ *(.debug_pubnames)
+
+.debug_info     0x0000000000000000     0x6e6c
+ *(.debug_info .gnu.linkonce.wi.*)
+ .debug_info    0x0000000000000000       0x76 ../rfid_test_bsp//obj/HAL/src/crt0.o
+ .debug_info    0x0000000000000076      0x48a obj/default/hello_world.o
+ .debug_info    0x0000000000000500      0x123 obj/default/helpers/commands/ack.o
+ .debug_info    0x0000000000000623      0x12a obj/default/helpers/commands/kill.o
+ .debug_info    0x000000000000074d      0x110 obj/default/helpers/commands/lock.o
+ .debug_info    0x000000000000085d      0x104 obj/default/helpers/commands/nak.o
+ .debug_info    0x0000000000000961      0x1ed obj/default/helpers/commands/query.o
+ .debug_info    0x0000000000000b4e       0xf9 obj/default/helpers/commands/query_adjust.o
+ .debug_info    0x0000000000000c47       0xd0 obj/default/helpers/commands/query_rep.o
+ .debug_info    0x0000000000000d17      0x144 obj/default/helpers/commands/read.o
+ .debug_info    0x0000000000000e5b      0x13c obj/default/helpers/commands/req_rn.o
+ .debug_info    0x0000000000000f97       0x49 obj/default/helpers/commands/rn16.o
+ .debug_info    0x0000000000000fe0      0x194 obj/default/helpers/commands/select.o
+ .debug_info    0x0000000000001174      0x144 obj/default/helpers/commands/write.o
+ .debug_info    0x00000000000012b8      0x18d obj/default/helpers/crc.o
+ .debug_info    0x0000000000001445      0x2c6 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0\libgcc.a(lib2-divmod.o)
+ .debug_info    0x000000000000170b      0x145 ../rfid_test_bsp/\libhal_bsp.a(alt_load.o)
+ .debug_info    0x0000000000001850      0x131 ../rfid_test_bsp/\libhal_bsp.a(alt_main.o)
+ .debug_info    0x0000000000001981      0x3c9 ../rfid_test_bsp/\libhal_bsp.a(alt_sys_init.o)
+ .debug_info    0x0000000000001d4a      0x3a7 ../rfid_test_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_fd.o)
+ .debug_info    0x00000000000020f1      0x1b2 ../rfid_test_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_read.o)
+ .debug_info    0x00000000000022a3      0x195 ../rfid_test_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_write.o)
+ .debug_info    0x0000000000002438      0x321 ../rfid_test_bsp/\libhal_bsp.a(alt_close.o)
+ .debug_info    0x0000000000002759       0xa5 ../rfid_test_bsp/\libhal_bsp.a(alt_dcache_flush_all.o)
+ .debug_info    0x00000000000027fe      0x49c ../rfid_test_bsp/\libhal_bsp.a(alt_dev.o)
+ .debug_info    0x0000000000002c9a      0x1a9 ../rfid_test_bsp/\libhal_bsp.a(alt_dev_llist_insert.o)
+ .debug_info    0x0000000000002e43       0x83 ../rfid_test_bsp/\libhal_bsp.a(alt_do_ctors.o)
+ .debug_info    0x0000000000002ec6       0x83 ../rfid_test_bsp/\libhal_bsp.a(alt_do_dtors.o)
+ .debug_info    0x0000000000002f49       0xa6 ../rfid_test_bsp/\libhal_bsp.a(alt_errno.o)
+ .debug_info    0x0000000000002fef       0x92 ../rfid_test_bsp/\libhal_bsp.a(alt_icache_flush_all.o)
+ .debug_info    0x0000000000003081      0x4a5 ../rfid_test_bsp/\libhal_bsp.a(alt_io_redirect.o)
+ .debug_info    0x0000000000003526      0x3bb ../rfid_test_bsp/\libhal_bsp.a(alt_open.o)
+ .debug_info    0x00000000000038e1      0x2b0 ../rfid_test_bsp/\libhal_bsp.a(alt_release_fd.o)
+ .debug_info    0x0000000000003b91       0x92 ../rfid_test_bsp/\libhal_bsp.a(altera_nios2_gen2_irq.o)
+ .debug_info    0x0000000000003c23      0x2e9 ../rfid_test_bsp/\libhal_bsp.a(alt_find_dev.o)
+ .debug_info    0x0000000000003f0c      0x2e6 ../rfid_test_bsp/\libhal_bsp.a(alt_find_file.o)
+ .debug_info    0x00000000000041f2      0x310 ../rfid_test_bsp/\libhal_bsp.a(alt_get_fd.o)
+ .debug_info    0x0000000000004502       0xdc ../rfid_test_bsp/\libhal_bsp.a(alt_icache_flush.o)
+ .debug_info    0x00000000000045de       0xfe c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-atexit.o)
+ .debug_info    0x00000000000046dc      0x8e4 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-exit.o)
+ .debug_info    0x0000000000004fc0      0x8a1 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-impure.o)
+ .debug_info    0x0000000000005861       0x8a c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-int_errno.o)
+ .debug_info    0x00000000000058eb      0x11a c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-memcmp.o)
+ .debug_info    0x0000000000005a05       0xe2 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-strlen.o)
+ .debug_info    0x0000000000005ae7      0x934 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-__atexit.o)
+ .debug_info    0x000000000000641b      0x965 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-__call_atexit.o)
+ .debug_info    0x0000000000006d80       0xec ../rfid_test_bsp/\libhal_bsp.a(alt_exit.o)
+
+.debug_abbrev   0x0000000000000000     0x26e1
+ *(.debug_abbrev)
+ .debug_abbrev  0x0000000000000000       0x12 ../rfid_test_bsp//obj/HAL/src/crt0.o
+ .debug_abbrev  0x0000000000000012      0x140 obj/default/hello_world.o
+ .debug_abbrev  0x0000000000000152       0xbf obj/default/helpers/commands/ack.o
+ .debug_abbrev  0x0000000000000211       0xb0 obj/default/helpers/commands/kill.o
+ .debug_abbrev  0x00000000000002c1       0xb0 obj/default/helpers/commands/lock.o
+ .debug_abbrev  0x0000000000000371       0xb0 obj/default/helpers/commands/nak.o
+ .debug_abbrev  0x0000000000000421       0xf7 obj/default/helpers/commands/query.o
+ .debug_abbrev  0x0000000000000518       0xa1 obj/default/helpers/commands/query_adjust.o
+ .debug_abbrev  0x00000000000005b9       0x92 obj/default/helpers/commands/query_rep.o
+ .debug_abbrev  0x000000000000064b       0xb0 obj/default/helpers/commands/read.o
+ .debug_abbrev  0x00000000000006fb       0xe8 obj/default/helpers/commands/req_rn.o
+ .debug_abbrev  0x00000000000007e3       0x39 obj/default/helpers/commands/rn16.o
+ .debug_abbrev  0x000000000000081c       0xb0 obj/default/helpers/commands/select.o
+ .debug_abbrev  0x00000000000008cc       0xb0 obj/default/helpers/commands/write.o
+ .debug_abbrev  0x000000000000097c       0xc4 obj/default/helpers/crc.o
+ .debug_abbrev  0x0000000000000a40      0x10e c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0\libgcc.a(lib2-divmod.o)
+ .debug_abbrev  0x0000000000000b4e       0x9f ../rfid_test_bsp/\libhal_bsp.a(alt_load.o)
+ .debug_abbrev  0x0000000000000bed       0xba ../rfid_test_bsp/\libhal_bsp.a(alt_main.o)
+ .debug_abbrev  0x0000000000000ca7      0x157 ../rfid_test_bsp/\libhal_bsp.a(alt_sys_init.o)
+ .debug_abbrev  0x0000000000000dfe       0xf7 ../rfid_test_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_fd.o)
+ .debug_abbrev  0x0000000000000ef5       0xd5 ../rfid_test_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_read.o)
+ .debug_abbrev  0x0000000000000fca       0xd5 ../rfid_test_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_write.o)
+ .debug_abbrev  0x000000000000109f      0x11f ../rfid_test_bsp/\libhal_bsp.a(alt_close.o)
+ .debug_abbrev  0x00000000000011be       0x5a ../rfid_test_bsp/\libhal_bsp.a(alt_dcache_flush_all.o)
+ .debug_abbrev  0x0000000000001218       0xd9 ../rfid_test_bsp/\libhal_bsp.a(alt_dev.o)
+ .debug_abbrev  0x00000000000012f1      0x114 ../rfid_test_bsp/\libhal_bsp.a(alt_dev_llist_insert.o)
+ .debug_abbrev  0x0000000000001405       0x79 ../rfid_test_bsp/\libhal_bsp.a(alt_do_ctors.o)
+ .debug_abbrev  0x000000000000147e       0x79 ../rfid_test_bsp/\libhal_bsp.a(alt_do_dtors.o)
+ .debug_abbrev  0x00000000000014f7       0x5a ../rfid_test_bsp/\libhal_bsp.a(alt_errno.o)
+ .debug_abbrev  0x0000000000001551       0x42 ../rfid_test_bsp/\libhal_bsp.a(alt_icache_flush_all.o)
+ .debug_abbrev  0x0000000000001593      0x114 ../rfid_test_bsp/\libhal_bsp.a(alt_io_redirect.o)
+ .debug_abbrev  0x00000000000016a7      0x148 ../rfid_test_bsp/\libhal_bsp.a(alt_open.o)
+ .debug_abbrev  0x00000000000017ef       0xde ../rfid_test_bsp/\libhal_bsp.a(alt_release_fd.o)
+ .debug_abbrev  0x00000000000018cd       0x42 ../rfid_test_bsp/\libhal_bsp.a(altera_nios2_gen2_irq.o)
+ .debug_abbrev  0x000000000000190f       0xf0 ../rfid_test_bsp/\libhal_bsp.a(alt_find_dev.o)
+ .debug_abbrev  0x00000000000019ff       0xf0 ../rfid_test_bsp/\libhal_bsp.a(alt_find_file.o)
+ .debug_abbrev  0x0000000000001aef      0x10d ../rfid_test_bsp/\libhal_bsp.a(alt_get_fd.o)
+ .debug_abbrev  0x0000000000001bfc       0x8c ../rfid_test_bsp/\libhal_bsp.a(alt_icache_flush.o)
+ .debug_abbrev  0x0000000000001c88       0xaa c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-atexit.o)
+ .debug_abbrev  0x0000000000001d32      0x1e5 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-exit.o)
+ .debug_abbrev  0x0000000000001f17      0x18f c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-impure.o)
+ .debug_abbrev  0x00000000000020a6       0x37 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-int_errno.o)
+ .debug_abbrev  0x00000000000020dd       0x7f c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-memcmp.o)
+ .debug_abbrev  0x000000000000215c       0x90 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-strlen.o)
+ .debug_abbrev  0x00000000000021ec      0x21e c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-__atexit.o)
+ .debug_abbrev  0x000000000000240a      0x22e c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-__call_atexit.o)
+ .debug_abbrev  0x0000000000002638       0xa9 ../rfid_test_bsp/\libhal_bsp.a(alt_exit.o)
+
+.debug_line     0x0000000000000000     0x25d7
+ *(.debug_line)
+ .debug_line    0x0000000000000000       0x72 ../rfid_test_bsp//obj/HAL/src/crt0.o
+ .debug_line    0x0000000000000072      0x1de obj/default/hello_world.o
+ .debug_line    0x0000000000000250       0x65 obj/default/helpers/commands/ack.o
+ .debug_line    0x00000000000002b5       0x6a obj/default/helpers/commands/kill.o
+ .debug_line    0x000000000000031f       0x66 obj/default/helpers/commands/lock.o
+ .debug_line    0x0000000000000385       0x5e obj/default/helpers/commands/nak.o
+ .debug_line    0x00000000000003e3       0x8e obj/default/helpers/commands/query.o
+ .debug_line    0x0000000000000471       0x71 obj/default/helpers/commands/query_adjust.o
+ .debug_line    0x00000000000004e2       0x67 obj/default/helpers/commands/query_rep.o
+ .debug_line    0x0000000000000549       0x6e obj/default/helpers/commands/read.o
+ .debug_line    0x00000000000005b7       0x82 obj/default/helpers/commands/req_rn.o
+ .debug_line    0x0000000000000639       0x47 obj/default/helpers/commands/rn16.o
+ .debug_line    0x0000000000000680       0x7e obj/default/helpers/commands/select.o
+ .debug_line    0x00000000000006fe       0x70 obj/default/helpers/commands/write.o
+ .debug_line    0x000000000000076e       0xbd obj/default/helpers/crc.o
+ .debug_line    0x000000000000082b      0x102 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0\libgcc.a(lib2-divmod.o)
+ .debug_line    0x000000000000092d       0x8e ../rfid_test_bsp/\libhal_bsp.a(alt_load.o)
+ .debug_line    0x00000000000009bb       0xa4 ../rfid_test_bsp/\libhal_bsp.a(alt_main.o)
+ .debug_line    0x0000000000000a5f      0x127 ../rfid_test_bsp/\libhal_bsp.a(alt_sys_init.o)
+ .debug_line    0x0000000000000b86      0x112 ../rfid_test_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_fd.o)
+ .debug_line    0x0000000000000c98       0xfd ../rfid_test_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_read.o)
+ .debug_line    0x0000000000000d95       0xf4 ../rfid_test_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_write.o)
+ .debug_line    0x0000000000000e89      0x165 ../rfid_test_bsp/\libhal_bsp.a(alt_close.o)
+ .debug_line    0x0000000000000fee       0x61 ../rfid_test_bsp/\libhal_bsp.a(alt_dcache_flush_all.o)
+ .debug_line    0x000000000000104f       0xf8 ../rfid_test_bsp/\libhal_bsp.a(alt_dev.o)
+ .debug_line    0x0000000000001147       0xcf ../rfid_test_bsp/\libhal_bsp.a(alt_dev_llist_insert.o)
+ .debug_line    0x0000000000001216       0x59 ../rfid_test_bsp/\libhal_bsp.a(alt_do_ctors.o)
+ .debug_line    0x000000000000126f       0x59 ../rfid_test_bsp/\libhal_bsp.a(alt_do_dtors.o)
+ .debug_line    0x00000000000012c8       0x51 ../rfid_test_bsp/\libhal_bsp.a(alt_errno.o)
+ .debug_line    0x0000000000001319       0x50 ../rfid_test_bsp/\libhal_bsp.a(alt_icache_flush_all.o)
+ .debug_line    0x0000000000001369      0x133 ../rfid_test_bsp/\libhal_bsp.a(alt_io_redirect.o)
+ .debug_line    0x000000000000149c      0x128 ../rfid_test_bsp/\libhal_bsp.a(alt_open.o)
+ .debug_line    0x00000000000015c4       0xae ../rfid_test_bsp/\libhal_bsp.a(alt_release_fd.o)
+ .debug_line    0x0000000000001672       0x51 ../rfid_test_bsp/\libhal_bsp.a(altera_nios2_gen2_irq.o)
+ .debug_line    0x00000000000016c3       0xb5 ../rfid_test_bsp/\libhal_bsp.a(alt_find_dev.o)
+ .debug_line    0x0000000000001778       0xd1 ../rfid_test_bsp/\libhal_bsp.a(alt_find_file.o)
+ .debug_line    0x0000000000001849       0xd4 ../rfid_test_bsp/\libhal_bsp.a(alt_get_fd.o)
+ .debug_line    0x000000000000191d       0x81 ../rfid_test_bsp/\libhal_bsp.a(alt_icache_flush.o)
+ .debug_line    0x000000000000199e       0xe4 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-atexit.o)
+ .debug_line    0x0000000000001a82      0x1f9 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-exit.o)
+ .debug_line    0x0000000000001c7b      0x15d c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-impure.o)
+ .debug_line    0x0000000000001dd8       0x5c c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-int_errno.o)
+ .debug_line    0x0000000000001e34      0x173 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-memcmp.o)
+ .debug_line    0x0000000000001fa7      0x16c c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-strlen.o)
+ .debug_line    0x0000000000002113      0x21c c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-__atexit.o)
+ .debug_line    0x000000000000232f      0x237 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-__call_atexit.o)
+ .debug_line    0x0000000000002566       0x71 ../rfid_test_bsp/\libhal_bsp.a(alt_exit.o)
+
+.debug_frame    0x0000000000000000      0xf44
+ *(.debug_frame)
+ .debug_frame   0x0000000000000000      0x2a4 obj/default/hello_world.o
+ .debug_frame   0x00000000000002a4       0x7c obj/default/helpers/commands/ack.o
+ .debug_frame   0x0000000000000320       0x58 obj/default/helpers/commands/kill.o
+ .debug_frame   0x0000000000000378       0x58 obj/default/helpers/commands/lock.o
+ .debug_frame   0x00000000000003d0       0x7c obj/default/helpers/commands/nak.o
+ .debug_frame   0x000000000000044c       0x84 obj/default/helpers/commands/query.o
+ .debug_frame   0x00000000000004d0       0x58 obj/default/helpers/commands/query_adjust.o
+ .debug_frame   0x0000000000000528       0x58 obj/default/helpers/commands/query_rep.o
+ .debug_frame   0x0000000000000580       0x58 obj/default/helpers/commands/read.o
+ .debug_frame   0x00000000000005d8       0xb0 obj/default/helpers/commands/req_rn.o
+ .debug_frame   0x0000000000000688       0x34 obj/default/helpers/commands/rn16.o
+ .debug_frame   0x00000000000006bc       0x58 obj/default/helpers/commands/select.o
+ .debug_frame   0x0000000000000714       0x58 obj/default/helpers/commands/write.o
+ .debug_frame   0x000000000000076c       0x7c obj/default/helpers/crc.o
+ .debug_frame   0x00000000000007e8       0x50 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0\libgcc.a(lib2-divmod.o)
+ .debug_frame   0x0000000000000838       0x5c ../rfid_test_bsp/\libhal_bsp.a(alt_load.o)
+ .debug_frame   0x0000000000000894       0x2c ../rfid_test_bsp/\libhal_bsp.a(alt_main.o)
+ .debug_frame   0x00000000000008c0       0x88 ../rfid_test_bsp/\libhal_bsp.a(alt_sys_init.o)
+ .debug_frame   0x0000000000000948       0x60 ../rfid_test_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_fd.o)
+ .debug_frame   0x00000000000009a8       0x34 ../rfid_test_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_read.o)
+ .debug_frame   0x00000000000009dc       0x34 ../rfid_test_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_write.o)
+ .debug_frame   0x0000000000000a10       0x60 ../rfid_test_bsp/\libhal_bsp.a(alt_close.o)
+ .debug_frame   0x0000000000000a70       0x34 ../rfid_test_bsp/\libhal_bsp.a(alt_dcache_flush_all.o)
+ .debug_frame   0x0000000000000aa4       0x34 ../rfid_test_bsp/\libhal_bsp.a(alt_dev.o)
+ .debug_frame   0x0000000000000ad8       0x60 ../rfid_test_bsp/\libhal_bsp.a(alt_dev_llist_insert.o)
+ .debug_frame   0x0000000000000b38       0x38 ../rfid_test_bsp/\libhal_bsp.a(alt_do_ctors.o)
+ .debug_frame   0x0000000000000b70       0x38 ../rfid_test_bsp/\libhal_bsp.a(alt_do_dtors.o)
+ .debug_frame   0x0000000000000ba8       0x38 ../rfid_test_bsp/\libhal_bsp.a(alt_icache_flush_all.o)
+ .debug_frame   0x0000000000000be0       0x60 ../rfid_test_bsp/\libhal_bsp.a(alt_io_redirect.o)
+ .debug_frame   0x0000000000000c40       0x84 ../rfid_test_bsp/\libhal_bsp.a(alt_open.o)
+ .debug_frame   0x0000000000000cc4       0x34 ../rfid_test_bsp/\libhal_bsp.a(alt_release_fd.o)
+ .debug_frame   0x0000000000000cf8       0x34 ../rfid_test_bsp/\libhal_bsp.a(altera_nios2_gen2_irq.o)
+ .debug_frame   0x0000000000000d2c       0x38 ../rfid_test_bsp/\libhal_bsp.a(alt_find_dev.o)
+ .debug_frame   0x0000000000000d64       0x38 ../rfid_test_bsp/\libhal_bsp.a(alt_find_file.o)
+ .debug_frame   0x0000000000000d9c       0x34 ../rfid_test_bsp/\libhal_bsp.a(alt_get_fd.o)
+ .debug_frame   0x0000000000000dd0       0x34 ../rfid_test_bsp/\libhal_bsp.a(alt_icache_flush.o)
+ .debug_frame   0x0000000000000e04       0x20 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-atexit.o)
+ .debug_frame   0x0000000000000e24       0x28 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-exit.o)
+ .debug_frame   0x0000000000000e4c       0x20 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-memcmp.o)
+ .debug_frame   0x0000000000000e6c       0x20 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-strlen.o)
+ .debug_frame   0x0000000000000e8c       0x38 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-__atexit.o)
+ .debug_frame   0x0000000000000ec4       0x54 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-__call_atexit.o)
+ .debug_frame   0x0000000000000f18       0x2c ../rfid_test_bsp/\libhal_bsp.a(alt_exit.o)
+
+.debug_str      0x0000000000000000     0x18ac
+ *(.debug_str)
+ .debug_str     0x0000000000000000      0x33a obj/default/hello_world.o
+                                        0x39d (size before relaxing)
+ .debug_str     0x000000000000033a       0x43 obj/default/helpers/commands/ack.o
+                                        0x121 (size before relaxing)
+ .debug_str     0x000000000000037d       0x3b obj/default/helpers/commands/kill.o
+                                        0x118 (size before relaxing)
+ .debug_str     0x00000000000003b8       0x35 obj/default/helpers/commands/lock.o
+                                        0x117 (size before relaxing)
+ .debug_str     0x00000000000003ed       0x37 obj/default/helpers/commands/nak.o
+                                        0x113 (size before relaxing)
+ .debug_str     0x0000000000000424       0x5f obj/default/helpers/commands/query.o
+                                        0x149 (size before relaxing)
+ .debug_str     0x0000000000000483       0x59 obj/default/helpers/commands/query_adjust.o
+                                        0x119 (size before relaxing)
+ .debug_str     0x00000000000004dc       0x46 obj/default/helpers/commands/query_rep.o
+                                        0x106 (size before relaxing)
+ .debug_str     0x0000000000000522       0x4a obj/default/helpers/commands/read.o
+                                        0x12c (size before relaxing)
+ .debug_str     0x000000000000056c       0x4a obj/default/helpers/commands/req_rn.o
+                                        0x139 (size before relaxing)
+ .debug_str     0x00000000000005b6       0x26 obj/default/helpers/commands/rn16.o
+                                         0xca (size before relaxing)
+ .debug_str     0x00000000000005dc       0x69 obj/default/helpers/commands/select.o
+                                        0x156 (size before relaxing)
+ .debug_str     0x0000000000000645       0x30 obj/default/helpers/commands/write.o
+                                        0x12a (size before relaxing)
+ .debug_str     0x0000000000000675       0x75 obj/default/helpers/crc.o
+                                        0x13a (size before relaxing)
+ .debug_str     0x00000000000006ea      0x16d c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0\libgcc.a(lib2-divmod.o)
+                                        0x1b8 (size before relaxing)
+ .debug_str     0x0000000000000857      0x133 ../rfid_test_bsp/\libhal_bsp.a(alt_load.o)
+                                        0x217 (size before relaxing)
+ .debug_str     0x000000000000098a       0x70 ../rfid_test_bsp/\libhal_bsp.a(alt_main.o)
+                                        0x1a2 (size before relaxing)
+ .debug_str     0x00000000000009fa      0x14c ../rfid_test_bsp/\libhal_bsp.a(alt_sys_init.o)
+                                        0x2d9 (size before relaxing)
+ .debug_str     0x0000000000000b46       0x77 ../rfid_test_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_fd.o)
+                                        0x2da (size before relaxing)
+ .debug_str     0x0000000000000bbd       0x48 ../rfid_test_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_read.o)
+                                        0x224 (size before relaxing)
+ .debug_str     0x0000000000000c05       0x4a ../rfid_test_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_write.o)
+                                        0x21a (size before relaxing)
+ .debug_str     0x0000000000000c4f       0x44 ../rfid_test_bsp/\libhal_bsp.a(alt_close.o)
+                                        0x210 (size before relaxing)
+ .debug_str     0x0000000000000c93       0x34 ../rfid_test_bsp/\libhal_bsp.a(alt_dcache_flush_all.o)
+                                        0x15a (size before relaxing)
+ .debug_str     0x0000000000000cc7      0x120 ../rfid_test_bsp/\libhal_bsp.a(alt_dev.o)
+                                        0x30a (size before relaxing)
+ .debug_str     0x0000000000000de7       0x4b ../rfid_test_bsp/\libhal_bsp.a(alt_dev_llist_insert.o)
+                                        0x1d1 (size before relaxing)
+ .debug_str     0x0000000000000e32       0x48 ../rfid_test_bsp/\libhal_bsp.a(alt_do_ctors.o)
+                                         0xd5 (size before relaxing)
+ .debug_str     0x0000000000000e7a       0x4c ../rfid_test_bsp/\libhal_bsp.a(alt_do_dtors.o)
+                                         0xd4 (size before relaxing)
+ .debug_str     0x0000000000000ec6       0x14 ../rfid_test_bsp/\libhal_bsp.a(alt_errno.o)
+                                        0x14a (size before relaxing)
+ .debug_str     0x0000000000000eda       0x34 ../rfid_test_bsp/\libhal_bsp.a(alt_icache_flush_all.o)
+                                        0x15a (size before relaxing)
+ .debug_str     0x0000000000000f0e       0x56 ../rfid_test_bsp/\libhal_bsp.a(alt_io_redirect.o)
+                                        0x31b (size before relaxing)
+ .debug_str     0x0000000000000f64       0x36 ../rfid_test_bsp/\libhal_bsp.a(alt_open.o)
+                                        0x250 (size before relaxing)
+ .debug_str     0x0000000000000f9a       0x28 ../rfid_test_bsp/\libhal_bsp.a(alt_release_fd.o)
+                                        0x1d8 (size before relaxing)
+ .debug_str     0x0000000000000fc2       0x3b ../rfid_test_bsp/\libhal_bsp.a(altera_nios2_gen2_irq.o)
+                                        0x161 (size before relaxing)
+ .debug_str     0x0000000000000ffd       0x24 ../rfid_test_bsp/\libhal_bsp.a(alt_find_dev.o)
+                                        0x1f1 (size before relaxing)
+ .debug_str     0x0000000000001021       0x26 ../rfid_test_bsp/\libhal_bsp.a(alt_find_file.o)
+                                        0x1ff (size before relaxing)
+ .debug_str     0x0000000000001047       0x30 ../rfid_test_bsp/\libhal_bsp.a(alt_get_fd.o)
+                                        0x221 (size before relaxing)
+ .debug_str     0x0000000000001077       0x2c ../rfid_test_bsp/\libhal_bsp.a(alt_icache_flush.o)
+                                        0x160 (size before relaxing)
+ .debug_str     0x00000000000010a3      0x162 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-atexit.o)
+                                        0x207 (size before relaxing)
+ .debug_str     0x0000000000001205      0x3c1 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-exit.o)
+                                        0x5a4 (size before relaxing)
+ .debug_str     0x00000000000015c6       0xc8 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-impure.o)
+                                        0x59b (size before relaxing)
+ .debug_str     0x000000000000168e       0x3c c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-int_errno.o)
+                                        0x1c3 (size before relaxing)
+ .debug_str     0x00000000000016ca       0xcc c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-memcmp.o)
+                                        0x1ca (size before relaxing)
+ .debug_str     0x0000000000001796       0x4e c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-strlen.o)
+                                        0x1dd (size before relaxing)
+ .debug_str     0x00000000000017e4       0x3c c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-__atexit.o)
+                                        0x5dc (size before relaxing)
+ .debug_str     0x0000000000001820       0x62 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-__call_atexit.o)
+                                        0x5c8 (size before relaxing)
+ .debug_str     0x0000000000001882       0x2a ../rfid_test_bsp/\libhal_bsp.a(alt_exit.o)
+                                        0x156 (size before relaxing)
+
+.debug_loc      0x0000000000000000      0x9d8
+ *(.debug_loc)
+ .debug_loc     0x0000000000000000      0x4ce c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0\libgcc.a(lib2-divmod.o)
+ .debug_loc     0x00000000000004ce       0x2c c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-atexit.o)
+ .debug_loc     0x00000000000004fa       0x1e c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-exit.o)
+ .debug_loc     0x0000000000000518      0x126 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-memcmp.o)
+ .debug_loc     0x000000000000063e       0x47 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-strlen.o)
+ .debug_loc     0x0000000000000685      0x185 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-__atexit.o)
+ .debug_loc     0x000000000000080a      0x1ce c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-__call_atexit.o)
+
+.debug_macinfo
+ *(.debug_macinfo)
+
+.debug_weaknames
+ *(.debug_weaknames)
+
+.debug_funcnames
+ *(.debug_funcnames)
+
+.debug_typenames
+ *(.debug_typenames)
+
+.debug_varnames
+ *(.debug_varnames)
+
+.debug_alt_sim_info
+                0x0000000000000000       0x30
+ *(.debug_alt_sim_info)
+ .debug_alt_sim_info
+                0x0000000000000000       0x30 ../rfid_test_bsp//obj/HAL/src/crt0.o
+                0x000000000003c200                __alt_data_end = 0x3c200
+                0x000000000003c200                PROVIDE (__alt_stack_pointer, __alt_data_end)
+                [!provide]                        PROVIDE (__alt_stack_limit, __alt_stack_base)
+                [!provide]                        PROVIDE (__alt_heap_start, end)
+                [!provide]                        PROVIDE (__alt_heap_limit, 0x3c200)
+OUTPUT(rfid_test.elf elf32-littlenios2)
+
+.debug_ranges   0x0000000000000000      0x118
+ .debug_ranges  0x0000000000000000       0x20 ../rfid_test_bsp//obj/HAL/src/crt0.o
+ .debug_ranges  0x0000000000000020       0x60 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0\libgcc.a(lib2-divmod.o)
+ .debug_ranges  0x0000000000000080       0x18 ../rfid_test_bsp/\libhal_bsp.a(altera_avalon_jtag_uart_read.o)
+ .debug_ranges  0x0000000000000098       0x10 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-atexit.o)
+ .debug_ranges  0x00000000000000a8       0x10 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-exit.o)
+ .debug_ranges  0x00000000000000b8       0x10 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-memcmp.o)
+ .debug_ranges  0x00000000000000c8       0x10 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-strlen.o)
+ .debug_ranges  0x00000000000000d8       0x10 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-__atexit.o)
+ .debug_ranges  0x00000000000000e8       0x30 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib\libc.a(lib_a-__call_atexit.o)

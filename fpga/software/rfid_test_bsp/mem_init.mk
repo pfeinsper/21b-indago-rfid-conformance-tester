@@ -158,7 +158,7 @@ ACDS_VERSION := 18.1
 # BUILD_NUMBER: 625
 
 # Optimize for simulation
-SIM_OPTIMIZE ?= 1
+SIM_OPTIMIZE ?= 0
 
 # The CPU reset address as needed by elf2flash
 RESET_ADDRESS ?= 0x00020000

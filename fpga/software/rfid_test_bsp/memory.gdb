@@ -3,7 +3,7 @@
 # Machine generated for CPU 'nios2_gen2_0' in SOPC Builder design 'RFID_NIOS'
 # SOPC Builder design path: ../../RFID_NIOS.sopcinfo
 #
-# Generated: Mon Sep 20 09:56:50 BRT 2021
+# Generated: Thu Oct 28 14:22:46 BRST 2021
 
 # DO NOT MODIFY THIS FILE
 #
