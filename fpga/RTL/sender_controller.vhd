@@ -41,7 +41,7 @@
     signal state_controller	: state_type_controller := c_wait;
     
     begin
-        controller : process( clk, rst )
+        controller : process( clk, rst, enable, clr_finished_sending )
         begin
             if (rst = '1') then
                 state_controller <= c_wait;
