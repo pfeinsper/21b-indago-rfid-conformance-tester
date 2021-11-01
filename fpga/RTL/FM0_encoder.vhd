@@ -172,7 +172,7 @@ architecture arch of FM0_encoder is
         --          sender          --
         ------------------------------
         -- This section is responsable to encode and send the date received using the Miller-Signaling State Diagram mentioned before --
-        data_sender :  process ( clk, rst, enable )
+        data_sender :  process ( clk, rst, enable, data_sender_end )
             variable index_bit : integer range 0 to data_width + 1;
             variable last_state_bit : state_type_sender := s_send_s2;
             begin
