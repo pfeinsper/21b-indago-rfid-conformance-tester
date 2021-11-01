@@ -219,7 +219,7 @@ architecture arch of rfid is
                             avs_readdata <= reg_status;
                         when "0100" => -- 4
                             avs_readdata <= receiver_data_out;
-                        when "0101" =>
+                        when "0101" => -- 5
                             avs_readdata(7 downto 0) <= reg_read_usedw_sender;
                         when "0110" => -- 6
                             avs_readdata(7 downto 0) <= reg_read_usedw_receiver;    
