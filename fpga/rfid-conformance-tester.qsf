@@ -56,19 +56,14 @@ set_global_assignment -name EDA_GENERATE_FUNCTIONAL_NETLIST OFF -section_id eda_
 set_global_assignment -name EDA_GENERATE_FUNCTIONAL_NETLIST OFF -section_id eda_board_design_boundary_scan
 set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
 set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
-set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
-set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
-set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_global_assignment -name NUM_PARALLEL_PROCESSORS ALL
 set_location_assignment PIN_AF14 -to fpga_clk_50
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to fpga_clk_50
 set_location_assignment PIN_AA12 -to pin_rx
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to pin_rx
 set_location_assignment PIN_W15 -to pin_tx
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to pin_tx
+set_global_assignment -name QIP_FILE RFID_NIOS/synthesis/RFID_NIOS.qip
+set_global_assignment -name VHDL_FILE RTL/FM0_encoder_tb.vhd
 set_global_assignment -name VHDL_FILE RTL/signal_generator.vhd
 set_global_assignment -name VHDL_FILE RTL/sender_controller.vhd
-set_global_assignment -name QIP_FILE RFID_NIOS/synthesis/RFID_NIOS.qip
 set_global_assignment -name VHDL_FILE RTL/sender.vhd
 set_global_assignment -name VHDL_FILE RTL/receiver.vhd
 set_global_assignment -name VHDL_FILE RTL/package_constructor.vhd
@@ -78,4 +73,12 @@ set_global_assignment -name VHDL_FILE RTL/FM0_decoder.vhd
 set_global_assignment -name VHDL_FILE RTL/fifo_fm0.vhd
 set_global_assignment -name VHDL_FILE RTL/rfid_nios_HW.vhd
 set_global_assignment -name SDC_FILE RTL/rfid_nios_HW.sdc
+set_global_assignment -name VHDL_FILE RTL/sender_test.vhd
+set_global_assignment -name VHDL_FILE RTL/sender_tb.vhd
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to fpga_clk_50
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to pin_rx
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to pin_tx
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
