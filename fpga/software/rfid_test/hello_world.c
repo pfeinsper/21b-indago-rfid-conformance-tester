@@ -15,7 +15,7 @@
 #define MASK_RST_RECEIVER    (1 << 10)
 #define MASK_EN_RECEIVER     (1 << 4)
 #define MASK_CLR_FIFO        (1 << 2)
-#define MASK_LOOPBACK        (1 << 8)
+#define MASK_LOOPBACK        (0 << 8)
 #define MASK_CLR_FINISHED    1 << 1
 #define MASK_CLR_FINISHED_0  0 << 1
 #define SENDER_HAS_GEN       1 << 5 // DURANTE PACOTE
@@ -41,6 +41,7 @@
 #define BASE_RECEIVER_USEDW 6
 #define BASE_ID             7
 #define MASK_FINISH_SEND    (1 << 2)
+#define BASE_REG_USEDW      5
 
 // package defines
 #define data_mask_size      6
@@ -74,6 +75,7 @@ void rfid_set_tari_bounderies(int tari_101, int tari_099, int tari_1616, int tar
 //void rfid_set_loopback(int EN_LOOPBACK){IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 2, EN_LOOPBACK | MASK_EN | MASK_EN_RECEIVER);}
 
 
+int  sender_check_usedw() { return IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE,  BASE_REG_USEDW <<2 );}
 
 
 int  sender_check_fifo_full() { return IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_STATUS << 3) & BASE_IS_FIFO_FULL; }
@@ -162,7 +164,7 @@ int main()
 {
 	enable_loopback();
     rfid_set_tari(tari_test);
-    sender_enable();
+    //sender_enable();
     //rfid_set_loopback(MASK_EN_LOOPBACK);
     receiver_enable();
     rfid_set_tari_bounderies(tari_101,tari_099,tari_1616,tari_1584,pw,delimiter,RTcal,TRcal);
@@ -175,22 +177,21 @@ int main()
     sender_has_gen(1);
     sender_is_preamble();
 
-    while(1)
-    	sender_send_package(0xFFFFFFF);
+	sender_select_package(commands, commands_size);
 
-
-    sender_select_package(commands, commands_size);
-
+    while(1){
+    	printf("%04d \n", sender_check_usedw() & 0xFF);
+    }
 
     int data_received[10];
     int i = 0;
     while(!receiver_empty()){
         data_received[i] = receiver_get_package();
         printf("confirming pack received from IP %04X \n",IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_ID << 2));
-        printf("	data received = %04X\n",data_received[i]);
+        printf("	data received = %04X\n", data_received[i]);
         i++;
 
     }
-    printf("End of Comunication with IP = %04X \n",IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_ID));
+    printf("End of Communication with IP = %04X \n",IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_ID));
     return 0;
 }
