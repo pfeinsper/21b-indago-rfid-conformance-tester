@@ -83,7 +83,6 @@
                 -- fm0
                 rst_fm0       : in std_logic;
                 enable_fm0    : in std_logic;
-                start_encoder : in std_logic;
                 encoder_ended : out std_logic;
 
                 -- fifo
@@ -194,15 +193,14 @@
                 clk            => clk,
                 rst_fm0        => rst,
                 encoder_ended  => encoder_ended,
-                enable_fm0     => enable,
+                enable_fm0     => start_encoder,
                 clear_fifo     => clear_fifo,
                 fifo_write_req => fifo_write_req,
                 is_fifo_full   => is_fifo_full,
                 tari           => tari,
                 data           => data,
                 usedw          => usedw,
-                q              => encoder_out,
-                start_encoder  => start_encoder 
+                q              => encoder_out
             );
 
             q <= encoder_out when mux = '1' else

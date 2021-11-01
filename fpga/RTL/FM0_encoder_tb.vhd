@@ -35,7 +35,7 @@ architecture tb of fm0_encoder_tb is
 	end component;
 
 	signal clk, data_out, is_fifo_empty, request_new_data, start_encoder, finished_sending : std_logic := '0';
-	signal data : std_logic_vector(25 downto 0) := (others => '1');
+	signal data : std_logic_vector(25 downto 0) := (others => '0');
 	signal data_in : std_logic_vector(31 downto 0) := (others => '0');
 	signal mask : std_logic_vector(5 downto 0) := "011010";
 	constant clk_period : time := 20 ns;
