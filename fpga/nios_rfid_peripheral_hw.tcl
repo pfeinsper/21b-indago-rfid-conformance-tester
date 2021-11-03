@@ -69,8 +69,8 @@ add_fileset_file signal_generator.vhd VHDL PATH RTL/signal_generator.vhd
 # 
 # parameters
 # 
-add_parameter data_width NATURAL 8
-set_parameter_property data_width DEFAULT_VALUE 8
+add_parameter data_width NATURAL 26
+set_parameter_property data_width DEFAULT_VALUE 26
 set_parameter_property data_width DISPLAY_NAME data_width
 set_parameter_property data_width TYPE NATURAL
 set_parameter_property data_width UNITS None
@@ -83,8 +83,8 @@ set_parameter_property tari_width TYPE NATURAL
 set_parameter_property tari_width UNITS None
 set_parameter_property tari_width ALLOWED_RANGES 0:2147483647
 set_parameter_property tari_width HDL_PARAMETER true
-add_parameter mask_width NATURAL 4
-set_parameter_property mask_width DEFAULT_VALUE 4
+add_parameter mask_width NATURAL 6
+set_parameter_property mask_width DEFAULT_VALUE 6
 set_parameter_property mask_width DISPLAY_NAME mask_width
 set_parameter_property mask_width TYPE NATURAL
 set_parameter_property mask_width UNITS None
@@ -144,11 +144,14 @@ set_interface_property avalon_slave_0 PORT_NAME_MAP ""
 set_interface_property avalon_slave_0 CMSIS_SVD_VARIABLES ""
 set_interface_property avalon_slave_0 SVD_ADDRESS_GROUP ""
 
+add_interface_port avalon_slave_0 rst beginbursttransfer Input 1
 add_interface_port avalon_slave_0 avs_address address Input 4
 add_interface_port avalon_slave_0 avs_read read Input 1
 add_interface_port avalon_slave_0 avs_readdata readdata Output 32
 add_interface_port avalon_slave_0 avs_write write Input 1
 add_interface_port avalon_slave_0 avs_writedata writedata Input 32
+add_interface_port avalon_slave_0 rfid_tx writeresponsevalid_n Output 1
+add_interface_port avalon_slave_0 rfid_rx beginbursttransfer Input 1
 set_interface_assignment avalon_slave_0 embeddedsw.configuration.isFlash 0
 set_interface_assignment avalon_slave_0 embeddedsw.configuration.isMemoryDevice 0
 set_interface_assignment avalon_slave_0 embeddedsw.configuration.isNonVolatileStorage 0
@@ -167,8 +170,6 @@ set_interface_property reset_sink PORT_NAME_MAP ""
 set_interface_property reset_sink CMSIS_SVD_VARIABLES ""
 set_interface_property reset_sink SVD_ADDRESS_GROUP ""
 
-add_interface_port reset_sink rst reset Input 1
-
 
 # 
 # connection point pins
@@ -181,7 +182,4 @@ set_interface_property pins EXPORT_OF ""
 set_interface_property pins PORT_NAME_MAP ""
 set_interface_property pins CMSIS_SVD_VARIABLES ""
 set_interface_property pins SVD_ADDRESS_GROUP ""
-
-add_interface_port pins rfid_rx rx Input 1
-add_interface_port pins rfid_tx tx Output 1
 
