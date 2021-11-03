@@ -61,11 +61,12 @@ architecture tb of sender_test is
     end component;
 	 
 	constant data : std_logic_vector(25 downto 0) := (others => '1');
-   signal data_in : std_logic_vector(31 downto 0) := (others => '1');
+   signal data_in : std_logic_vector(31 downto 0) := "10101111010010001010011100000111";
 	constant mask : std_logic_vector(5 downto 0) := "011010";
+	signal send: std_logic := '0';
 	
 	begin
-	
+			
 		sender_c : sender port map (
 			   clk                  => fpga_clk_50,
             clr_finished_sending => '0', -- escrita quando terminou o pacote pulsar esse fio
