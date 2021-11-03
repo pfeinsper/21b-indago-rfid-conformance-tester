@@ -16,18 +16,18 @@ use IEEE.std_logic_unsigned.all;
 use IEEE.numeric_std.all;
 use work.all;
 
-entity rfid is
+entity rfid_test is
     generic (
         -- defining size of data in and clock speed     
         data_width : natural := 26;
         tari_width : natural := 16;
         mask_width : natural := 6;
-        data_size  : natural :=32
+        data_size  : natural := 32
         
     );
     port (
         
-        clk : in std_logic;
+        fpga_clk_50 : in std_logic;
         rst : in std_logic;
         
         -- Avalion Memmory Mapped Slave
@@ -38,12 +38,12 @@ entity rfid is
         avs_writedata   : in  std_logic_vector(31 downto 0) := (others => '0');
     
         -- -- output
-        rfid_tx : out std_logic;
+        pin_tx : out std_logic;
         rfid_rx : in  std_logic
     );
 end entity;
 
-architecture arch of rfid is
+architecture arch of rfid_test is
 
     
 
@@ -162,123 +162,125 @@ architecture arch of rfid is
 
 
         -- other signals
-    signal pin_tx, pin_rx : std_logic := '0';
-        
+    --signal pin_tx, pin_rx : std_logic := '0';
+    constant data : std_logic_vector(25 downto 0) := (others => '1');
+    signal data_in : std_logic_vector(31 downto 0) := "11111111111110000000000000";
+	 constant mask : std_logic_vector(5 downto 0) := "011010";
     begin      
 
     -- rfid_tx
     -- rfid_rx w
     -- enable loopback mode
-    pin_rx <= rfid_rx when reg_settings(8) = '0' else pin_tx;
-    rfid_tx <= pin_tx;
+    --pin_rx <= rfid_rx when reg_settings(8) = '0' else pin_tx;
+    --rfid_tx <= pin_tx;
         
-        process(clk)
-        begin
-            if (rising_edge(clk)) then
-                if (rst = '1') then
-                    reg_settings    <= (others => '0');
-                    fifo_write_req  <= '0';
-                else
-                    fifo_write_req <= '0';
+    --     process(clk)
+    --     begin
+    --         if (rising_edge(clk)) then
+    --             if (rst = '1') then
+    --                 reg_settings    <= (others => '0');
+    --                 fifo_write_req  <= '0';
+    --             else
+    --                 fifo_write_req <= '0';
 
-                    if (avs_write = '1') then
-                        case avs_address is
-                        when "0000" => --0
-                            reg_settings  <= avs_writedata;
-                        when "0001" => -- 1
-                            reg_send_tari <=  avs_writedata(15 downto 0);
-                        when "0010" => -- 2
-                            fifo_data_in <= avs_writedata(data_size-1 downto 0);
-                            fifo_write_req <= '1';
-                        when "0011" => -- 3
-                            reg_send_tari_101 <=  avs_writedata(15 downto 0);
-                        when "0100" => -- 4
-                            reg_send_tari_099 <=  avs_writedata(15 downto 0);
-                        when "0101" => -- 5
-                            reg_send_tari_1616 <=  avs_writedata(15 downto 0);
-                        when "0110" => -- 6
-                            reg_send_tari_1584 <=  avs_writedata(15 downto 0);
-                        when "0111" => -- 7
-                            reg_send_pw <= avs_writedata(15 downto 0);
-                        when "1000" => -- 8
-                            reg_send_delimiter <= avs_writedata(15 downto 0);
-                        when "1001" => -- 9
-                            reg_send_RTcal <= avs_writedata(15 downto 0);  
-                        when "1010" => -- 10
-                            reg_send_TRcal <= avs_writedata(15 downto 0);
-                        when others => null;
-                        end case;
+    --                 if (avs_write = '1') then
+    --                     case avs_address is
+    --                     when "0000" => --0
+    --                         reg_settings  <= avs_writedata;
+    --                     when "0001" => -- 1
+    --                         reg_send_tari <=  avs_writedata(15 downto 0);
+    --                     when "0010" => -- 2
+    --                         fifo_data_in <= avs_writedata(data_size-1 downto 0);
+    --                         fifo_write_req <= '1';
+    --                     when "0011" => -- 3
+    --                         reg_send_tari_101 <=  avs_writedata(15 downto 0);
+    --                     when "0100" => -- 4
+    --                         reg_send_tari_099 <=  avs_writedata(15 downto 0);
+    --                     when "0101" => -- 5
+    --                         reg_send_tari_1616 <=  avs_writedata(15 downto 0);
+    --                     when "0110" => -- 6
+    --                         reg_send_tari_1584 <=  avs_writedata(15 downto 0);
+    --                     when "0111" => -- 7
+    --                         reg_send_pw <= avs_writedata(15 downto 0);
+    --                     when "1000" => -- 8
+    --                         reg_send_delimiter <= avs_writedata(15 downto 0);
+    --                     when "1001" => -- 9
+    --                         reg_send_RTcal <= avs_writedata(15 downto 0);  
+    --                     when "1010" => -- 10
+    --                         reg_send_TRcal <= avs_writedata(15 downto 0);
+    --                     when others => null;
+    --                     end case;
                     
-                    elsif(avs_read = '1') then
-                        case avs_address is
-                        when "0000" => -- 0
-                            avs_readdata <= reg_settings;
-                        when "0001" => -- 1
-                            avs_readdata(15 downto 0) <= reg_send_tari;
-                        when "0011" => -- 3
-                            avs_readdata <= reg_status;
-                        when "0100" => -- 4
-                            avs_readdata <= receiver_data_out;
-                        when "0101" => -- 5
-                            avs_readdata(7 downto 0) <= reg_read_usedw_sender;
-                        when "0110" => -- 6
-                            avs_readdata(7 downto 0) <= reg_read_usedw_receiver;    
-                        when "0111" => -- 7
-                            avs_readdata <= x"FF0055FF";
-                        when others => null;
-                        end case;
-                    end if;
-                end if;
-            end if;
-        end process;
+    --                 elsif(avs_read = '1') then
+    --                     case avs_address is
+    --                     when "0000" => -- 0
+    --                         avs_readdata <= reg_settings;
+    --                     when "0001" => -- 1
+    --                         avs_readdata(15 downto 0) <= reg_send_tari;
+    --                     when "0011" => -- 3
+    --                         avs_readdata <= reg_status;
+    --                     when "0100" => -- 4
+    --                         avs_readdata <= receiver_data_out;
+    --                     when "0101" =>
+    --                         avs_readdata(7 downto 0) <= reg_read_usedw_sender;
+    --                     when "0110" => -- 6
+    --                         avs_readdata(7 downto 0) <= reg_read_usedw_receiver;    
+    --                     when "0111" => -- 7
+    --                         avs_readdata <= x"FF0055FF";
+    --                     when others => null;
+    --                     end case;
+    --                 end if;
+    --             end if;
+    --         end if;
+    --     end process;
 		  
-	 aa : process( clk, fifo_write_req )
-        variable already_seted : std_logic := '0';
-        begin
-            if (rising_edge(clk)) then
+	--  aa : process( clk, fifo_write_req )
+    --     variable already_seted : std_logic := '0';
+    --     begin
+    --         if (rising_edge(clk)) then
 
-                fifo_write <= '0';
+    --             fifo_write <= '0';
 
-                if (fifo_write_req = '1' and already_seted = '0') then
-                    fifo_write <= '1';
-						  already_seted := '1';
-					 elsif (fifo_write_req = '0') then
-						  already_seted := '0';
-					 end if;
-            end if ;
-        end process ; -- aa
+    --             if (fifo_write_req = '1' and already_seted = '0') then
+    --                 fifo_write <= '1';
+	-- 					  already_seted := '1';
+	-- 				 elsif (fifo_write_req = '0') then
+	-- 					  already_seted := '0';
+	-- 				 end if;
+    --         end if ;
+    --     end process ; -- aa
 
-    rfid_sender: sender port map(
-        clk                   => clk,
-        clr_finished_sending  => reg_settings(10), -- escrita quando terminou o pacote pulsar esse fio
-        enable                => reg_settings(1),
-        rst                   => reg_settings(0),
-        finished_sending      => reg_status(3), -- leitura termino de envio de pacote
-        clear_fifo            => reg_settings(2),
-        fifo_write_req        => fifo_write,
-        is_fifo_full          => reg_status(0),  
-        usedw                 => reg_read_usedw_sender,
-        has_gen               => reg_settings(5), -- nios escrita - preamble/framesync 1  0 se n vai usar
-        start_controller      => reg_settings(6), -- nios escrita enable pulso to send package
-        is_preamble           => reg_settings(7), -- nios escrita 1 preamble 0 fs
-        tari                  => reg_send_tari,
-        pw                    => reg_send_pw, -- ver desenhos
-        delimiter             => reg_send_delimiter, -- e testbench
-        RTcal                 => reg_send_RTcal, -- 
-        TRcal                 => reg_send_TRcal, -- 
-        data                  => fifo_data_in,
-        q                     => pin_tx
-    );
+    -- rfid_sender: sender port map(
+    --     clk                   => clk,
+    --     clr_finished_sending  => reg_settings(10), -- escrita quando terminou o pacote pulsar esse fio
+    --     enable                => reg_settings(1),
+    --     rst                   => reg_settings(0),
+    --     finished_sending      => reg_status(3), -- leitura termino de envio de pacote
+    --     clear_fifo            => reg_settings(2),
+    --     fifo_write_req        => fifo_write,
+    --     is_fifo_full          => reg_status(0),  
+    --     usedw                 => reg_read_usedw_sender,
+    --     has_gen               => reg_settings(5), -- nios escrita - preamble/framesync 1  0 se n vai usar
+    --     start_controller      => reg_settings(6), -- nios escrita enable pulso to send package
+    --     is_preamble           => reg_settings(7), -- nios escrita 1 preamble 0 fs
+    --     tari                  => reg_send_tari,
+    --     pw                    => reg_send_pw, -- ver desenhos
+    --     delimiter             => reg_send_delimiter, -- e testbench
+    --     RTcal                 => reg_send_RTcal, -- 
+    --     TRcal                 => reg_send_TRcal, -- 
+    --     data                  => fifo_data_in,
+    --     q                     => pin_tx
+    -- );
 
 
     -- reg_settings is available from 11 to 31 for receiver
     rfid_receiver: receiver port map(
         -- flags
-        clk      => clk, --done
+        clk      => fpga_clk_50, --done
         rst      => reg_settings(11), -- done
         enable   => reg_settings(4), -- done
         -- data in from DUT 
-        data_DUT => pin_rx, -- EDITAR PARA A ENTRADA DA TAG
+        data_DUT => '1', -- EDITAR PARA A ENTRADA DA TAG
         -----------------------------------
         -- DECODER
         -- config
@@ -300,7 +302,29 @@ architecture arch of rfid is
         data_out_fifo => receiver_data_out,
         usedw         => reg_read_usedw_receiver
     );
-
-                        
+    
+    
+    sender_c : sender port map (
+			clk                  => fpga_clk_50,
+            clr_finished_sending => '0', -- escrita quando terminou o pacote pulsar esse fio
+            enable               => '1',
+            rst                  => '0',
+            finished_sending     => open,
+            clear_fifo           => '0',
+            fifo_write_req       => '1',
+            is_fifo_full         => open,
+            usedw                => open,
+            has_gen              => '0',
+            start_controller     => '1',
+            is_preamble          => '0',
+            tari                 => "0000000111110100",
+            pw                   => "0000000011111010",
+            delimiter            => "0000001001110001",
+            RTcal                => "0000010101000110",
+            TRcal                => "0000010101000110",
+            data                 => data_in,
+            q                    => pin_tx
+		);
+        data_in <= data & mask;
 
 end arch ;   
