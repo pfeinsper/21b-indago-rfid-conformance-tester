@@ -15,13 +15,13 @@
 #define MASK_RST_RECEIVER    (1 << 10)
 #define MASK_EN_RECEIVER     (1 << 4)
 #define MASK_CLR_FIFO        (1 << 2)
-#define MASK_LOOPBACK        (0 << 8)
+#define MASK_LOOPBACK        (1 << 8)
 #define MASK_CLR_FINISHED    1 << 1
 #define MASK_CLR_FINISHED_0  0 << 1
-#define SENDER_HAS_GEN       1 << 5 // DURANTE PACOTE
+#define SENDER_HAS_GEN       0 << 5 // DURANTE PACOTE
 #define SENDER_ENABLE_CTRL   1 << 6 // PULSE
 #define SENDER_ENABLE_CTRL_0 0 << 6 // PULSE
-#define SENDER_IS_PREAMBLE   1 << 7
+#define SENDER_IS_PREAMBLE   0 << 7
 // RFID - WRITE
 #define BASE_REG_TARI       1        // can be read in the same address 
 #define BASE_REG_FIFO       2
@@ -38,6 +38,7 @@
 
 #define BASE_REG_STATUS     3
 #define BASE_RECEIVER_DATA  4
+#define BASE_REG_USEDW      5
 #define BASE_RECEIVER_USEDW 6
 #define BASE_ID             7
 #define MASK_FINISH_SEND    (1 << 3)
@@ -137,11 +138,14 @@ void sender_mount_package(int command, int size)
 void sender_select_package(int *commands, int size){
     for (int command = 0; command < size; command++)
     {
+
         // https://stackoverflow.com/questions/29388711/c-how-to-get-length-of-bits-of-a-variable
         unsigned command_size, var = (commands[command] < 0) ? commands[command] : commands[command];
         for (command_size = 0; var != 0; ++command_size)
             var >>= 1;
+        printf(" command %d and size %d\n", commands[command],command_size);
         sender_mount_package(commands[command], command_size);
+
     }
 }
 
@@ -167,21 +171,28 @@ int main()
     receiver_enable();
     rfid_set_tari_bounderies(tari_101,tari_099,tari_1616,tari_1584,pw,delimiter,RTcal,TRcal);
 
-    int commands[3];
+    int commands[4];
     commands[0] = 0b110111111111111111111111111111; //32
     commands[1] = 0b101010101010101010101010101;
     commands[2] = 0b111100001111000011110000111;
+    int command = 0b11111111111111111111000000010100;
     //char commands[] = "111110000011111000001111100000111110000011111000001111100000";
-    int commands_size = sizeof(commands) / sizeof(char);
-    sender_has_gen(1);
-    sender_is_preamble();
+    int commands_size = sizeof(commands) / sizeof(int);
+    sender_has_gen(0);
+    //sender_is_preamble();
+
+    //IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_FIFO << 2, command);
+//    sender_send_end_of_package();
+//    sender_Start_Ctrl();
+//    while(!sender_read_finished_send()){}
+//    sender_write_clr_finished_sending();
 
     //while(1)
     sender_select_package(commands, commands_size);
 
-    while(1){
-    	printf("%04d \n", sender_check_usedw() & 0xFF);
-    }
+//    while(1){
+//    	printf("%04d \n", sender_check_usedw() & 0xFF);
+//    }
 
 
 
@@ -190,8 +201,8 @@ int main()
     int i = 0;
     while(!receiver_empty()){
         data_received[i] = receiver_get_package();
-        printf("confirming pack received from IP %04X \n",IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_ID << 2));
-        printf("	data received = %04X\n", data_received[i]);
+        //printf("confirming pack received from IP %04X \n",IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_ID << 2));
+        //printf("	data received = %04X\n", data_received[i]);
         i++;
 
     }
