@@ -171,7 +171,7 @@ int main()
     receiver_enable();
     rfid_set_tari_bounderies(tari_101,tari_099,tari_1616,tari_1584,pw,delimiter,RTcal,TRcal);
 
-    int commands[4];
+    int commands[3];
     commands[0] = 0b110111111111111111111111111111; //32
     commands[1] = 0b101010101010101010101010101;
     commands[2] = 0b111100001111000011110000111;
