@@ -4,10 +4,11 @@
 #include "helpers/commands/commands.h"
 #include "sys/wait.h"
 #include "stdio.h"
-// REGISTER STATUS
 
+// REGISTER STATUS
 #define BASE_IS_FIFO_FULL    (1 << 0)
 #define MASK_EMPTY_RECEIVER  (1 << 13)
+
 // REGISTER SETTINGS
 #define BASE_REG_SET          0        // can be read in the same address
 #define MASK_RST             (1 << 0)
@@ -22,6 +23,7 @@
 #define SENDER_ENABLE_CTRL   1 << 6 // PULSE
 #define SENDER_ENABLE_CTRL_0 0 << 6 // PULSE
 #define SENDER_IS_PREAMBLE   0 << 7
+
 // RFID - WRITE
 #define BASE_REG_TARI       1        // can be read in the same address 
 #define BASE_REG_FIFO       2
@@ -35,7 +37,6 @@
 #define BASE_REG_TRCAL      10
 
 // RFID - READ
-
 #define BASE_REG_STATUS     3
 #define BASE_RECEIVER_DATA  4
 #define BASE_REG_USEDW      5
@@ -60,7 +61,9 @@ int delimiter = 0x271;
 int RTcal     = 0x546;
 int TRcal     = 0x546;
 
+// RFID -----------------------------------------------------------------------------------------------------------
 void rfid_set_loopback(){IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 2, MASK_LOOPBACK);}
+
 void rfid_set_tari(int tari_value){IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_TARI << 2, tari_value);}
 
 void rfid_set_tari_bounderies(int tari_101, int tari_099, int tari_1616, int tari_1584, int pw, int delimiter, int RTcal, int TRcal){
@@ -72,26 +75,31 @@ void rfid_set_tari_bounderies(int tari_101, int tari_099, int tari_1616, int tar
 	IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_DELIMITER << 2, delimiter);
 	IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_RTCAL << 2, RTcal);
 	IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_TRCAL << 2, TRcal);}
-
-
+// SENDER -----------------------------------------------------------------------------------------------------------
 int  sender_check_usedw() { return IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE,  BASE_REG_USEDW <<2 );}
 
-
 int  sender_check_fifo_full() { return IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_STATUS << 2) & BASE_IS_FIFO_FULL; }
+
 void sender_enable(){IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 2, MASK_LOOPBACK | MASK_EN);}
+
 void sender_send_package(int package) {
 	IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_FIFO << 2, package);
 	printf("%d \n", package);
 }
+
 void sender_send_end_of_package() { IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_FIFO << 2, eop); }
+
 void sender_Start_Ctrl(){
     IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 2, MASK_EN | MASK_LOOPBACK | MASK_EN_RECEIVER | SENDER_IS_PREAMBLE | SENDER_HAS_GEN | SENDER_ENABLE_CTRL);
     IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 2, MASK_EN | MASK_LOOPBACK | MASK_EN_RECEIVER | SENDER_IS_PREAMBLE | SENDER_HAS_GEN);}
 
+
 void sender_write_clr_finished_sending(){
     IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 2, MASK_CLR_FINISHED | MASK_EN | MASK_LOOPBACK | MASK_EN_RECEIVER | SENDER_IS_PREAMBLE | SENDER_HAS_GEN);
     IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 2, MASK_CLR_FINISHED_0 |MASK_EN | MASK_LOOPBACK | MASK_EN_RECEIVER | SENDER_IS_PREAMBLE | SENDER_HAS_GEN);}
+
 int sender_read_finished_send(){return IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_STATUS << 2) & MASK_FINISH_SEND;}
+
 void sender_mount_package(int command, int size)
 {
     int remain_bits_to_send = size;
@@ -138,6 +146,8 @@ void sender_mount_package(int command, int size)
         }
     sender_write_clr_finished_sending();
 }
+
+
 void sender_select_package(int *commands, int size){
     for (int command = 0; command < size; command++)
     {
@@ -152,18 +162,16 @@ void sender_select_package(int *commands, int size){
     }
 }
 
-
-
 void sender_has_gen(int usesPreorFrameSync){if(usesPreorFrameSync){IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 2, MASK_EN | MASK_EN_RECEIVER | SENDER_HAS_GEN);}}
 
 void sender_is_preamble(){IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 2, MASK_EN | MASK_LOOPBACK | MASK_EN_RECEIVER | SENDER_IS_PREAMBLE | SENDER_HAS_GEN);}
-
+// RECEIVER -----------------------------------------------------------------------------------------------------------
 void receiver_enable(){IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 2 , MASK_EN | MASK_LOOPBACK |MASK_EN_RECEIVER);}
 
 int receiver_get_package(){return IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_RECEIVER_DATA<<2);}
 
 int receiver_empty(){return IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_STATUS << 2) & MASK_EMPTY_RECEIVER;}
-    
+//-----------------------------------------------------------------------------------------------------------
 
 int main()
 {
@@ -175,41 +183,27 @@ int main()
     rfid_set_tari_bounderies(tari_101,tari_099,tari_1616,tari_1584,pw,delimiter,RTcal,TRcal);
 
     int commands[3];
-    commands[0] = 0b110111111111111111111111111111; //32
+    commands[0] = 0b110111111111111111111111111111;
     commands[1] = 0b101010101010101010101010101;
     commands[2] = 0b111100001111000011110000111;
     int command = 0b11111111111111111111000000010100;
-    //char commands[] = "111110000011111000001111100000111110000011111000001111100000";
     int commands_size = sizeof(commands) / sizeof(int);
     sender_has_gen(0);
     //sender_is_preamble();
 
-    //IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_FIFO << 2, command);
-//    sender_send_end_of_package();
-//    sender_Start_Ctrl();
-//    while(!sender_read_finished_send()){}
-//    sender_write_clr_finished_sending();
-
-    //while(1)
+    printf("confirming pack received from IP %04X \n",IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_ID << 2));
+    
     sender_select_package(commands, commands_size);
 
-//    while(1){
-//    	printf("%04d \n", sender_check_usedw() & 0xFF);
-//    }
-
-
-
-
-    int data_received[10];
-
     while(!receiver_empty()){
-        //data_received[i] = receiver_get_package();
-        printf("receiver is: %d", receiver_empty());
-        //printf("confirming pack received from IP %04X \n",IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_ID << 2));
-        printf("data received = %X\n", receiver_get_package());
 
+        printf("receiver is: %d", receiver_empty());
+
+        int dado = receiver_get_package();
+        printf("data received = %X\n", dado);
 
     }
+
     printf("End of Communication with IP = %04X \n",IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_ID));
     return 0;
 }
