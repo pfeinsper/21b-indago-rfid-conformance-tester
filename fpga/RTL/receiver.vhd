@@ -99,15 +99,15 @@
         component fifo_32_32 IS
             port
                 (
-                    clock		: in std_logic ;
-                    data		: in std_logic_vector (31 downto 0);
-                    rdreq		: in std_logic ;
-                    sclr		: in std_logic ;
-                    wrreq		: in std_logic ;
-                    empty		: out std_logic ;
-                    full		: out std_logic ;
-                    q		    : out std_logic_vector (31 downto 0);
-                    usedw		: out std_logic_vector (7 downto 0)
+                    clock : in std_logic;
+                    data  : in std_logic_vector (31 downto 0);
+                    rdreq : in std_logic;
+                    sclr  : in std_logic;
+                    wrreq : in std_logic;
+                    empty : out std_logic;
+                    full  : out std_logic;
+                    q     : out std_logic_vector (31 downto 0);
+                    usedw : out std_logic_vector (7 downto 0)
                 );
         end component;
 
@@ -139,16 +139,17 @@
         signal write_request, data_ready, eop, data_out_decoder : std_logic := '0'; 
         
         begin
+
             fifo : fifo_32_32 port map (
-                clock	=> clk,
-                data	=> data_out_pc,
-                rdreq	=> rdreq,
-                sclr	=> sclr,
-                wrreq	=> write_request,
-                empty	=> empty,
-                full	=> full,
-                q		=> data_out_fifo,
-                usedw	=> usedw
+                sclr    => sclr,
+                data    => data_out_pc,
+                clock   => clk,
+                wrreq   => write_request,
+                rdreq   => rdreq,
+                q       => data_out_fifo,
+                empty   => empty,
+                full    => full,
+                usedw   => usedw
             );
             
             pack_const : package_constructor port map(
