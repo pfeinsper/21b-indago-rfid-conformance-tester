@@ -66,7 +66,7 @@ architecture arch of FM0_decoder is
 	signal clock_start, clear_counter : std_logic := '0';
 	
 	signal prev_bit_c, prev_bit_d : std_logic := '0';
-	signal clocks_counted         : integer range 0 to 50000;
+	signal clocks_counted         : integer range 0 to 500000000;
 
 	------------------------------
 	--          states          --
@@ -74,7 +74,7 @@ architecture arch of FM0_decoder is
 	type state_type_controller is (c_wait, c_decode);
 	signal state_controller	: state_type_controller := c_wait;
 	
-	type state_type_decoder is (d_wait, d_start_counter, d_start_counter2, d_wait_counter, d_wait_counter2, d_check_counter,d_check_counter2,  d_continue_counter, d_error, d_pass_1_01_tari, d_counter_cs);
+	type state_type_decoder is (d_wait, d_start_counter, d_start_counter2, d_wait_counter, d_wait_counter2, d_check_counter,d_check_counter2,  d_continue_counter, d_error, d_pass_1_01_tari, d_counter_cs, d_end);
 	signal state_decoder    : state_type_decoder := d_wait;
 
 
@@ -129,7 +129,7 @@ architecture arch of FM0_decoder is
 							data_ready        <= '0';
 							data_receiver_end <= '0';
 							clear_counter     <= '1';
-							eop <= '0';			
+							eop               <= '0';
 							if (data_receiver_start = '1') then
 								prev_bit_d <= data_in;
 								state_decoder <= d_start_counter;
@@ -220,12 +220,17 @@ architecture arch of FM0_decoder is
 						when d_counter_cs =>
 							clear_counter <= '0';
 							if (tari_1584_value < clocks_counted and clocks_counted < tari_1616_value) then
-								state_decoder <= d_wait;
+								state_decoder <= d_end;
 								eop <= '1';
 								data_receiver_end <= '1';
 							elsif (data_in /= prev_bit_d) then
 								state_decoder <= d_error;
 							end if;
+
+						when d_end =>
+							state_decoder <= d_wait;
+							eop <= '0';
+							data_receiver_end <= '0';
 							
 						when others =>
 							state_decoder <= d_wait;
