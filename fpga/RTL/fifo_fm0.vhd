@@ -80,15 +80,15 @@ architecture arch of FIFO_FM0 is
     component fifo_32_32 IS
             port
                 (
-                    clock		: in std_logic ;
-                    data		: in std_logic_vector (31 downto 0);
-                    rdreq		: in std_logic ;
-                    sclr		: in std_logic ;
-                    wrreq		: in std_logic ;
-                    empty		: out std_logic ;
-                    full		: out std_logic ;
-                    q		    : out std_logic_vector (31 downto 0);
-                    usedw		: out std_logic_vector (7 downto 0)
+                    clock : in std_logic;
+                    data  : in std_logic_vector (31 downto 0);
+                    rdreq : in std_logic;
+                    sclr  : in std_logic;
+                    wrreq : in std_logic;
+                    empty : out std_logic;
+                    full  : out std_logic;
+                    q     : out std_logic_vector (31 downto 0);
+                    usedw : out std_logic_vector (7 downto 0)
                 );
         end component;
 
