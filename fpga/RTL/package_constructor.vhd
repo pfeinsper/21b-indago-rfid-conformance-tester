@@ -51,7 +51,6 @@ architecture arch of package_constructor is
 	begin
 	    LL: process ( clk, rst )
         variable mask_integer : integer range 0 to data_width + mask_width + 1 := 0;
-
         begin
             if (rst = '1') then
                 write_request_out <= '0';
@@ -75,12 +74,12 @@ architecture arch of package_constructor is
 
                 elsif (eop = '1') then
                     write_request_out <= '1';
-                    mask <= (others => '0');
                     send_void_package <= true;
 
                 elsif (data_ready = '1') then
                     mask <= std_logic_vector(to_unsigned(mask_integer+1, mask_width));
-                    data <= data(data_width-2 downto 0) & data_in;
+                    data(mask_integer) <= data_in;
+                    -- data <= data(data_width-2 downto 0) & data_in;
                     if (mask_integer = data_width) then
                         write_request_out <= '1';
                         rst_mask_integer <= true;

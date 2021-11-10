@@ -64,8 +64,8 @@ architecture tb of receiver_tb is
 	constant tari : time := 10 us;
     signal i2 : integer range 0 to 1000:= 0;
     
-	constant size : integer := 41;
-    constant data_to_be_received : std_logic_vector(size-1 downto 0) := (others => '1');
+	constant size : integer := 17;
+    constant data_to_be_received : std_logic_vector(size-1 downto 0) := "10000010011010010";
 	
     begin
 

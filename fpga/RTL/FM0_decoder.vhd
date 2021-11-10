@@ -217,8 +217,8 @@ architecture arch of FM0_decoder is
 								data_out	  <= '1';
 								data_ready 	  <= '1';
 								clear_counter <= '1';
-							end if ;
-							
+							end if;
+
 						when d_counter_cs =>
 							data_ready 	  <= '0';
 							clear_counter <= '0';
