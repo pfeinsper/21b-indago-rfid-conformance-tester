@@ -39,7 +39,7 @@
 // RFID - READ
 #define BASE_REG_STATUS     3
 #define BASE_RECEIVER_DATA  4
-#define BASE_REG_USEDW      5
+#define BASE_SENDER_USEDW      5
 #define BASE_RECEIVER_USEDW 6
 #define BASE_ID             7
 #define MASK_FINISH_SEND    (1 << 3)
@@ -49,6 +49,7 @@
 #define data_package_size   26
 #define eop                 0b00000000000000000000000000000000
 #define bits26              0b11111111111111111111111111
+#define bits32              0b11111111111111111111111111111111
 
 // tudo isso precisa virar input
 int tari_test = 0x1f4;
@@ -76,7 +77,7 @@ void rfid_set_tari_bounderies(int tari_101, int tari_099, int tari_1616, int tar
 	IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_RTCAL << 2, RTcal);
 	IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_TRCAL << 2, TRcal);}
 // SENDER -----------------------------------------------------------------------------------------------------------
-int  sender_check_usedw() { return IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE,  BASE_REG_USEDW <<2 );}
+int  sender_check_usedw() { return IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE,  BASE_SENDER_USEDW <<2 );}
 
 int  sender_check_fifo_full() { return IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_STATUS << 2) & BASE_IS_FIFO_FULL; }
 
@@ -84,7 +85,47 @@ void sender_enable(){IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 
 
 void sender_send_package(int package) {
 	IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_FIFO << 2, package);
-	printf("%d \n", package);
+	printf("sender_send_package %d \n", package);
+}
+
+
+
+void *command_to_vector(int *command_vector ,long data, int size){
+
+    
+
+    int remain_bits_to_send = size;
+    int remain_package = data;
+    int last_package_size = size % 32;
+    
+    int i = 0;
+
+    while (remain_bits_to_send > 0)
+    {
+        if (remain_bits_to_send > 32)
+        {
+
+            int data_to_vector = remain_package & bits32; // 26 bits, ive tried in hex but got an error might be the conversion
+            
+
+            command_vector[i] = data_to_vector;
+
+            remain_bits_to_send = remain_bits_to_send - 0x20;
+        }
+        else
+        {
+            int data_to_vector = remain_package;
+            
+
+            command_vector[i] = data_to_vector;
+
+
+            remain_bits_to_send = remain_bits_to_send - last_package_size;
+        }
+
+        i++;
+    }
+    
 }
 
 void sender_send_end_of_package() { IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_FIFO << 2, eop); }
@@ -100,11 +141,12 @@ void sender_write_clr_finished_sending(){
 
 int sender_read_finished_send(){return IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_STATUS << 2) & MASK_FINISH_SEND;}
 
-void sender_mount_package(int command, int size)
+void sender_add_mask(int *command_vector_masked, int command, int size)
 {
     int remain_bits_to_send = size;
     int remain_package = command;
     int last_package_size = size % data_package_size;
+    int i = 0;
     while (remain_bits_to_send > 0)
     {
         if (remain_bits_to_send > data_package_size)
@@ -114,12 +156,7 @@ void sender_mount_package(int command, int size)
             remain_package = remain_package >> 0x1A;
             int32_t to_fifo = data_to_fifo << 6 | 0x1A;
 
-            while (sender_check_fifo_full())
-            {
-            }
-
-            sender_send_package(to_fifo);
-
+            command_vector_masked[i] = to_fifo;
             remain_bits_to_send = remain_bits_to_send - 0x1A;
         }
         else
@@ -128,27 +165,18 @@ void sender_mount_package(int command, int size)
             remain_package = remain_package >> last_package_size;
             int32_t to_fifo = data_to_fifo << 6 | last_package_size;
 
-            while (sender_check_fifo_full())
-            {
-            }
-
-            sender_send_package(to_fifo);
-
+            command_vector_masked[i] = to_fifo;
             remain_bits_to_send = remain_bits_to_send - last_package_size;
         }
-
+    i++;
 
     }
 
-    sender_send_end_of_package();
-    sender_Start_Ctrl();
-    while(!sender_read_finished_send()){
-        }
-    sender_write_clr_finished_sending();
+    
 }
 
 
-void sender_select_package(int *commands, int size){
+void sender_select_package(int *sizes,int *commands, int size){
     for (int command = 0; command < size; command++)
     {
 
@@ -157,10 +185,12 @@ void sender_select_package(int *commands, int size){
         for (command_size = 0; var != 0; ++command_size)
             var >>= 1;
         //printf(" command %d and size %d\n", commands[command],command_size);
-        sender_mount_package(commands[command], command_size);
-
+        //sender_add_mask(commands[command], command_size);
+        sizes[command] = command_size;
     }
 }
+
+
 
 void sender_has_gen(int usesPreorFrameSync){if(usesPreorFrameSync){IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 2, MASK_EN | MASK_EN_RECEIVER | SENDER_HAS_GEN);}}
 
@@ -182,28 +212,78 @@ int main()
     receiver_enable();
     rfid_set_tari_bounderies(tari_101,tari_099,tari_1616,tari_1584,pw,delimiter,RTcal,TRcal);
 
-    int commands[3];
-    commands[0] = 0b110111111111111111111111111111;
-    commands[1] = 0b101010101010101010101010101;
-    commands[2] = 0b111100001111000011110000111;
-    int command = 0b11111111111111111111000000010100;
-    int commands_size = sizeof(commands) / sizeof(int);
+    
+    ack command_ack;
+    ack_init(&command_ack, 1234);
+    ack_build(&command_ack);
+    int size;
+    if (command_ack.size < 32)
+    {
+        size = 1;
+    }else{
+        size = 2;
+    }
+    
+    // int commands[3];
+    // commands[0] = 11;//0b111111111111111111111111111;
+    // commands[1] = 0;//0b101010101010101010101010101;
+    // commands[2] = 1;//0b111100001111000011110000111;
+    // int commands_size = sizeof(commands) / sizeof(int);
     sender_has_gen(0);
     //sender_is_preamble();
 
-    printf("confirming pack received from IP %04X \n",IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_ID << 2));
+    int command_vector[size];
+    int commands_size = sizeof(command_vector) / sizeof(int);
+    command_to_vector(&command_vector,command_ack.result_data,command_ack.size);
+
+    int sizes[size];
+
+    sender_select_package(sizes, command_vector, commands_size);
     
-    sender_select_package(commands, commands_size);
+    int add = 0;
+    for (int i = 0; i < size; i++)
+    {
+        if(sizes[i]>26){
+            add++;
+        }
+    }
+    int commands_masked_size = size+add;
+    int command_vector_masked[commands_masked_size];
+    for (int i = 0; i < commands_size; i++)
+    {
+        sender_add_mask(command_vector_masked, command_vector[i], sizes[i]);
+        printf("command_vector[%d], sizes[%d] \n", command_vector[i], sizes[i]);
+    }
+    for (int i = 0; i < commands_masked_size; i++)
+    {
+        while (sender_check_fifo_full())
+            {
+            }
 
-    while(!receiver_empty()){
-
-        printf("receiver is: %d", receiver_empty());
-
-        int dado = receiver_get_package();
-        printf("data received = %X\n", dado);
-
+        sender_send_package(command_vector_masked[i]);
+        printf("command_vector_masked %d = %d \n", i,command_vector_masked[i]);
     }
 
-    printf("End of Communication with IP = %04X \n",IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_ID));
+    sender_send_end_of_package();
+    sender_Start_Ctrl();
+    while(!sender_read_finished_send()){
+        }
+    sender_write_clr_finished_sending();
+
+    printf("confirming pack received from IP %04X \n",IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_ID << 2));
+    
+
+
+
+     while(!receiver_empty()){
+
+         printf("receiver is: %d\n", receiver_empty());
+
+         int dado = receiver_get_package();
+         printf("data received = %X\n", dado);
+
+     }
+
+    // printf("End of Communication with IP = %04X \n",IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_ID));
     return 0;
 }
