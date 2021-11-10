@@ -74,7 +74,6 @@ architecture arch of package_constructor is
 
                 elsif (eop = '1') then
                     write_request_out <= '1';
-                    mask <= (others => '0');
                     send_void_package <= true;
 
                 elsif (data_ready = '1') then
