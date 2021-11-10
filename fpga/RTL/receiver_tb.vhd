@@ -52,21 +52,22 @@ architecture tb of receiver_tb is
         );
     end component;
 
-	signal clk, data_DUT, clr_err_decoder, err_decoder, rdreq, sclr, empty, full, aa : std_logic := '0';
+    
+	signal clk, data_DUT, clr_err_decoder, err_decoder, rdreq, sclr, empty, full : std_logic := '0';
 	signal out_fifo : std_logic_vector(31 downto 0) := (others => '0');
     signal data : std_logic_vector(25 downto 0) := (others => '0');
     signal mask : std_logic_vector(5 downto 0) := (others => '0');
 	signal usedw : std_logic_vector(7 downto 0) := (others => '0');
     signal current_bit : std_logic := '0';
-	constant clk_period : time := 20 ns;
+    constant clk_period : time := 20 ns;
 	constant nios_delay : time := 5 us;
 	constant tari : time := 10 us;
-    constant data_to_be_received : std_logic_vector(49 downto 0) := "10001111000110000000000010010111010010010011010001";
-    signal cc : boolean := false;
-
-
-
-	begin
+    signal i2 : integer range 0 to 1000:= 0;
+    
+	constant size : integer := 41;
+    constant data_to_be_received : std_logic_vector(size-1 downto 0) := (others => '1');
+	
+    begin
 
 		clk_process : process
 		begin
@@ -79,9 +80,10 @@ architecture tb of receiver_tb is
         DUT : process
 		variable i : integer range 0 to 1000 := 0;
 		variable prev_value : std_logic := '1';
+		variable current : std_logic := '1';
 		begin
-			current_bit <= data_to_be_received(i); 
-			if (current_bit = '1') then
+			current := data_to_be_received(i);
+			if (current = '1') then
 				data_DUT <= prev_value;
 				wait for tari;
 				prev_value := not prev_value;
@@ -92,16 +94,17 @@ architecture tb of receiver_tb is
 				wait for tari/2;
 			end if ;
 			i := i + 1;
-			if (i = 49) then
-				current_bit <= '0';
+			if (i = size) then
+				current := '1';
 				data_DUT <= '0';
 				wait;
 			end if ;
+            i2 <= i;
+            current_bit <= current;
         end process;
 
         NIOS : process
             begin
-                aa <= '0';
                 wait until (empty = '0');
                 wait for nios_delay;
                 -- read data in nios and save it
@@ -111,7 +114,6 @@ architecture tb of receiver_tb is
                 rdreq <= '1';
                 wait for clk_period;
                 rdreq <= '0';
-                aa <= '1';
                 wait for clk_period;
         end process;
 
@@ -137,6 +139,5 @@ architecture tb of receiver_tb is
         data <= out_fifo(31 downto 6);
         mask <= out_fifo(5 downto 0);
 
-        cc <= (empty = '0');
 	
 end tb;

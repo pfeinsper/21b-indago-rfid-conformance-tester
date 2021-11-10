@@ -44,22 +44,25 @@ architecture arch of package_constructor is
 	------------------------------
     signal data : std_logic_vector(data_width-1 downto 0) := (others => '0');
     signal mask : std_logic_vector(mask_width-1 downto 0) := (others => '0');
-    signal package_out : std_logic_vector((data_width + mask_width)-1 downto 0);
-    signal mask_integer : integer range 0 to data_width + mask_width + 1 := 0;
+    -- signal mask_integer : integer range 0 to data_width + mask_width + 1 := 0;
     signal send_void_package, rst_mask_integer : boolean := false;
     
 
 	begin
 	    LL: process ( clk, rst )
+        variable mask_integer : integer range 0 to data_width + mask_width + 1 := 0;
+
         begin
             if (rst = '1') then
                 write_request_out <= '0';
                 data              <= (others => '0');
-                mask_integer      <= 0;
+                mask              <= (others => '0');
             elsif rising_edge(clk) then
                 write_request_out <= '0';
+                mask_integer := to_integer(unsigned(mask));
                 if (rst_mask_integer) then
-                    mask_integer <= 0;
+                    -- mask_integer <= 0;
+                    mask <= (others => '0');
                     rst_mask_integer <= false;
 
                 elsif (send_void_package) then
@@ -67,25 +70,25 @@ architecture arch of package_constructor is
                         write_request_out <= '1';                        
                         send_void_package <= false;
                     end if ;
-                    mask_integer <= 0;
-                    data         <= (others => '0');
+                    mask <= (others => '0');
+                    data <= (others => '0');
 
                 elsif (eop = '1') then
                     write_request_out <= '1';
-                    mask_integer <= 0;
+                    mask <= (others => '0');
                     send_void_package <= true;
 
                 elsif (data_ready = '1') then
-                    mask_integer <= mask_integer + 1;
+                    mask <= std_logic_vector(to_unsigned(mask_integer+1, mask_width));
                     data <= data(data_width-2 downto 0) & data_in;
                     if (mask_integer = data_width) then
                         write_request_out <= '1';
                         rst_mask_integer <= true;
                     end if;
                 end if;
-            end if;
-        end process;
-
-        mask <= std_logic_vector(to_unsigned(mask_integer-1, mask'length));
+                end if;
+                end process;
+                
+        -- mask <= std_logic_vector(to_unsigned(mask_integer-1, mask_width));
         data_out <= data & mask;
 end arch ; -- arch
