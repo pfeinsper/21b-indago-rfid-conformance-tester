@@ -214,10 +214,13 @@ architecture arch of FM0_decoder is
 								state_decoder <= d_error;
 							else
 								state_decoder <= d_counter_cs;
+								data_out	  <= '1';
+								data_ready 	  <= '1';
 								clear_counter <= '1';
 							end if ;
 							
 						when d_counter_cs =>
+							data_ready 	  <= '0';
 							clear_counter <= '0';
 							if (tari_1584_value < clocks_counted and clocks_counted < tari_1616_value) then
 								state_decoder <= d_end;
