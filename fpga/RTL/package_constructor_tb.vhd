@@ -5,7 +5,6 @@ entity package_constructor_tb is
 end entity package_constructor_tb;
 
 architecture tb of package_constructor_tb is
-
     component package_constructor
 	    generic (
             -- defining size of data in and clock speed
@@ -17,25 +16,26 @@ architecture tb of package_constructor_tb is
             -- flags
             clk : in std_logic;
             rst : in std_logic;
-    
+
+            -- data
             data_ready : in std_logic := '0';
             data_in    : in std_logic := '0';
             eop        : in std_logic := '0';
     
             -- output
             write_request_out : out std_logic := '0';
-            data_out       : out std_logic_vector((data_width + mask_width)-1 downto 0)
+            data_out          : out std_logic_vector((data_width + mask_width)-1 downto 0)
         );
 
     end component;
 
+    -- signals and constants
 	signal clk, eop, data_in_constructor, write_request_out, data_ready : std_logic := '0';
     signal data_constructor_out : std_logic_vector (31 downto 0);
 	constant clk_period : time := 20 ns;
 	constant tari_period : time := 10 us;
 
 	begin
-
 		clk_process : process
 		begin
 			clk <= '0';
@@ -47,264 +47,74 @@ architecture tb of package_constructor_tb is
 		
 		decoder : process
 		begin
+            -- initial wait cycle
 			wait for 30 us;
-
 			data_in_constructor <= '0';
 			data_ready <= '1';
+
 			wait for clk_period;
 			data_ready <= '0';
+
 			wait for tari_period;
-			
 			data_in_constructor <= '1';
 			data_ready <= '1';
+
 			wait for clk_period;
 			data_ready <= '0';
-			wait for tari_period;
 
+			wait for tari_period;
 			eop <= '1';
+
 			wait for clk_period;
 			eop <= '0';
 
-			wait for 30 us;
-			
-			
+            -- second wait cycle
+			wait for 30 us;			
 			data_in_constructor <= '1';
 			data_ready <= '1';
+
 			wait for clk_period;
 			data_ready <= '0';
+
 			wait for tari_period;
-			
 			data_in_constructor <= '1';
 			data_ready <= '1';
+
 			wait for clk_period;
 			data_ready <= '0';
+
 			wait for tari_period * 1.6;
+			data_in_constructor <= '1';
+			data_ready <= '1';
 
-			data_in_constructor <= '1';
-			data_ready <= '1';
-			wait for clk_period;
-			data_ready <= '0';
-			wait for tari_period;
-			
-			data_in_constructor <= '1';
-			data_ready <= '1';
-			wait for clk_period;
-			data_ready <= '0';
-			wait for tari_period;
-			
-			data_in_constructor <= '1';
-			data_ready <= '1';
-			wait for clk_period;
-			data_ready <= '0';
-			wait for tari_period;
-			
-			data_in_constructor <= '0';
-			data_ready <= '1';
-			wait for clk_period;
-			data_ready <= '0';
-			wait for tari_period;
-			
-			data_in_constructor <= '1';
-			data_ready <= '1';
-			wait for clk_period;
-			data_ready <= '0';
-			wait for tari_period;
-			
-			data_in_constructor <= '1';
-			data_ready <= '1';
-			wait for clk_period;
-			data_ready <= '0';
-			wait for tari_period;
-			
-			data_in_constructor <= '1';
-			data_ready <= '1';
-			wait for clk_period;
-			data_ready <= '0';
-			wait for tari_period;
+            -- third wait cycle
+            for i in 1 to 35 loop
+                wait for clk_period;
+			    data_ready <= '0';
 
-			data_in_constructor <= '1';
-			data_ready <= '1';
-			wait for clk_period;
-			data_ready <= '0';
-			wait for tari_period;
-			
-			data_in_constructor <= '1';
-			data_ready <= '1';
-			wait for clk_period;
-			data_ready <= '0';
-			wait for tari_period;
-			
-			data_in_constructor <= '1';
-			data_ready <= '1';
-			wait for clk_period;
-			data_ready <= '0';
-			wait for tari_period;
-			
-			data_in_constructor <= '0';
-			data_ready <= '1';
-			wait for clk_period;
-			data_ready <= '0';
-			wait for tari_period;
-			
-			data_in_constructor <= '1';
-			data_ready <= '1';
-			wait for clk_period;
-			data_ready <= '0';
-			wait for tari_period;
-			
-			data_in_constructor <= '1';
-			data_ready <= '1';
-			wait for clk_period;
-			data_ready <= '0';
-			wait for tari_period;
-			
-			data_in_constructor <= '1';
-			data_ready <= '1';
-			wait for clk_period;
-			data_ready <= '0';
-			wait for tari_period;
+                if (i-2 mod 7 = 0) then
+                    wait for tari_period;
+                    data_in_constructor <= '0';
+                    data_ready <= '1';
+                else
+                    wait for tari_period;
+                    data_in_constructor <= '1';
+                    data_ready <= '1';
+                end if;
+            end loop;
 
-			data_in_constructor <= '1';
-			data_ready <= '1';
+            -- fourth and final wait cycle
 			wait for clk_period;
 			data_ready <= '0';
-			wait for tari_period;
-			
-			data_in_constructor <= '1';
-			data_ready <= '1';
-			wait for clk_period;
-			data_ready <= '0';
-			wait for tari_period;
-			
-			data_in_constructor <= '1';
-			data_ready <= '1';
-			wait for clk_period;
-			data_ready <= '0';
-			wait for tari_period;
-			
-			data_in_constructor <= '0';
-			data_ready <= '1';
-			wait for clk_period;
-			data_ready <= '0';
-			wait for tari_period;
-			
-			data_in_constructor <= '1';
-			data_ready <= '1';
-			wait for clk_period;
-			data_ready <= '0';
-			wait for tari_period;
-			
-			data_in_constructor <= '1';
-			data_ready <= '1';
-			wait for clk_period;
-			data_ready <= '0';
-			wait for tari_period;
-			
-			data_in_constructor <= '1';
-			data_ready <= '1';
-			wait for clk_period;
-			data_ready <= '0';
-			wait for tari_period;
 
-			data_in_constructor <= '1';
-			data_ready <= '1';
-			wait for clk_period;
-			data_ready <= '0';
-			wait for tari_period;
-			
-			data_in_constructor <= '1';
-			data_ready <= '1';
-			wait for clk_period;
-			data_ready <= '0';
-			wait for tari_period;
-			
-			data_in_constructor <= '1';
-			data_ready <= '1';
-			wait for clk_period;
-			data_ready <= '0';
-			wait for tari_period;
-			
-			data_in_constructor <= '0';
-			data_ready <= '1';
-			wait for clk_period;
-			data_ready <= '0';
-			wait for tari_period;
-			
-			data_in_constructor <= '1';
-			data_ready <= '1';
-			wait for clk_period;
-			data_ready <= '0';
-			wait for tari_period;
-			
-			data_in_constructor <= '1';
-			data_ready <= '1';
-			wait for clk_period;
-			data_ready <= '0';
-			wait for tari_period;
-			
-			data_in_constructor <= '1';
-			data_ready <= '1';
-			wait for clk_period;
-			data_ready <= '0';
-			wait for tari_period;
-
-			data_in_constructor <= '1';
-			data_ready <= '1';
-			wait for clk_period;
-			data_ready <= '0';
-			wait for tari_period;
-			
-			data_in_constructor <= '1';
-			data_ready <= '1';
-			wait for clk_period;
-			data_ready <= '0';
-			wait for tari_period;
-			
-			data_in_constructor <= '1';
-			data_ready <= '1';
-			wait for clk_period;
-			data_ready <= '0';
-			wait for tari_period;
-			
-			data_in_constructor <= '0';
-			data_ready <= '1';
-			wait for clk_period;
-			data_ready <= '0';
-			wait for tari_period;
-			
-			data_in_constructor <= '1';
-			data_ready <= '1';
-			wait for clk_period;
-			data_ready <= '0';
-			wait for tari_period;
-			
-			data_in_constructor <= '1';
-			data_ready <= '1';
-			wait for clk_period;
-			data_ready <= '0';
-			wait for tari_period;
-			
-			data_in_constructor <= '1';
-			data_ready <= '1';
-			wait for clk_period;
-			data_ready <= '0';
-			wait for tari_period;
-			
-			data_in_constructor <= '1';
-			data_ready <= '1';
-			wait for clk_period;
-			data_ready <= '0';
 			wait for tari_period * 1.6;
-
-			
-
 			eop <= '1';
+
 			wait for clk_period;
 			eop <= '0';
+
 			wait;
-
-		end process ; -- decoder
-
+		end process ;
 
 	   	p_constructor : package_constructor port map (
             clk => clk,
@@ -315,6 +125,4 @@ architecture tb of package_constructor_tb is
             write_request_out => write_request_out,
             data_out => data_constructor_out
        );
-		
-	
 end tb;
