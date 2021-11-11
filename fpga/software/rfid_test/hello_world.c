@@ -88,11 +88,7 @@ void sender_send_package(int package) {
 	printf("sender_send_package %d \n", package);
 }
 
-
-
-void *command_to_vector(int *command_vector ,long data, int size){
-
-    
+void *command_to_vector(int *command_vector, int *sizes ,long data, int size){
 
     int remain_bits_to_send = size;
     int remain_package = data;
@@ -109,7 +105,7 @@ void *command_to_vector(int *command_vector ,long data, int size){
             
 
             command_vector[i] = data_to_vector;
-
+            sizes[i] = 32;
             remain_bits_to_send = remain_bits_to_send - 0x20;
         }
         else
@@ -119,7 +115,7 @@ void *command_to_vector(int *command_vector ,long data, int size){
 
             command_vector[i] = data_to_vector;
 
-
+            sizes[i] = last_package_size;
             remain_bits_to_send = remain_bits_to_send - last_package_size;
         }
 
@@ -133,7 +129,6 @@ void sender_send_end_of_package() { IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, B
 void sender_Start_Ctrl(){
     IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 2, MASK_EN | MASK_LOOPBACK | MASK_EN_RECEIVER | SENDER_IS_PREAMBLE | SENDER_HAS_GEN | SENDER_ENABLE_CTRL);
     IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 2, MASK_EN | MASK_LOOPBACK | MASK_EN_RECEIVER | SENDER_IS_PREAMBLE | SENDER_HAS_GEN);}
-
 
 void sender_write_clr_finished_sending(){
     IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 2, MASK_CLR_FINISHED | MASK_EN | MASK_LOOPBACK | MASK_EN_RECEIVER | SENDER_IS_PREAMBLE | SENDER_HAS_GEN);
@@ -175,22 +170,21 @@ void sender_add_mask(int *command_vector_masked, int command, int size)
     
 }
 
-
-void sender_select_package(int *sizes,int *commands, int size){
-    for (int command = 0; command < size; command++)
-    {
-
-        // https://stackoverflow.com/questions/29388711/c-how-to-get-length-of-bits-of-a-variable
-        unsigned command_size, var = (commands[command] < 0) ? commands[command] : commands[command];
-        for (command_size = 0; var != 0; ++command_size)
-            var >>= 1;
-        //printf(" command %d and size %d\n", commands[command],command_size);
-        //sender_add_mask(commands[command], command_size);
-        sizes[command] = command_size;
+int sender_get_masked_command_size(int *vector_of_sizes, int size){
+        int add = 0;
+        for (int i = 0; i < size; i++)
+        {
+            if(vector_of_sizes[i]>26){
+                add++;
+            }
+        }
+        return add;
     }
-}
 
-
+int sender_get_command_ints_size(int size_of_command){
+        if (size_of_command < 32){return 1;}
+        return 2;  
+    }
 
 void sender_has_gen(int usesPreorFrameSync){if(usesPreorFrameSync){IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 2, MASK_EN | MASK_EN_RECEIVER | SENDER_HAS_GEN);}}
 
@@ -205,55 +199,41 @@ int receiver_empty(){return IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_
 
 int main()
 {
+    //configurations------------------------------------------------------------------------------
 	rfid_set_loopback();
     rfid_set_tari(tari_test);
     sender_enable();
     
     receiver_enable();
     rfid_set_tari_bounderies(tari_101,tari_099,tari_1616,tari_1584,pw,delimiter,RTcal,TRcal);
-
+    sender_has_gen(0);
+    //sender_is_preamble();
     
+    // SENDER ----------------------------------------------------------------------------------
     ack command_ack;
     ack_init(&command_ack, 1234);
     ack_build(&command_ack);
-    int size;
-    if (command_ack.size < 32)
-    {
-        size = 1;
-    }else{
-        size = 2;
-    }
     
-    // int commands[3];
-    // commands[0] = 11;//0b111111111111111111111111111;
-    // commands[1] = 0;//0b101010101010101010101010101;
-    // commands[2] = 1;//0b111100001111000011110000111;
-    // int commands_size = sizeof(commands) / sizeof(int);
-    sender_has_gen(0);
-    //sender_is_preamble();
+    int size = sender_get_command_ints_size(command_ack.size);
 
     int command_vector[size];
-    int commands_size = sizeof(command_vector) / sizeof(int);
-    command_to_vector(&command_vector,command_ack.result_data,command_ack.size);
-
     int sizes[size];
+    int commands_size = sizeof(command_vector) / sizeof(int);
 
-    sender_select_package(sizes, command_vector, commands_size);
-    
-    int add = 0;
-    for (int i = 0; i < size; i++)
-    {
-        if(sizes[i]>26){
-            add++;
-        }
-    }
-    int commands_masked_size = size+add;
+    command_to_vector(&command_vector, &sizes,command_ack.result_data,command_ack.size);
+
+    int new_ints = sender_get_masked_command_size(&sizes, size);
+    int commands_masked_size = size+new_ints;
     int command_vector_masked[commands_masked_size];
+    
+    // ADDING MASKS TO EACH PACKAGE OF THE COMMAND
     for (int i = 0; i < commands_size; i++)
     {
         sender_add_mask(command_vector_masked, command_vector[i], sizes[i]);
         printf("command_vector[%d], sizes[%d] \n", command_vector[i], sizes[i]);
     }
+
+    // WAITING FOR FIFO AND THEN SENDING PACKAGES
     for (int i = 0; i < commands_masked_size; i++)
     {
         while (sender_check_fifo_full())
@@ -265,23 +245,23 @@ int main()
     }
 
     sender_send_end_of_package();
+
     sender_Start_Ctrl();
+
     while(!sender_read_finished_send()){
         }
+
     sender_write_clr_finished_sending();
 
+
+    //RECEIVER-------------------------------------------------------------------------------------------------------
     printf("confirming pack received from IP %04X \n",IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_ID << 2));
-    
-
-
-
-     while(!receiver_empty()){
+    while(!receiver_empty()){
 
          printf("receiver is: %d\n", receiver_empty());
 
          int dado = receiver_get_package();
          printf("data received = %X\n", dado);
-
      }
 
     // printf("End of Communication with IP = %04X \n",IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_ID));
