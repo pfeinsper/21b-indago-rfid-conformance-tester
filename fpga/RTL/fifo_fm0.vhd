@@ -25,6 +25,7 @@ entity FIFO_FM0 is
     port (
         -- flags
         clk : in std_logic;
+
         -- fm0
         rst_fm0 : in std_logic;
         enable_fm0 : in std_logic;
@@ -57,6 +58,7 @@ architecture arch of FIFO_FM0 is
                 tari_width : natural := tari_width;
                 mask_width : natural := mask_width
         );
+        
         port (
             -- flags 
             clk : in std_logic;
@@ -82,9 +84,9 @@ architecture arch of FIFO_FM0 is
                 (
                     clock : in std_logic;
                     data  : in std_logic_vector (31 downto 0);
-                    rdreq : in std_logic;
+                    rd_req : in std_logic;
                     sclr  : in std_logic;
-                    wrreq : in std_logic;
+                    wr_req : in std_logic;
                     empty : out std_logic;
                     full  : out std_logic;
                     q     : out std_logic_vector (31 downto 0);
@@ -100,8 +102,8 @@ architecture arch of FIFO_FM0 is
 			sclr    => clear_fifo,
 			data    => data,
 			clock   => clk,
-			wrreq   => fifo_write_req,
-			rdreq   => request_new_data,
+			wr_req   => fifo_write_req,
+			rd_req   => request_new_data,
             q       => fifo_out,
             empty   => is_fifo_empty,
             full    => wrfull,

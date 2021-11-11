@@ -5,7 +5,6 @@ entity fm0_encoder_tb is
 end entity fm0_encoder_tb;
 
 architecture tb of fm0_encoder_tb is
-
 	component fm0_encoder
 		generic (
 				-- defining size of data in and clock speed
@@ -13,7 +12,9 @@ architecture tb of fm0_encoder_tb is
 				tari_width : natural := 16;
 				mask_width : natural := 6
 		);
+
 		port (
+            -- flags
 			clk : in std_logic;
 			rst : in std_logic;
 			enable : in std_logic;
@@ -33,7 +34,10 @@ architecture tb of fm0_encoder_tb is
 		);
 
 	end component;
-
+    
+    -------------------------------
+	--   signals and constants   --
+	-------------------------------
 	signal clk, data_out, is_fifo_empty, request_new_data, start_encoder, finished_sending : std_logic := '0';
 	signal data : std_logic_vector(25 downto 0) := (others => '0');
 	signal data_in : std_logic_vector(31 downto 0) := (others => '0');
@@ -46,9 +50,9 @@ architecture tb of fm0_encoder_tb is
 		clk_process : process
 		begin
 			clk <= '0';
-			wait for clk_period/2;  --for 0.5 ns signal is '0'.
+			wait for clk_period/2;  -- for 0.5 ns signal is '0'.
 			clk <= '1';
-			wait for clk_period/2;  --for next 0.5 ns signal is '1'.
+			wait for clk_period/2;  -- for next 0.5 ns signal is '1'.
 		end process;
 
 
@@ -62,22 +66,22 @@ architecture tb of fm0_encoder_tb is
 
 		
 		fifo : process ( request_new_data )
-		variable quant_packages : integer range 0 to 3 := 3;
+		variable n_pkgs : integer range 0 to 3 := 3;
 		begin
 			if (rising_edge(request_new_data)) then
-				if (quant_packages > 0) then
+				if (n_pkgs > 0) then
 					is_fifo_empty <= '0';
-					if (quant_packages = 3) then
+					if (n_pkgs = 3) then
 						data <= "01011101111010111001110101";
 						mask <= "011010";
-					elsif (quant_packages = 2) then
+					elsif (n_pkgs = 2) then
 						data <= "10111101010010110110001101";
 						mask <= "000100";
-					elsif (quant_packages = 1) then
+					elsif (n_pkgs = 1) then
 						data <= (others => '0');
 						mask <= (others => '0');
 					end if;
-					quant_packages := quant_packages - 1;
+					n_pkgs := n_pkgs - 1;
 				else
 					is_fifo_empty <= '1';
 				end if;
@@ -99,5 +103,4 @@ architecture tb of fm0_encoder_tb is
 		);
 
 		data_in <= data & mask;
-	
 end tb;
