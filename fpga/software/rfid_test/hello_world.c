@@ -2,7 +2,6 @@
 #include "system.h"
 #include "stdint.h"
 #include "helpers/commands/commands.h"
-#include "sys/wait.h"
 #include "stdio.h"
 
 // REGISTER STATUS
@@ -102,15 +101,15 @@ void sender_write_clr_finished_sending(){
 
 int sender_read_finished_send(){return IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_STATUS << 2) & MASK_FINISH_SEND;}
 
-void sender_add_mask(int n, int command_vector_masked[n],unsigned int result_data,unsigned int result_data_size){
-
+void sender_add_mask(int n, int command_vector_masked[n],unsigned long long result_data,unsigned int result_data_size){
+    printf("result_data is: %d and result_data_size is, %d\n", result_data,result_data_size);
     int last_package_size = result_data_size % data_package_size;
-    int quant_packages = result_data/data_package_size + 1;
-
-    for(int current_package = 0; current_package < quant_packages; current_package++){
-
+    int quant_packages = result_data_size/data_package_size + 1;
+    printf("last_package_size is: %d and quant_packages is, %d\n", last_package_size,quant_packages);
+    for(int current_package = 1; current_package <= quant_packages; current_package++){
+        printf("FOR LOOP current_package is: %d and quant_packages is, %d\n", current_package,quant_packages);
         int quant_bits_this_package;
-        if (current_package == quant_packages - 1){
+        if (current_package == quant_packages){
             // case when we cant fill a package with 26 bits
             quant_bits_this_package = last_package_size;
         }
@@ -122,7 +121,7 @@ void sender_add_mask(int n, int command_vector_masked[n],unsigned int result_dat
         // deviding package and adding mask to it
         int unmasked_package = result_data & bits26; // 26 bits
         int masked_package = unmasked_package << 6 | quant_bits_this_package;
-        command_vector_masked[current_package] = masked_package;
+        command_vector_masked[current_package-1] = masked_package;
 
         // shifting result_data to remove bits that are already treated
         result_data = result_data >> quant_bits_this_package;
@@ -160,26 +159,33 @@ int main()
 
     // SENDER ----------------------------------------------------------------------------------
 
-    // //ack ------------------------------------------------------------------------------
-    unsigned short rn = 1234;
-    ack command_ack;
-    ack_init(&command_ack, rn);
-    ack_build(&command_ack);
-    
-    int size_with_mask = sender_get_command_ints_size(command_ack.size);
+    // query_rep
+    unsigned char dr = 1;
+    unsigned char m = 1;
+    unsigned char trext = 1;
+    unsigned char sel = 1;
+    unsigned char session = 1;
+    unsigned char target = 1;
+    unsigned char q = 1;
 
-    int command_vector_masked[size_with_mask];
+    query command_query;
+    query_init(&command_query, dr, m, trext, sel, session, target, q);
+    query_build(&command_query);
+    
+    int size_with_mask_query = sender_get_command_ints_size(command_query.size);
+
+    int command_vector_masked_query[size_with_mask_query];
 
     // ADDING MASKS TO EACH PACKAGE OF THE COMMAND
-    sender_add_mask(size_with_mask,command_vector_masked,command_ack.result_data, command_ack.size);
+    sender_add_mask(size_with_mask_query,command_vector_masked_query,command_query.result_data, command_query.size);
 
     // WAITING FOR FIFO AND THEN SENDING PACKAGES
-    for (int i = 0; i < 1; i++)
+    for (int i = 0; i < size_with_mask_query; i++)
     {
         while (sender_check_fifo_full()){}
-        sender_send_package(command_vector_masked[i]);
+        sender_send_package(command_vector_masked_query[i]);
     }
-    //sender_send_package(command_ack.result_data);
+    
     sender_send_end_of_package();
 
     sender_start_ctrl();
@@ -193,11 +199,85 @@ int main()
     printf("confirming pack received from IP %04X \n",IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_ID << 2));
     while(!receiver_empty()){
        printf("receiver is: %d\n", receiver_empty());
-       int dado = receiver_get_package();
-       printf("data received = %X\n", dado);
+       int dado_query = receiver_get_package();
+       printf("data received = %X\n", dado_query);
        break;
     }
 
-    printf("End of Communication with IP = %04X \n",IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_ID));
+    //ack ------------------------------------------------------------------------------
+    unsigned short rn = 1234;
+    ack command_ack;
+    ack_init(&command_ack, rn);
+    ack_build(&command_ack);
+    
+    int size_with_mask_ack = sender_get_command_ints_size(command_ack.size);
+
+    int command_vector_masked_ack[size_with_mask_ack];
+
+    // ADDING MASKS TO EACH PACKAGE OF THE COMMAND
+    sender_add_mask(size_with_mask_ack,command_vector_masked_ack,command_ack.result_data, command_ack.size);
+
+    // WAITING FOR FIFO AND THEN SENDING PACKAGES
+    for (int i = 0; i < size_with_mask_ack; i++)
+    {
+        while (sender_check_fifo_full()){}
+        sender_send_package(command_vector_masked_ack[i]);
+    }
+    
+    sender_send_end_of_package();
+
+    sender_start_ctrl();
+
+    while(!sender_read_finished_send()){}
+
+    sender_write_clr_finished_sending();
+
+
+    //RECEIVER-------------------------------------------------------------------------------------------------------
+    printf("confirming pack received from IP %04X \n",IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_ID << 2));
+    while(!receiver_empty()){
+       printf("receiver is: %d\n", receiver_empty());
+       int dado_ack = receiver_get_package();
+       printf("data received = %X\n", dado_ack);
+       break;
+    }
+    //req_rn------------------------------------------------------
+    req_rn command_req_rn;
+    req_rn_init(&command_req_rn, rn);
+    req_rn_build(&command_req_rn);
+    
+    int size_with_mask_req = sender_get_command_ints_size(command_req_rn.size);
+
+    int command_vector_masked_req[size_with_mask_req];
+
+    // ADDING MASKS TO EACH PACKAGE OF THE COMMAND
+    sender_add_mask(size_with_mask_req,command_vector_masked_req,command_req_rn.result_data, command_req_rn.size);
+
+    // WAITING FOR FIFO AND THEN SENDING PACKAGES
+    for (int i = 0; i < size_with_mask_req; i++)
+    {
+        while (sender_check_fifo_full()){}
+        sender_send_package(command_vector_masked_req[i]);
+    }
+    
+    sender_send_end_of_package();
+
+    sender_start_ctrl();
+
+    while(!sender_read_finished_send()){}
+
+    sender_write_clr_finished_sending();
+
+
+    //RECEIVER-------------------------------------------------------------------------------------------------------
+    printf("confirming pack received from IP %04X \n",IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_ID << 2));
+    while(!receiver_empty()){
+       printf("receiver is: %d\n", receiver_empty());
+       int dado_req = receiver_get_package();
+       printf("data received = %X\n", dado_req);
+       break;
+    }
+
+    printf("End of Communication with IP = %04X \n",IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_ID<< 2));
     return 0;
 }
