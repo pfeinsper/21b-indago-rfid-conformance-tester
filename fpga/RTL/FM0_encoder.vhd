@@ -191,7 +191,7 @@ architecture arch of FM0_encoder is
                         when s_wait =>
                             data_sender_end <= '0';
                             if (mask_value = 0 and unsigned(data) = 0) then
-                                last_state_bit := s_send_s1;
+                                last_state_bit := s_send_s2;
                                 data_out <= '0';
                                 data_sender_end <= '1';
 
