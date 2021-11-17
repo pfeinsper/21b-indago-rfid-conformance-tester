@@ -136,16 +136,37 @@
 
         signal data_out_pc : std_logic_vector(31 downto 0) := (others => '0');
         
-        signal write_request, data_ready, eop, data_out_decoder : std_logic := '0'; 
+        signal write_request, data_ready, eop, data_out_decoder, rdreq_pulse : std_logic := '0'; 
         
         begin
+            pulse_generator : process( rst, clk, rdreq )
+                variable already_read : boolean := false;
+                begin
+                    if rst = '1' then
+                        already_read := false;
+                        rdreq_pulse <= '0';
+
+                    elsif (rising_edge(clk)) then
+                        if (rdreq = '1' and not already_read) then
+                            already_read := true;
+                            rdreq_pulse <= '1';
+                        else
+                            rdreq_pulse <= '0';
+                        end if;
+                        if (rdreq = '0') then
+                            already_read := false;
+                        end if;         
+                    end if;
+                
+            end process ; -- pulse_generator
+
 
             fifo : fifo_32_32 port map (
                 sclr    => sclr,
                 data    => data_out_pc,
                 clock   => clk,
                 wrreq   => write_request,
-                rdreq   => rdreq,
+                rdreq   => rdreq_pulse,
                 q       => data_out_fifo,
                 empty   => empty,
                 full    => full,

@@ -77,10 +77,10 @@ architecture arch of package_constructor is
                     send_void_package <= true;
 
                 elsif (data_ready = '1') then
-                    mask <= std_logic_vector(to_unsigned(mask_integer+1, mask_width));
                     data(mask_integer) <= data_in;
-                    -- data <= data(data_width-2 downto 0) & data_in;
-                    if (mask_integer = data_width) then
+                    mask <= std_logic_vector(to_unsigned(mask_integer+1, mask_width));
+                    mask_integer := to_integer(unsigned(mask));
+                    if (mask_integer >= data_width) then
                         write_request_out <= '1';
                         rst_mask_integer <= true;
                     end if;

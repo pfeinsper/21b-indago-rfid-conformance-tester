@@ -9,7 +9,7 @@
 #define MASK_EMPTY_RECEIVER  (1 << 13)
 
 // REGISTER SETTINGS
-#define BASE_REG_SET          0        // can be read in the same address
+#define BASE_REG_SET          0        
 #define MASK_RST             (1 << 0)
 #define MASK_EN              (1 << 1)
 #define MASK_RST_RECEIVER    (1 << 10)
@@ -17,15 +17,15 @@
 #define MASK_CLR_FIFO        (1 << 2)
 #define MASK_LOOPBACK        (1 << 8)
 #define MASK_CLR_FINISHED    1 << 1
-#define MASK_CLR_FINISHED_0  0 << 1
-#define SENDER_HAS_GEN       0 << 5 // DURANTE PACOTE
-#define SENDER_ENABLE_CTRL   1 << 6 // PULSE
-#define SENDER_ENABLE_CTRL_0 0 << 6 // PULSE
+// #define MASK_CLR_FINISHED_0  0 << 1
+#define SENDER_HAS_GEN       0 << 5 
+#define SENDER_ENABLE_CTRL   1 << 6
+// #define SENDER_ENABLE_CTRL_0 0 << 6
 #define SENDER_IS_PREAMBLE   0 << 7
 #define MASK_READ_REQ        1 << 12
-#define MASK_READ_REQ_0        0 << 12
+
 // RFID - WRITE
-#define BASE_REG_TARI       1        // can be read in the same address 
+#define BASE_REG_TARI       1       
 #define BASE_REG_FIFO       2
 #define BASE_REG_TARI_101   3
 #define BASE_REG_TARI_099   4
@@ -98,7 +98,7 @@ void sender_start_ctrl(){
 
 void sender_write_clr_finished_sending(){
     IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 2, MASK_CLR_FINISHED | MASK_EN | MASK_LOOPBACK | MASK_EN_RECEIVER | SENDER_IS_PREAMBLE | SENDER_HAS_GEN);
-    IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 2, MASK_CLR_FINISHED_0 |MASK_EN | MASK_LOOPBACK | MASK_EN_RECEIVER | SENDER_IS_PREAMBLE | SENDER_HAS_GEN);}
+    IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 2, MASK_EN | MASK_LOOPBACK | MASK_EN_RECEIVER | SENDER_IS_PREAMBLE | SENDER_HAS_GEN);}
 
 int sender_read_finished_send(){return IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_STATUS << 2) & MASK_FINISH_SEND;}
 
@@ -145,13 +145,13 @@ int receiver_get_package(){return IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BAS
 
 int receiver_empty(){
     int is_empty = IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_STATUS << 2) & MASK_EMPTY_RECEIVER;
-    printf(" receiver is empty: %d \n",is_empty);
+    // printf(" receiver is empty: %d \n",is_empty);
     return is_empty;
     }
 
 void receiver_rdreq(){
     IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 2, MASK_READ_REQ |MASK_EN | MASK_LOOPBACK | MASK_EN_RECEIVER | SENDER_IS_PREAMBLE | SENDER_HAS_GEN);
-	IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 2, MASK_READ_REQ_0 |MASK_EN | MASK_LOOPBACK | MASK_EN_RECEIVER | SENDER_IS_PREAMBLE | SENDER_HAS_GEN);
+	IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 2,  MASK_EN | MASK_LOOPBACK | MASK_EN_RECEIVER | SENDER_IS_PREAMBLE | SENDER_HAS_GEN);
 }
 //-----------------------------------------------------------------------------------------------------------
 
@@ -167,7 +167,7 @@ int main()
     sender_has_gen(0);
     //sender_is_preamble();
 
-    // SENDER ----------------------------------------------------------------------------------
+    // // SENDER ----------------------------------------------------------------------------------
 
     // query_rep
     unsigned char dr = 1;
@@ -299,6 +299,31 @@ int main()
        printf("eop_req rn is: %d\n", eop_req_rn);
        break;
     }
+    // int A = 0b11111111111111111111111111011010;
+    // int B = 0b11100001111111110000111111011010;
+    // sender_send_package(A);
+    // while (sender_check_fifo_full()){}
+    // sender_send_package(B);
+    
+    // sender_send_end_of_package();
+
+    // sender_start_ctrl();
+
+    // while(!sender_read_finished_send()){}
+
+    // sender_write_clr_finished_sending();
+
+    // while(!receiver_empty()){
+    //    int dado = receiver_get_package();
+    //    printf("data received = %X\n", dado);
+    //    receiver_rdreq();
+    //    int eope = receiver_get_package();
+    //    receiver_rdreq();
+    //    printf("eop is: %d\n", eope);
+    //    break;
+    // }
+
+    
 
     printf("End of Communication with IP = %04X \n",IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_ID<< 2));
     return 0;
