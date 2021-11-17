@@ -177,6 +177,7 @@ architecture arch of FM0_decoder is
 							if (clocks_counted > tari_1010_value) then
 								state_decoder <= d_pass_1_01_tari;
 							elsif (data_in /= prev_bit_d) then
+								clock_start   <= '0';
 								prev_bit_d    <= data_in;
 								state_decoder <= d_check_counter2;		
 							else
@@ -201,6 +202,7 @@ architecture arch of FM0_decoder is
 							
 						-- Error -> if there is change in the data signal before or after the margin of error, this state should handle it
 						when d_error =>
+							clock_start <= '0';
 							if (clr_err = '1') then
 								err <= '0';
 								state_decoder <= d_wait;
@@ -229,8 +231,9 @@ architecture arch of FM0_decoder is
 							elsif (data_in /= prev_bit_d) then
 								state_decoder <= d_error;
 							end if;
-
+						
 						when d_end =>
+							clock_start <= '0';
 							state_decoder <= d_wait;
 							eop <= '0';
 							data_receiver_end <= '0';

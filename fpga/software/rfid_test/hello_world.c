@@ -87,7 +87,7 @@ void sender_enable(){IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 
 
 void sender_send_package(int package) {
 	IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_FIFO << 2, package);
-	printf("sender_send_package %d \n", package);
+	//printf("sender_send_package %d \n", package);
 }
 
 void sender_send_end_of_package() { IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_FIFO << 2, eop); }
@@ -103,12 +103,12 @@ void sender_write_clr_finished_sending(){
 int sender_read_finished_send(){return IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_STATUS << 2) & MASK_FINISH_SEND;}
 
 void sender_add_mask(int n, int command_vector_masked[n],unsigned long long result_data, unsigned int result_data_size){
-    printf("result_data is: %d and result_data_size is, %d\n", result_data,result_data_size);
+    //printf("result_data is: %d and result_data_size is, %d\n", result_data,result_data_size);
     int last_package_size = result_data_size % data_package_size;
     int quant_packages = result_data_size/data_package_size + 1;
-    printf("last_package_size is: %d and quant_packages is, %d\n", last_package_size,quant_packages);
+    //printf("last_package_size is: %d and quant_packages is, %d\n", last_package_size,quant_packages);
     for(int current_package = 1; current_package <= quant_packages; current_package++){
-        printf("FOR LOOP current_package is: %d and quant_packages is, %d\n", current_package,quant_packages);
+        //printf("FOR LOOP current_package is: %d and quant_packages is, %d\n", current_package,quant_packages);
         int quant_bits_this_package;
         if (current_package == quant_packages){
             // case when we cant fill a package with 26 bits
@@ -177,7 +177,7 @@ int main()
     query command_query;
     query_init(&command_query, dr, m, trext, sel, session, target, q);
     query_build(&command_query);
-    printf("command query = %d\n", command_query.size);
+    
     int size_with_mask_query = sender_get_command_ints_size(command_query.size);
 
     int command_vector_masked_query[size_with_mask_query];
@@ -202,12 +202,15 @@ int main()
 
 
     //RECEIVER-------------------------------------------------------------------------------------------------------
-    printf("confirming pack received from IP %04X \n",IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_ID << 2));
+    printf("IP conneced ID is: %04X \n",IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_ID << 2));
     while(!receiver_empty()){
-       printf("receiver is: %d\n", receiver_empty());
-       //receiver_rdreq();
+       
        int dado_query = receiver_get_package();
-       printf("data received = %X\n", dado_query);
+       printf("data received query = %X\n", dado_query);
+       receiver_rdreq();
+       int eop_query = receiver_get_package();
+       receiver_rdreq();
+       printf("eop_query is: %d\n", eop_query);
        break;
     }
 
@@ -216,7 +219,7 @@ int main()
     ack command_ack;
     ack_init(&command_ack, rn);
     ack_build(&command_ack);
-    printf("command ack = %d\n", command_ack.size);
+    //printf("command ack = %d\n", command_ack.size);
     int size_with_mask_ack = sender_get_command_ints_size(command_ack.size);
 
     int command_vector_masked_ack[size_with_mask_ack];
@@ -241,20 +244,22 @@ int main()
 
 
     //RECEIVER-------------------------------------------------------------------------------------------------------
-    printf("confirming pack received from IP %04X \n",IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_ID << 2));
-    receiver_rdreq();
+    //printf("IP connected ID is: %04X \n",IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_ID << 2));
+    
     while(!receiver_empty()){
-       //printf("receiver is: %d\n", receiver_empty());
-
        int dado_ack = receiver_get_package();
-       printf("data received = %X\n", dado_ack);
+       printf("data received ack= %X\n", dado_ack);
+       receiver_rdreq();
+       int eop_ack = receiver_get_package();
+       receiver_rdreq();
+       printf("eop_ack is: %d\n", eop_ack);
        break;
     }
     //req_rn------------------------------------------------------
     req_rn command_req_rn;
     req_rn_init(&command_req_rn, rn);
     req_rn_build(&command_req_rn);
-    printf("command req_rn = %d\n", command_req_rn.size);
+    //printf("command req_rn = %d\n", command_req_rn.size);
     int size_with_mask_req = sender_get_command_ints_size(command_req_rn.size);
 
     int command_vector_masked_req[size_with_mask_req];
@@ -279,13 +284,15 @@ int main()
 
 
     //RECEIVER-------------------------------------------------------------------------------------------------------
-    printf("confirming pack received from IP %04X \n",IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_ID << 2));
-    receiver_rdreq();
+    //printf("confirming pack received from IP %04X \n",IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_ID << 2));
+    
     while(!receiver_empty()){
-       //printf("receiver is: %d\n", receiver_empty());
-
-       int dado_req = receiver_get_package();
-       printf("data received = %X\n", dado_req);
+       int dado_req_rn = receiver_get_package();
+       printf("data received req = %X\n", dado_req_rn);
+       receiver_rdreq();
+       int eop_req_rn = receiver_get_package();
+       receiver_rdreq();
+       printf("eop_req rn is: %d\n", eop_req_rn);
        break;
     }
 
