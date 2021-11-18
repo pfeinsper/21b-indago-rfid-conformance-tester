@@ -292,7 +292,7 @@ architecture arch of rfid is
         -----------------------------------
         -- FIFO
         -- flags
-        rdreq => reg_status(11), -- done
+        rdreq => reg_settings(12), -- done
         sclr  => reg_status(12), -- done
         empty => reg_status(13), -- done
         full  => reg_status(14), -- done

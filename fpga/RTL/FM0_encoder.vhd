@@ -222,12 +222,12 @@ architecture arch of FM0_encoder is
                         end if;
                     
 
-                    ---------------------
-                    --     State 1     --
-                    ---------------------
-                    when s_send_s1 => -- data 1, out 1 1
-                        data_out <= '1';
-                        last_state_bit := s_send_s1;
+                        when s_wait =>
+                            data_sender_end <= '0';
+                            if (mask_value = 0 and unsigned(data) = 0) then
+                                last_state_bit := s_send_s2;
+                                data_out <= '0';
+                                data_sender_end <= '1';
 
                         if (full_tari_end = '1') then
                             index_bit := index_bit + 1;
