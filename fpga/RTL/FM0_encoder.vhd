@@ -77,9 +77,6 @@ architecture arch of FM0_encoder is
     type state_type_sender is (s_wait, s_send_s1, s_send_s2, s_send_s2_part2, s_send_s3, s_send_s3_part2, s_send_s4, s_end);
     signal state_sender     : state_type_sender := s_wait;
 
-    signal aa : boolean := false;
-
-
     begin
 
         ------------------------------
@@ -176,7 +173,6 @@ architecture arch of FM0_encoder is
             variable index_bit : integer range 0 to data_width + 1;
             variable last_state_bit : state_type_sender := s_send_s2;
             begin
-                aa <= (enable = '1' or data_sender_end = '1') and rising_edge(clk);
                 if (rst = '1') then
                     state_sender <= s_wait;
                     half_tari_start <= '0';
