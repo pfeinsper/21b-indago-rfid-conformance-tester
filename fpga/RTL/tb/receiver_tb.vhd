@@ -62,10 +62,10 @@ architecture tb of receiver_tb is
     constant clk_period : time := 20 ns;
 	constant nios_delay : time := 5 us;
 	constant tari : time := 10 us;
-    signal i2 : integer range 0 to 1000:= 0;
     
-	constant size : integer := 17;
-    constant data_to_be_received : std_logic_vector(size-1 downto 0) := "10000010011010010";
+    
+	constant size : integer := 100;
+    constant data_to_be_received : std_logic_vector(size-1 downto 0) := (others => '1');
 	
     begin
 
@@ -99,7 +99,7 @@ architecture tb of receiver_tb is
 				data_DUT <= '0';
 				wait;
 			end if ;
-            i2 <= i;
+            
             current_bit <= current;
         end process;
 

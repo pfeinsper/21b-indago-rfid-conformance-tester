@@ -24,12 +24,13 @@ architecture tb of package_constructor_tb is
     
             -- output
             write_request_out : out std_logic := '0';
-            data_out       : out std_logic_vector((data_width + mask_width)-1 downto 0)
+            data_out       : out std_logic_vector((data_width + mask_width)-1 downto 0);
+			clr_eop        : out std_logic := '0'
         );
 
     end component;
 
-	signal clk, eop, data_in_constructor, write_request_out, data_ready : std_logic := '0';
+	signal clk, eop, data_in_constructor, write_request_out, data_ready, clr_eop : std_logic := '0';
     signal data_constructor_out : std_logic_vector (31 downto 0);
 	constant clk_period : time := 20 ns;
 	constant tari_period : time := 10 us;
@@ -62,7 +63,7 @@ architecture tb of package_constructor_tb is
 			wait for tari_period;
 
 			eop <= '1';
-			wait for clk_period;
+			wait until clr_eop = '1';
 			eop <= '0';
 
 			wait for 30 us;
@@ -299,7 +300,7 @@ architecture tb of package_constructor_tb is
 			
 
 			eop <= '1';
-			wait for clk_period;
+			wait until clr_eop = '1';
 			eop <= '0';
 			wait;
 
@@ -313,7 +314,8 @@ architecture tb of package_constructor_tb is
             data_in => data_in_constructor,
             eop => eop,
             write_request_out => write_request_out,
-            data_out => data_constructor_out
+            data_out => data_constructor_out,
+			clr_eop => clr_eop
        );
 		
 	

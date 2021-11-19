@@ -27,6 +27,7 @@ entity FM0_decoder is
 		rst     : in std_logic;
 		enable  : in std_logic;
 		clr_err : in std_logic;
+		clr_eop : in std_logic;
  
 		err : out std_logic := '0';
 		eop : out std_logic := '0';
@@ -129,7 +130,10 @@ architecture arch of FM0_decoder is
 							data_ready        <= '0';
 							data_receiver_end <= '0';
 							clear_counter     <= '1';
-							eop               <= '0';
+							if (clr_eop = '1') then
+								eop <= '0';
+							end if;
+							-- eop               <= '0';
 							if (data_receiver_start = '1') then
 								prev_bit_d <= data_in;
 								state_decoder <= d_start_counter;
@@ -235,7 +239,9 @@ architecture arch of FM0_decoder is
 						when d_end =>
 							clock_start <= '0';
 							state_decoder <= d_wait;
-							eop <= '0';
+							if (clr_eop = '1') then
+								eop <= '0';
+							end if;
 							data_receiver_end <= '0';
 							
 						when others =>

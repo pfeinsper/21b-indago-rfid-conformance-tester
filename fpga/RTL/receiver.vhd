@@ -77,6 +77,7 @@
                 rst     : in std_logic;
                 enable  : in std_logic;
                 clr_err : in std_logic;
+                clr_eop : in std_logic;
         
                 err : out std_logic := '0';
                 eop : out std_logic := '0';
@@ -129,14 +130,15 @@
         
                 -- output
                 write_request_out : out std_logic := '0';
-                data_out          : out std_logic_vector((data_width + mask_width)-1 downto 0)
+                data_out          : out std_logic_vector((data_width + mask_width)-1 downto 0);
+                clr_eop           : out std_logic := '0'
             );
         
         end component;
 
         signal data_out_pc : std_logic_vector(31 downto 0) := (others => '0');
         
-        signal write_request, data_ready, eop, data_out_decoder, rdreq_pulse : std_logic := '0'; 
+        signal write_request, data_ready, eop, data_out_decoder, rdreq_pulse, clr_eop : std_logic := '0'; 
         
         begin
             pulse_generator : process( rst, clk, rdreq )
@@ -181,7 +183,8 @@
                 eop               => eop,
                 -- output
                 write_request_out => write_request,
-                data_out          => data_out_pc
+                data_out          => data_out_pc,
+                clr_eop           => clr_eop
             );
 
             decoder : FM0_decoder port map(
@@ -189,6 +192,7 @@
                 rst        => rst,
                 enable     => enable,
                 clr_err    => clr_err_decoder,
+                clr_eop    => clr_eop,
                 err        => err_decoder,
                 eop        => eop,
                 -- config
