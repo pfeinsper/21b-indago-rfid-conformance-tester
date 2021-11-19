@@ -222,7 +222,7 @@ int main()
            mask = mask << 1;
            mask = mask | 1;
        }
-    //    mask = mask | 1;
+
        data = data & mask;
        
        printf("data received query = %d\n", pack_query);
@@ -277,7 +277,7 @@ int main()
            mask = mask << 1;
            mask = mask | 1;
        }
-    //    mask = mask | 1;
+
        data = data & mask;
        
        printf("data received ack = %d\n", pack_ack);
@@ -285,8 +285,7 @@ int main()
        printf("mask_value = %d\n", mask_value);
        receiver_rdreq();
    };
-    //printf("out first ack\n");
-
+    
    //req_rn------------------------------------------------------
    req_rn command_req_rn;
    req_rn_init(&command_req_rn, rn);
@@ -339,30 +338,6 @@ int main()
         printf("mask_value = %d\n", mask_value);
         receiver_rdreq();
    };
-//     int A = 0b11111111111111111111111111011010;
-//     int B = 0b11100001111111110000111111011010;
-//     sender_send_package(A);
-//     while (sender_check_fifo_full()){}
-//     sender_send_package(B);
-//
-//     sender_send_end_of_package();
-//
-//     sender_start_ctrl();
-//
-//     while(!sender_read_finished_send()){}
-//
-//     sender_write_clr_finished_sending();
-//
-//     int pack = 2;
-//
-//     while(pack != 0){
-//        while(receiver_empty()){
-//            printf("receiver_empty is: %d \n", receiver_empty());
-//        };
-//         pack = receiver_get_package();
-//         printf("data received = %X\n", pack);
-//         receiver_rdreq();
-//      };
 
 
     printf("End of Communication with IP = %04X \n",IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_ID<< 2));
