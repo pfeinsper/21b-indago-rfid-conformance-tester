@@ -68,7 +68,13 @@ architecture arch of package_constructor is
                         if (data_ready = '1') then
                             state_contructor <= c_add_data_in;
                         elsif (eop = '1') then
-                            state_contructor <= c_send_void_package;
+                            -- state_contructor <= c_check_eop;
+                            if (mask_integer = 0) then
+                                state_contructor <= c_send_void_package;
+                            else
+                                state_contructor <= c_send_package;
+                                write_request_out <= '1';
+                            end if;
                         end if;
                         
                     when c_add_data_in =>
@@ -89,7 +95,12 @@ architecture arch of package_constructor is
 
                     when c_send_package =>
                         write_request_out <= '0';
-                        state_contructor <= c_clear_mask;
+                        if (mask_integer = 0) then
+                            state_contructor <= c_send_void_package;
+                        else
+                            state_contructor <= c_clear_mask;
+                        end if;
+                        -- state_contructor <= c_clear_mask;
 
                     when c_clear_mask =>
                         -- write_request_out <= '0';
@@ -99,7 +110,13 @@ architecture arch of package_constructor is
                     
                     when c_check_eop =>
                         if (eop = '1') then
-                            state_contructor <= c_send_void_package;
+                            if (mask_integer = 0) then
+                                state_contructor <= c_send_void_package;
+                            else
+                                state_contructor <= c_send_package;
+                                write_request_out <= '1';
+                            end if;
+                            -- state_contructor <= c_send_void_package;
                         else
                             state_contructor <= c_wait;
                         end if;
