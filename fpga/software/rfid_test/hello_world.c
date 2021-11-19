@@ -170,60 +170,73 @@ int main()
     // SENDER ----------------------------------------------------------------------------------
 
     //query_rep
-//   unsigned char dr = 1;
-//   unsigned char m = 1;
-//   unsigned char trext = 1;
-//   unsigned char sel = 1;
-//   unsigned char session = 1;
-//   unsigned char target = 1;
-//   unsigned char q = 1;
-//
-//   query command_query;
-//   query_init(&command_query, dr, m, trext, sel, session, target, q);
-//   query_build(&command_query);
-//
-//   int size_with_mask_query = sender_get_command_ints_size(command_query.size);
-//
-//   int command_vector_masked_query[size_with_mask_query];
-//
-//   // ADDING MASKS TO EACH PACKAGE OF THE COMMAND
-//   sender_add_mask(size_with_mask_query,command_vector_masked_query,command_query.result_data, command_query.size);
-//
-//   // WAITING FOR FIFO AND THEN SENDING PACKAGES
-//   for (int i = 0; i < size_with_mask_query; i++)
-//   {
-//       while (sender_check_fifo_full()){}
-//       sender_send_package(command_vector_masked_query[i]);
-//   }
-//
-//   sender_send_end_of_package();
-//
-//   sender_start_ctrl();
-//
-//   while(!sender_read_finished_send()){}
-//
-//   sender_write_clr_finished_sending();
-//
-//
-//   //RECEIVER-------------------------------------------------------------------------------------------------------
-//
-//   int pack_query=2;
-//
-//    while(pack_query != 0){
-//        while(receiver_empty()){
-//            printf("receiver_empty is: %d \n", receiver_empty());
-//        };
-//        pack_query = receiver_get_package();
-//        printf("data received  query= %X\n", pack_query);
-//        receiver_rdreq();
-//    };
-//
-//   //ack ------------------------------------------------------------------------------
+   unsigned char dr = 1;
+   unsigned char m = 1;
+   unsigned char trext = 1;
+   unsigned char sel = 1;
+   unsigned char session = 1;
+   unsigned char target = 1;
+   unsigned char q = 1;
+
+   query command_query;
+   query_init(&command_query, dr, m, trext, sel, session, target, q);
+   query_build(&command_query);
+   printf("command query = %d\n", command_query.result_data);
+   int size_with_mask_query = sender_get_command_ints_size(command_query.size);
+
+   int command_vector_masked_query[size_with_mask_query];
+
+   // ADDING MASKS TO EACH PACKAGE OF THE COMMAND
+   sender_add_mask(size_with_mask_query,command_vector_masked_query,command_query.result_data, command_query.size);
+
+   // WAITING FOR FIFO AND THEN SENDING PACKAGES
+   for (int i = 0; i < size_with_mask_query; i++)
+   {
+       while (sender_check_fifo_full()){}
+       sender_send_package(command_vector_masked_query[i]);
+   }
+
+   sender_send_end_of_package();
+
+   sender_start_ctrl();
+
+   while(!sender_read_finished_send()){}
+
+   sender_write_clr_finished_sending();
+
+
+   //RECEIVER-------------------------------------------------------------------------------------------------------
+
+   int pack_query = 2;
+
+   while(pack_query != 0){
+       while(receiver_empty()){
+           //printf("receiver_empty is: %d \n", receiver_empty());
+       };
+       pack_query = receiver_get_package();
+       int mask_value = pack_query & 0b111111;
+       int data = pack_query >> 6;
+       int mask = 0;
+       for (int i = 0; i < mask_value; i++)
+       {
+           mask = mask << 1;
+           mask = mask | 1;
+       }
+    //    mask = mask | 1;
+       data = data & mask;
+       
+       printf("data received query = %d\n", pack_query);
+       printf("data received = %d\n", data);
+       printf("mask_value = %d\n", mask_value);
+       receiver_rdreq();
+   };
+
+   //ack ------------------------------------------------------------------------------
   unsigned short rn = 1234;
   ack command_ack;
   ack_init(&command_ack, rn);
   ack_build(&command_ack);
-  //printf("command ack = %d\n", command_ack.size);
+  printf("command ack = %d\n", command_ack.result_data);
   int size_with_mask_ack = sender_get_command_ints_size(command_ack.size);
 
   int command_vector_masked_ack[size_with_mask_ack];
@@ -249,81 +262,107 @@ int main()
 
   //RECEIVER-------------------------------------------------------------------------------------------------------
 
-  int pack_ack=2;
+  int pack_ack = 2;
 
    while(pack_ack != 0){
        while(receiver_empty()){
-           printf("receiver_empty is: %d \n", receiver_empty());
+           //printf("receiver_empty is: %d \n", receiver_empty());
        };
        pack_ack = receiver_get_package();
-       printf("data received ack = %X\n", pack_ack);
+       int mask_value = pack_ack & 0b111111;
+       int data = pack_ack >> 6;
+       int mask = 0;
+       for (int i = 0; i < mask_value; i++)
+       {
+           mask = mask << 1;
+           mask = mask | 1;
+       }
+    //    mask = mask | 1;
+       data = data & mask;
+       
+       printf("data received ack = %d\n", pack_ack);
+       printf("data received = %d\n", data);
+       printf("mask_value = %d\n", mask_value);
        receiver_rdreq();
    };
-    printf("out first ack");
+    //printf("out first ack\n");
 
-//   //req_rn------------------------------------------------------
-//   req_rn command_req_rn;
-//   req_rn_init(&command_req_rn, rn);
-//   req_rn_build(&command_req_rn);
-//   //printf("command req_rn = %d\n", command_req_rn.size);
-//   int size_with_mask_req = sender_get_command_ints_size(command_req_rn.size);
+   //req_rn------------------------------------------------------
+   req_rn command_req_rn;
+   req_rn_init(&command_req_rn, rn);
+   req_rn_build(&command_req_rn);
+   printf("command req_rn = %d\n", command_req_rn.size);
+   int size_with_mask_req = sender_get_command_ints_size(command_req_rn.size);
+
+   int command_vector_masked_req[size_with_mask_req];
+
+   // ADDING MASKS TO EACH PACKAGE OF THE COMMAND
+   sender_add_mask(size_with_mask_req,command_vector_masked_req,command_req_rn.result_data, command_req_rn.size);
+
+   // WAITING FOR FIFO AND THEN SENDING PACKAGES
+   for (int i = 0; i < size_with_mask_req; i++)
+   {
+       while (sender_check_fifo_full()){}
+       sender_send_package(command_vector_masked_req[i]);
+   }
+
+   sender_send_end_of_package();
+
+   sender_start_ctrl();
+
+   while(!sender_read_finished_send()){}
+
+   sender_write_clr_finished_sending();
+
+
+   //RECEIVER-------------------------------------------------------------------------------------------------------
+    int pack_rn = 2;
+
+    while(pack_rn != 0){
+        while(receiver_empty()){
+            // printf("receiver_empty is: %d \n", receiver_empty());
+        };
+        pack_rn = receiver_get_package();
+        int mask_value = pack_rn & 0b111111;
+        int data = pack_rn >> 6;
+        int mask = 0;
+        for (int i = 0; i < mask_value; i++)
+        {
+            mask = mask << 1;
+            mask = mask | 1;
+        }
+    
+        data = data & mask;
+        
+        printf("data received rn = %d\n", pack_rn);
+        printf("data received = %d\n", data);
+        printf("mask_value = %d\n", mask_value);
+        receiver_rdreq();
+   };
+//     int A = 0b11111111111111111111111111011010;
+//     int B = 0b11100001111111110000111111011010;
+//     sender_send_package(A);
+//     while (sender_check_fifo_full()){}
+//     sender_send_package(B);
 //
-//   int command_vector_masked_req[size_with_mask_req];
+//     sender_send_end_of_package();
 //
-//   // ADDING MASKS TO EACH PACKAGE OF THE COMMAND
-//   sender_add_mask(size_with_mask_req,command_vector_masked_req,command_req_rn.result_data, command_req_rn.size);
+//     sender_start_ctrl();
 //
-//   // WAITING FOR FIFO AND THEN SENDING PACKAGES
-//   for (int i = 0; i < size_with_mask_req; i++)
-//   {
-//       while (sender_check_fifo_full()){}
-//       sender_send_package(command_vector_masked_req[i]);
-//   }
+//     while(!sender_read_finished_send()){}
 //
-//   sender_send_end_of_package();
+//     sender_write_clr_finished_sending();
 //
-//   sender_start_ctrl();
+//     int pack = 2;
 //
-//   while(!sender_read_finished_send()){}
-//
-//   sender_write_clr_finished_sending();
-//
-//
-//   //RECEIVER-------------------------------------------------------------------------------------------------------
-//    int pack_req=2;
-//
-//    while(pack_req != 0){
+//     while(pack != 0){
 //        while(receiver_empty()){
 //            printf("receiver_empty is: %d \n", receiver_empty());
 //        };
-//        pack_req = receiver_get_package();
-//        printf("data received req = %X\n", pack_req);
-//        receiver_rdreq();
-//    };
-     int A = 0b11111111111111111111111111011010;
-     int B = 0b11100001111111110000111111011010;
-     sender_send_package(A);
-     while (sender_check_fifo_full()){}
-     sender_send_package(B);
-
-     sender_send_end_of_package();
-
-     sender_start_ctrl();
-
-     while(!sender_read_finished_send()){}
-
-     sender_write_clr_finished_sending();
-
-     int pack = 2;
-
-     while(pack != 0){
-        while(receiver_empty()){
-            printf("receiver_empty is: %d \n", receiver_empty());
-        };
-         pack = receiver_get_package();
-         printf("data received = %X\n", pack);
-         receiver_rdreq();
-      };
+//         pack = receiver_get_package();
+//         printf("data received = %X\n", pack);
+//         receiver_rdreq();
+//      };
 
 
     printf("End of Communication with IP = %04X \n",IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_ID<< 2));

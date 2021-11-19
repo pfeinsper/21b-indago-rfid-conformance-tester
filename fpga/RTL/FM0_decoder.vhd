@@ -92,6 +92,7 @@ architecture arch of FM0_decoder is
 		tari_0495_value <= to_integer(unsigned(tari_099(tari_width-1 downto 1)));
 
 		decoder_controller: process ( clk, rst, enable )
+			
 			begin
 				if (rst = '1') then
 					state_controller  <= c_wait;
@@ -120,6 +121,7 @@ architecture arch of FM0_decoder is
 
 		-- Decoder State Machine -> based on our diagram available in the github diagrams folder
 		decoder_data: process ( clk, rst, enable )
+			variable was_one: boolean := false;
 			begin
 				if (rst = '1') then
 					state_decoder  <= d_wait;
@@ -147,6 +149,7 @@ architecture arch of FM0_decoder is
 
 						when d_wait_counter =>
 							if (clocks_counted > tari_1010_value) then
+								was_one := true;
 								state_decoder <= d_pass_1_01_tari;
 							elsif (data_in /= prev_bit_d) then
 								prev_bit_d    <= data_in;
@@ -179,6 +182,7 @@ architecture arch of FM0_decoder is
 						-- Continue Counter -> as half tari has passed, now we need to wait for another half tari
 						when d_wait_counter2 =>
 							if (clocks_counted > tari_1010_value) then
+								was_one := false;
 								state_decoder <= d_pass_1_01_tari;
 							elsif (data_in /= prev_bit_d) then
 								clock_start   <= '0';
@@ -220,7 +224,12 @@ architecture arch of FM0_decoder is
 								state_decoder <= d_error;
 							else
 								state_decoder <= d_counter_cs;
-								data_out	  <= '1';
+								if (was_one) then
+									data_out <= '1';
+								else
+									data_out <= '0';
+								end if;
+								-- data_out	  <= '1';
 								data_ready 	  <= '1';
 								clear_counter <= '1';
 							end if;
