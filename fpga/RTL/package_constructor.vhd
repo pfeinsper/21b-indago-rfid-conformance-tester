@@ -49,9 +49,8 @@ architecture arch of package_constructor is
     -- signal send_void_package, rst_mask_integer : boolean := false;
     
 
-    type state_type_contructor is (c_wait, c_send_package, c_add_data_in, c_inc_mask, c_clear_mask, c_send_void_package, c_check_mask_overflow, c_check_eop);
+    type state_type_contructor is (c_wait, c_send_package, c_new_bit, c_inc_mask, c_clear, c_send_void_package, c_check_mask_overflow, c_check_eop);
 	signal state_contructor    : state_type_contructor := c_wait;
-    
 
 	begin
 
@@ -69,18 +68,12 @@ architecture arch of package_constructor is
                         clr_eop <= '0';
                         write_request_out <= '0';
                         if (data_ready = '1') then
-                            state_contructor <= c_add_data_in;
+                            state_contructor <= c_new_bit;
                         elsif (eop = '1') then
                             state_contructor <= c_check_eop;
-                            -- if (mask_integer = 0) then
-                            --     state_contructor <= c_send_void_package;
-                            -- else
-                            --     state_contructor <= c_send_package;
-                            --     write_request_out <= '1';
-                            -- end if;
                         end if;
                         
-                    when c_add_data_in =>
+                    when c_new_bit =>
                         data(mask_integer) <= data_in;
                         state_contructor <= c_inc_mask;
                         
@@ -98,9 +91,9 @@ architecture arch of package_constructor is
 
                     when c_send_package =>
                         write_request_out <= '0';                        
-                        state_contructor <= c_clear_mask;
+                        state_contructor <= c_clear;
 
-                    when c_clear_mask =>
+                    when c_clear =>
                         -- write_request_out <= '0';
                         mask_integer <= 0;
                         data <= (others => '0');
@@ -114,7 +107,6 @@ architecture arch of package_constructor is
                                 state_contructor <= c_send_package;
                                 write_request_out <= '1';
                             end if;
-                            -- state_contructor <= c_send_void_package;
                         else
                             state_contructor <= c_wait;
                         end if;

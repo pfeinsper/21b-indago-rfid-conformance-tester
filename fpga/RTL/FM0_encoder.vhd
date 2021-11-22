@@ -71,7 +71,7 @@ architecture arch of FM0_encoder is
     -- the documentention of rfid (https://www.gs1.org/sites/default/files/docs/epc/Gen2_Protocol_Standard.pdf) page 32
     -- So we designed a Miller-Signaling State Diagram as suggested by the doc.
 
-    type state_type_controller is (c_wait, c_send, c_request, c_wait_tari, c_wait_send, c_wait_request, c_wait_request2);
+    type state_type_controller is (c_wait, c_wait_send, c_request, c_wait_tari_CS, c_start_send, c_wait_request);
     signal state_controller	: state_type_controller := c_wait;
 
     type state_type_sender is (s_wait, s_send_s1, s_send_s2, s_send_s2_part2, s_send_s3, s_send_s3_part2, s_send_s4, s_end);
@@ -109,18 +109,18 @@ architecture arch of FM0_encoder is
                             if (is_fifo_empty = '0') then
                                 if (mask_value = 0 and unsigned(data) = 0) then
                                     request_new_data <= '1';
-                                    state_controller <= c_wait_request2;
+                                    state_controller <= c_wait_request;
                                 else
-                                    state_controller <= c_wait_send;
+                                    state_controller <= c_start_send;
                                 end if;
                             end if;
 
-                        when c_wait_send =>
+                        when c_start_send =>
                             data_sender_start <= '1';
                             request_new_data <= '0';
-                            state_controller <= c_send;
+                            state_controller <= c_wait_send;
                             
-                        when c_send =>
+                        when c_wait_send =>
                             request_new_data <= '0';
                             data_sender_start <= '0';
                             if (data_sender_end = '1') then
@@ -137,20 +137,15 @@ architecture arch of FM0_encoder is
                             if (mask_value = 0 and unsigned(data) = 0) then
                                 if (data_sender_end = '1') then
                                     tari_CS_start <= '1';
-                                    state_controller <= c_wait_tari;
+                                    state_controller <= c_wait_tari_CS;
                                 else
-                                    state_controller <= c_wait_send;
+                                    state_controller <= c_start_send;
                                 end if ;
                             else
-                                state_controller <= c_wait_send;
+                                state_controller <= c_start_send;
                             end if;
 
-                        when c_wait_request2 =>
-                            request_new_data <= '0';
-                            state_controller <= c_wait_request;
-                            
-
-                        when c_wait_tari =>
+                        when c_wait_tari_CS =>
                             request_new_data <= '0';
                             if (tari_CS_end = '1') then
                                 tari_CS_start <= '0';
