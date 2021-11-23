@@ -14,7 +14,7 @@
 - **Repository:** https://github.com/pfeinsper/21b-indago-rfid-conformance-tester
 ## About
 
-TESTE WORKFLOW
+TESTE WORKFLOW V2
 
 This project aims to develop an equipment capable of performing a series of tests on RFID TAGs, based on the communication protocol "EPC-GEN2 UHF RFID" [^1]. The project simplifies the development of  new TAGs that conform to the defined protocol, being able to assert wether the tag satisfies the requirements of said protocol, and also wether the TAG itself is working as intended.
 
