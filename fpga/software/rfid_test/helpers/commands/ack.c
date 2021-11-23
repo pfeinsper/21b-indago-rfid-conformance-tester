@@ -16,15 +16,16 @@ void ack_build(ack *ack)
     ack->result_data |= ack->rn;
 }
 
-int ack_validate(unsigned long *command, unsigned int command_size)
+int ack_validate(int *packages, int quant_packages, int command_size)
 {
-    if (((*command >> 16) & 0b11) != ACK_COMMAND)
-    {
-        return 0;
-    }
-    else if (command_size != ACK_SIZE)
-    {
-        return 0;
-    }
-    return 1;
+    return 0;
+    // if (((*packages >> 16) & 0b11) != ACK_COMMAND)
+    // {
+    //     return 0;
+    // }
+    // else if (command_size != ACK_SIZE)
+    // {
+    //     return 0;
+    // }
+    // return 1;
 }

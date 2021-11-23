@@ -79,6 +79,16 @@ void rfid_set_tari_bounderies(int tari_101, int tari_099, int tari_1616, int tar
 	IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_RTCAL << 2, RTcal);
 	IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_TRCAL << 2, TRcal);}
 
+int rfid_create_mask_from_value(int value){
+    int mask = 0;
+    for (int i = 0; i < value; i++)
+    {
+        mask = mask << 1;
+        mask = mask | 1;
+    }
+    return mask;
+}
+
 int rfid_get_ip_id(){return IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_ID << 2);}
 // SENDER -----------------------------------------------------------------------------------------------------------
 int  sender_check_usedw() { return IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE,  BASE_SENDER_USEDW <<2 );}
@@ -288,15 +298,15 @@ int main()
     sender_write_clr_finished_sending();
 
    //WAIT A REQRN-------------------------------------------------------------------------------------------------------
-    int pack_rn = 2;
+    int pack_req_rn = 2;
 
-    while(pack_rn != 0){
+    while(pack_req_rn != 0){
         while(receiver_empty()){
             // printf("receiver_empty is: %d \n", receiver_empty());
         };
-        pack_rn = receiver_get_package();
-        int mask_value = pack_rn & 0b111111;
-        int data = pack_rn >> 6;
+        pack_req_rn = receiver_get_package();
+        int mask_value = pack_req_rn & 0b111111;
+        int data = pack_req_rn >> 6;
         int mask = 0;
         for (int i = 0; i < mask_value; i++)
         {
@@ -306,7 +316,7 @@ int main()
     
         data = data & mask;
         
-        printf("data received rn = %d\n", pack_rn);
+        printf("data received rn = %d\n", pack_req_rn);
         printf("data received = %d\n", data);
         printf("mask_value = %d\n", mask_value);
         receiver_rdreq();

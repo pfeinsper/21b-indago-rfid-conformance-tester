@@ -34,19 +34,20 @@ void query_build(query *query)
     query->result_data |= (query->crc);
 }
 
-int query_validate(unsigned long *command, unsigned int command_size)
+int query_validate(int *packages, int quant_packages, int command_size)
 {
-    if (((*command >> 18) & 0b11111) != QUERY_COMMAND)
-    {
-        return 0;
-    }
-    if (command_size != QUERY_SIZE)
-    {
-        return 0;
-    }
+    return 0;
+    // if (((*packages >> 18) & 0b11111) != QUERY_COMMAND)
+    // {
+    //     return 0;
+    // }
+    // if (command_size != QUERY_SIZE)
+    // {
+    //     return 0;
+    // }
 
-    unsigned char ccr = crc5(*command >> 5);
-    unsigned char ccr2 = (*command & 0b11111);
-    int res = (ccr == ccr2);
-    return res;
+    // unsigned char ccr = crc5(*packages >> 5);
+    // unsigned char ccr2 = (*packages & 0b11111);
+    // int res = (ccr == ccr2);
+    // return res;
 }

@@ -9,12 +9,13 @@ void nak_build(nak *nak) {
 	nak->result_data = nak->command;
 }
 
-int nak_validate(unsigned long long *command, unsigned int command_size) {
-    if(command_size!=NAK_SIZE){
-        return 0;
-    }
-	if(((*command) & 0b11111111)!=NAK_COMMAND){
-        return 0;
-    }
-    return 1;
+int nak_validate(int *packages, int quant_packages, int command_size){
+    return 0;
+    // if(command_size!=NAK_SIZE){
+    //     return 0;
+    // }
+	// if(((*packages) & 0b11111111)!=NAK_COMMAND){
+    //     return 0;
+    // }
+    // return 1;
 }

@@ -79,9 +79,50 @@ void rfid_set_tari_bounderies(int tari_101, int tari_099, int tari_1616, int tar
 	IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_RTCAL << 2, RTcal);
 	IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_TRCAL << 2, TRcal);}
 
+int rfid_create_mask_from_value(int value)
+{
+    int mask = 0;
+    for (int i = 0; i < value; i++)
+    {
+        mask = mask << 1;
+        mask = mask | 1;
+    }
+    return mask;
+}
+
+int rfid_check_command(int *packages, int quant_packages, int command_size)
+{
+    if (ack_validate(packages, quant_packages, command_size))
+        return ACK_LABEL;
+    else if (nak_validate(packages, quant_packages, command_size))
+        return NAK_LABEL;
+    else if (query_validate(packages, quant_packages, command_size))
+        return QUERY_LABEL;
+    else if (req_rn_validate(packages, quant_packages, command_size))
+        return REQ_RN_LABEL;
+//    else if(kill_validate(packages, quant_packages, command_size))
+//        return KILL_LABEL;
+//    else if (lock_validate(packages, quant_packages, command_size))
+//        return LOCK_LABEL;
+//    else if (query_adjust_validate(packages, quant_packages, command_size))
+//        return QUERY_ADJUST_LABEL;
+//    else if (query_rep_validate(packages, quant_packages, command_size))
+//        return QUERY_REP_LABEL;
+//    else if (read_validate(packages, quant_packages, command_size))
+//        return READ_LABEL;
+//    else if (select_validate(packages, quant_packages, command_size))
+//        return SELECT_LABEL;
+//    else if (write_validate(packages, quant_packages, command_size))
+//        return WRITE_LABEL;
+    // else if (rn16_validate(packages, quant_packages, command_size))
+    //    return RN16_LABEL;
+    else
+        return -1;
+}
+
 int rfid_get_ip_id(){return IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_ID << 2);}
 // SENDER -----------------------------------------------------------------------------------------------------------
-int  sender_check_usedw() { return IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE,  BASE_SENDER_USEDW <<2 );}
+int  sender_check_usedw() { return IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE,  BASE_SENDER_USEDW << 2 ) & 0xFF;}
 
 int  sender_check_fifo_full() { return IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_STATUS << 2) & BASE_IS_FIFO_FULL; }
 
@@ -143,29 +184,68 @@ void sender_is_preamble(){IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SE
 // RECEIVER -----------------------------------------------------------------------------------------------------------
 void receiver_enable(){IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 2 , MASK_EN | MASK_LOOPBACK |MASK_EN_RECEIVER);}
 
-int receiver_get_package(){return IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_RECEIVER_DATA<<2);}
+int receiver_check_usedw() { return IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE,  BASE_RECEIVER_USEDW << 2) & 0xFF; }
+
+int receiver_request_package(){ return IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_RECEIVER_DATA<<2); }
 
 int receiver_empty(){
     int is_empty = IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_STATUS << 2) & MASK_EMPTY_RECEIVER;
-    // printf(" receiver is empty: %d \n",is_empty);
+    //printf(" receiver is empty: %d \n",is_empty);
     return is_empty >> 13;
     }
-
 void receiver_rdreq(){
     IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 2, MASK_READ_REQ |MASK_EN | MASK_LOOPBACK | MASK_EN_RECEIVER | SENDER_IS_PREAMBLE | SENDER_HAS_GEN);
 	IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 2,  MASK_EN | MASK_LOOPBACK | MASK_EN_RECEIVER | SENDER_IS_PREAMBLE | SENDER_HAS_GEN);
 }
+void receiver_get_package(int *command_vector, int quant_packages, int *command_size, int *quant_packages_received){
+    int package = 1;
+    *command_size = 0;
+    *quant_packages_received = 0;
+    int i = 0;
+    while(package != 0){
+        while(receiver_empty()){};
+
+        package = receiver_request_package();
+        receiver_rdreq();
+
+        int mask_value = package & 0b111111;
+        int mask = rfid_create_mask_from_value(mask_value);
+
+        int data = package >> 6;
+        data = data & mask;
+
+        printf("mask is: %d and data is: %d\n", mask_value, data);
+
+        if (data != 0){
+            command_vector[i] = data;
+            *command_size += mask_value;
+            quant_packages_received++;
+            i++;
+            if (i > quant_packages) {
+                printf("receiver_get_package: package size is bigger than expected\n");
+                return;
+            }
+        } else {
+            printf("receiver_get_package: received EOP\n");
+            return;
+        }
+    };
+}
+
+
+
+
 //-----------------------------------------------------------------------------------------------------------
 
 int main()
 {
     //configurations------------------------------------------------------------------------------
-	rfid_set_loopback();
+    rfid_set_loopback();
     rfid_set_tari(tari_test);
     sender_enable();
     
     receiver_enable();
-    rfid_set_tari_bounderies(tari_101,tari_099,tari_1616,tari_1584,pw,delimiter,RTcal,TRcal);
+    rfid_set_tari_bounderies(tari_101, tari_099, tari_1616, tari_1584, pw, delimiter, RTcal, TRcal);
     sender_has_gen(0);
     //sender_is_preamble();
     printf("IP conneced ID is: %04X \n",rfid_get_ip_id());
@@ -173,88 +253,58 @@ int main()
     // HANDSHAKE EXAMPLE READER -----------------------------------------------------------------------
     // SEND A QUERY ----------------------------------------------------------------------------------
 
-   unsigned char dr = 1;
-   unsigned char m = 1;
-   unsigned char trext = 1;
-   unsigned char sel = 1;
-   unsigned char session = 1;
-   unsigned char target = 1;
-   unsigned char q = 1;
+    unsigned char dr = 1;
+    unsigned char m = 1;
+    unsigned char trext = 1;
+    unsigned char sel = 1;
+    unsigned char session = 1;
+    unsigned char target = 1;
+    unsigned char q = 1;
 
 
-   query command_query;
-   query_init(&command_query, dr, m, trext, sel, session, target, q);
-   query_build(&command_query);
-   printf("command query = %d\n", command_query.result_data);
-   int size_with_mask_query = sender_get_command_ints_size(command_query.size);
+    // query command_query;
+    // query_init(&command_query, dr, m, trext, sel, session, target, q);
+    // query_build(&command_query);
+    // printf("command query = %d\n", command_query.result_data);
+    // int size_with_mask_query = sender_get_command_ints_size(command_query.size);
 
-   int command_vector_masked_query[size_with_mask_query];
+    // int command_vector_masked_query[size_with_mask_query];
 
-   // ADDING MASKS TO EACH PACKAGE OF THE COMMAND
-   sender_add_mask(size_with_mask_query,command_vector_masked_query,command_query.result_data, command_query.size);
+    // // ADDING MASKS TO EACH PACKAGE OF THE COMMAND
+    // sender_add_mask(size_with_mask_query,command_vector_masked_query,command_query.result_data, command_query.size);
 
-   // WAITING FOR FIFO AND THEN SENDING PACKAGES
-   for (int i = 0; i < size_with_mask_query; i++)
-   {
-       while (sender_check_fifo_full()){}
-       sender_send_package(command_vector_masked_query[i]);
-   }
+    // // WAITING FOR FIFO AND THEN SENDING PACKAGES
+    // for (int i = 0; i < size_with_mask_query; i++)
+    // {
+    //     while (sender_check_fifo_full()){}
+    //     sender_send_package(command_vector_masked_query[i]);
+    // }
 
-   sender_send_end_of_package();
+    // sender_send_end_of_package();
 
-   sender_start_ctrl();
+    // sender_start_ctrl();
 
-   while(!sender_read_finished_send()){}
+    // while(!sender_read_finished_send()){}
 
-   sender_write_clr_finished_sending();
+    // sender_write_clr_finished_sending();
 
+    //req_rn------------------------------------------------------
+    req_rn command_req_rn;
+    req_rn_init(&command_req_rn, 0xF234);
+    req_rn_build(&command_req_rn);
+    printf("command req_rn = %d\n", command_req_rn.size);
+    int size_with_mask_req = sender_get_command_ints_size(command_req_rn.size);
 
-   //WAIT A RANDOM NUMBER-------------------------------------------------------------------------------------------------------
-
-   int pack_rn = 2;
-   int rn = 0;
-   while(pack_rn != 0){
-       while(receiver_empty()){
-           //printf("receiver_empty is: %d \n", receiver_empty());
-       };
-       pack_rn = receiver_get_package();
-       int mask_value = pack_rn & 0b111111;
-       rn = pack_rn >> 6;
-       int mask = 0;
-       for (int i = 0; i < mask_value; i++)
-       {
-           mask = mask << 1;
-           mask = mask | 1;
-       }
-
-       //data = data & mask;
-       
-       printf("data received query = %d\n", pack_rn);
-       printf("data received = %d\n", rn);
-       printf("mask_value = %d\n", mask_value);
-       receiver_rdreq();
-   };
-
-   //SEND AN ACK ------------------------------------------------------------------------------
-    if(rn == 0){
-        printf("ERROR IN RN\n", );
-    }
-    ack command_ack;
-    ack_init(&command_ack, rn);
-    ack_build(&command_ack);
-    printf("command ack = %d\n", command_ack.result_data);
-    int size_with_mask_ack = sender_get_command_ints_size(command_ack.size);
-
-    int command_vector_masked_ack[size_with_mask_ack];
+    int command_vector_masked_req[size_with_mask_req];
 
     // ADDING MASKS TO EACH PACKAGE OF THE COMMAND
-    sender_add_mask(size_with_mask_ack, command_vector_masked_ack, command_ack.result_data, command_ack.size);
+    sender_add_mask(size_with_mask_req, command_vector_masked_req, command_req_rn.result_data, command_req_rn.size);
 
     // WAITING FOR FIFO AND THEN SENDING PACKAGES
-    for (int i = 0; i < size_with_mask_ack; i++)
+    for (int i = 0; i < size_with_mask_req; i++)
     {
         while (sender_check_fifo_full()){}
-        sender_send_package(command_vector_masked_ack[i]);
+        sender_send_package(command_vector_masked_req[i]);
     }
 
     sender_send_end_of_package();
@@ -266,82 +316,138 @@ int main()
     sender_write_clr_finished_sending();
 
 
-  //RECEIVER-------------------------------------------------------------------------------------------------------
+    //WAIT A RANDOM NUMBER-------------------------------------------------------------------------------------------------------
+    int quant_packages = 2;
+    int quant_packages_received;
+    unsigned int pack_rn[quant_packages];
+    int command_size_rn = 0;
+    printf("waiting for random number\n");
+    receiver_get_package(pack_rn, quant_packages, &command_size_rn, &quant_packages_received);
+    printf("random number is: %X and size is: %d\n", pack_rn[0], command_size_rn);
 
-   int pack_rn = 2;
-   int rn = 0;
-   while(pack_rn != 0){
-       while(receiver_empty()){};
-       pack_rn = receiver_get_package();
-       int mask_value = pack_rn & 0b111111;
-       rn = pack_rn >> 6;
-       int mask = 0;
-       for (int i = 0; i < mask_value; i++)
-       {
-           mask = mask << 1;
-           mask = mask | 1;
-       }
+    int label = rfid_check_command(pack_rn, quant_packages_received, command_size_rn);
+    if (label == RN16_LABEL) {
+        printf("label RN16_LABEL\n");
+        int RN16 = pack_rn[0];
+	} else {
+        printf("RN16_LABEL NOT FOUND\n");
+        printf("found: %d\n", label);
+        return -1;
+    }
+    return 1;
 
-       //data = data & mask;
+//    int rn = 0;
+//    while(pack_rn != 0){
+//        while(receiver_empty()){};
+//        pack_rn = receiver_get_package();
+//        rn = pack_rn >> 6;
+//        int mask_value = pack_rn & 0b111111;
+//        int mask = rfid_create_mask_from_value(mask_value);
+
+//        rn = rn & mask;
        
-       printf("data received pc = %d\n", pack_rn);
-       printf("data received = %d\n", rn);
-       printf("mask_value = %d\n", mask_value);
-       receiver_rdreq();
-   };
-    
-   //req_rn------------------------------------------------------
-   req_rn command_req_rn;
-   req_rn_init(&command_req_rn, rn);
-   req_rn_build(&command_req_rn);
-   printf("command req_rn = %d\n", command_req_rn.size);
-   int size_with_mask_req = sender_get_command_ints_size(command_req_rn.size);
+//        printf("data received query = %d\n", pack_rn);
+//        printf("data received = %d\n", rn);
+//        printf("mask_value = %d\n", mask_value);
+//        receiver_rdreq();
+//    };
 
-   int command_vector_masked_req[size_with_mask_req];
-
-   // ADDING MASKS TO EACH PACKAGE OF THE COMMAND
-   sender_add_mask(size_with_mask_req,command_vector_masked_req,command_req_rn.result_data, command_req_rn.size);
-
-   // WAITING FOR FIFO AND THEN SENDING PACKAGES
-   for (int i = 0; i < size_with_mask_req; i++)
-   {
-       while (sender_check_fifo_full()){}
-       sender_send_package(command_vector_masked_req[i]);
-   }
-
-   sender_send_end_of_package();
-
-   sender_start_ctrl();
-
-   while(!sender_read_finished_send()){}
-
-   sender_write_clr_finished_sending();
-
-
-   //RECEIVER-------------------------------------------------------------------------------------------------------
-    int pack_rn = 2;
-
-    while(pack_rn != 0){
-        while(receiver_empty()){
-            // printf("receiver_empty is: %d \n", receiver_empty());
-        };
-        pack_rn = receiver_get_package();
-        int mask_value = pack_rn & 0b111111;
-        int data = pack_rn >> 6;
-        int mask = 0;
-        for (int i = 0; i < mask_value; i++)
-        {
-            mask = mask << 1;
-            mask = mask | 1;
-        }
-    
-        data = data & mask;
-        
-        printf("data received rn = %d\n", pack_rn);
-        printf("data received = %d\n", data);
-        printf("mask_value = %d\n", mask_value);
-        receiver_rdreq();
-   };
+   //SEND AN ACK ------------------------------------------------------------------------------
+//    if(rn == 0){
+//        printf("ERROR IN RN\n", );
+//    }
+//    ack command_ack;
+//    ack_init(&command_ack, rn);
+//    ack_build(&command_ack);
+//    printf("command ack = %d\n", command_ack.result_data);
+//    int size_with_mask_ack = sender_get_command_ints_size(command_ack.size);
+//
+//    int command_vector_masked_ack[size_with_mask_ack];
+//
+//    // ADDING MASKS TO EACH PACKAGE OF THE COMMAND
+//    sender_add_mask(size_with_mask_ack, command_vector_masked_ack, command_ack.result_data, command_ack.size);
+//
+//    // WAITING FOR FIFO AND THEN SENDING PACKAGES
+//    for (int i = 0; i < size_with_mask_ack; i++)
+//    {
+//        while (sender_check_fifo_full()){}
+//        sender_send_package(command_vector_masked_ack[i]);
+//    }
+//
+//    sender_send_end_of_package();
+//
+//    sender_start_ctrl();
+//
+//    while(!sender_read_finished_send()){}
+//
+//    sender_write_clr_finished_sending();
+//
+//
+//    //RECEIVER-------------------------------------------------------------------------------------------------------
+//
+//    int pack_rn = 2;
+//
+//    while(pack_rn != 0){
+//        while(receiver_empty()){};
+//        pack_rn = receiver_get_package();
+//        int mask_value = pack_rn & 0b111111;
+//        rn = pack_rn >> 6;
+//        int mask = rfid_create_mask_from_value(mask_value);
+//
+//        rn = rn & mask;
+//
+//        printf("data received pc = %d\n", pack_rn);
+//        printf("data received = %d\n", rn);
+//        printf("mask_value = %d\n", mask_value);
+//        receiver_rdreq();
+//    };
+//
+//    //req_rn------------------------------------------------------
+//    req_rn command_req_rn;
+//    req_rn_init(&command_req_rn, rn);
+//    req_rn_build(&command_req_rn);
+//    printf("command req_rn = %d\n", command_req_rn.size);
+//    int size_with_mask_req = sender_get_command_ints_size(command_req_rn.size);
+//
+//    int command_vector_masked_req[size_with_mask_req];
+//
+//    // ADDING MASKS TO EACH PACKAGE OF THE COMMAND
+//    sender_add_mask(size_with_mask_req,command_vector_masked_req,command_req_rn.result_data, command_req_rn.size);
+//
+//    // WAITING FOR FIFO AND THEN SENDING PACKAGES
+//    for (int i = 0; i < size_with_mask_req; i++)
+//    {
+//        while (sender_check_fifo_full()){}
+//        sender_send_package(command_vector_masked_req[i]);
+//    }
+//
+//    sender_send_end_of_package();
+//
+//    sender_start_ctrl();
+//
+//    while(!sender_read_finished_send()){}
+//
+//    sender_write_clr_finished_sending();
+//
+//
+//    //RECEIVER-------------------------------------------------------------------------------------------------------
+//    int handle = 2;
+//
+//    while(handle != 0){
+//        while(receiver_empty()){};
+//        handle = receiver_get_package();
+//        int mask_value = handle & 0b111111;
+//        int data = handle >> 6;
+//
+//        int mask = rfid_create_mask_from_value(mask_value);
+//
+//        data = data & mask;
+//
+//        printf("data received rn = %d\n", handle);
+//        printf("data received = %d\n", data);
+//        printf("mask_value = %d\n", mask_value);
+//        receiver_rdreq();
+//    };
 
 
     printf("End of Communication with IP = %04X \n",rfid_get_ip_id());

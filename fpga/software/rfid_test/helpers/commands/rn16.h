@@ -9,4 +9,6 @@ typedef struct
 
 unsigned short rn16_generate(void);
 
+int rn16_validate(int *packages, int quant_packages, int command_size);
+
 #endif /* RN16_H */
