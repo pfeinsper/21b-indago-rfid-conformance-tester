@@ -23,6 +23,10 @@ site_dir: docs
 
 nav:
   - Home: index.md
+  - getting_started.md
+  - hardware.md
+  - firmware.md
+  - software.md
 
 # Extensions
 markdown_extensions:
