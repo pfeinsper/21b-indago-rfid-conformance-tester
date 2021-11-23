@@ -9,56 +9,63 @@
 	-- 		Lucas Leal                     --
 	-- 		Rafael Santos                  --
 	-----------------------------------------
-
+    --! \receiver.vhd
+    --!
+    --!
     library IEEE;
     use IEEE.std_logic_1164.all;
     use IEEE.std_logic_unsigned.all;
     use IEEE.numeric_std.all;
     use work.all;
-    
+    --! \brief This component receives the encoded data from the TAG (DUT), decoding and sending them back to the NIOS II processor.
+    --!
+    --! The data is received bit by bit, and thus needs to be first gouped in pairs, in order to be decoded, since the TAG also uses the FM0 encoding.
+    --! After this, the decoded bits are stored in a FIFO until the packet is complete and ready to be sent back to the NIOS II.
+    --! If the command ends before the packet is completed, a mask is sent to denote which bits of the packet are actually data.
+    --!
     entity receiver is
         generic (
             -- defining size of data in and clock speed
-            data_width : natural := 26;
-            tari_width : natural := 16;
-            mask_width : natural := 6
+            data_width : natural := 26; --! Size of the data inside a packet sent between components
+            tari_width : natural := 16; --! Bits reserved for the TARI time parameter
+            mask_width : natural := 6  --! Size of the mask that indicates how many bits of the packet are in use
         );
     
         port (
             -- GENERAL
             
             -- flags
-            clk    : in std_logic;
-            rst    : in std_logic;
-            enable : in std_logic;
+            clk : in std_logic; --! Clock input
+            rst : in std_logic; --! Reset high
+            enable : in std_logic; --! Enable high
  
             -- data in from DUT
-            data_DUT : in std_logic;
+            data_DUT : in std_logic; --! Encoded data received from the TAG
             -----------------------------------
             -- DECODER
 
             -- config
-            tari_101  : in std_logic_vector(tari_width-1 downto 0); -- 1% above tari
-            tari_099  : in std_logic_vector(tari_width-1 downto 0); -- 1% below tari
-            tari_1616 : in std_logic_vector(tari_width-1 downto 0); -- 1% above 1.6 tari
-            tari_1584 : in std_logic_vector(tari_width-1 downto 0); -- 1% below 1.6 tari
+            tari_101  : in std_logic_vector(tari_width-1 downto 0); --! 1% above tari limit
+            tari_099  : in std_logic_vector(tari_width-1 downto 0); --! 1% below tari limit
+            tari_1616 : in std_logic_vector(tari_width-1 downto 0); --! 1% above 1.6 tari limit
+            tari_1584 : in std_logic_vector(tari_width-1 downto 0); --! 1% below 1.6 tari limit
             
             -- flag
-            clr_err_decoder : in std_logic;
-            err_decoder     : out std_logic;
+            clr_err_decoder : in std_logic;  --! Flag clears decoder error
+            err_decoder     : out std_logic; --! Flag decoder error indicator
             -----------------------------------
             -- FIFO
 
             -- flags
-            rdreq : in std_logic;
-            sclr  : in std_logic;
+            rdreq : in std_logic; --! Flag FIFO read request
+            sclr  : in std_logic; --! Flag FIFO clear
 
-            empty : out std_logic;
-            full  : out std_logic;
+            empty : out std_logic; --! Flag that indicates if the FIFO has no more data stored
+            full  : out std_logic; --! Flag that indicates if the FIFO has run out of space
             
             -- data output
-            data_out_fifo : out std_logic_vector(31 downto 0);
-            usedw	      : out std_logic_vector(7 downto 0)
+            data_out_fifo : out std_logic_vector(31 downto 0); --! Packet sent from the FIFO to the Avalon Interface
+            usedw	      : out std_logic_vector(7 downto 0) --! Number of valid packets in the FIFO
         );
     
     end entity;

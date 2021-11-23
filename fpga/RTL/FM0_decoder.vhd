@@ -10,39 +10,44 @@
 -- 		Lucas Leal                     --
 -- 		Rafael Santos                  --
 -----------------------------------------
-
+--! \FM0_decoder.vhd
+--!
+--!
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
-
+--! \brief This component decodes the packets received from the TAG that have been encoded with FM0 encoding
+--!
+--! For further explanation on how this decoding is done, check the EPC-GEN2 documentation - https://www.gs1.org/sites/default/files/docs/epc/Gen2_Protocol_Standard.pdf
+--!
 entity FM0_decoder is
 	generic (
 		-- defining size of data in and clock speed
-		tari_width : natural := 16
+		tari_width : natural := 16 --! Bits reserved for the TARI time parameter
 	);
 
 	port (
 		-- flags
-		clk     : in std_logic;
-		rst     : in std_logic;
-		enable  : in std_logic;
-		clr_err : in std_logic;
-		clr_eop : in std_logic;
+		clk     : in std_logic; --! Clock input
+		rst     : in std_logic; --! Reset high
+		enable  : in std_logic; --! Enable high
+		clr_err : in std_logic; --! Flag clears error indicator
+		clr_eop : in std_logic; --! Flag clears EOP indicator
  
-		err : out std_logic := '0';
-		eop : out std_logic := '0';
+		err : out std_logic := '0'; --! Flag high if error ocurred
+		eop : out std_logic := '0'; --! Flag high if EOP detected
 
 		-- config
-		tari_101  : in std_logic_vector(tari_width-1 downto 0); -- 1% above tari
-		tari_099  : in std_logic_vector(tari_width-1 downto 0); -- 1% below tari
-		tari_1616 : in std_logic_vector(tari_width-1 downto 0); -- 1% above 1.6 tari
-		tari_1584 : in std_logic_vector(tari_width-1 downto 0); -- 1% below 1.6 tari
-
-		data_in : in std_logic := '0';
+		tari_101  : in std_logic_vector(tari_width-1 downto 0); --! 1% above tari limit
+		tari_099  : in std_logic_vector(tari_width-1 downto 0); --! 1% below tari limit
+		tari_1616 : in std_logic_vector(tari_width-1 downto 0); --! 1% above 1.6 tari limit
+		tari_1584 : in std_logic_vector(tari_width-1 downto 0); --! 1% below 1.6 tari limit
+		
+		data_in : in std_logic := '0'; --! Encoded bits from the TAG
 
 		-- output
-		data_ready : out std_logic := '0';
-		data_out   : out std_logic := '0'
+		data_ready : out std_logic := '0'; --! Flag indicates encoded bit is valid
+		data_out   : out std_logic := '0'  --! Decoded bit going to the package constructor
 	);
 
 end entity;
