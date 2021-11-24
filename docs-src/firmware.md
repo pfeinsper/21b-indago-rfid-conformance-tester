@@ -4,15 +4,15 @@ Below is an in depth explanation of the mechanism responsible for the communicat
 
 ## Avalon Interface
 
-The Avalon Interface, according to its developer Intel (in “Avalon® Interface Specifications”, 2021, p.4): "Avalon® interfaces simplify system design by allowing you to easily connect components in Intel® FPGA. The Avalon interface family defines interfaces appropriate for streaming high-speed data, reading and writing registers and memory, and controlling off-chip devices. Components available in Platform Designer incorporate these standard interfaces. Additionally, you can incorporate Avalon interfaces in custom components, enhancing the interoperability of designs.".
+The Avalon Interface, according to its developer Intel (in “Avalon® Interface Specifications”, 2021, p.4): "Avalon® interfaces simplify system design by allowing you to easily connect components in Intel® FPGA. The Avalon interface family defines interfaces appropriate for streaming high-speed data, reading, and writing registers and memory, and controlling off-chip devices. Components available in Platform Designer incorporate these standard interfaces. Additionally, you can incorporate Avalon interfaces in custom components, enhancing the interoperability of designs.".
 
-In other words, it is possible to conclude from this excerpt that, in addition to enabling the connection between Intel® FPGA components, that once the interfaces are added to Platform Designer, they are able to connect custom components, which we use for the IP Core in out product. All documentation for other possible interfaces and connection is present in the document “Avalon® Interface Specifications”.
+In other words, it is possible to conclude from this excerpt that, in addition to enabling the connection between Intel® FPGA components, that once the interfaces are added to Platform Designer, they can connect custom components, which we use for the IP-Rfid in our product. All documentation for other possible interfaces and connection is present in the document “Avalon® Interface Specifications”.
 
 The Avalon Bus can be implemented with multiple features and modules. In this project, Avalon Memory-Mapped will be used, but other alternatives were considered, such as Avalon Interrupt Interfaces and Avalon Streaming Interfaces.
 
 The Avalon Memory-Mapped (Avalon-MM) interface implements the writing and reading of interfaces for the other components used, including Memory, UART Chip and the NIOS II. The interface uses a Host and Agent system in which the Host is the provider of data and commands to the Agent, while the Agent responds to the Host.
 
-These relations can be viewed in the images below, which represent an example of Host and Agent communication in the first image, and an example of writing to a address in the second one.
+These relations can be viewed in the images below, which represent an example of Host and Agent communication in the first image, and an example of writing to an address in the second one.
 
 ![](Avalon_1.png){width=70%}
 
