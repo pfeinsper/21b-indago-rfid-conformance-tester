@@ -20,3 +20,9 @@ void lock_build(lock *lock)
     lock->result_data |= (lock->rn << 16);
     lock->result_data |= lock->crc;
 }
+
+int lock_validate(int packages_vector[], int command_size){
+    //TODO: validate
+    
+    return 0;
+}

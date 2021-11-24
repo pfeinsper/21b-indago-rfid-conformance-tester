@@ -1,11 +1,12 @@
 #include "rn16.h"
 
-unsigned short rn16_generate()
+void rn16_init(rn16 *rn16_ptr)
 {
-    return 0xFD24;
+    rn16_ptr->result_data = 0xFD24;
+    rn16_ptr->size = RN16_SIZE;
 }
 
-int rn16_validate(int packages[], int quant_packages, int command_size)
+int rn16_validate(int command_size)
 {
-    return (command_size != RN_SIZE) && (command_size != RN_SIZE + 1);
+    return (command_size != RN16_SIZE) && (command_size != RN16_SIZE + 1);
 }

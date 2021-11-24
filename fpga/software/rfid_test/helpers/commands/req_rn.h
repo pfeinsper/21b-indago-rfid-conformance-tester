@@ -16,6 +16,6 @@ typedef struct
 
 void req_rn_init(req_rn *req_rn, unsigned short rn);
 void req_rn_build(req_rn *req_rn);
-int req_rn_validate(int packages[], int quant_packages, int command_size);
+int req_rn_validate(int packages[], int command_size);
 
 #endif /* REQ_RN_H */

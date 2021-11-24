@@ -16,7 +16,7 @@ void ack_build(ack *ack)
     ack->result_data |= ack->rn;
 }
 
-int ack_validate(int packages[], int quant_packages, int command_size)
+int ack_validate(int packages[], int command_size)
 {
     if (command_size != ACK_SIZE && command_size != ACK_SIZE + 1)
         return 0;

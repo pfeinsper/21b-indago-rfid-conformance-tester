@@ -18,4 +18,6 @@ void query_adjust_build(query_adjust *query_adjust);
 
 int query_adjust_parse(query_adjust *query_adjust, unsigned char *data);
 
+int query_adjust_validate(int packages[], int command_size);
+
 #endif /* QUERY_ADJUST_H */

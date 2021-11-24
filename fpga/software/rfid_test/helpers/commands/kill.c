@@ -23,7 +23,7 @@ void kill_build(kill *kill)
     kill->result_data |= kill->crc;
 }
 
-int kill_validate(int packages[], int quant_packages, int command_size)
+int kill_validate(int packages[], int command_size)
 {
     if (command_size != KILL_SIZE && command_size != KILL_SIZE + 1)
         return 0;

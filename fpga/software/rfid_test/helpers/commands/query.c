@@ -34,7 +34,7 @@ void query_build(query *query)
     query->result_data |= (query->crc);
 }
 
-int query_validate(int packages[], int quant_packages, int command_size)
+int query_validate(int packages[], int command_size)
 {
     if (command_size != QUERY_SIZE && command_size != QUERY_SIZE + 1)
         return 0;

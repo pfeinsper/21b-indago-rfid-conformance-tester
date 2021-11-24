@@ -33,7 +33,7 @@ void select_build(select_cmd *select)
     select->result_data |= select->crc;
 }
 
-int select_validate(int packages[], int quant_packages, int command_size)
+int select_validate(int packages[], int command_size)
 {
     if (command_size < SELECT_SIZE)
         return 0;

@@ -16,7 +16,7 @@ void query_rep_build(query_rep *query_rep)
     query_rep->result_data |= query_rep->session;
 }
 
-int query_rep_validate(int packages[], int quant_packages, int command_size)
+int query_rep_validate(int packages[], int command_size)
 {
     if (command_size != QUERY_REP_SIZE && command_size != QUERY_REP_SIZE + 1)
         return 0;

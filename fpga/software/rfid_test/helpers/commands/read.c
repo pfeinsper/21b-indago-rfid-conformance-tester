@@ -25,7 +25,7 @@ void read_build(read *read)
     read->result_data |= read->crc;
 }
 
-int read_validate(int packages[], int quant_packages, int command_size)
+int read_validate(int packages[], int command_size)
 {
     if (command_size != READ_SIZE && command_size != READ_SIZE + 1)
         return 0;

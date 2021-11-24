@@ -19,6 +19,6 @@ void kill_init(kill *kill, unsigned short password, unsigned char rfu,
                unsigned short rn, unsigned short crc);
 void kill_build(kill *kill);
 
-int kill_validate(int packages[], int quant_packages, int command_size);
+int kill_validate(int packages[], int command_size);
 
 #endif /* KILL_H */

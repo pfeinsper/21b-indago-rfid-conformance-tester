@@ -20,15 +20,15 @@ void req_rn_build(req_rn *req_rn)
     req_rn->result_data |= req_rn->crc;
 }
 
-int req_rn_validate(int packages[], int size, int command_size)
+int req_rn_validate(int packages[], int command_size)
 {
     if (command_size != REQ_RN_SIZE && command_size != REQ_RN_SIZE + 1)
         return 0;
 
-    // | packages[1]| packages[0]  |
-    // |  command   |  rn  |  crc  |
-    // |    X*8     | X*16 |  X*16 |
-    int command = packages[1] & 0xFF;
+    // |    packages[1]    | packages[0] |
+    // |  command   |  rn  |  rn  |  crc |
+    // |    X*8     | X*6  | X*10 | X*16 |
+    int command = (packages[1] >> 6) & 0xFF;
 
     if (command != REQ_RN_COMMAND)
         return 0;

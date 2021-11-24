@@ -11,7 +11,7 @@ void nak_build(nak *nak)
     nak->result_data = nak->command;
 }
 
-int nak_validate(int *packages, int quant_packages, int command_size)
+int nak_validate(int *packages, int command_size)
 {
     if (command_size != NAK_SIZE && command_size != NAK_SIZE + 1)
         return 0;

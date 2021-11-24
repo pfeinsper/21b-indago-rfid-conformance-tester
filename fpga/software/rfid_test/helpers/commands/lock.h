@@ -18,6 +18,6 @@ void lock_init(lock *lock, unsigned int payload, unsigned short rn,
                unsigned short crc);
 void lock_build(lock *lock);
 
-int lock_validate(int packages[], int quant_packages, int command_size);
+int lock_validate(int packages[], int command_size);
 
 #endif /* LOCK_H */

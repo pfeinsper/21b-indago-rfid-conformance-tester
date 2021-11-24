@@ -25,9 +25,9 @@ void write_build(write *write)
     write->result_data |= write->crc;
 }
 
-int write_validate(int packages[], int quant_packages, int command_size)
+int write_validate(int packages[], int command_size)
 {
-    if (quant_packages != WRITE_SIZE && quant_packages != WRITE_SIZE + 1)
+    if (command_size != WRITE_SIZE && command_size != WRITE_SIZE + 1)
         return 0;
 
     // |     packages[2]    |            packages[1]           | packages[0] |

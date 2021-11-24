@@ -16,4 +16,6 @@ void query_rep_build(query_rep *query_rep);
 
 int query_rep_parse(query_rep *query_rep, unsigned char *data);
 
+int query_rep_validate(int packages[], int command_size);
+
 #endif /* QUERY_REP_H */

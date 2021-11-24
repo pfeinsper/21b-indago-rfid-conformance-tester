@@ -30,6 +30,6 @@ void select_init(select_cmd *select, unsigned char target, unsigned char action,
                  unsigned char truncate, unsigned short crc);
 void select_build(select_cmd *select);
 
-int select_validate(int packages[], int quant_packages, int command_size);
+int select_validate(int packages[], int command_size);
 
 #endif /* SELECT_H */
