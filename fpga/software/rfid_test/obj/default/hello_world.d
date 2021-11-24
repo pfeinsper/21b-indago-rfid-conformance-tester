@@ -7,7 +7,7 @@ obj/default/hello_world.o: hello_world.c ../rfid_test_bsp//HAL/inc/io.h \
  helpers/commands/select.h helpers/commands/nak.h \
  helpers/commands/req_rn.h helpers/commands/read.h \
  helpers/commands/write.h helpers/commands/kill.h helpers/commands/lock.h \
- helpers/commands/rn16.h
+ helpers/commands/rn16.h helpers/commands/rn_crc.h
 
 ../rfid_test_bsp//HAL/inc/io.h:
 
@@ -46,3 +46,5 @@ helpers/commands/kill.h:
 helpers/commands/lock.h:
 
 helpers/commands/rn16.h:
+
+helpers/commands/rn_crc.h:
