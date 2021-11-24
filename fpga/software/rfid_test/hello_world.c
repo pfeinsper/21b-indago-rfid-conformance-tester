@@ -15,7 +15,7 @@
 #define MASK_RST_RECEIVER (1 << 10)
 #define MASK_EN_RECEIVER (1 << 4)
 #define MASK_CLR_FIFO (1 << 2)
-#define MASK_LOOPBACK (1 << 8)
+#define MASK_LOOPBACK (0 << 8)
 #define MASK_CLR_FINISHED 1 << 1
 // #define MASK_CLR_FINISHED_0  0 << 1
 #define SENDER_HAS_GEN 0 << 5
@@ -263,7 +263,7 @@ int receiver_get_package(int command_vector[], int quant_packages, int *command_
 int main()
 {
     //configurations------------------------------------------------------------------------------
-    // rfid_set_loopback();
+    rfid_set_loopback();
     rfid_set_tari(tari_test);
     sender_enable();
 
@@ -320,6 +320,7 @@ int main()
         printf("exiting on RN16\n");
         return 1;
     }
+    printf("%d \n", command_size_rn);
     int label = rfid_check_command(pack_rn, command_size_rn);
     // printf("label is: %d\n", label);
     if (label != RN16_LABEL)
