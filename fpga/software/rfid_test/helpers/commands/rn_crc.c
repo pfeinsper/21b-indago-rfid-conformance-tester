@@ -6,7 +6,7 @@ void rn_crc_generate(rn_crc *rn_crc_ptr)
     int crc = crc_16_ccitt(rn, 3);
     rn_crc_ptr->result_data = (rn << 16) | crc;
     rn_crc_ptr->size = RN_CRC_SIZE;
-}
+};
 
 int rn_crc_validate(int packages[], int command_size)
 {
@@ -17,7 +17,7 @@ int rn_crc_validate(int packages[], int command_size)
     // |     rn      |  rn  |  crc |
     // |     X*6     | X*10 | X*16 |
 
-    int rn = ((packages[1] & 0x3F) << 10) | (packages[0] >> 16) & 0x3FF;
+    int rn = ((packages[1] & 0x3F) << 10) | ((packages[0] >> 16) & 0x3FF);
     int crc = packages[0] & 0xFFFF;
     int crc_calc = crc_16_ccitt(rn, 3);
 
@@ -25,4 +25,4 @@ int rn_crc_validate(int packages[], int command_size)
         return 0;
 
     return 1;
-}
+};

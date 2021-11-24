@@ -156,6 +156,7 @@ C_SRCS += helpers/commands/rn16.c
 C_SRCS += helpers/commands/select.c
 C_SRCS += helpers/commands/write.c
 C_SRCS += helpers/crc.c
+C_SRCS += helpers/commands/rn_crc.c
 CXX_SRCS :=
 ASM_SRCS :=
 
