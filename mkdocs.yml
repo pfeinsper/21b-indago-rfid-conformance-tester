@@ -21,6 +21,10 @@ copyright: 'Copyright &copy; 2019 / Prof. Rafael Corsi / rafael.corsi@insper.edu
 docs_dir: docs-src
 site_dir: docs
 
+# CSS
+extra_css:
+- extra.css
+
 nav:
   - Home: index.md
   - getting_started.md
