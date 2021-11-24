@@ -10,6 +10,8 @@ Communication between the NIOS II and the peripheral IP rfid is done via the Ava
 
 The NIOS II function is to write the commands and tests in the register banks present in the IP peripheral, so that it can communicate with the TAG. This processor can be viewed as the conductor and all other components as the orchestra, as it is responsible for enabling, configuring, reading and writing data from the Avalon memory to the IP rfid.
 
+Througout this project, the group breaks commands into packages for ease of use. Details on how this is done can be found [here](hardware.md)
+
 ### Starting Variables
 
 **Register Status**

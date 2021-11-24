@@ -31,6 +31,21 @@ All necessary VHDL hardware description files are located in the project’s fpg
      └package_constructor.vhd  - Stores bits into packages before storing in the FIFO
 
 
+## Packages and commands
+
+Our project uses the mandatory commands specified in the EPC-GEN2 documentation. However, those commands have varying sizes and even the same command could vary its size based on the data it sends. To work with this fluctuating command bit size, the group decided to break commands into 32-bit packages, where the 26 more significant bits are the actual data of the packet, and the 6 less significant are the mask, indicating how many of the 26 are in use.
+
+![](package.png)
+
+This way, we have three possible situations given the command sizes:
+
+-	The command is larger than one package: if the command has more than 26 bits, we are able to break it into multiple packages, communicated in order through our components (more significant -> less significant);
+-	The command is the same size as the package: the easiest case, where we just treat the package as the full command;
+-	The command is shorter than one package: in this case we just fill the package up to the number of bits the command has, and then use the mask to communicate how many of the data bits in the package are useful, ignoring the ones not needed to the command;
+
+For example, if a command has 40 bits, we will break it into two packets. The first one uses the 26 data bits, and the mask `011010` (26) to indicate all the data bits are in use. Then, the second package would only use 14 of the 26 data bits available to reach the 40 bits the command has, and so the mask would be `001110` (14) to indicate that only 14 bits should be analyzed.
+
+
 ## READER
 
 The READER, as shown in the diagram below, is the toplevel of our project, which contains the three main components. Here we will give an overview of each component, and a in depth analysis is present in the sections below.
