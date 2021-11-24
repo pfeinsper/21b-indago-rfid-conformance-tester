@@ -48,6 +48,7 @@
 #define data_mask_size 6
 #define data_package_size 26
 #define eop 0b00000000000000000000000000000000
+#define bits6  0b111111;
 #define bits26 0b11111111111111111111111111
 #define bits32 0b11111111111111111111111111111111
 
@@ -100,12 +101,12 @@ int rfid_check_command(int *packages, int quant_packages, int command_size)
         return QUERY_LABEL;
     else if (req_rn_validate(packages, quant_packages, command_size))
         return REQ_RN_LABEL;
-    else if (req_rn_resp_validate(packages, quant_packages, command_size))
+    else if (rn_crc_validate(packages, quant_packages, command_size))
         return RN_CRC_LABEL;
     else if (kill_validate(packages, quant_packages, command_size))
         return KILL_LABEL;
-    else if (lock_validate(packages, quant_packages, command_size))
-        return LOCK_LABEL;
+//    else if (lock_validate(packages, quant_packages, command_size))
+//        return LOCK_LABEL;
     else if (query_adjust_validate(packages, quant_packages, command_size))
         return QUERY_ADJUST_LABEL;
     else if (query_rep_validate(packages, quant_packages, command_size))
@@ -231,7 +232,7 @@ void receiver_get_package(int command_vector[], int quant_packages, int *command
         package = receiver_request_package();
         receiver_rdreq();
 
-        int mask_value = package & 0b111111;
+        int mask_value = package & bits6;
         int mask = rfid_create_mask_from_value(mask_value);
 
         int data = package >> 6;
@@ -370,7 +371,7 @@ int main()
     //        while(receiver_empty()){};
     //        pack_rn = receiver_get_package();
     //        rn = pack_rn >> 6;
-    //        int mask_value = pack_rn & 0b111111;
+    //        int mask_value = pack_rn & bits6;
     //        int mask = rfid_create_mask_from_value(mask_value);
 
     //        rn = rn & mask;
@@ -419,7 +420,7 @@ int main()
     //    while(pack_rn != 0){
     //        while(receiver_empty()){};
     //        pack_rn = receiver_get_package();
-    //        int mask_value = pack_rn & 0b111111;
+    //        int mask_value = pack_rn & bits6;
     //        rn = pack_rn >> 6;
     //        int mask = rfid_create_mask_from_value(mask_value);
     //
@@ -465,7 +466,7 @@ int main()
     //    while(handle != 0){
     //        while(receiver_empty()){};
     //        handle = receiver_get_package();
-    //        int mask_value = handle & 0b111111;
+    //        int mask_value = handle & bits6;
     //        int data = handle >> 6;
     //
     //        int mask = rfid_create_mask_from_value(mask_value);

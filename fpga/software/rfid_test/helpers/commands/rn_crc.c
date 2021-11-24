@@ -9,7 +9,7 @@ unsigned short rn_crc_generate()
 
 int rn_crc_validate(int packages[], int quant_packages, int command_size)
 {
-    if (command_size != REQ_RN_RESP_SIZE)
+    if (command_size != RN_CRC_SIZE)
         return 0;
 
     // | packages[0] |
