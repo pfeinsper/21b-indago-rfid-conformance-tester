@@ -9,27 +9,32 @@
 	-- 		Lucas Leal                     --
 	-- 		Rafael Santos                  --
 	-----------------------------------------
-
+    --! \sender_controller.vhd
+    --!
+    --!
     library ieee;
     use ieee.std_logic_1164.all;
     use ieee.numeric_std.all;
-    
+    --! \brief This component controls the state machine in the sender
+    --!
+    --! This component is responsible for indicating to the other sender components if the data should be encoded or sent, since the TARI controls the rate at which encoded packets can be sent
+    --!
     entity sender_controller is
         port (
             -- flags
-            clk                    : in std_logic;
-            rst                    : in std_logic;
-            enable                 : in std_logic;
-            start                  : in std_logic;
-            signal_generator_ended : in std_logic;
-            encoder_ended          : in std_logic;
-            has_gen                : in std_logic;
-            clr_finished_sending   : in std_logic;
+            clk                    : in std_logic; --! Clock input
+            rst                    : in std_logic; --! Reset high
+            enable                 : in std_logic; --! Enable high
+            start                  : in std_logic; --! Flag indicates a new command must be encoded and sent
+            signal_generator_ended : in std_logic; --! Flag high if preamble or framesync finished
+            encoder_ended          : in std_logic; --! Flag high if encoder has no more data to send
+            has_gen                : in std_logic; --! Flag high if using the preamble or framesync
+            clr_finished_sending   : in std_logic; --! Clears the finished_sending flag
             
-            mux              : out std_logic;
-            finished_sending : out std_logic := '0';
-            start_encoder    : out std_logic := '0';
-            start_generator  : out std_logic := '0'
+            mux              : out std_logic;        --! Flag control mux output
+            finished_sending : out std_logic := '0'; --! Flag high if sender has no more data to send
+            start_encoder    : out std_logic := '0'; --! Flag high to start the encoder
+            start_generator  : out std_logic := '0'  --! Flag high to start preamble or framesync
         );
     
     end entity;

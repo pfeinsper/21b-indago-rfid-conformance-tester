@@ -10,39 +10,43 @@
 	-- 		Lucas Leal                     --
 	-- 		Rafael Santos                  --
 	-----------------------------------------
-
+    --! \signal_generator.vhd
+    --!
+    --!
     library ieee;
     use ieee.std_logic_1164.all;
     use ieee.numeric_std.all;
-    
+    --! \brief This component generates the preamble or framesync flag when requested
+    --!
+    --!
     entity Signal_Generator is
         generic (
             -- defining size of data in and clock speed
-            tari_width       : natural := 16;
-            pw_width         : natural := 16;
-            delimiter_width  : natural := 16;
-            RTcal_width      : natural := 16;
-            TRcal_width      : natural := 16
+            tari_width       : natural := 16; --! Bits reserved for the TARI time parameter
+            pw_width         : natural := 16; --! Bits reserved for the PW time parameter
+            delimiter_width  : natural := 16; --! Bits reserved for the delimiter time parameter
+            RTcal_width      : natural := 16; --! Bits reserved for the receiver transmitter callibration time parameter
+            TRcal_width      : natural := 16 --! Bits reserved for the transmitter receiver callibration time parameter
         );
     
         port (
             -- flags
-            clk : in std_logic;
-            rst : in std_logic;
-            enable : in std_logic;
-            start_send : in std_logic;
-            is_preamble : in std_logic; -- if 1 is preamble, else is frame - sync 
+            clk : in std_logic; --! Clock input
+            rst : in std_logic; --! Reset high
+            enable : in std_logic; --! Enable high
+            start_send : in std_logic; --! Flag indicates a new encoded packet must be sent
+            is_preamble : in std_logic; --! Flag indicates preamble if high; framesync if low
 
             -- config
-            tari      : in std_logic_vector(tari_width-1 downto 0);
-            pw        : in std_logic_vector(pw_width-1 downto 0);
-            delimiter : in std_logic_vector(delimiter_width-1 downto 0);
-            RTcal     : in std_logic_vector(RTcal_width-1 downto 0);
-            TRcal     : in std_logic_vector(TRcal_width-1 downto 0);
+            tari      : in std_logic_vector(tari_width-1 downto 0); --! Time parameter
+            pw        : in std_logic_vector(pw_width-1 downto 0);   --! PW parameter
+            delimiter : in std_logic_vector(delimiter_width-1 downto 0); --! Delimiter parameter
+            RTcal     : in std_logic_vector(RTcal_width-1 downto 0);  --! Receiver transmitter callibration parameter
+            TRcal     : in std_logic_vector(TRcal_width-1 downto 0);  --! Transmitter receiver callibration parameter
             
             -- output
-            has_ended : out std_logic := '0';
-            data_out : out std_logic := '0'
+            has_ended : out std_logic := '0'; --! Flag indicates packet has been sent
+            data_out : out std_logic := '0'   --! Generator - preamble or framesync - signal
         );
     
     end entity;

@@ -9,41 +9,45 @@
 -- 		Lucas Leal                     --
 -- 		Rafael Santos                  --
 -----------------------------------------
-
+--! \fifo_fm0
+--!
+--!
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
-
+--! \brief Component that integrates the FIFO with the FM0 encoder.
+--!
+--!
 entity FIFO_FM0 is
     generic (
         -- defining size of data in and clock speed
-        data_width : natural := 26;
-        tari_width : natural := 16;
-        mask_width : natural := 6
+        data_width : natural := 26; --! Size of the data inside a packet sent between components
+        tari_width : natural := 16; --! Bits reserved for the TARI time parameter
+        mask_width : natural := 6  --! Size of the mask that indicates how many bits of the packet are in use
     );
 
     port (
         -- flags
-        clk : in std_logic;
+        clk : in std_logic; --! Clock input
         -- fm0
-        rst_fm0 : in std_logic;
-        enable_fm0 : in std_logic;
-		encoder_ended : out std_logic;
+        rst_fm0 : in std_logic; --! Reset high
+        enable_fm0 : in std_logic; --! Enable high
+		encoder_ended : out std_logic; --! Flag high if encoder has no more data to send
 
         -- fifo
-        clear_fifo : in std_logic;
-        fifo_write_req : in std_logic;
-        is_fifo_full : out std_logic;
-        usedw : out std_logic_vector(7 downto 0);
+        clear_fifo : in std_logic;     --! Clears all data from the FIFO
+        fifo_write_req : in std_logic; --! Flag to write new data on the FIFO
+        is_fifo_full : out std_logic;  --! Flag that indicates if the FIFO has run out of space
+        usedw : out std_logic_vector(7 downto 0); --! Number of valid packets in the FIFO
 
         -- config
-        tari : in std_logic_vector(tari_width-1 downto 0);
+        tari : in std_logic_vector(tari_width-1 downto 0); --! Time parameter
 
         -- data
-        data : in std_logic_vector(31 downto 0);
+        data : in std_logic_vector(31 downto 0); --! Packet to be encoded and sent to the TAG
 
         -- output
-        q : out std_logic
+        q : out std_logic --! Modulated in FM0 out signal
     );
 
 end entity;

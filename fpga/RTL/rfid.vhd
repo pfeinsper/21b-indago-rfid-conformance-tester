@@ -9,37 +9,44 @@
 -- 		Lucas Leal                     --
 -- 		Rafael Santos                  --
 -----------------------------------------
-
+--! \rfid.vhd
+--!
+--!
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.std_logic_unsigned.all;
 use IEEE.numeric_std.all;
 use work.all;
-
+--! \brief Project top level, instantiates the sender, receiver and Avalon Interface.
+--!
+--! This component encopasses the whole project. Instantiating the Avalon Interface allows for communication between hardware and software, or, in other words, the NIOS II and the IP RFID.
+--!
+--!
+--!
 entity rfid is
     generic (
         -- defining size of data in and clock speed     
-        data_width : natural := 26;
-        tari_width : natural := 16;
-        mask_width : natural := 6;
-        data_size  : natural :=32
+        data_width : natural := 26; --! Size of the data inside a packet sent between components
+        tari_width : natural := 16; --! Bits reserved for the TARI time parameter
+        mask_width : natural := 6;  --! Size of the mask that indicates how many bits of the packet are in use
+        data_size  : natural :=32   --! Size of the packets including the mask
         
     );
     port (
         
-        clk : in std_logic;
-        rst : in std_logic;
+        clk : in std_logic; --! Clock input
+        rst : in std_logic; --! Reset high
         
         -- Avalion Memmory Mapped Slave
-        avs_address     : in  std_logic_vector(3 downto 0)  := (others => '0');
-        avs_read        : in  std_logic                     := '0';
-        avs_readdata    : out std_logic_vector(31 downto 0) := (others => '0');
-        avs_write       : in  std_logic                     := '0';
-        avs_writedata   : in  std_logic_vector(31 downto 0) := (others => '0');
+        avs_address     : in  std_logic_vector(3 downto 0)  := (others => '0'); --! Points to the specific address in the memory bank
+        avs_read        : in  std_logic                     := '0';             --! Indicates a read request if high
+        avs_readdata    : out std_logic_vector(31 downto 0) := (others => '0'); --! Data being read from the avs_address
+        avs_write       : in  std_logic                     := '0';             --! Indicates a write request if high
+        avs_writedata   : in  std_logic_vector(31 downto 0) := (others => '0'); --! Data being written to the avs_address
     
         -- -- output
-        rfid_tx : out std_logic;
-        rfid_rx : in  std_logic
+        rfid_tx : out std_logic; --! Reader output
+        rfid_rx : in  std_logic  --! Reader input
     );
 end entity;
 

@@ -10,31 +10,35 @@
 -- 		Lucas Leal                     --
 -- 		Rafael Santos                  --
 -----------------------------------------
-
+--! \package_constructor.vhd
+--!
+--!
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
-
+--! \brief This component stores the bits received from the decoder and groups them into 26 data bits + 6 mask bits packets
+--!
+--!
 entity package_constructor is
 	generic (
 		-- defining size of data in and clock speed
-		data_width : natural := 26;
-		mask_width : natural := 6
+		data_width : natural := 26; --! Size of the data inside a packet sent between components
+		mask_width : natural := 6   --! Size of the mask that indicates how many bits of the packet are in use
 	);
 
 	port (
 		-- flags
-		clk : in std_logic;
-		rst : in std_logic;
+		clk : in std_logic; --! Clock input
+		rst : in std_logic; --! Reset high
 
-        data_ready : in std_logic := '0';
-		data_in    : in std_logic := '0';
-        eop        : in std_logic := '0';
+        data_ready : in std_logic := '0'; --! Flag indicates new data is coming from the FM0_decoder
+		data_in    : in std_logic := '0'; --! Data received from the FM0_decoder
+        eop        : in std_logic := '0'; --! Flag indicates end of package
 
 		-- output
-		write_request_out : out std_logic := '0';
-		data_out       : out std_logic_vector((data_width + mask_width)-1 downto 0);
-        clr_eop        : out std_logic := '0'
+		write_request_out : out std_logic := '0'; --! Flag request to write data on the FIFO
+		data_out       : out std_logic_vector((data_width + mask_width)-1 downto 0); --! Packet out to the FIFO
+        clr_eop        : out std_logic := '0' --! Flag clears EOP
 	);
 
 end entity;

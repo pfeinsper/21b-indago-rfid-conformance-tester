@@ -9,36 +9,41 @@
 -- 		Lucas Leal                     --
 -- 		Rafael Santos                  --
 -----------------------------------------
-
+--! \FM0_encoder.vhd
+--!
+--!
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
-
+--! \brief This component encodes the packets received from the NIOS II using FM0 encoding
+--!
+--! For further explanation on how this encoding is done, check the EPC-GEN2 documentation - https://www.gs1.org/sites/default/files/docs/epc/Gen2_Protocol_Standard.pdf
+--!
 entity FM0_encoder is
     generic (
         -- defining size of data in and clock speed
-        data_width : natural := 26;
-        tari_width : natural := 16;
-        mask_width : natural := 6
+        data_width : natural := 26; --! Size of the data inside a packet sent between components
+        tari_width : natural := 16; --! Bits reserved for the TARI time parameter
+        mask_width : natural := 6  --! Size of the mask that indicates how many bits of the packet are in use
     );
 
     port (
         -- flags
-        clk : in std_logic;
-        rst : in std_logic;
-        enable : in std_logic;
-        finished_sending : out std_logic;
+        clk : in std_logic; --! Clock input
+        rst : in std_logic; --! Reset high
+        enable : in std_logic; --! Enable high
+        finished_sending : out std_logic; --! Flag high if sender has no more data to send
 
         -- config
-        tari : in std_logic_vector(tari_width-1 downto 0);
+        tari : in std_logic_vector(tari_width-1 downto 0); --! Time parameter
 
         -- fifo data
-        is_fifo_empty    : in std_logic;
-        data_in          : in std_logic_vector((data_width + mask_width)-1 downto 0); -- format expected : dddddddddddmmmmm
-        request_new_data : out std_logic;
+        is_fifo_empty    : in std_logic;--! Flag that indicates if the FIFO has no more data
+        data_in          : in std_logic_vector((data_width + mask_width)-1 downto 0); --! packet with 26 data bits and 6 mask bits - format ddddddddddddddddddddddddddmmmmmm
+        request_new_data : out std_logic; --! Flag high if requests new packet to encode and send
 
         -- output
-        data_out : out std_logic := '0'
+        data_out : out std_logic := '0' --! Modulated in FM0 out signal
     );
 
 end entity;
