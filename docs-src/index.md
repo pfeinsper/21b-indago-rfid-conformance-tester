@@ -38,7 +38,7 @@ Indago Devices Inc. is a startup that has its headquarters in the city of Birmin
 
 ## Project Overview
 
-The main objetive of this project is to develop and assemble a conformance tester for RFID TAGs where a microcontroller will be implemented and an IP Core for communication with the DUT (device under testing). This device then shall be able to run a series of tests as a READER interacting with a TAG through the EPC-GEN2 protocol, analysing if the TAG works as intended and complies with the requirements of the protocol.
+The main objetive of this project is to develop and assemble a conformance tester for RFID TAGs where a microcontroller will be implemented and an IP rfid for communication with the DUT (device under testing). This device then shall be able to run a series of tests as a READER interacting with a TAG through the EPC-GEN2 protocol, analysing if the TAG works as intended and complies with the requirements of the protocol.
 
 The tests will be implemented using C, allowing for a large amount of tests to be made that target different aspects of the TAG's process, independently evaluating most of them. Also, it will be possible to customize the tests or develop new ones should the user need to do so.
 
@@ -112,20 +112,3 @@ As the project consists of the creation of a conformance tester for the EPC-GEN2
 
 Since the project was open-source and available on GitHub, it was decided that the group would also provide a documentation to the whole project, which was later decided would be available through GitHub Pages. Inside, the group would give an in-depth description of all components, and also a tutorial on how to clone, run, utilize and modify this project.
 
-### File Hierarchy
-
-All necessary VHDL hardware description files are located in the project’s fpga/rtl/ folder. The top entity of the entire processor including all the required configuration generics is rfid.vhd.
-
-    rfid.vhd                   - Conformance tester top entity
-    │
-    ├sender.vhd                - Sender component top entity
-    │├FIFO_fm0.vhd             - Encoder-specific FIFO
-    ││├FM0_encoder.vhd         - Encoder-FM0-specific FIFO
-    ││└fifo_32_32.vhd          - General use FIFO
-    │├sender_controller.vhd    - Controls the flow of packets to the TAG
-    │└signal_generator.vhd     - Generates preamble or frame-sync signal
-    │
-    └receiver.vhd              - Receiver component top entity
-     ├FM0_decoder.vhd          - Decoder-FM0-specific FIFO
-     ├fifo_32_32.vhd           - General use FIFO
-     └package_constructor.vhd  - Stores bits into packets before storing in the FIFO
