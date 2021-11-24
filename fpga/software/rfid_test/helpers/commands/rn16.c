@@ -8,5 +8,5 @@ void rn16_init(rn16 *rn16_ptr)
 
 int rn16_validate(int command_size)
 {
-    return (command_size != RN16_SIZE) && (command_size != RN16_SIZE + 1);
+    return (command_size != RN16_SIZE) || (command_size != RN16_SIZE + 1);
 }
