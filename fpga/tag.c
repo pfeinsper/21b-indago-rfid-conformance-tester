@@ -48,7 +48,7 @@
 #define data_mask_size 6
 #define data_package_size 26
 #define eop 0b00000000000000000000000000000000
-#define bits6  0b111111;
+#define bits6 0b111111;
 #define bits26 0b11111111111111111111111111
 #define bits32 0b11111111111111111111111111111111
 
@@ -105,8 +105,8 @@ int rfid_check_command(int packages[], int command_size)
         return RN_CRC_LABEL;
     else if (kill_validate(packages, command_size))
         return KILL_LABEL;
-   else if (lock_validate(packages, command_size))
-       return LOCK_LABEL;
+    else if (lock_validate(packages, command_size))
+        return LOCK_LABEL;
     else if (query_adjust_validate(packages, command_size))
         return QUERY_ADJUST_LABEL;
     else if (query_rep_validate(packages, command_size))
@@ -281,7 +281,7 @@ int main()
     printf("waiting for query\n");
     if (receiver_get_package(pack_query, quant_packages, &command_size_rn) == -1)
     {
-        printf("exiting on RN16\n")
+        printf("exiting on RN16\n");
         return 1;
     }
     int label = rfid_check_command(pack_query, command_size_rn);
@@ -306,9 +306,11 @@ int main()
     sender_add_mask(size_with_mask_rn16, command_vector_masked_rn16, command_rn16.result_data, command_rn16.size);
 
     // WAITING FOR FIFO AND THEN SENDING PACKAGES
-    for (int i = 0; i < size_with_mask_ack; i++)
+    for (int i = 0; i < size_with_mask_rn16; i++)
     {
-        while (sender_check_fifo_full()){}
+        while (sender_check_fifo_full())
+        {
+        }
         sender_send_package(command_vector_masked_rn16[i]);
     }
 
@@ -316,14 +318,16 @@ int main()
 
     sender_start_ctrl();
 
-    while(!sender_read_finished_send()){}
+    while (!sender_read_finished_send())
+    {
+    }
 
     sender_write_clr_finished_sending();
 
     //RECEIVER-------------------------------------------------------------------------------------------------------
     //expecting a ack(RN16)
 
-    int quant_packages = 2;
+    quant_packages = 2;
     int command_size_ack = 0;
     int pack_ack[quant_packages];
     printf("waiting for ack(RN16)\n");
@@ -332,7 +336,7 @@ int main()
         printf("exiting on ack(RN16)\n");
         return 1;
     }
-    int label = rfid_check_command(pack_ack, command_size_ack);
+    label = rfid_check_command(pack_ack, command_size_ack);
     if (label != ACK_LABEL)
     {
         printf("ACK_LABEL NOT FOUND\n");
@@ -351,12 +355,14 @@ int main()
     int command_vector_masked_req[size_with_mask_req];
 
     // ADDING MASKS TO EACH PACKAGE OF THE COMMAND
-    sender_add_mask(size_with_mask_req,command_vector_masked_req,command_XPC.result_data, command_XPC.size);
+    sender_add_mask(size_with_mask_req, command_vector_masked_req, command_XPC.result_data, command_XPC.size);
 
     // WAITING FOR FIFO AND THEN SENDING PACKAGES
     for (int i = 0; i < size_with_mask_req; i++)
     {
-        while (sender_check_fifo_full()){}
+        while (sender_check_fifo_full())
+        {
+        }
         sender_send_package(command_vector_masked_req[i]);
     }
 
@@ -364,54 +370,60 @@ int main()
 
     sender_start_ctrl();
 
-    while(!sender_read_finished_send()){}
+    while (!sender_read_finished_send())
+    {
+    }
 
     sender_write_clr_finished_sending();
 
     //RECEIVER-------------------------------------------------------------------------------------------------------
-    int quant_packages = 2;
+    //expecting a req_rn
+    quant_packages = 2;
     int command_size_handle = 0;
-    int pack_handle[quant_packages];
+    int pack_req_rn[quant_packages];
     printf("waiting for req_rn\n");
-    if (receiver_get_package(pack_handle, quant_packages, &command_size_handle) == -1)
+    if (receiver_get_package(pack_req_rn, quant_packages, &command_size_handle) == -1)
     {
         printf("exiting on req_rn\n");
         return 1;
     }
-    int label = rfid_check_command(pack_handle, command_size_handle);
-    if (label != HANDLE_LABEL)
+    label = rfid_check_command(pack_req_rn, command_size_handle);
+    if (label != REQ_RN_LABEL)
     {
-        printf("HANDLE_LABEL NOT FOUND\n");
+        printf("REQ_RN_LABEL NOT FOUND\n");
         printf("found: %d\n", label);
         return 1;
     }
 
-    printf("found HANDLE_LABEL\n");
+    printf("found REQ_RN_LABEL\n");
 
     // REQ_RN_RESPONSE-------------------------------------------------------------------------------------------------------
     rn_crc command_REQ_RN_RESPONSE;
-    rn_crc_init(&command_REQ_RN_RESPONSE, rn);
-    rn_crc_build(&command_REQ_RN_RESPONSE);
+    rn_crc_init(&command_REQ_RN_RESPONSE);
     printf("command rn_crc = %d\n", command_REQ_RN_RESPONSE.size);
     int size_with_mask_req_rn_resp = sender_get_command_ints_size(command_REQ_RN_RESPONSE.size);
 
-    int command_vector_masked_req[size_with_mask_req_rn_resp];
+    int command_vector_masked_req_rn_resp[size_with_mask_req_rn_resp];
 
     // ADDING MASKS TO EACH PACKAGE OF THE COMMAND
-    sender_add_mask(size_with_mask_req_rn_resp, command_vector_masked_req, command_REQ_RN_RESPONSE.result_data, command_REQ_RN_RESPONSE.size);
+    sender_add_mask(size_with_mask_req_rn_resp, command_vector_masked_req_rn_resp, command_REQ_RN_RESPONSE.result_data, command_REQ_RN_RESPONSE.size);
 
     // WAITING FOR FIFO AND THEN SENDING PACKAGES
     for (int i = 0; i < size_with_mask_req_rn_resp; i++)
     {
-        while (sender_check_fifo_full()){}
-        sender_send_package(command_vector_masked_req[i]);
+        while (sender_check_fifo_full())
+        {
+        }
+        sender_send_package(command_vector_masked_req_rn_resp[i]);
     }
 
     sender_send_end_of_package();
 
     sender_start_ctrl();
 
-    while(!sender_read_finished_send()){}
+    while (!sender_read_finished_send())
+    {
+    }
 
     sender_write_clr_finished_sending();
 
