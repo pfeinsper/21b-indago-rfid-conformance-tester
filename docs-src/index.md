@@ -14,7 +14,7 @@
 - **Repository:** https://github.com/pfeinsper/21b-indago-rfid-conformance-tester
 ## About
 
-This project aims to develop an equipment capable of performing a series of tests on RFID TAGs, based on the communication protocol "EPC-GEN2 UHF RFID" [^1]. The project simplifies the development of  new TAGs that conform to the defined protocol, being able to assert wether the tag satisfies the requirements of said protocol, and also wether the TAG itself is working as intended.
+This project aims to develop an equipment capable of performing a series of tests on RFID TAGs, based on the communication protocol "EPC-GEN2 UHF RFID" [^1]. The project simplifies the development of new TAGs that conform to the defined protocol, being able to assert whether the tag satisfies the requirements of said protocol, and also whether the TAG itself is working as intended.
 
 [^1]: EPC UHF Gen2 Air Interface Protocol.
 <https://www.gs1.org/sites/default/files/docs/epc/Gen2_Protocol_Standard.pdf>
@@ -34,15 +34,15 @@ Accessed on: 16/08/2021.
 
 ### Indago Devices Inc.
 
-Indago Devices Inc. is a startup that has its headquarters in the city of Birmingham Alabama, US, and works in the field of development and study of electronics. Despite having few employees, it seeks to innovate in the electronics market, specifically in the development of systems that communicate through RFID. They had already been communicating with Insper in the previous semester, and also another group of students who planned to do a similar project. This semester they decided to request a conformance tester to help develop RFID TAGs. One of the driving points of the project is that currently there is no similar sofware avaliable on open source for the RFID community, so it could impact not only their company, but also the worldwide RFID development community.
+Indago Devices Inc. is a startup that has its headquarters in the city of Birmingham Alabama, US, and works in the field of development and study of electronics. Despite having few employees, it seeks to innovate in the electronics market, specifically in the development of systems that communicate through RFID. They had already been communicating with Insper in the previous semester, and another group of students who planned to do a similar project. This semester they decided to request a conformance tester to help develop RFID TAGs. One of the driving points of the project is that currently there is no similar software available on open source for the RFID community, so it could impact not only their company, but also the worldwide RFID development community.
 
 ## Project Overview
 
-The main objetive of this project is to develop and assemble a conformance tester for RFID TAGs where a microcontroller will be implemented and an IP rfid for communication with the DUT (device under testing). This device then shall be able to run a series of tests as a READER interacting with a TAG through the EPC-GEN2 protocol, analysing if the TAG works as intended and complies with the requirements of the protocol.
+The main objective of this project is to develop and assemble a conformance tester for RFID TAGs where a microcontroller will be implemented and an IP-Rfid for communication with the DUT (device under testing). This device then shall be able to run a series of tests as a READER interacting with a TAG through the EPC-GEN2 protocol, analyzing if the TAG works as intended and complies with the requirements of the protocol.
 
-The tests will be implemented using C, allowing for a large amount of tests to be made that target different aspects of the TAG's process, independently evaluating most of them. Also, it will be possible to customize the tests or develop new ones should the user need to do so.
+The tests will be implemented using C, allowing for a large number of tests to be made that target different aspects of the TAG's process, independently evaluating most of them. Also, it will be possible to customize the tests or develop new ones should the user need to do so.
 
-This project does not make use of RFID communication, nor does it intend to test wether the TAG is able to communicate through it. Given the compleity of communicating through radio waves, the group and the teacher agreed to not cover those points in this project. Therefore, the device, TAG and computer shall be connected by cables. 
+This project does not make use of RFID communication, nor does it intend to test whether the TAG is able to communicate through it. Given the complexity of communicating through radio waves, the group and the teacher agreed to not cover those points in this project. Therefore, the device, TAG and computer shall be connected by cables.
 
 ### Protocol EPC-GEN2 UHF RFID
 

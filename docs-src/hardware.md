@@ -1,8 +1,8 @@
 # Hardware
 
-For this project, the chosen solution for implementing the conformance tester was to develop a dedicated hardware in FPGA [^10]. The chosen product was the DE10-Standard produced by Terasic as well as a PFGA Cyclone V from Intel. Our teacher had ample experience working with this specific model, and it also perfectly fits the requirements need to implement the chosen solution. This is because, through a tool called "platform designer", it is able to edit its configuration on demand, allowing great flexibility when needed.
+For this project, the chosen solution for implementing the conformance tester was to develop a dedicated hardware in FPGA [^10]. The chosen product was the DE10-Standard produced by Terasic as well as a PFGA Cyclone V from Intel. Our teacher had ample experience working with this specific model, and it also perfectly fits the requirements need to implement the chosen solution. This is because, through a tool called "platform designer", it can edit its configuration on demand, allowing great flexibility when needed.
 
-The proposed solution makes use of Intel's solution development ecosystem, providing flexibility in the use of a soft processor, enabling the integration of peripherals called IP rfids to its architecture, as well as allowing the creation of new instructions implmented in the hardware. For more information on these modifications, see the document "Nios II Custom Instruction User Guide" [^11].
+The proposed solution makes use of Intel's solution development ecosystem, providing flexibility in the use of a soft processor, enabling the integration of peripherals called IP-Rfid to its architecture, as well as allowing the creation of new instructions implemented in the hardware. For more information on these modifications, see the document "NIOS II Custom Instruction User Guide" [^11].
 
 [^10]: FPGA Intel.
 <https://www.intel.com.br/content/www/br/pt/products/programmable.html>
