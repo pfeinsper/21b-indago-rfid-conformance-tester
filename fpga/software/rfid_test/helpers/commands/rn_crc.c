@@ -1,6 +1,6 @@
 #include "rn_crc.h"
 
-void rn_crc_generate(rn_crc *rn_crc_ptr)
+void rn_crc_init(rn_crc *rn_crc_ptr)
 {
     int rn = 0xFD24;
     int crc = crc_16_ccitt(rn, 3);
@@ -10,6 +10,7 @@ void rn_crc_generate(rn_crc *rn_crc_ptr)
 
 int rn_crc_validate(int packages[], int command_size)
 {
+	printf("cmd %d \n", command_size);
     if (command_size != RN_CRC_SIZE && command_size != RN_CRC_SIZE + 1)
         return 0;
 
