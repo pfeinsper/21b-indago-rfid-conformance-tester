@@ -9,7 +9,7 @@ typedef struct
     unsigned int size;
 } rn16;
 
-int rn16_init(rn16 *rn16_ptr);
+void rn16_init(rn16 *rn16_ptr);
 
 int rn16_validate(int command_size);
 

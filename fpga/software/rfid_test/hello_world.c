@@ -317,7 +317,7 @@ int main()
     printf("waiting for random number\n");
     if (receiver_get_package(pack_rn, quant_packages, &command_size_rn) == -1)
     {
-        printf("exiting on RN16\n")
+        printf("exiting on RN16\n");
         return 1;
     }
     int label = rfid_check_command(pack_rn, command_size_rn);
@@ -335,7 +335,7 @@ int main()
 
     // SEND AN ACK ------------------------------------------------------------------------------
     ack command_ack;
-    ack_init(&command_ack, rn);
+    ack_init(&command_ack, RN16);
     ack_build(&command_ack);
     printf("command ack = %d\n", command_ack.result_data);
     int size_with_mask_ack = sender_get_command_ints_size(command_ack.size);
@@ -364,7 +364,7 @@ int main()
     //RECEIVER-------------------------------------------------------------------------------------------------------
     //expecting a PC/XPC, EPC
 
-    int quant_packages = 2;
+    quant_packages = 2;
     int command_size_rn_crc = 0;
     int pack_rn_crc[quant_packages];
     printf("waiting for PC/XPC, EPC\n");
@@ -373,7 +373,7 @@ int main()
         printf("exiting on PC/XPC, EPC\n");
         return 1;
     }
-    int label = rfid_check_command(pack_rn_crc, command_size_rn_crc);
+    label = rfid_check_command(pack_rn_crc, command_size_rn_crc);
     if (label != RN_CRC_LABEL)
     {
         printf("RN_CRC_LABEL NOT FOUND\n");
@@ -411,7 +411,7 @@ int main()
     sender_write_clr_finished_sending();
 
     //RECEIVER-------------------------------------------------------------------------------------------------------
-    int quant_packages = 2;
+    quant_packages = 2;
     int command_size_handle = 0;
     int pack_handle[quant_packages];
     printf("waiting for PC/XPC, EPC\n");
@@ -420,7 +420,7 @@ int main()
         printf("exiting on PC/XPC, EPC\n");
         return 1;
     }
-    int label = rfid_check_command(pack_handle, command_size_handle);
+    label = rfid_check_command(pack_handle, command_size_handle);
     if (label != RN_CRC_LABEL)
     {
         printf("RN_CRC_LABEL NOT FOUND\n");
