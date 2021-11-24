@@ -76,7 +76,7 @@ For this project, we opted to use the FIFO produced by Intel, which was obtained
 
 **[FIFO_FM0](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/RTL/fifo_fm0.vhd)**
 
-TODO
+FIFO-FM0 is a component created to separate the data encoding component from the signal-generator and the sender-controller, mapping the inputs: `data` to be encoded, `write request` for the fifo, `enable` and `tari` to the other components, allowing for individual control of each component. Since the encoder does not need to obey the tari, it can operate independently, and much faster than the sender, since each bit can only be sent after the tari interval.
 
 **[Encoder](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/RTL/FM0_encoder.vhd)**
 
