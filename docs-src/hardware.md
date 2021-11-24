@@ -30,7 +30,7 @@ The developed peripheral can be split into two components, visualized in the dia
 
 ![](ip.png)
 
-#### [SENDER.vhd](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/8a679f9520eca2e62d6d618fc6171888dcbf3b1c/fpga/RTL/sender.vhd)
+#### [SENDER.vhd](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/RTL/sender.vhd)
 
 ```VHDL
     entity sender is
@@ -156,7 +156,9 @@ Since the TAG also communicates back to the READER using FM0 encoding, a decoder
 
 **Package Constructor**
 
-This component is responsible for assembling the decoded bits into packets and storing them in the FIFO. This operation is very simple, just gathering the received bits until reaching the limit defined in the code, and then sending to the FIFO. If, however, the package constructor receives the `EOP` signal before completing the packet, it will concatenate a mask with the current packet to inform how many bits were filled. Furthermore, it will also extend the `EOP` flag to the FIFO and the processor, so that they know the RECEIVER has finished capturing and decoding the whole response command.
+This component is responsible for assembling the decoded bits into packets and storing them in the FIFO. It gathers the received bits until reaching the limit defined in the code, and then sending to the FIFO. If, however, the package constructor receives the `EOP` signal before completing the packet, it will concatenate a mask with the current packet to inform how many bits were filled. Furthermore, it will also extend the `EOP` flag to the FIFO and the processor, so that they know the RECEIVER has finished capturing and decoding the whole response command.
+
+![](package_constructor.png)
 
 **FIFO**
 
