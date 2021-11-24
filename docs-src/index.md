@@ -48,11 +48,34 @@ This project does not make use of RFID communication, nor does it intend to test
 
 Documentation avaliable on: <https://www.gs1.org/sites/default/files/docs/epc/Gen2_Protocol_Standard.pdf>
 
-The main purpose of this protocol is to allow two pieces of hardware, obtained independently, but conforming to the protocol, to communicate flawlessly. To achieve this, it specifies how physical and logial interactions should take place, as well as the possible commands between READER and TAG.
+The main purpose of the protocol is to allow two pieces of hardware, obtained independently, but conforming to the protocol, to communicate flawlessly. To achieve this, it specifies how physical and logical interactions should take place, as well as the possible commands between READER and TAG.
 
-There are rules defined for both READER and TAG, however, due to the nature of this project, we will focus only on the TAG, as it is the focus of the tests devised.
+To claim compliance with the protocol, a READER must meet all required specifications, having implemented all mandatory commands, be able to encode, send, receive, and decode data so that it can communicate with a TAG, as well as comply with all local government radio regulations. Optionally, it is allowed to implement any number of optional commands defined in the protocol and any other private commands that do not conflict with any of the mandatory ones. Finally, a READER must not require a TAG to be able to process any command that is not specified as mandatory in the protocol.
 
-To claim compliance with the protocol, a TAG must meet all required specifications, having implementd all mandatory commands, be able to modulate a response signal after receiving a command from a READER, and comply with all government radio regulations. Optionally, it is allowed to implement any number of non-mandatory commands defined in this protocol and any other private commands that do not conflict with any of the mandatory ones. Finally, the TAG must not require a READER to be able to process any non-mandatory comand for this protocol, and is not allowed to modulate a response signal unless it has been commanded to do so by a READER using the commands present in this protocol.
+To claim compliance with the protocol, a TAG must meet all required specifications, having implemented all mandatory commands, be able to modulate a response signal after receiving a command from a READER, and comply with all local government radio regulations. Optionally, it is allowed to implement any number of optional commands defined in the protocol and any other private commands that do not conflict with any of the mandatory ones. Finally, the TAG must not require a READER to be able to process any optional command from the protocol and is not allowed to modulate a response signal unless it has been commanded to do so by a READER using the commands present in the protocol.
+
+The EPC-GEN2 UHF RFID allow four types of commands in its documentation: 1- mandatory; 2- optional; 3- proprietary; 4- custom. All commands defined in the protocol are either mandatory or optional. Proprietary and custom commands are manufacturer-defined.
+Mandatory commands shall be supported by all TAGs and READERs that claim compliance to the protocol.
+Optional commands may or may not be supported by TAGs or READERs. If any implements optional commands, then it shall do so in the manner specified in the protocol.
+Proprietary commands may be enabled in conformance with the protocol but are not specified in it. All proprietary commands shall be capable of being permanently disabled. Proprietary commands are intended for manufacturing purposes and shall not be used in field-deployed RFID systems.
+Custom commands may be enabled in conformance with the protocol but are not specified in it. A READER shall issue a custom command only after singulating a TAG and reading (or having prior knowledge of) the TAG manufacturer’s identification in the TAG’s TID memory. A READER shall use a custom command only in accordance with the specifications of the TAG manufacturer identified in the TID. A custom command shall not solely duplicate the functionality of any mandatory or optional command defined in the protocol by a different method.
+
+**Mandatory Commands**
+
+-	`Select` selects the population of TAGs that will be communicated with. The set can be defined by intersection, union or negation of TAGs;
+-	`Query / Query Adjust / Query Rep` starts a communication round between the TAGs and READER, deciding which TAG will participate in the round and sending the Q value for such. `Query Adjust` can adjust que Q value for the TAG. `Query Rep` decreases the value of Q stored within the TAG’s memory by 1;  
+-	`ACK / NAK` is sent to the TAG with the same value sent by the TAG when returning to the `Query` command. It signifies the READER recognized the TAG’s response. `NAK` changes the state of the TAGs involved in the round to `arbitrate`, in which they remain as stand-by;
+-	`Req_RN` requests a new random number (RN16), sending the previous one as authentication;
+-	`Read / Write` requests the reading of information within a specified address in the TAG’s memory bank. `Write` sends information to be written in that address instead;
+-	`Kill / Lock` sets the tag as unusable. It is a way to end the communication so that the TAG no longer responds. `Lock` can lock or unlock portions of the TAG’s memory bank for `Write` access.
+
+**Handshake**
+
+The diagram below can be found in annex E of the EPC-GEN2 documentation and represents the Hand-shake between READER and TAG.
+
+![](Handshake.png)
+
+The READER sends a `Query` (1), to start an inventory round with the TAG. Upon recognizing the inventory round, the TAG checks whether to respond, and responds with a 16-bit random number `RN16` (2). To establish the communication as successful, the reader sends the `ACK` (3) containing the same RN16. Having received and validated the confirmation, the TAG responds with `PC/XPC, EPC` (4). The reader then send a `Req_RN` (5), again with the old RN16, requesting a new RN16 to continue the communication. If the TAG again validates the RN16, it responds with the `handle` (6), a new RN16. Once the READER receives the `handle`, the handshake is effectively over and the `handle` will be used as authentication for all communication from that point forwards. Every `command` (7) will be sent together with the `handle` and TAG will always verify the `handle` before responding (8). 
 
 ### State-of-the-Art Review
 
