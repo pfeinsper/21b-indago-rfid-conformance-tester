@@ -14,4 +14,6 @@ typedef struct
 void query_rep_init(query_rep *query_rep, unsigned char session);
 void query_rep_build(query_rep *query_rep);
 
+int query_rep_parse(query_rep *query_rep, unsigned char *data);
+
 #endif /* QUERY_REP_H */

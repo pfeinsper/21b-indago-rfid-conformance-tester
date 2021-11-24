@@ -32,3 +32,16 @@ void select_build(select_cmd *select)
     select->result_data |= (select->truncate << 2);
     select->result_data |= select->crc;
 }
+
+int select_validate(int packages[], int quant_packages, int command_size)
+{
+    if (command_size < SELECT_SIZE)
+        return 0;
+
+    // | command | target | action | mem_bank | pointer | length | mask | truncate | crc  |
+    // |   X*4   |   X*3  |   X*3  |    X*2   |  X*EBV  |   X*8  |  X*? |    X*1   | X*16 |
+
+    // TODO: implement select_validate
+
+    return 0;
+}

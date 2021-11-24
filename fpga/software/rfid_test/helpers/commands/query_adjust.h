@@ -16,4 +16,6 @@ void query_adjust_init(query_adjust *query_adjust, unsigned char session,
                        unsigned char updn);
 void query_adjust_build(query_adjust *query_adjust);
 
+int query_adjust_parse(query_adjust *query_adjust, unsigned char *data);
+
 #endif /* QUERY_ADJUST_H */

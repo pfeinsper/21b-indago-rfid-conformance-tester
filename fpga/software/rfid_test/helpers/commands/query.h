@@ -26,6 +26,6 @@ void query_init(query *query, unsigned char dr, unsigned char m,
                 unsigned char target, unsigned char q);
 void query_build(query *query);
 
-int query_validate(int *packages, int quant_packages, int command_size);
+int query_validate(int packages[], int quant_packages, int command_size);
 
 #endif /* QUERY_H */

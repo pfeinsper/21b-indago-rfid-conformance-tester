@@ -15,3 +15,20 @@ void query_rep_build(query_rep *query_rep)
     query_rep->result_data |= (query_rep->command << 2);
     query_rep->result_data |= query_rep->session;
 }
+
+int query_rep_validate(int packages[], int quant_packages, int command_size)
+{
+    if (command_size != QUERY_REP_SIZE && command_size != QUERY_REP_SIZE + 1)
+        return 0;
+
+    // |      packages[0]      |
+    // |   command   | session |
+    // |     X*2     |   X*2   |
+
+    int command = (packages[0] >> 2) & 0x3;
+
+    if (command != QUERY_REP_COMMAND)
+        return 0;
+
+    return 1;
+}

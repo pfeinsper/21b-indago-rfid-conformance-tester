@@ -24,3 +24,20 @@ void read_build(read *read)
     read->result_data |= (read->rn << 16);
     read->result_data |= read->crc;
 }
+
+int read_validate(int packages[], int quant_packages, int command_size)
+{
+    if (command_size != READ_SIZE && command_size != READ_SIZE + 1)
+        return 0;
+
+    // | packages[2] |                     packages[1]                   | packages[0]  |
+    // | command     | command | mem_bank | word_ptr | word_count |  rn  |   rn  | crc  |
+    // |   X*3       |   x*5   |    X*2   |   X*EBV  |     X*8    | X*6  |  X*10 | X*16 |
+
+    int command = ((packages[2] & 0b111) << 5) | (packages[1] & 0x1F);
+
+    if (command != READ_COMMAND)
+        return 0;
+
+    return 1;
+}

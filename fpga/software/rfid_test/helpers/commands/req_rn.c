@@ -20,33 +20,25 @@ void req_rn_build(req_rn *req_rn)
     req_rn->result_data |= req_rn->crc;
 }
 
-int req_rn_validate(int *packages, int size, int command_size)
+int req_rn_validate(int packages[], int size, int command_size)
 {
-    if (command_size != REQ_RN_SIZE && command_size != REQ_RN_SIZE + 1){
+    if (command_size != REQ_RN_SIZE && command_size != REQ_RN_SIZE + 1)
         return 0;
-    }
-    printf("req_rn size: %d\n", command_size);
 
-    printf("a: ");
-    for(int i = 0; i < size; i++)
-    {
-        printf("%X ", packages[i]);
-    }
-    printf("\n");
+    // | packages[1]| packages[0]  |
+    // |  command   |  rn  |  crc  |
+    // |    X*8     | X*16 |  X*16 |
+    int command = packages[1] & 0xFF;
+
+    if (command != REQ_RN_COMMAND)
+        return 0;
+
+    int rn = (packages[0] >> 16) & 0xFFFF;
+    int crc = packages[0] & 0xFFff;
+    int crc_calc = crc_16_ccitt(rn, 3);
+
+    if (crc != crc_calc)
+        return 0;
+
     return 1;
-
-    // if (((*command >> 32) & 0b11111111) != REQ_RN_COMMAND)
-    // {
-    //     return 0;
-    // }
-    // else if (command_size != REQ_RN_SIZE)
-    // {
-    //     return 0;
-    // }
-    // int rr = crc_16_ccitt((*command >> 16), 3);
-    // if (rr == (*command & 0xFFFF))
-    // {
-    //     return 1;
-    // }
-    // return 0;
 }

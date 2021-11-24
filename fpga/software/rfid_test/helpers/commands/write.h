@@ -20,4 +20,6 @@ void write_init(write *write, unsigned char mem_bank, unsigned char word_ptr,
                 unsigned short data, unsigned short rn, unsigned short crc);
 void write_build(write *write);
 
+int write_validate(int packages[], int quant_packages, int command_size);
+
 #endif /* WRITE_H */

@@ -20,4 +20,6 @@ void read_init(read *read, unsigned char mem_bank, unsigned char word_ptr,
                unsigned char word_count, unsigned short rn, unsigned short crc);
 void read_build(read *read);
 
+int read_validate(int packages[], int quant_packages, int command_size);
+
 #endif /* READ_H */
