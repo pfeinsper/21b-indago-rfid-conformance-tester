@@ -15,7 +15,7 @@
 #define MASK_RST_RECEIVER (1 << 10)
 #define MASK_EN_RECEIVER (1 << 4)
 #define MASK_CLR_FIFO (1 << 2)
-#define MASK_LOOPBACK (1 << 8)
+#define MASK_LOOPBACK (0 << 8)
 #define MASK_CLR_FINISHED 1 << 1
 // #define MASK_CLR_FINISHED_0  0 << 1
 #define SENDER_HAS_GEN 0 << 5
