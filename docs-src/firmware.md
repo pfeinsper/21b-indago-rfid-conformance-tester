@@ -169,7 +169,7 @@ In contrast to the `REG_Settings`, the `REG_Status` is a read only register from
 - Bits 31 through 15 are not in use, instead being reserved for future implementations.
 - Bit 14 - `Receiver full` stores the full flag for the Receiver FIFO;
 - Bit 13 - `Receiver empty` stores the empty flag for the Recevier FIFO;
-- Bit 12 - `Receiver sclear`?
+- Bit 12 - `Receiver sclear`stores the clear flag for the Receiver FIFO;
 - Bit 10 - `Receiver clear error decoder` stores the clear error flag for the Receiver decoder;
 - Bit 9 - `Receiver error decoder` stores the error flag for the Receiver decoder;
 - Bit 3 - `Sender finished sending` stores the finished sending flag for the Sender FIFO;

@@ -174,6 +174,7 @@ int sender_get_command_ints_size(int size_of_command)
 void sender_add_mask(int n, int command_vector_masked[n],unsigned long long result_data, unsigned int result_data_size)
 void sender_has_gen(int usesPreorFrameSync)
 void sender_is_preamble()
+void sender_send_command(command *command_ptr)
 ```
 
 - `sender_check_usedw` - Access the address that indicates how many packages are in the sender FIFO
@@ -188,6 +189,7 @@ void sender_is_preamble()
 - `sender_add_mask` - Divides the command into smaller packages if needed and generates a mask based on the current package data size
 - `sender_has_gen` - Access REG_SET to define wether the generator should be activated
 - `sender_is_preamble` - If the generator is activated, defines if the generator is a preamble or a framesync
+- `sender_send_command` - Runs the all the functions related to the command, going through all the steps necessary to split in packages, add the masks, send and clear the flag registers in the end
 
 **RECEIVER functions**
 
