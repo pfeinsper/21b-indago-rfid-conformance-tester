@@ -45,6 +45,8 @@ This way, we have three possible situations given the command sizes:
 
 For example, if a command has 40 bits, we will break it into two packets. The first one uses the 26 data bits, and the mask `011010` (26) to indicate all the data bits are in use. Then, the second package would only use 14 of the 26 data bits available to reach the 40 bits the command has, and so the mask would be `001110` (14) to indicate that only 14 bits should be analyzed.
 
+To communicate between the components that the command is over, we send a `void package 0b00000000000000000000000000000000` after the last package of the command. This occurs in two times in out product: first, when sending the command to the TAG, the NIOS II sends a void package to the Sender to indicate the command is over. Second, when receiving the response from the TAG, the Recevier sends a void package to the NIOS II to indicate that the command received is over.
+
 
 ## READER
 
@@ -58,7 +60,9 @@ The second component is the IP-Rfid, developed in VHDL, and is responsible for e
 
 The last one is the Avalon Interface, is the connection between the NIOS II and the IP-Rfid, where the commands, generated in the programming language C, will be passed on to the VHDL sender, and responses will take the opposite path, going from the receiver to the processor.
 
-### [IP rfid](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/RTL/rfid.vhd)
+### IP-Rfid
+
+  [/main/fpga/RTL/rfid.vhd](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/RTL/rfid.vhd)
 
 The developed peripheral can be split into two components, visualized in the diagram below. Those are the SENDER, in red, responsible for receiving the data from the NIOS II, encoding and forwarding them to the TAG; and the RECEIVER, in blue, responsible for receiving the data from the TAG, decoding and forwarding them to the NIOS II.
 
