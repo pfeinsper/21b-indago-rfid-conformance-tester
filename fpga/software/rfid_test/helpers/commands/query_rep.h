@@ -1,20 +1,14 @@
 #ifndef QUERY_REP_H
 #define QUERY_REP_H
 
+#include "command_struct.h"
+
 #define QUERY_REP_COMMAND 0b00
 #define QUERY_REP_SIZE 4
 
-typedef struct
-{
-    unsigned char command;
-    unsigned char session;
-    unsigned int size;
-    unsigned int result_data;
-} query_rep;
-void query_rep_init(query_rep *query_rep, unsigned char session);
-void query_rep_build(query_rep *query_rep);
+void query_rep_build(command *query_rep, unsigned char session);
 
-int query_rep_parse(query_rep *query_rep, unsigned char *data);
+// int query_rep_parse(command *query_rep, unsigned char *data);
 
 int query_rep_validate(int packages[], int command_size);
 

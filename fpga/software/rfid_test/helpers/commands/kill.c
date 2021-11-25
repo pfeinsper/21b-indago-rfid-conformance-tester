@@ -1,26 +1,17 @@
 #include "kill.h"
 
-void kill_init(kill *kill, unsigned short password, unsigned char rfu,
+void kill_build(command *kill, unsigned short password, unsigned char rfu,
                unsigned short rn, unsigned short crc)
-{
-    kill->command = KILL_COMMAND;
-    kill->size = KILL_SIZE;
-
-    kill->password = password;
-    kill->rfu = rfu;
-    kill->rn = rn;
-    kill->crc = crc;
-}
-
-void kill_build(kill *kill)
 {
     kill->result_data = 0;
 
-    kill->result_data |= (kill->command << 51);
-    kill->result_data |= (kill->password << 35);
-    kill->result_data |= (kill->rfu << 32);
-    kill->result_data |= (kill->rn << 16);
-    kill->result_data |= kill->crc;
+    kill->result_data |= (KILL_COMMAND << 51);
+    kill->result_data |= (password << 35);
+    kill->result_data |= (rfu << 32);
+    kill->result_data |= (rn << 16);
+    kill->result_data |= crc;
+
+    kill->size = KILL_SIZE;
 }
 
 int kill_validate(int packages[], int command_size)

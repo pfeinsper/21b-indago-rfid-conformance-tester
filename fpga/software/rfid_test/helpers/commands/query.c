@@ -1,37 +1,26 @@
 #include "query.h"
 
-void query_init(query *query, unsigned char dr, unsigned char m,
+void query_build(command *query, unsigned char dr, unsigned char m,
                 unsigned char trext, unsigned char sel, unsigned char session,
                 unsigned char target, unsigned char q)
 {
-    query->command = QUERY_COMMAND;
-    query->size = QUERY_SIZE;
-    query->dr = dr;
-    query->m = m;
-    query->trext = trext;
-    query->sel = sel;
-    query->session = session;
-    query->target = target;
-    query->q = q;
-}
-
-void query_build(query *query)
-{
     query->result_data = 0;
 
-    query->result_data |= (query->command << 13);
-    query->result_data |= (query->dr << 12);
-    query->result_data |= (query->m << 10);
-    query->result_data |= (query->trext << 9);
-    query->result_data |= (query->sel << 7);
-    query->result_data |= (query->session << 5);
-    query->result_data |= (query->target << 4);
-    query->result_data |= query->q;
+    query->result_data |= (QUERY_COMMAND << 13);
+    query->result_data |= (dr << 12);
+    query->result_data |= (m << 10);
+    query->result_data |= (trext << 9);
+    query->result_data |= (sel << 7);
+    query->result_data |= (session << 5);
+    query->result_data |= (target << 4);
+    query->result_data |= q;
 
-    query->crc = crc5(query->result_data);
+    const int crc = crc5(query->result_data);
 
     query->result_data <<= 5;
-    query->result_data |= (query->crc);
+    query->result_data |= crc;
+
+    query->size = QUERY_SIZE;
 }
 
 int query_validate(int packages[], int command_size)

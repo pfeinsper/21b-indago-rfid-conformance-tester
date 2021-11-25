@@ -2,16 +2,11 @@
 #define RN_CRC_H
 
 #include "../crc.h"
+#include "command_struct.h"
 
 #define RN_CRC_SIZE 32
 
-typedef struct
-{
-    unsigned short result_data;
-    unsigned int size;
-} rn_crc;
-
-void rn_crc_init(rn_crc *rn_crc_ptr);
+void rn_crc_build(command *rn_crc, int rn);
 
 int rn_crc_validate(int packages[], int command_size);
 

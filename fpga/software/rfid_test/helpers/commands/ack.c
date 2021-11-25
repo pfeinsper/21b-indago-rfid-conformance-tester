@@ -1,19 +1,9 @@
 #include "ack.h"
 
-void ack_init(ack *ack, unsigned short rn)
+void ack_build(command *ack, int rn)
 {
-    ack->command = ACK_COMMAND;
+    ack->result_data = ((ACK_COMMAND & 0b11) << 16) | (rn & 0xFFFF);
     ack->size = ACK_SIZE;
-
-    ack->rn = rn;
-}
-
-void ack_build(ack *ack)
-{
-    ack->result_data = 0;
-
-    ack->result_data |= (ack->command << 16);
-    ack->result_data |= ack->rn;
 }
 
 int ack_validate(int packages[], int command_size)

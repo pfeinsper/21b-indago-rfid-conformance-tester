@@ -1,14 +1,9 @@
 #include "nak.h"
 
-void nak_init(nak *nak)
+void nak_build(command *nak)
 {
-    nak->command = NAK_COMMAND;
+    nak->result_data = NAK_COMMAND;
     nak->size = NAK_SIZE;
-}
-
-void nak_build(nak *nak)
-{
-    nak->result_data = nak->command;
 }
 
 int nak_validate(int *packages, int command_size)

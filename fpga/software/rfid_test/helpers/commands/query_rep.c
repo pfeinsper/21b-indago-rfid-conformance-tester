@@ -1,19 +1,14 @@
 #include "query_rep.h"
 
-void query_rep_init(query_rep *query_rep, unsigned char session)
-{
-    query_rep->command = QUERY_REP_COMMAND;
-    query_rep->size = QUERY_REP_SIZE;
 
-    query_rep->session = session;
-}
-
-void query_rep_build(query_rep *query_rep)
+void query_rep_build(command *query_rep, unsigned char session)
 {
     query_rep->result_data = 0;
 
-    query_rep->result_data |= (query_rep->command << 2);
-    query_rep->result_data |= query_rep->session;
+    query_rep->result_data |= (QUERY_REP_COMMAND << 2);
+    query_rep->result_data |= session;
+
+    query_rep->size = QUERY_REP_SIZE;
 }
 
 int query_rep_validate(int packages[], int command_size)
