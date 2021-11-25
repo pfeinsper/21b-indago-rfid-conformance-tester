@@ -12,6 +12,40 @@ The NIOS II function is to write the commands and tests in the register banks pr
 
 Throughout this project, the group breaks commands into packages for ease of use. Details on how this is done can be found [here](hardware.md)
 
+### File Hierarchy
+
+All necessary C and header filesare located in the project’s fpga/software/rfid_test folder. The top entity of the entire processor including all the required configuration generics is main.c and all other relevant files are inside the helpers folder.
+
+    main.c                   - NIOS II soft processor top entity
+    │
+    ├crc.c                   - Cyclic Redundance Check file
+    │
+    └/helpers                - Holds all complimentary C files
+        │
+        ├/functions             - Holds all functions that dictate how the components act
+        ││
+        │├sender.c              - Holds all functions that dictate how the Sender acts
+        │├receiver.c            - Holds all functions that dictate how the Receiver acts
+        │└rfid.c                - Holds all functions about tari, commands and packages
+        │
+        └/commands              - Holds all the EPC-GEN2 mandatory commands
+        │
+        ├ack.c                 - Mandatory command ack
+        ├kill.c                - Mandatory command kill
+        ├lock.c                - Mandatory command lock
+        ├nak.c                 - Mandatory command nak
+        ├query.c               - Mandatory command query
+        ├query_adjust.c        - Mandatory command query_adjust
+        ├query_rep.c           - Mandatory command query_rep
+        ├read.c                - Mandatory command read
+        ├req_rn.c              - Mandatory command req_rn
+        ├rn16.c                - Mandatory command rn16
+        ├rn_crc.c              - Mandatory command rn_crc
+        ├select.c              - Mandatory command select
+        ├write.c               - Mandatory command write
+
+Additional information on the EPC-GEN2 protocol and mandatory commands (as well as the other command types) can be found here [here](index.md)
+
 ### Starting Variables
 
 **Register Status**

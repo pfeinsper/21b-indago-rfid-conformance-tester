@@ -11,3 +11,19 @@
 #include "kill.h"
 #include "lock.h"
 #include "rn16.h"
+#include "rn_crc.h"
+
+// Defining commands labels
+#define ACK_LABEL 0
+#define KILL_LABEL 1
+#define LOCK_LABEL 2
+#define NAK_LABEL 3
+#define QUERY_ADJUST_LABEL 4
+#define QUERY_REP_LABEL 5
+#define QUERY_LABEL 6
+#define READ_LABEL 7
+#define REQ_RN_LABEL 8
+#define RN16_LABEL 9
+#define SELECT_LABEL 10
+#define WRITE_LABEL 11
+#define RN_CRC_LABEL 12
