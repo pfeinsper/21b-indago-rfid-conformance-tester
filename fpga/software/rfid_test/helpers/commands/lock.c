@@ -1,22 +1,21 @@
 #include "lock.h"
 
-void lock_init(lock *lock, unsigned int payload, unsigned short rn,
+void lock_build(command *lock, unsigned int payload, unsigned short rn,
                unsigned short crc)
-{
-    lock->command = LOCK_COMMAND;
-    lock->size = LOCK_SIZE;
-
-    lock->payload = payload;
-    lock->rn = rn;
-    lock->crc = crc;
-}
-
-void lock_build(lock *lock)
 {
     lock->result_data = 0;
 
-    lock->result_data |= (lock->command << 52);
-    lock->result_data |= (lock->payload << 32);
-    lock->result_data |= (lock->rn << 16);
-    lock->result_data |= lock->crc;
+    lock->result_data |= (LOCK_COMMAND << 52);
+    lock->result_data |= (payload << 32);
+    lock->result_data |= (rn << 16);
+    lock->result_data |= crc;
+
+    lock->size = LOCK_SIZE;
+
+}
+
+int lock_validate(int packages_vector[], int command_size){
+    //TODO: validate
+    
+    return 0;
 }
