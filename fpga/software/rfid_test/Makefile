@@ -157,6 +157,9 @@ C_SRCS += helpers/commands/select.c
 C_SRCS += helpers/commands/write.c
 C_SRCS += helpers/crc.c
 C_SRCS += helpers/commands/rn_crc.c
+C_SRCS += helpers/functions/receiver.c
+C_SRCS += helpers/functions/rfid.c
+C_SRCS += helpers/functions/sender.c
 CXX_SRCS :=
 ASM_SRCS :=
 
