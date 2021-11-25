@@ -25,7 +25,7 @@ int main()
     sender_has_gen(0);
     //sender_is_preamble(); // NOTE: enable this function if implementing RFID tech
 
-    printf("IP conneced ID is: %04X \n", rfid_get_ip_id());
+    printf("IP connected ID is: %04X \n", rfid_get_ip_id());
     printf("==============================\n");
     printf("==          READER          ==\n");
     printf("==============================\n");
@@ -45,7 +45,7 @@ int main()
     query_build(&query, dr, m, trext, sel, session, target, q);
     printf("sending query\n");
     sender_send_command(&query);
-    printf("query sent\n\n");
+    printf("sent query\n\n");
     
     // ---------------------------------------------------------------------------------------------
 
@@ -112,7 +112,7 @@ int main()
     ack_build(&ack, RN16);
     printf("sending ack\n");
     sender_send_command(&ack);
-    printf("ack sent\n\n");
+    printf("sent ack\n\n");
 
     // ---------------------------------------------------------------------------------------------
 
@@ -176,10 +176,10 @@ int main()
     //req_rn------------------------------------------------------
     command req_rn;
     req_rn_build(&req_rn, RN16);
-    printf("sending handle");
 
+    printf("sending handle");
     sender_send_command(&req_rn);
-    printf("handle sent\n\n");
+    printf("sent handle\n\n");
 
 
     //-------------------------------------------------------------------------------------------------------
@@ -213,7 +213,7 @@ int main()
     rn_crc_build(&req_rn_resp, handle);
     printf("sending handle\n");
     sender_send_command(&req_rn_resp);
-    printf("sent handle\n\n");
+    printf("handle was sent\n\n");
 
 
     //RECEIVER-------------------------------------------------------------------------------------------------------

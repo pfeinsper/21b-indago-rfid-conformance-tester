@@ -26,7 +26,7 @@ int main()
     //sender_is_preamble(); // NOTE: enable this function if implementing RFID tech
 
 
-    printf("IP conneced ID is: %04X , also starting handshake\n", rfid_get_ip_id());
+    printf("IP connected ID is: %04X , also starting handshake\n", rfid_get_ip_id());
     printf("==============================\n")
     printf("==          READER          ==\n")
     printf("==============================\n")

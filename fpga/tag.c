@@ -26,7 +26,7 @@ int main()
     //sender_is_preamble(); // NOTE: enable this function if implementing RFID tech
 
 
-    printf("IP conneced ID is: %04X , also starting handshake\n", rfid_get_ip_id());
+    printf("IP connected ID is: %04X , also starting handshake\n", rfid_get_ip_id());
     printf("==============================\n");
     printf("==           TAG            ==\n");
     printf("==============================\n");
@@ -43,7 +43,7 @@ int main()
         return 1;
     }
     int label = rfid_check_command(pack_query, command_size_rn);
-    // printf("label is: %d\n", label);
+
     if (label != QUERY_LABEL)
     {
         printf("QUERY_LABEL NOT FOUND\n");

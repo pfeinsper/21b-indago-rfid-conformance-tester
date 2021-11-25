@@ -38,8 +38,6 @@ int receiver_get_package(int command_vector[], int quant_packages, int *command_
         int data = package >> 6;
         data = data & mask;
 
-        printf("mask is: %d and data is: %d\n", mask_value, data);
-
         if (data != 0)
         {
             command_vector[i] = data;
