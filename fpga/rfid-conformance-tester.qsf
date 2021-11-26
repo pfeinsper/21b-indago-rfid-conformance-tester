@@ -58,8 +58,8 @@ set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 
 set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
 set_global_assignment -name NUM_PARALLEL_PROCESSORS ALL
 set_location_assignment PIN_AF14 -to fpga_clk_50
-set_location_assignment PIN_AA12 -to pin_rx
-set_location_assignment PIN_W15 -to pin_tx
+set_location_assignment PIN_AH2 -to pin_rx
+set_location_assignment PIN_AJ2 -to pin_tx
 set_global_assignment -name VHDL_FILE RTL/rfid_nios_HW.vhd
 set_global_assignment -name QIP_FILE RFID_NIOS/synthesis/RFID_NIOS.qip
 set_global_assignment -name VHDL_FILE RTL/sender_test.vhd
