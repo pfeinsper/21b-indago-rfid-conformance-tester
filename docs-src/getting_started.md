@@ -11,12 +11,13 @@ To be able to use the Conformance Tester for TAGs EPC-GEN2 UHF RFID, you'll need
     - Quartus Prime Lite Edition 18.1
     - Cyclone V device support
     - ModelSim-Intel FPGA Edition
+    - git
 
 You can find the software downloads [here](https://fpgasoftware.intel.com/18.1/?edition=lite). The user manual for the DE-10 Standard board can be found [here](https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/blob/master/Manual/DE10-Standard_User_manual.pdf).
 
 ## Cloning
 
-First, you must have <guide>git</guide> installed on your machine. After that, you need to run the following command on the directory that you want the repository to be cloned on.
+To clone the project, run the following command on your preferred terminal.
 
 <guide>git clone <https://github.com/pfeinsper/21b-indago-rfid-conformance-tester.git></guide>
 
@@ -96,9 +97,31 @@ Once the design is open, click on <guide>Generate</guide> ➡️ <guide>Generate
 
 After checking the files, go to <guide>Project Navigator</guide> on the left panel, click on the dropdown menu that says <guide>Hierarchy</guide>, then click on <guide>Files</guide>. After that, right-click on the <guide>RTL/rfid_nios_HW.vhd</guide> file, and click on the option that says <guide>Set as Top-Level Entity</guide>. Now you can click on the blue play button next to the stop button to start the compilation.
 
-After compiling, go to <guide>Tools</guide> ➡️ <guide>Programmmer</guide> to program the board.
+After compiling, go to <guide>Tools</guide> ➡️ <guide>Programmmer</guide> to program the board. Be sure that the board is plugged in before opening.
 
-Next, you wanna open up the <guide>Nios II Software Build Tools for Eclipse</guide>. You can follow the same steps in the ModelSim guide.
+![Programmer window](programmer.png)
+
+If your board is not showing up on the <guide>Hardware</guide> menu on top, click on <guide>Hardware Setup</guide>, then double click on your board in the menu. After selecting your board, close this window.
+
+![Hardware Setup](hw_setup.png)
+
+Once your board is shown in the <guide>Hardware</guide> menu, click on the <guide>Auto Detect</guide> button on the left menu, and select the corresponding device name for your board (it is engraved on the chip, shown in the image below).
+
+![Device name](device_chip.png)
+
+After selecting the corresponding device name, the program may show two chips: one named <guide>SOCVHPS</guide> and the other with your device. Double-click on the <guide>File</guide> tab next to the name of your device, and look for the <guide>rfid-conformance-tester.sof</guide> file for the compiled project, located on the <guide>21b-indago-rfid-conformance-tester/fpga/output_files</guide> folder.
+
+Once you selected the file, check the <guide>Program/Configure</guide> box next to your device as is shown in the image below, then click on <guide>Start</guide> to program the board. Once it's finished, you can close the <guide>Programmer</guide> window.
+
+![Programmer with board](select_board.png)
+
+After programming the board, get a female/female jumper, plug one end on pin 1 of the GPIO header and the other end on pin 40 of the GPIO header, as shown in the images below.
+
+![GPIO schematic](gpio.png)
+
+![Board pins](jumper_connected.png)
+
+Once the jumpers are connected, open up the <guide>Nios II Software Build Tools for Eclipse</guide>. You can follow the same steps shown in the ModelSim guide on how to do so.
 
 After both projects have been imported, right-click on <guide>rfid_test_bsp</guide> ➡️ <guide>BSP Editor</guide>.Make sure that the options are the same as the ones present in the image below (they are **not** the same settings from the ModelSim guide).
 
@@ -110,9 +133,9 @@ After checking the settings, click on the <guide>Generate</guide> button on the 
 
 If you had any errors, try cleaning both projects, generating the BSP and rebuilding the project.
 
-Once the build is complete, go to <guide>Run</guide> ➡️ <guide>Run configurations</guide>. It should open up a new window. Right click on <guide>Nios II Modelsim</guide>, and click on <guide>New</guide>. A new ModelSim run configuration has been created, and you can click on <guide>Run</guide> to simulate. The image below shows the configuration settings.
+Once the build is complete, go to <guide>Run</guide> ➡️ <guide>Run configurations</guide>. It should open up a new window. Right click on <guide>Nios II Hardware</guide>, and click on <guide>New</guide>. Once the configuration has been created, go to the <guide>Target Connection</guide> tab, and check if the settings are the same as the one shown in the image below. Once you checked the settings, you can click on <guide>Run</guide> to launch.
 
-![ModelSim Configuration](modelsim_config.png)
+![Hardware Configuration](hw_config.png)
 
 You can also watch the video below, which shows the step-by-step process.
 
