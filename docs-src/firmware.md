@@ -56,7 +56,7 @@ As seen in the table, this communication path is responsible for the IP peripher
 
 While some registers indicate a single variable, such as those that indicate Tari values, others carry multiple peripheral control variables with them, those being `REG_SETTINGS` and `REG_STATUS`.
 
-### 0 - REG_Settings (R/W)
+**0 - REG_Settings (R/W)**
 
 The Register Settings is responsible for the control of the IP core, as a Read and Write register it is capable of setting flags, making pulses in specific bits and also activating components of the IP core
 
@@ -70,20 +70,22 @@ The Register Settings is responsible for the control of the IP core, as a Read a
 |        **7**       |          **6**          |      **5**     |         **4**         |      **3**     |           **2**          |      **1**     |     **0**    |
 | Sender is preamble | Sender start controller | Sender has_gen |    Receiver enable    |        x       |     Sender clear FIFO    | Sender  enable | Sender reset |
 
-- Bits 31 through 13 are not in use, instead being reserved for future implementations.
+- Bits 31 through 13 are unused, instead being reserved for future implementations.
 - Bit 12 - `Receiver read request` stores the read request flag for the Receiver FIFO;
 - Bit 11 - `Receiver reset` stores the reset flag for the Receiver;
 - Bit 10 - `Sender clr finished send` stores the Sender clear finished send flag;
+- Bit 9 -  unused;  
 - Bit 8 - `Loopback` stores the loopback flag used in testing the READER;
 - Bit 7 - `Sender is preamble` stores the preamble flag for the Sender generator;
 - Bit 6 - `Sender start controller` stores the start controller flag for the Sender;
 - Bit 5 - `Sender has_gen` stores the generator flag for the Sender;
 - Bit 4 - `Receiver enable` stores the enable flag for the Receiver;
+- Bit 3 -  unused;  
 - Bit 2 - `Sender clear FIFO` stores the clear FIFO flag for the Sender FIFO;
 - Bit 1 - `Sender enable` stores the enable flag for the Sender;
 - Bit 0 - `Sender reset` stores the reset flag for the Sender;
 
-### 1 - REG_Tari (R/W)
+**1 - REG_Tari (R/W)**
 
 The Register Tari carries the time parameter to the IP Core, in the software it is declared as an int and can vary between 313 to 1250 values. These range is calculated by multiplying frequency of the µProcessor times the tari range. The tari range is 6.25µs to 25µs, which is also stablished in EPC-GEN2 Documentation.
 
@@ -93,7 +95,7 @@ The tari is written in the Register Tari from least significant (0) to most sign
 |:------:|:------:|:---:|:-----:|:-----:|:-----:|
 |    x   |    x   | ... |   x   |   x   |   x   |
 
-### 2 - REG_FIFO (W)
+**2 - REG_FIFO (W)**
 
 The register FIFO carries the package, from the C Software to the IP core through Avalon bus.
 

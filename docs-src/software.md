@@ -29,7 +29,7 @@ All necessary C and header filesare located in the project’s fpga/software/rfi
         │   ├receiver.c            - Holds all functions that dictate how the Receiver acts
         │   └rfid.c                - Holds all functions about tari, commands and packages
         |
-        ├config.h                - stores all the needed defines
+        ├config.h                - Stores all the needed defines
         |
         ├crc.c                   - Cyclic Redundance Check file
         │
@@ -141,10 +141,10 @@ define BASE_ID             (7)
 // package defines
 define data_mask_size      (6)
 define data_package_size   (26)
-define eop                 (0b00000000000000000000000000000000)
-define bits6               (0b111111)
-define bits26              (0b11111111111111111111111111)
-define bits32              (0b11111111111111111111111111111111)
+define eop                 (0x000000000)
+define bits6               (0x3F)
+define bits26              (0x3FFFFFF)
+define bits32              (0xFFFFFFFF)
 ```
 
 - `data_mask_size`    - defines the number of bits reserved for the mask
