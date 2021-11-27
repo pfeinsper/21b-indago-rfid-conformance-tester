@@ -19,16 +19,16 @@ All necessary VHDL hardware description files are located in the project’s fpg
     rfid.vhd                   - Conformance tester top entity
     │
     ├sender.vhd                - Sender component top entity
-    │├FIFO_fm0.vhd             - Encoder-specific FIFO
-    ││├FM0_encoder.vhd         - Encoder-FM0-specific FIFO
-    ││└fifo_32_32.vhd          - General use FIFO
-    │├sender_controller.vhd    - Controls the flow of packages to the TAG
-    │└signal_generator.vhd     - Generates preamble or frame-sync signal
+    │   ├FIFO_fm0.vhd             - Encoder-specific FIFO
+    │   │  ├FM0_encoder.vhd         - Encoder-FM0-specific FIFO
+    │   │  └fifo_32_32.vhd          - General use FIFO
+    │   ├sender_controller.vhd    - Controls the flow of packages to the TAG
+    │   └signal_generator.vhd     - Generates preamble or frame-sync signal
     │
     └receiver.vhd              - Receiver component top entity
-     ├FM0_decoder.vhd          - Decoder-FM0-specific FIFO
-     ├fifo_32_32.vhd           - General use FIFO
-     └package_constructor.vhd  - Stores bits into packages before storing in the FIFO
+        ├FM0_decoder.vhd          - Decoder-FM0-specific FIFO
+        ├fifo_32_32.vhd           - General use FIFO
+        └package_constructor.vhd  - Stores bits into packages before storing in the FIFO
 
 
 ## Packages and commands
@@ -45,7 +45,7 @@ This way, we have three possible situations given the command sizes:
 
 For example, if a command has 40 bits, we will break it into two packets. The first one uses the 26 data bits, and the mask `011010` (26) to indicate all the data bits are in use. Then, the second package would only use 14 of the 26 data bits available to reach the 40 bits the command has, and so the mask would be `001110` (14) to indicate that only 14 bits should be analyzed.
 
-To communicate between the components that the command is over, we send a `void package 0b00000000000000000000000000000000` after the last package of the command. This occurs in two times in out product: first, when sending the command to the TAG, the NIOS II sends a void package to the Sender to indicate the command is over. Second, when receiving the response from the TAG, the Recevier sends a void package to the NIOS II to indicate that the command received is over.
+To communicate between the components that the command is over, we send a `void package 0x000000` after the last package of the command. This occurs in two times in out product: first, when sending the command to the TAG, the NIOS II sends a void package to the Sender to indicate the command is over. Second, when receiving the response from the TAG, the Recevier sends a void package to the NIOS II to indicate that the command received is over.
 
 
 ## READER
@@ -171,7 +171,7 @@ This component is responsible for assembling the decoded bits into packages and 
 - `Send Package` sends the current package to the FIFO, an intermediary step before going to the NIOS II processor;
 - `Check EOP` checks if the EOP flag is high, and changes state based on the current packet. If it is empty, goes to the `Send void` state, if not goes to the `Send Package`;
 - `Clear` clears the current package before starting a new one;
-- `Send Void` send to the FIFO an empty package - `0b00000000000000000000000000000000`
+- `Send Void` send to the FIFO an empty package - `0x000000`
 
 ![](/hardware/Package_constructor.png)
 
