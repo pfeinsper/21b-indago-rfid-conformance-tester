@@ -20,32 +20,35 @@ All necessary C and header filesare located in the project’s fpga/software/rfi
 
     main.c                   - NIOS II soft processor top entity
     │
-    ├crc.c                   - Cyclic Redundance Check file
     │
     └/helpers                - Holds all complimentary C files
         │
         ├/functions             - Holds all functions that dictate how the components act
-        ││
-        │├sender.c              - Holds all functions that dictate how the Sender acts
-        │├receiver.c            - Holds all functions that dictate how the Receiver acts
-        │└rfid.c                - Holds all functions about tari, commands and packages
+        │   │
+        │   ├sender.c              - Holds all functions that dictate how the Sender acts
+        │   ├receiver.c            - Holds all functions that dictate how the Receiver acts
+        │   └rfid.c                - Holds all functions about tari, commands and packages
+        |
+        ├config.h                - stores all the needed defines
+        |
+        ├crc.c                   - Cyclic Redundance Check file
         │
         └/commands              - Holds all the EPC-GEN2 mandatory commands
-        │
-        ├ack.c                 - Mandatory command ack
-        ├kill.c                - Mandatory command kill
-        ├lock.c                - Mandatory command lock
-        ├nak.c                 - Mandatory command nak
-        ├query.c               - Mandatory command query
-        ├query_adjust.c        - Mandatory command query_adjust
-        ├query_rep.c           - Mandatory command query_rep
-        ├read.c                - Mandatory command read
-        ├req_rn.c              - Mandatory command req_rn
-        ├rn16.c                - Mandatory command rn16
-        ├rn_crc.c              - Mandatory command rn_crc
-        ├select.c              - Mandatory command select
-        ├write.c               - Mandatory command write
-
+            │
+            ├ack.c                 - Mandatory command ack
+            ├kill.c                - Mandatory command kill
+            ├lock.c                - Mandatory command lock
+            ├nak.c                 - Mandatory command nak
+            ├query.c               - Mandatory command query
+            ├query_adjust.c        - Mandatory command query_adjust
+            ├query_rep.c           - Mandatory command query_rep
+            ├read.c                - Mandatory command read
+            ├req_rn.c              - Mandatory command req_rn
+            ├rn16.c                - Mandatory command rn16
+            ├rn_crc.c              - Mandatory command rn_crc
+            ├select.c              - Mandatory command select
+            ├write.c               - Mandatory command write
+            
 Additional information on the EPC-GEN2 protocol and mandatory commands (as well as the other command types) can be found here [here](index.md)
 
 ### Starting Variables
