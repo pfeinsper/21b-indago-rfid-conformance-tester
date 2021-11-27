@@ -67,7 +67,7 @@ markdown_extensions:
 
 plugins:
     - search
-    - doxygen:
-        packages:
-          - doxygen:
-              url : .
+    # - doxygen:
+    #     packages:
+    #       - doxygen:
+    #           url : .
