@@ -38,7 +38,7 @@ Indago Devices Inc. is a startup that has its headquarters in the city of Birmin
 
 ## Project Overview
 
-The main objective of this project is to develop and assemble a conformance tester for RFID TAGs where a microcontroller will be implemented and an IP-Rfid for communication with the DUT (device under testing). This device then shall be able to run a series of tests as a READER interacting with a TAG through the EPC-GEN2 protocol, analyzing if the TAG works as intended and complies with the requirements of the protocol.
+The main objective of this project is to develop and assemble a conformance tester for RFID TAGs where a microcontroller will be implemented and an IP core for communication with the DUT (device under testing). This device then shall be able to run a series of tests as a READER interacting with a TAG through the EPC-GEN2 protocol, analyzing if the TAG works as intended and complies with the requirements of the protocol.
 
 The tests will be implemented using C, allowing for a large number of tests to be made that target different aspects of the TAG's process, independently evaluating most of them. Also, it will be possible to customize the tests or develop new ones should the user need to do so.
 
