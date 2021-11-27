@@ -28,6 +28,7 @@ jobs:
       - run: |
           pip install -r requirements.txt
           pip install mkdocs-minify-plugin>=0.2
+          pip install git+https://github.com/pieterdavid/mkdocs-doxygen-plugin.git
           
       # Set configuration for repository and deploy documentation
       - env:
