@@ -10,7 +10,7 @@ void rfid_set_loopback(void);
 
 void rfid_set_tari(int);
 
-void rfid_set_tari_bounderies(int, int, int, int, int, int, int, int);
+void rfid_set_tari_boundaries(int, int, int, int, int, int, int, int);
 
 int rfid_create_mask_from_value(int);
 

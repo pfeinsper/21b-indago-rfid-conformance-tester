@@ -21,7 +21,7 @@ int main()
     sender_enable();
 
     receiver_enable();
-    rfid_set_tari_bounderies(tari_100 * 1.01, tari_100 * 0.99, tari_100 * 1.616, tari_100 * 1.584, pw, delimiter, RTcal, TRcal);
+    rfid_set_tari_boundaries(tari_100 * 1.01, tari_100 * 0.99, tari_100 * 1.616, tari_100 * 1.584, pw, delimiter, RTcal, TRcal);
     sender_has_gen(0);
     //sender_is_preamble(); // NOTE: enable this function if implementing RFID tech
 
