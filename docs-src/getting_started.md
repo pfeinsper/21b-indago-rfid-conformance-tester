@@ -107,9 +107,8 @@ If your board is not showing up on the <guide>Hardware</guide> menu on top, clic
 
 Once your board is shown in the <guide>Hardware</guide> menu, click on the <guide>Auto Detect</guide> button on the left menu, and select the corresponding device name for your board (it is engraved on the chip, shown in the image below).
 
-<!-- https://br.mouser.com/images/marketingid/2012/img/135185855.png?v=050521.0810 -->
-
 ![Device name](./getting_started/device_chip.png){ style="width: 60%; display: block; margin: auto" }
+*Image obtained at: <https://br.mouser.com/images/marketingid/2012/img/135185855.png?v=050521.0810>*
 
 After selecting the corresponding device name, the program may show two chips: one named <guide>SOCVHPS</guide> and the other with your device. Double-click on the <guide>File</guide> tab next to the name of your device, and look for the <guide>rfid-conformance-tester.sof</guide> file for the compiled project, located on the <guide>21b-indago-rfid-conformance-tester/fpga/output_files</guide> folder.
 
@@ -120,8 +119,7 @@ Once you selected the file, check the <guide>Program/Configure</guide> box next 
 After programming the board, get a female/female jumper, plug one end on pin 6 of the GPIO header and the other end on pin 7 of the GPIO header, as shown in the images below.
 
 ![GPIO schematic](./getting_started/gpio.png){ style="height: 40%; display: block; margin: auto" }
-
-<!-- <http://modernhackers.com/wp-content/uploads/2019/12/SDRAM-Board-GPIO-Direction-DE10-Standard-DE1-SoC-ArrowSoCKit.png/> -->
+*Image obtained at: <http://modernhackers.com/wp-content/uploads/2019/12/SDRAM-Board-GPIO-Direction-DE10-Standard-DE1-SoC-ArrowSoCKit.png>*
 
 Once the jumpers are connected, open up the <guide>Nios II Software Build Tools for Eclipse</guide>. You can follow the same steps shown in the ModelSim guide on how to do so.
 
@@ -143,13 +141,13 @@ You can also watch the video below, which shows the step-by-step process.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/2RS8Qlrdf1I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-### Hardware guide - part 2
+### Hardware guide (handshake)
 
 You can also run a handshake version of the project using two DE-10 Standard boards. To do so, follow the same steps shown on the hardware guide until you reach the <guide>rfid_test</guide> project build. Before building the project, you need to find the <guide>tag.c</guide> and  <guide>reader.c</guide> files, located in the <guide>fpga</guide> folder.
 
 Choose one board to act as the tag, and one board to act as the reader; after that, replace the code present in the <guide>hello_world.c</guide> with the corresponding code (one board will have the <guide>tag.c</guide> code and the other will have the <guide>reader.c</guide> code).
 
-After overwriting the code, build the project on each Nios environment. Once the projects are built, make sure that the boards are plugged as shown in the image below.
+After overwriting the code, build the project on each Nios environment. Once the projects are built, use female/female jumpers to connect the board pins as shown in the image below.
 
 ![GPIO schematic](./getting_started/gpio_x2.png)
 

@@ -11,7 +11,8 @@
     - rafaels6@al.insper.edu.br
     - rafael.corsi@insper.edu.br
 - **Year:** 2021
-- **Repository:** https://github.com/pfeinsper/21b-indago-rfid-conformance-tester
+- **Repository URL:** <https://github.com/pfeinsper/21b-indago-rfid-conformance-tester>
+
 ## About
 
 This project aims to develop an equipment capable of performing a series of tests on RFID TAGs, based on the communication protocol "EPC-GEN2 UHF RFID" [^1]. The project simplifies the development of new TAGs that conform to the defined protocol, being able to assert whether the tag satisfies the requirements of said protocol, and also whether the TAG itself is working as intended.
@@ -60,22 +61,22 @@ Optional commands may or may not be supported by TAGs or READERs. If any impleme
 Proprietary commands may be enabled in conformance with the protocol but are not specified in it. All proprietary commands shall be capable of being permanently disabled. Proprietary commands are intended for manufacturing purposes and shall not be used in field-deployed RFID systems.
 Custom commands may be enabled in conformance with the protocol but are not specified in it. A READER shall issue a custom command only after singulating a TAG and reading (or having prior knowledge of) the TAG manufacturer’s identification in the TAG’s TID memory. A READER shall use a custom command only in accordance with the specifications of the TAG manufacturer identified in the TID. A custom command shall not solely duplicate the functionality of any mandatory or optional command defined in the protocol by a different method.
 
-**Mandatory Commands**
+#### Mandatory Commands
 
--	`Select` selects the population of TAGs that will be communicated with. The set can be defined by intersection, union or negation of TAGs;
--	`Query / Query Adjust / Query Rep` starts a communication round between the TAGs and READER, deciding which TAG will participate in the round and sending the Q value for such. `Query Adjust` can adjust que Q value for the TAG. `Query Rep` decreases the value of Q stored within the TAG’s memory by 1;  
--	`ACK / NAK` is sent to the TAG with the same value sent by the TAG when returning to the `Query` command. It signifies the READER recognized the TAG’s response. `NAK` changes the state of the TAGs involved in the round to `arbitrate`, in which they remain as stand-by;
--	`Req_RN` requests a new random number (RN16), sending the previous one as authentication;
--	`Read / Write` requests the reading of information within a specified address in the TAG’s memory bank. `Write` sends information to be written in that address instead;
--	`Kill / Lock` sets the tag as unusable. It is a way to end the communication so that the TAG no longer responds. `Lock` can lock or unlock portions of the TAG’s memory bank for `Write` access.
+- <guide>Select</guide>  selects the population of TAGs that will be communicated with. The set can be defined by intersection, union or negation of TAGs;
+- <guide>Query / Query Adjust / Query Rep</guide>  starts a communication round between the TAGs and READER, deciding which TAG will participate in the round and sending the Q value for such. <guide>Query Adjust</guide>  can adjust que Q value for the TAG. <guide>Query Rep</guide>  decreases the value of Q stored within the TAG’s memory by 1;  
+- <guide>ACK / NAK</guide>  is sent to the TAG with the same value sent by the TAG when returning to the <guide>Query</guide>  command. It signifies the READER recognized the TAG’s response. <guide>NAK</guide>  changes the state of the TAGs involved in the round to <guide>arbitrate</guide>  , in which they remain as stand-by;
+- <guide>Req_RN</guide>  requests a new random number (RN16), sending the previous one as authentication;
+- <guide>Read / Write</guide>  requests the reading of information within a specified address in the TAG’s memory bank. <guide>Write</guide>  sends information to be written in that address instead;
+- <guide>Kill / Lock</guide>  sets the tag as unusable. It is a way to end the communication so that the TAG no longer responds. <guide>Lock</guide>  can lock or unlock portions of the TAG’s memory bank for <guide>Write</guide>  access.
 
-**Handshake**
+#### Handshake
 
 The diagram below can be found in annex E of the EPC-GEN2 documentation and represents the Hand-shake between READER and TAG.
 
-![](/index/handshake.png)
+![Handshake diagram](./index/handshake.png)
 
-The READER sends a `Query` (1), to start an inventory round with the TAG. Upon recognizing the inventory round, the TAG checks whether to respond, and responds with a 16-bit random number `RN16` (2). To establish the communication as successful, the reader sends the `ACK` (3) containing the same RN16. Having received and validated the confirmation, the TAG responds with `PC/XPC, EPC` (4). The reader then send a `Req_RN` (5), again with the old RN16, requesting a new RN16 to continue the communication. If the TAG again validates the RN16, it responds with the `handle` (6), a new RN16. Once the READER receives the `handle`, the handshake is effectively over and the `handle` will be used as authentication for all communication from that point forwards. Every `command` (7) will be sent together with the `handle` and TAG will always verify the `handle` before responding (8). 
+The READER sends a <guide>Query</guide>  (1), to start an inventory round with the TAG. Upon recognizing the inventory round, the TAG checks whether to respond, and responds with a 16-bit random number <guide>RN16</guide>  (2). To establish the communication as successful, the reader sends the <guide>ACK</guide>  (3) containing the same RN16. Having received and validated the confirmation, the TAG responds with <guide>PC/XPC, EPC</guide>  (4). The reader then send a <guide>Req_RN</guide>  (5), again with the old RN16, requesting a new RN16 to continue the communication. If the TAG again validates the RN16, it responds with the <guide>handle</guide>  (6), a new RN16. Once the READER receives the <guide>handle<guide>, the handshake is effectively over and the <guide>handle</guide>  will be used as authentication for all communication from that point forwards. Every <guide>command</guide>  (7) will be sent together with the <guide>handle</guide>  and TAG will always verify the <guide>handle</guide>  before responding (8).
 
 ### State-of-the-Art Review
 
@@ -108,7 +109,7 @@ Accessed on: 20/09/2021.
 Accessed on: 20/09/2021.
 
 [^7]: University of Washington.
-https://www.washington.edu/
+<https://www.washington.edu/>
 Accessed on: 20/09/2021.
 
 [^8]: S.U.R.F.E.R. reader.
@@ -116,7 +117,7 @@ Accessed on: 20/09/2021.
 Accessed on: 20/09/2021.
 
 [^9]: University of North Carolina.
-https://www.uncg.edu/
+<https://www.uncg.edu/>
 Accessed on: 20/09/2021.
 
 ### Methodology
@@ -135,17 +136,17 @@ As the project consists of the creation of a conformance tester for the EPC-GEN2
 
 Since the project was open-source and available on GitHub, it was decided that the group would also provide a documentation to the whole project, which was later decided would be available through GitHub Pages. Inside, the group would give an in-depth description of all components, and also a tutorial on how to clone, run, utilize and modify this project.
 
-### Tools
+### Environment Tools
 
 #### Development Tools
 
 - Intel® Quartus® Prime FPGA Design Software
-- Eclipse IDE 2021‑09
+- Nios® II Software Build Tools for Eclipse
 - Intel® FPGA Simulation - ModelSim
-- Github.com
+- [GitHub](https://github.com)
 
 #### Design Tools
 
 - Google Drive
-- Excalidraw.com
+- [Excalidraw](https://excalidraw.com)
 - Discord
