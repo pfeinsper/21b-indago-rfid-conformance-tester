@@ -135,3 +135,17 @@ As the project consists of the creation of a conformance tester for the EPC-GEN2
 
 Since the project was open-source and available on GitHub, it was decided that the group would also provide a documentation to the whole project, which was later decided would be available through GitHub Pages. Inside, the group would give an in-depth description of all components, and also a tutorial on how to clone, run, utilize and modify this project.
 
+### Tools
+
+#### Development Tools
+
+- Intel® Quartus® Prime FPGA Design Software
+- Eclipse IDE 2021‑09
+- Intel® FPGA Simulation - ModelSim
+- Github.com
+
+#### Design Tools
+
+- Google Drive
+- Excalidraw.com
+- Discord
