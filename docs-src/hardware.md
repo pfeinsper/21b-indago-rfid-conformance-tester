@@ -1,6 +1,6 @@
 # Hardware
 
-For this project, the chosen solution for implementing the conformance tester was to develop a dedicated hardware in FPGA [^10]. The chosen product was the DE10-Standard produced by Terasic as well as a FPGA Cyclone V from Intel. Our teacher had ample experience working with this specific model, and it also perfectly fits the requirements need to implement the chosen solution. This is because, through a tool called "platform designer", it can edit its configuration on demand, allowing great flexibility when needed.
+For this project, the chosen solution for implementing the conformance tester was to develop a dedicated hardware in FPGA [^10]. The chosen product was the DE10-Standard produced by Terasic as well as a FPGA Cyclone V from Intel. The teacher had ample experience working with this specific model, and it also perfectly fits the requirements need to implement the chosen solution. This is because, through a tool called "platform designer", it can edit its configuration on demand, allowing great flexibility when needed.
 
 The proposed solution makes use of Intel's solution development ecosystem, providing flexibility in the use of a soft processor, enabling the integration of peripherals called IP cores to its architecture, as well as allowing the creation of new instructions implemented in the hardware. For more information on these modifications, see the document "NIOS II Custom Instruction User Guide" [^11].
 
@@ -32,29 +32,29 @@ All necessary VHDL hardware description files are located in the project’s <gu
 
 ## Packages and commands
 
-Our project uses the mandatory commands specified in the EPC-GEN2 documentation. However, those commands have varying sizes and even the same command could vary its size based on the data it sends. To work with this fluctuating command bit size, the group decided to separate the commands into 32-bit packages, where the 26 more significant bits are the actual data of the packet, and the 6 less significant are the mask, indicating how many of the 26 are in use.
+This project uses the mandatory commands specified in the EPC-GEN2 documentation. However, those commands have varying sizes and even the same command could vary its size based on the data it sends. To work with this fluctuating command bit size, the group decided to separate the commands into 32-bit packages, where the 26 more significant bits are the actual data of the packet, and the 6 less significant are the mask, indicating how many of the 26 are in use.
 
 ![Package structure](./hardware/package.png)
 *Package visual example*
 
-This way, we have three possible situations given the command sizes:
+This way, there are three possible situations given the command sizes:
 
-- The command is larger than one package: if the command has more than 26 bits, we are able to break it into multiple packages, communicated in order through our components (more significant -> less significant);
-- The command is the same size as the package: the easiest case, where we just treat the package as the full command;
-- The command is shorter than one package: in this case we just fill the package up to the number of bits the command has, and then use the mask to communicate how many of the data bits in the package are useful, ignoring the ones not needed to the command;
+- The command is larger than one package: if the command has more than 26 bits, it is split into multiple packages, communicated in order through the components (more significant -> less significant);
+- The command is the same size as the package: the easiest case, where the package is treated as the full command;
+- The command is shorter than one package: in this case  the package will be filled up to the number of bits the command has, and then use the mask to communicate how many of the data bits in the package are useful, ignoring the ones not needed to the command;
 
-For example, if a command has 40 bits, we will break it into two packets. The first one uses the 26 data bits, and the mask <guide>011010</guide> (26) to indicate all the data bits are in use. Then, the second package would only use 14 of the 26 data bits available to reach the 40 bits the command has, and so the mask would be <guide>001110</guide> (14) to indicate that only 14 bits should be analyzed.
+For example, if a command has 40 bits, it will be separated into two packets. The first one uses the 26 data bits, and the mask <guide>011010</guide> (26) to indicate all the data bits are in use. Then, the second package would only use 14 of the 26 data bits available to reach the 40 bits the command has, and so the mask would be <guide>001110</guide> (14) to indicate that only 14 bits should be analyzed.
 
-To communicate between the components that the command is over, we send a <guide>void package 0x000000</guide> after the last package of the command. This occurs in two times in our product: first, when sending the command to the TAG, the NIOS II sends a void package to the Sender to indicate the command is over. Second, when receiving the response from the TAG, the Recevier sends a void package to the NIOS II to indicate that the command received is over.
+To communicate between the components that the command is over, a <guide>void package 0x000000</guide> is sent after the last package of the command. This occurs in two times in the product: first, when sending the command to the TAG, the NIOS II sends a void package to the Sender to indicate the command is over. Second, when receiving the response from the TAG, the Recevier sends a void package to the NIOS II to indicate that the command received is over.
 
 ## READER
 
-The READER, as shown in the diagram below, is the toplevel of our project, which contains the three main components. Here we will give an overview of each component, and a in depth analysis is present in the sections below.
+The READER, as shown in the diagram below, is the toplevel of the vhdl components, which contains the three main components. An in depth analysis is present in the sections below.
 
 ![Reader diagram](./hardware/reader.png)
 *Reader component visual diagram*
 
-The first one is the NIOS II soft processor, where we programmed the tests that will be run on the TAG. Therefore, its responsible for generating the commands for communicating with the TAG, as well as interpreting the responses it receives, to assert whether the TAG passes or fails each test.
+The first one is the NIOS II soft processor, where the group programmed the tests that will be run on the TAG. Therefore, its responsible for generating the commands for communicating with the TAG, as well as interpreting the responses it receives, to assert whether the TAG passes or fails each test.
 
 The second component is the IP core, developed in VHDL, and is responsible for encoding and sending messages to the TAG, as well as decoding any responses and passing the through to the processor. Those two tasks have been separated into the sender and the receiver respectively.
 
@@ -81,7 +81,7 @@ This component is responsible for encoding the commands generated by the process
 
 The first component of the SENDER is the FIFO, a storage system that receives the assembled commands from the NIOS II and waits for the encoder to send the <guide>read request</guide> flag, signaling for the FIFO to send the oldest package. It is possible that the command to be sent to the TAG is composed of more than one package, so the FIFO serves as a storage system for packages already received from the processor until it signals that the entire command is ready for encoding.
 
-For this project, we opted to use the FIFO produced by Intel, which was obtained through the Quartus automatic generator, the main software used by the group for programming in VHDL language. It is possible to include several customizations before generating the code, and thus, the group defined that the FIFO would have the settings below: 
+For this project, the group opted to use the FIFO produced by Intel, which was obtained through the Quartus automatic generator, the main software used by the group for programming in VHDL language. It is possible to include several customizations before generating the code, and thus, the group defined that the FIFO would have the settings below: 
 
 **FIFO charactersitics**
 
@@ -112,7 +112,7 @@ This component has two state machines that work simultaneously, one responsible 
 - <guide>Start Send</guide> is the most complex state, where another state machine is present inside it, which is responsible for encoding the packages. Furthermore, it also expects to receive the correct tari to send data to the TAG;
 - <guide>Wait Send</guide> is a temporary state for when the data has not been fully encoded, and therefore needs to wait until the other state machine finishes the encoding.;
 - <guide>Request Data</guide> happens after the data has been sent, and signals the FIFO to send more data. This state is very short, as its only duty is to send a flag to the FIFO, and immediately change to the <guide>Wait Request</guide> state;
-- <guide>Wait Request</guide> can happen in two situations. First, if the Encoder is waiting for the next package from the FIFO, going back to the <guide>Start Send</guide> state once it is received. Second, it can happen once the FIFO sends the <guide>FIFO_empty</guide> signal to the Encoder, in which we need to remove the void package and get to the next valid data.
+- <guide>Wait Request</guide> can happen in two situations. First, if the Encoder is waiting for the next package from the FIFO, going back to the <guide>Start Send</guide> state once it is received. Second, it can happen once the FIFO sends the <guide>FIFO_empty</guide> signal to the Encoder, in which case the void package is removed, waiting for the next command;
 - <guide>Wait 1.6 tari</guide> is the formal completion of the command sent to the TAG, where a <guide>dummy 1</guide> bit is sent, which will remain active for 1.6 tari and then stop the communication;
 
 ![Encoder diagram](./hardware/encoder.png)

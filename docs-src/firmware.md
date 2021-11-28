@@ -1,9 +1,7 @@
 # Firmware
-This section contains an explanation of the software/code of our project, which is centered around the NIOS II soft processor.
+This section contains an explanation of the firmware/code of this project, which is centered around the NIOS II soft processor.
 
 ## NIOS II
-
-[/main/fpga/software/rfid_test/hello_world.c](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/software/rfid_test/hello_world.c)
 
 The NIOS II is a soft processor, which means that, unlike discrete processors, such as those in conventional computers, its peripherals and addressing can be reconfigured on demand. This enables the development of a specialized and efficient processor, reducing the costs and time of producing a prototype since i!t is dynamically generated inside the FPGA without the need to produce a new processor.
 
@@ -49,6 +47,10 @@ All necessary C and header filesare located in the project’s fpga/software/rfi
             ├write.c               - Mandatory command write
             
 Additional information on the EPC-GEN2 protocol and mandatory commands (as well as the other command types) can be found here [here](index.md)
+
+### Main code
+
+[/main/fpga/software/rfid_test/main.c](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/software/rfid_test/main.c)
 
 ### Starting Variables
 

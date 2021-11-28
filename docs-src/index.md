@@ -51,7 +51,7 @@ Documentation avaliable on: <https://www.gs1.org/sites/default/files/docs/epc/Ge
 
 The main purpose of the protocol is to allow two pieces of hardware, obtained independently, but conforming to the protocol, to communicate flawlessly. To achieve this, it specifies how physical and logical interactions should take place, as well as the possible commands between READER and TAG.
 
-To claim compliance with the protocol, a READER must meet all required specifications, having implemented all mandatory commands, be able to encode, send, receive, and decode data so that it can communicate with a TAG, as well as comply with all local government radio regulations. Optionally, it is allowed to implement any number of optional commands defined in the protocol and any other private commands that do not conflict with any of the mandatory ones. Finally, a READER must not require a TAG to be able to process any command that is not specified as mandatory in the protocol.
+To claim compliance with the protocol, a READER (also called interrogator) must meet all required specifications, having implemented all mandatory commands, be able to encode, send, receive, and decode data so that it can communicate with a TAG, as well as comply with all local government radio regulations. Optionally, it is allowed to implement any number of optional commands defined in the protocol and any other private commands that do not conflict with any of the mandatory ones. Finally, a READER must not require a TAG to be able to process any command that is not specified as mandatory in the protocol.
 
 To claim compliance with the protocol, a TAG must meet all required specifications, having implemented all mandatory commands, be able to modulate a response signal after receiving a command from a READER, and comply with all local government radio regulations. Optionally, it is allowed to implement any number of optional commands defined in the protocol and any other private commands that do not conflict with any of the mandatory ones. Finally, the TAG must not require a READER to be able to process any optional command from the protocol and is not allowed to modulate a response signal unless it has been commanded to do so by a READER using the commands present in the protocol.
 
@@ -79,6 +79,12 @@ The diagram below can be found in annex E of the EPC-GEN2 documentation and repr
 
 The READER sends a <guide>Query</guide>  (1), to start an inventory round with the TAG. Upon recognizing the inventory round, the TAG checks whether to respond, and responds with a 16-bit random number <guide>RN16</guide>  (2). To establish the communication as successful, the reader sends the <guide>ACK</guide>  (3) containing the same RN16. Having received and validated the confirmation, the TAG responds with <guide>PC/XPC, EPC</guide>  (4). The reader then send a <guide>Req_RN</guide>  (5), again with the old RN16, requesting a new RN16 to continue the communication. If the TAG again validates the RN16, it responds with the <guide>handle</guide>  (6), a new RN16. Once the READER receives the <guide>handle</guide>, the handshake is effectively over and the <guide>handle</guide>  will be used as authentication for all communication from that point forwards. Every <guide>command</guide>  (7) will be sent together with the <guide>handle</guide>  and TAG will always verify the <guide>handle</guide>  before responding (8).
 
+#### Tari
+
+The reference time interval for a data-0 in READER to TAG signaling. Derives from <u>T</u>ype <u>A</u> <u>R</u>eference <u>I</u>nterval.
+
+According to the EPC-GEN2 protocol, section 6.3.1.2.4, p 27: "Interrogators  shall  communicate  using  Tari  values  in  the  range  of  6.25μs  to  25μs.  Interrogator  compliance  shall be evaluated using at least one Tari value between 6.25μs and 25μs with at least one value of the parameter x. The tolerance on all parameters specified in units of Tari shall be +/–1%. The choice of Tari value and x shall be in accordance with local radio regulations. ".
+
 ### State-of-the-Art Review
 
 The market currently has very diversified solutions in relation to RFID technology. Among the options currently available, proprietary equipment and products are the main competitors, as they are developed by well-established companies. For example, CISC semiconductor [^4], specializing in RFID and NFC services, and working both in the production of laboratory equipment and product testers for the market. Another company that is worth mentioning is HID global [^5], which has several solutions for RFID tags end operates worldwide under sales and distribution of these products.
@@ -93,7 +99,7 @@ Open-source products bring a series of benefits to the users, such as lesser har
 
 Given these advantages, Indago Devices opted for a completely open-source product as well. In a meeting with our mentor Wallace Shepherd Pitts, he mentioned he had previously researched and studied some of the options currently available, but nothing had fit with what he had in mind, because the products offered little room for customization regarding the tests made to the tag.
 
-The direct competitors of our project would be the previously mentioned products, which dominate the current market. However, as we are aiming for the open-source architecture, it may attract users interested in a more accessible or customizable product.
+The direct competitors of our project would be the previously mentioned products, which dominate the current market. However, as the team was aiming for the open-source architecture, it may attract users interested in a more accessible or customizable product.
 
 Another point mentioned by our mentor is that he also intends to use the project as study material for students at the University of North Carolina [^9], which consequently opens up possibilities for further expansion of the product.
 

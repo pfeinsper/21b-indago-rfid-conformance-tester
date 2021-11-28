@@ -55,7 +55,7 @@ Next, you wanna open up the <guide>Nios II Software Build Tools for Eclipse</gui
 
 ![Eclipse workspace](./getting_started/eclipse_blank.png)
 
-Now we need to import our projects into Eclipse. Go to <guide>File</guide> ➡️ <guide>Import</guide>, and it should show a window like the one below. Click on <guide>Nios II Software Build Tools Project</guide> ➡️ <guide>Import Nios II Software Build Tools Project</guide>, then click <guide>Next</guide>.
+The next step is to import our projects into Eclipse. Go to <guide>File</guide> ➡️ <guide>Import</guide>, and it should show a window like the one below. Click on <guide>Nios II Software Build Tools Project</guide> ➡️ <guide>Import Nios II Software Build Tools Project</guide>, then click <guide>Next</guide>.
 
 ![Importing project](./getting_started/import_project.png){ style="width: 80%; display: block; margin: auto" }
 
