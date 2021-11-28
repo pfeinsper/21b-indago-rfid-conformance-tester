@@ -29,8 +29,8 @@ nav:
   - Home: index.md
   - getting_started.md
   - hardware.md
+  - IP_core_interface.md
   - firmware.md
-  - software.md
 
 # Extensions
 markdown_extensions:
