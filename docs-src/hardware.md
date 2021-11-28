@@ -110,13 +110,13 @@ The next image demonstrates the other state machine present in the component, re
 - <guide>S3</guide> encodes <guide>0</guide> into <guide>0 1</guide>;
 - <guide>S4</guide> encodes <guide>1</guide> into <guide>0 0</guide>;
 
-![FM0 State diagram](/hardware/FM0_1.png){style= "width: 50%;"}
+![FM0 State diagram](./hardware/FM0_1.png){style= "width: 50%;"}
 
-![data-0 and data-1](/hardware/FM0_2.png){style= "width: 60%;"}
+![data-0 and data-1](./hardware/FM0_2.png){style= "width: 60%;"}
 
 The previously defined <guide>dummy 1</guide> acts as the <guide>EOP</guide> of a command passed to the TAG, however it also needs to be encoded, and is always followed by a <guide>0</guide> bit. This is shown in the image below.
 
-![FM0 End-of-Signaling](/hardware/FM0_3.png){style= "width: 60%"}
+![FM0 End-of-Signaling](./hardware/FM0_3.png){style= "width: 60%"}
 
 #### Signal Generator
 
@@ -126,11 +126,11 @@ This component encompasses both the Preamble and Frame-sync functions, and recei
 
 The Frame-sync is responsible for defining and regulating the interval at which information is sent to the TAG, and sharing this interval to all other SENDER components, so that they can communicate within the correct time intervals. This period, named TARI, must be within the range defined in the protocol, and have a variation of less than 1% between each pulse.
 
-![Frame-sync](/hardware/Framesync.png){style= "width: 70%"}
+![Frame-sync](./hardware/Framesync.png){style= "width: 70%"}
 
 The Preamble is responsible for the first wave of information sent to the TAG for each new command, and it defines which TARI will be used throughout the next command. This component needs to be activated for every command that is sent to the TAG, except when more than one command is sent in sequence, without a response in between. In this case, the preamble informed will be valid for all subsequent commands, until a response is requested.
 
-![Preamble](/hardware/Preamble.png)
+![Preamble](./hardware/Preamble.png)
 
 ### RECEIVER
 
@@ -138,7 +138,7 @@ The Preamble is responsible for the first wave of information sent to the TAG fo
 
 The RECEIVER is responsible for receiving the responses from the TAG, decode them, and notify the NIOS II processor that there was a response, as well as store each package of the response until the processor sends the <guide>read request</guide> flags to analyze them. In order for the received data to be interpreted, it is necessary that the information is decoded and grouped into packages, because it is possible the response is too large for the processor to receive all at once. The group decided to split the RECEIVER into three smaller components, shown and described below:
 
-![Receiver diagram](/hardware/receiver.png)
+![Receiver diagram](./hardware/receiver.png)
 
 #### Decoder
 
@@ -154,7 +154,7 @@ Since the TAG also communicates back to the READER using FM0 encoding, a decoder
 - <guide>Counter CS</guide> stops the counter and resets the decoder to its default state;
 - <guide>ERROR</guide> is a state that can be activated by almost any other state, as they all check certain characteristics of that TAG that must comply with the protocol. If something is irregular, this status will be activated and will send an error message explaining what caused this to happen;
 
-![Decode diagram](/hardware/decoder.png)
+![Decode diagram](./hardware/decoder.png)
 
 #### Package Constructor
 
@@ -171,7 +171,7 @@ This component is responsible for assembling the decoded bits into packages and 
 - <guide>Clear</guide> clears the current package before starting a new one;
 - <guide>Send Void</guide> send to the FIFO an empty package - <guide>0x000000</guide>
 
-![Package constructor](/hardware/Package_constructor.png)
+![Package constructor](./hardware/Package_constructor.png)
 
 #### FIFO
 
