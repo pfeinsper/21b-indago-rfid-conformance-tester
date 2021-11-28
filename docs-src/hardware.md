@@ -35,6 +35,7 @@ All necessary VHDL hardware description files are located in the project’s <gu
 Our project uses the mandatory commands specified in the EPC-GEN2 documentation. However, those commands have varying sizes and even the same command could vary its size based on the data it sends. To work with this fluctuating command bit size, the group decided to separate the commands into 32-bit packages, where the 26 more significant bits are the actual data of the packet, and the 6 less significant are the mask, indicating how many of the 26 are in use.
 
 ![Package structure](./hardware/package.png)
+*Package visual example*
 
 This way, we have three possible situations given the command sizes:
 
@@ -51,6 +52,7 @@ To communicate between the components that the command is over, we send a <guide
 The READER, as shown in the diagram below, is the toplevel of our project, which contains the three main components. Here we will give an overview of each component, and a in depth analysis is present in the sections below.
 
 ![Reader diagram](./hardware/reader.png)
+*Reader component visual diagram*
 
 The first one is the NIOS II soft processor, where we programmed the tests that will be run on the TAG. Therefore, its responsible for generating the commands for communicating with the TAG, as well as interpreting the responses it receives, to assert whether the TAG passes or fails each test.
 
@@ -65,6 +67,7 @@ The last one is the Avalon Interface, is the connection between the NIOS II and 
 The developed peripheral can be split into two components, visualized in the diagram below. Those are the SENDER, in red, responsible for receiving the data from the NIOS II, encoding and forwarding them to the TAG; and the RECEIVER, in blue, responsible for receiving the data from the TAG, decoding and forwarding them to the NIOS II.
 
 ![IP Core](./hardware/ip.png)
+*IP core visual diagram*
 
 ### SENDER
 
@@ -102,6 +105,7 @@ This component has two state machines that work simultaneously, one responsible 
 - <guide>Wait 1.6 TARI</guide> is the formal completion of the command sent to the TAG, where a <guide>dummy 1</guide> bit is sent, which will remain active for 1.6 TARI and then stop the communication;
 
 ![Encoder diagram](./hardware/encoder.png)
+*Encoder state-machine visual diagram*
 
 The next image demonstrates the other state machine present in the component, responsible for the encoding of the data. It was defined that it would always start in state <guide>S3</guide>. FM0 encoding transforms each bit of information into two bits, in such a way so that a <guide>1</guide> becomes two bits of the same value (either <guide>1 1</guide> or <guide>0 0</guide>), and a <guide>0</guide> becomes two bits of different values (either <guide>1 0</guide> or <guide>0 1</guide>), where the signal always alternates when encoding a new bit. The change of state occurs after each bit has been sent and is defined by the value of the next bit.
 
@@ -112,11 +116,16 @@ The next image demonstrates the other state machine present in the component, re
 
 ![FM0 State diagram](./hardware/FM0_1.png){style= "width: 50%;"}
 
+*EPC UHF Gen2 Air Interface Protocol, p 32*
+
 ![data-0 and data-1](./hardware/FM0_2.png){style= "width: 60%;"}
+*EPC UHF Gen2 Air Interface Protocol, p 32*
 
 The previously defined <guide>dummy 1</guide> acts as the <guide>EOP</guide> of a command passed to the TAG, however it also needs to be encoded, and is always followed by a <guide>0</guide> bit. This is shown in the image below.
 
 ![FM0 End-of-Signaling](./hardware/FM0_3.png){style= "width: 60%"}
+
+*EPC UHF Gen2 Air Interface Protocol, p 33*
 
 #### Signal Generator
 
@@ -128,9 +137,12 @@ The Frame-sync is responsible for defining and regulating the interval at which 
 
 ![Frame-sync](./hardware/Framesync.png){style= "width: 70%"}
 
+*EPC UHF Gen2 Air Interface Protocol, p 29*
+
 The Preamble is responsible for the first wave of information sent to the TAG for each new command, and it defines which TARI will be used throughout the next command. This component needs to be activated for every command that is sent to the TAG, except when more than one command is sent in sequence, without a response in between. In this case, the preamble informed will be valid for all subsequent commands, until a response is requested.
 
 ![Preamble](./hardware/Preamble.png)
+*EPC UHF Gen2 Air Interface Protocol, p 29*
 
 ### RECEIVER
 
@@ -139,6 +151,7 @@ The Preamble is responsible for the first wave of information sent to the TAG fo
 The RECEIVER is responsible for receiving the responses from the TAG, decode them, and notify the NIOS II processor that there was a response, as well as store each package of the response until the processor sends the <guide>read request</guide> flags to analyze them. In order for the received data to be interpreted, it is necessary that the information is decoded and grouped into packages, because it is possible the response is too large for the processor to receive all at once. The group decided to split the RECEIVER into three smaller components, shown and described below:
 
 ![Receiver diagram](./hardware/receiver.png)
+*Receiver component visual diagram*
 
 #### Decoder
 
@@ -154,13 +167,14 @@ Since the TAG also communicates back to the READER using FM0 encoding, a decoder
 - <guide>Counter CS</guide> stops the counter and resets the decoder to its default state;
 - <guide>ERROR</guide> is a state that can be activated by almost any other state, as they all check certain characteristics of that TAG that must comply with the protocol. If something is irregular, this status will be activated and will send an error message explaining what caused this to happen;
 
-![Decode diagram](./hardware/decoder.png)
+![Decode diagram](./hardware/decode_data.png)
+*Decoder state-machine visual diagram*
 
 #### Package Constructor
 
 [/main/fpga/RTL/package_constructor.vhd](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/RTL/package_constructor.vhd)
 
-This component is responsible for assembling the decoded bits into packages and storing them in the FIFO. It gathers the received bits until reaching the limit defined in the code, and then sending to the FIFO. If, however, the package constructor receives the <guide>EOP</guide> signal before completing the package, it will concatenate a mask with the current package to inform how many bits were filled. Furthermore, it will also extend the <guide>EOP</guide> flag to the FIFO and the processor, so that they know the RECEIVER has finished capturing and decoding the whole response command.
+This component is responsible for assembling the decoded bits into packages and storing them in the FIFO. It gathers the received bits until reaching the limit defined in the code, and then sending to the FIFO. If, however, the package constructor receives the <guide>EOP</guide> signal before completing the package, it will concatenate a mask with the current package to inform how many bits were filled. Lastly, it will the <guide>voi package</guide> to the FIFO and the processor, which indicates the RECEIVER has finished capturing and decoding the whole response command, and that it has been fully passed to the FIFO.
 
 - <guide>Wait</guide> is the package constructor's default, the state it remains in while it doesn't receive any new data to store;
 - <guide>New Bit</guide> happens when the decoder sends a decoded bit to the package constructor, which stores it in the current package being constructed;
@@ -172,6 +186,7 @@ This component is responsible for assembling the decoded bits into packages and 
 - <guide>Send Void</guide> send to the FIFO an empty package - <guide>0x000000</guide>
 
 ![Package constructor](./hardware/Package_constructor.png)
+*Package constructor state-machine visual diagram*
 
 #### FIFO
 

@@ -75,6 +75,7 @@ Custom commands may be enabled in conformance with the protocol but are not spec
 The diagram below can be found in annex E of the EPC-GEN2 documentation and represents the Hand-shake between READER and TAG.
 
 ![Handshake diagram](./index/handshake.png)
+*EPC UHF Gen2 Air Interface Protocol, p 138*
 
 The READER sends a <guide>Query</guide>  (1), to start an inventory round with the TAG. Upon recognizing the inventory round, the TAG checks whether to respond, and responds with a 16-bit random number <guide>RN16</guide>  (2). To establish the communication as successful, the reader sends the <guide>ACK</guide>  (3) containing the same RN16. Having received and validated the confirmation, the TAG responds with <guide>PC/XPC, EPC</guide>  (4). The reader then send a <guide>Req_RN</guide>  (5), again with the old RN16, requesting a new RN16 to continue the communication. If the TAG again validates the RN16, it responds with the <guide>handle</guide>  (6), a new RN16. Once the READER receives the <guide>handle</guide>, the handshake is effectively over and the <guide>handle</guide>  will be used as authentication for all communication from that point forwards. Every <guide>command</guide>  (7) will be sent together with the <guide>handle</guide>  and TAG will always verify the <guide>handle</guide>  before responding (8).
 
