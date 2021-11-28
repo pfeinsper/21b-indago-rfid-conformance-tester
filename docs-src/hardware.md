@@ -168,7 +168,14 @@ The RECEIVER is responsible for receiving the responses from the TAG, decode the
 
 [/main/fpga/RTL/FM0_decoder.vhd](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/RTL/FM0_decoder.vhd)
 
-Since the TAG also communicates back to the READER using FM0 encoding, a decoder component is needed to decode the received data, allowing it to be interpreted by the processor. This component was built in a similar way to the sender, though it is a simpler process, and only one state machine was needed. The diagram below demonstrates the state machine programmed for this purpose:
+Since the TAG also communicates back to the READER using FM0 encoding, a decoder component is needed to decode the received data, allowing it to be interpreted by the processor. This component was built in a similar way to the sender, through the use of two state machines, one of which operates inside the other. The diagram below demonstrates the first state machine programmed for this purpose:
+
+- <guide>Wait</guide> is the decoder's default, the state it remains in while it doesn't receive any new data to decode;
+- <guide>Decode Data</guide>  runs a stand-by mode while for this state machine and activates the other one, responsible for decoding the data received and sending it to the FIFO;
+
+![Decoder diagram](./hardware/decoder.png)
+
+Below is the diagram for the other state machine, responsible for checking if all the time intervals for the communication are correct, as well as decoding the data, and sending it to the FIFO afterwards:
 
 - <guide>Wait</guide> is the decoder's default, the state it remains in while it doesn't receive any new data to decode;
 - <guide>Start Counter</guide> starts a time counter as soon as the decoder receives new data, in order to determine if the bit will change after 0.5 or 1.0 tari, then passing to the next state. It is also possible for the bit to remain unchanged for more than 1.0 tari, in which case it will go to the <guide>Pass 1.01 tari</guide> state;
@@ -178,7 +185,7 @@ Since the TAG also communicates back to the READER using FM0 encoding, a decoder
 - <guide>Counter CS</guide> stops the counter and resets the decoder to its default state;
 - <guide>ERROR</guide> is a state that can be activated by almost any other state, as they all check certain characteristics of that TAG that must comply with the protocol. If something is irregular, this status will be activated and will send an error message explaining what caused this to happen;
 
-![Decode diagram](./hardware/decode_data.png)
+![Decode_data diagram](./hardware/decode_data.png)
 *Decoder state-machine visual diagram*
 
 #### Package Constructor
