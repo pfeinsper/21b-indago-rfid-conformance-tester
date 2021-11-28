@@ -1,0 +1,14 @@
+guide {
+    font-family: Consolas, "courier new";
+    color: black;
+    background-color: #f1f1f1;
+    padding: 2px;
+    font-size: 95%;
+}
+
+pre {
+    font-family: monospace;
+    font-size: 0.8em;
+    line-height: 1.5;
+    -webkit-text-size-adjust: none;
+}
