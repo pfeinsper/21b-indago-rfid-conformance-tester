@@ -157,22 +157,14 @@ define bits32              (0xFFFFFFFF)
 #### RFID - Start of Communication Values
 
 ```c
-int tari      = 0x1F4;
-int tari_101  = 0x1F9;
-int tari_099  = 0x1EF;
-int tari_1616 = 0x328;
-int tari_1584 = 0x318;
-int pw        = 0xFA;
-int delimiter = 0x271;
-int RTcal     = 0x546;
-int TRcal     = 0x546;
+int tari_100  = rfid_tari_2_clock(10e-6, FREQUENCY);
+int pw        = rfid_tari_2_clock(5e-6, FREQUENCY);
+int delimiter = rfid_tari_2_clock(62.5e-6, FREQUENCY);
+int RTcal     = rfid_tari_2_clock(135e-6, FREQUENCY);
+int TRcal     = rfid_tari_2_clock(135e-6, FREQUENCY);
 ```
 
-- <guide>tari</guide>        - tari time parameter
-- <guide>tari_101</guide>    - 1% above tari limit
-- <guide>tari_099</guide>    - 1% below tari limit
-- <guide>tari_1616</guide>   - 1% above 1.6 tari limit
-- <guide>tari_1584</guide>   - 1% below 1.6 tari limit
+- <guide>tari_100</guide>    - tari time parameter
 - <guide>pw</guide>          - pw parameter
 - <guide>delimiter</guide>   - Delimiter parameter
 - <guide>RTcal</guide>       - Receiver transmitter callibration parameter
