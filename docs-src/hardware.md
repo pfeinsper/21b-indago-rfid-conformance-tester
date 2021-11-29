@@ -23,7 +23,7 @@ rfid.vhd                   - Conformance tester top-level entity
 │   ├FIFO_fm0.vhd             - Encoder-specific FIFO
 │   │  ├FM0_encoder.vhd         - Encoder-FM0-specific FIFO
 │   │  └fifo_32_32.vhd          - General use FIFO
-│   ├sender_controller.vhd    - Controls the flow of packages to the TAG
+│   ├sender_controller.vhd    - Controls the flow of packages to the tag
 │   └signal_generator.vhd     - Generates preamble or frame-sync signal
 │
 └receiver.vhd              - Receiver component top entity
@@ -47,26 +47,26 @@ This way, there are three possible situations given the command sizes:
 
 For example, if a command has 40 bits, it will be separated into two packets. The first one uses the 26 data bits, and the mask <guide>011010</guide> (26) to indicate all the data bits are in use. Then, the second package would only use 14 of the 26 data bits available to reach the 40 bits the command has, and so the mask would be <guide>001110</guide> (14) to indicate that only 14 bits should be analyzed.
 
-To communicate between the components that the command is over, a <guide>void package 0x000000</guide> is sent after the last package of the command. This occurs in two times in the product: first, when sending the command to the TAG, the NIOS II sends a void package to the Sender to indicate the command is over. Second, when receiving the response from the TAG, the Recevier sends a void package to the NIOS II to indicate that the command received is over.
+To communicate between the components that the command is over, a <guide>void package 0x000000</guide> is sent after the last package of the command. This occurs in two times in the product: first, when sending the command to the tag, the NIOS II sends a void package to the Sender to indicate the command is over. Second, when receiving the response from the tag, the Recevier sends a void package to the NIOS II to indicate that the command received is over.
 
-## READER
+## Solution: READER
 
-The READER, as shown in the diagram below, is the toplevel of the vhdl components, which contains the three main components. An in depth analysis is present in the sections below.
+The READER, as shown in the diagram below, is the solution implemented in this project, which contains the two main components. An in depth analysis is present in the sections below.
 
 ![Reader diagram](./hardware/reader.png)
 *Reader component visual diagram*
 
-The first one is the NIOS II soft processor, where the group programmed the tests that will be run on the TAG. Therefore, its responsible for generating the commands for communicating with the TAG, as well as interpreting the responses it receives, to assert whether the TAG passes or fails each test.
+The first one is the NIOS II soft processor, where the group programmed the tests that will be run on the tag. Therefore, its responsible to generate the commands for communicating with the tag, as well as interpreting the responses it receives, to assert whether the tag passes or fails each test.
 
-The second component is the IP core, developed in VHDL, and is responsible for encoding and sending messages to the TAG, as well as decoding any responses and passing the through to the processor. Those two tasks have been separated into the sender and the receiver respectively.
+The second component is the IP core, developed in VHDL, and is responsible for encoding and sending messages to the tag, as well as decoding any responses and passing it through to the processor. Those two tasks have been separated into the sender and the receiver respectively.
 
-The last one is the Avalon Interface, is the connection between the NIOS II and the IP core, where the commands, generated in the programming language C, will be passed on to the VHDL sender, and responses will take the opposite path, going from the receiver to the processor.
+The Avalon Interface Interface, is the connection between the NIOS II and the IP core, where the commands, generated in the programming language C, will be passed on to the VHDL sender, and responses will take the opposite path, going from the receiver to the processor.
 
 ### IP CORE
 
 [/main/fpga/RTL/rfid.vhd](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/RTL/rfid.vhd)
 
-The developed peripheral can be split into two components, visualized in the diagram below. Those are the SENDER, in red, responsible for receiving the data from the NIOS II, encoding and forwarding them to the TAG; and the RECEIVER, in blue, responsible for receiving the data from the TAG, decoding and forwarding them to the NIOS II.
+The developed peripheral can be split into two components, visualized in the diagram below. Those are the SENDER, in red, responsible for receiving the data from the NIOS II, encoding and forwarding them to the tag; and the RECEIVER, in blue, responsible for receiving the data from the tag, decoding and forwarding them to the NIOS II.
 
 ![IP Core](./hardware/ip.png)
 *IP core visual diagram*
@@ -75,13 +75,13 @@ The developed peripheral can be split into two components, visualized in the dia
 
 [/main/fpga/RTL/sender.vhd](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/RTL/sender.vhd)
 
-This component is responsible for encoding the commands generated by the processor, and send them to the TAG, respecting the rules of the EPC-GEN2 protocol, including the tari, preamble and EOP. Its components are detailed below:
+This component is responsible for encoding the commands generated by the processor, and send them to the tag, respecting the rules of the EPC-GEN2 protocol, including the tari, signal generation and EOP. Its components are detailed below:
 
 ### FIFO
 
 [/main/fpga/fifo_32_32.vhd](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/fifo_32_32.vhd)
 
-The first component of the SENDER is the FIFO, a storage system that receives the assembled commands from the NIOS II and waits for the encoder to send the <guide>read request</guide> flag, signaling for the FIFO to send the oldest package. It is possible that the command to be sent to the TAG is composed of more than one package, so the FIFO serves as a storage system for packages already received from the processor until it signals that the entire command is ready for encoding.
+The first component of the SENDER is the FIFO, a storage system that receives the assembled commands from the NIOS II and waits for the encoder to send the <guide>read request</guide> flag, signaling for the FIFO to send the oldest package. It is possible that the command to be sent to the tag is composed of more than one package, so the FIFO serves as a storage system for packages already received from the processor until it signals that the entire command is ready for encoding.
 
 For this project, the group opted to use the FIFO produced by Intel, which was obtained through the Quartus automatic generator, the main software used by the group for programming in VHDL language. It is possible to include several customizations before generating the code, and thus, the group defined that the FIFO would have the settings below: 
 
@@ -106,16 +106,16 @@ FIFO-FM0 is a component created to separate the data encoding component from the
 
 [/main/fpga/RTL/FM0_encoder.vhd](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/RTL/FM0_encoder.vhd)
 
-The encoder is the main component of the sender, being responsible for encoding the packages received from the FIFO with FM0 band, as specified in the EPC-GEN2, as well as sending the encoded data to the TAG. for this purpose, a refined control of the time intervals is necessary to obey the tari, also defined in the protocol as being between 6.25μs and 25μs.
+The encoder is the main component of the sender, being responsible for encoding the packages received from the FIFO with FM0 band, as specified in the EPC-GEN2, as well as sending the encoded data to the tag. for this purpose, a refined control of the time intervals is necessary to obey the tari, also defined in the protocol as being between 6.25μs and 25μs.
 
-This component has two state machines that work simultaneously, one responsible for communicating with the FIFO and sending it to the TAG, while the other encodes the received data. The diagram below demonstrates the first state machine:
+This component has two state machines that work simultaneously, one responsible for communicating with the FIFO and sending it to the tag, while the other encodes the received data. The diagram below demonstrates the first state machine:
 
 - <guide>Wait</guide> is the encoder's default, the state it remains in while it doesn't receive any new packages to encode;
-- <guide>Start Send</guide> is the most complex state, where another state machine is present inside it, which is responsible for encoding the packages. Furthermore, it also expects to receive the correct tari to send data to the TAG;
+- <guide>Start Send</guide> is the most complex state, where another state machine is present inside it, which is responsible for encoding the packages. Furthermore, it also expects to receive the correct tari to send data to the tag;
 - <guide>Wait Send</guide> is a temporary state for when the data has not been fully encoded, and therefore needs to wait until the other state machine finishes the encoding.;
 - <guide>Request Data</guide> happens after the data has been sent, and signals the FIFO to send more data. This state is very short, as its only duty is to send a flag to the FIFO, and immediately change to the <guide>Wait Request</guide> state;
 - <guide>Wait Request</guide> can happen in two situations. First, if the Encoder is waiting for the next package from the FIFO, going back to the <guide>Start Send</guide> state once it is received. Second, it can happen once the FIFO sends the <guide>FIFO_empty</guide> signal to the Encoder, in which case the void package is removed, waiting for the next command;
-- <guide>Wait 1.6 tari</guide> is the formal completion of the command sent to the TAG, where a <guide>dummy 1</guide> bit is sent, which will remain active for 1.6 tari and then stop the communication;
+- <guide>Wait 1.6 tari</guide> is the formal completion of the command sent to the tag, where a <guide>dummy 1</guide> bit is sent, which will remain active for 1.6 tari and then stop the communication;
 
 ![Encoder diagram](./hardware/encoder.png)
 *Encoder state-machine visual diagram*
@@ -134,7 +134,7 @@ The next image demonstrates the other state machine present in the component, re
 ![data-0 and data-1](./hardware/FM0_2.png){style= "width: 60%;"}
 *EPC UHF Gen2 Air Interface Protocol, p 32*
 
-The previously defined <guide>dummy 1</guide> acts as the <guide>EOP</guide> of a command passed to the TAG, however it also needs to be encoded, and is always followed by a <guide>0</guide> bit. This is shown in the image below.
+The previously defined <guide>dummy 1</guide> acts as the <guide>EOP</guide> of a command passed to the tag, however it also needs to be encoded, and is always followed by a <guide>0</guide> bit. This is shown in the image below.
 
 ![FM0 End-of-Signaling](./hardware/FM0_3.png){style= "width: 60%"}
 
@@ -146,13 +146,13 @@ The previously defined <guide>dummy 1</guide> acts as the <guide>EOP</guide> of 
 
 This component encompasses both the Preamble and Frame-sync functions, and receives flags to determine which one, if any, will be activated.
 
-The Frame-sync is responsible for defining and regulating the interval at which information is sent to the TAG, and sharing this interval to all other SENDER components, so that they can communicate within the correct time intervals. This period, named tari, must be within the range defined in the protocol, and have a variation of less than 1% between each pulse.
+The Frame-sync is responsible for defining and regulating the interval at which information is sent to the tag, and sharing this interval to all other SENDER components, so that they can communicate within the correct time intervals. This period, named tari, must be within the range defined in the protocol, and have a variation of less than 1% between each pulse.
 
 ![Frame-sync](./hardware/Framesync.png){style= "width: 70%"}
 
 *EPC UHF Gen2 Air Interface Protocol, p 29*
 
-The Preamble is responsible for the first wave of information sent to the TAG for each new command, and it defines which tari will be used throughout the next command. This component needs to be activated for every command that is sent to the TAG, except when more than one command is sent in sequence, without a response in between. In this case, the preamble informed will be valid for all subsequent commands, until a response is requested.
+The Preamble is responsible for the first wave of information sent to the tag for each new command, and it defines which tari will be used throughout the next command. This component needs to be activated for every command that is sent to the tag, except when more than one command is sent in sequence, without a response in between. In this case, the preamble informed will be valid for all subsequent commands, until a response is requested.
 
 ![Preamble](./hardware/Preamble.png)
 *EPC UHF Gen2 Air Interface Protocol, p 29*
@@ -161,7 +161,7 @@ The Preamble is responsible for the first wave of information sent to the TAG fo
 
 [/main/fpga/RTL/receiver.vhd](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/RTL/receiver.vhd)
 
-The RECEIVER is responsible for receiving the responses from the TAG, decode them, and notify the NIOS II processor that there was a response, as well as store each package of the response until the processor sends the <guide>read request</guide> flags to analyze them. In order for the received data to be interpreted, it is necessary that the information is decoded and grouped into packages, because it is possible the response is too large for the processor to receive all at once. The group decided to split the RECEIVER into three smaller components, shown and described below:
+The RECEIVER is responsible for receiving the responses from the tag, decode them, and notify the NIOS II processor that there was a response, as well as store each package of the response until the processor sends the <guide>read request</guide> flags to analyze them. In order for the received data to be interpreted, it is necessary that the information is decoded and grouped into packages, because it is possible the response is too large for the processor to receive all at once. The group decided to split the RECEIVER into three smaller components, shown and described below:
 
 ![Receiver diagram](./hardware/receiver.png)
 *Receiver component visual diagram*
@@ -170,7 +170,7 @@ The RECEIVER is responsible for receiving the responses from the TAG, decode the
 
 [/main/fpga/RTL/FM0_decoder.vhd](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/RTL/FM0_decoder.vhd)
 
-Since the TAG also communicates back to the READER using FM0 encoding, a decoder component is needed to decode the received data, allowing it to be interpreted by the processor. This component was built in a similar way to the sender, through the use of two state machines, one of which operates inside the other. The diagram below demonstrates the first state machine programmed for this purpose:
+Since the tag also communicates back to the READER using FM0 encoding, a decoder component is needed to decode the received data, allowing it to be interpreted by the processor. This component was built in a similar way to the sender, through the use of two state machines, one of which operates inside the other. The diagram below demonstrates the first state machine programmed for this purpose:
 
 - <guide>Wait</guide> is the decoder's default, the state it remains in while it doesn't receive any new data to decode;
 - <guide>Decode Data</guide>  runs a stand-by mode while for this state machine and activates the other one, responsible for decoding the data received and sending it to the FIFO;
@@ -183,9 +183,9 @@ Below is the diagram for the other state machine, responsible for checking if al
 - <guide>Start Counter</guide> starts a time counter as soon as the decoder receives new data, in order to determine if the bit will change after 0.5 or 1.0 tari, then passing to the next state. It is also possible for the bit to remain unchanged for more than 1.0 tari, in which case it will go to the <guide>Pass 1.01 tari</guide> state;
 - <guide>Stop Counter</guide> sends <guide>1</guide> to the package constructor if the input signal has not changed, and <guide>0</guide> otherwise;
 - <guide>Continue Counter</guide> is necessary because the stop counter always stop at 0.5 tari, so it is activated if no bit change occurs;
-- <guide>Pass 1.01 tari</guide> is activated when the TAG sends the <guide>dummy 1</guide>, which has a duration of 1.6 tari, and checks if the times are in accordance with the protocol;
+- <guide>Pass 1.01 tari</guide> is activated when the tag sends the <guide>dummy 1</guide>, which has a duration of 1.6 tari, and checks if the times are in accordance with the protocol;
 - <guide>Counter CS</guide> stops the counter and resets the decoder to its default state;
-- <guide>ERROR</guide> is a state that can be activated by almost any other state, as they all check certain characteristics of that TAG that must comply with the protocol. If something is irregular, this status will be activated and will send an error message explaining what caused this to happen;
+- <guide>ERROR</guide> is a state that can be activated by almost any other state, as they all check certain characteristics of that tag that must comply with the protocol. If something is irregular, this status will be activated and will send an error message explaining what caused this to happen;
 
 ![Decode_data diagram](./hardware/decode_data.png)
 *Decoder state-machine visual diagram*

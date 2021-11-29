@@ -2,7 +2,7 @@
 
 ## Tools
 
-To be able to use the Conformance Tester for TAGs EPC-GEN2 UHF RFID, you'll need the following tools:
+To be able to use the Conformance Tester for Tags EPC-GEN2 UHF RFID, you'll need the following tools:
 
 - **Hardware:**
     - DE10-Standard + accessories
