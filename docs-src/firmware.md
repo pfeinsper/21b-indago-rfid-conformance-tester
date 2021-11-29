@@ -55,6 +55,28 @@ Additional information on the EPC-GEN2 protocol and mandatory commands (as well 
 
 [/main/fpga/software/rfid_test/main.c](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/software/rfid_test/main.c)
 
+The software is developed to be easy to understand, it has single responsibility functions which are granted by the higher level code when compared to the VHDL present in the IP core. These functions are all called in the main.c code, which is responsible for the control and monitoring of the IP core. 
+
+In the main code the user can choose which commands they want to send to the TAG, to see if it responds properly according to the EPC-GEN2 protocol. Also It is possible to make timing tests by varying the Tari values, to check if the Tag will respond accordingly.
+
+### Receiver.c
+
+[/main/fpga/software/rfid_test/helpers/functions/receiver.c](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/software/rfid_test/helpers/functions/receiver.c)
+
+This section of code stores all the functions necessary to retrieve data from the IP core, which is composed by the functions that enable the peripheral Receiver, the ones that check the fifo for data and also the ones that request a new package. 
+
+### Sender.c
+
+[/main/fpga/software/rfid_test/helpers/functions/sender.c](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/software/rfid_test/helpers/functions/sender.c)
+
+This file is responsible for the functions of control of the Sender peripheral, it has the functions that enable the peripheral, the ones that prepares the commands in the proper format to be sent to the TAG and also the one that actually sends it.
+
+### RFID.c
+
+[/main/fpga/software/rfid_test/helpers/functions/rfid.c](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/software/rfid_test/helpers/functions/rfid.c)
+
+The RFID code comes first in use inside the main, because it stores the functions that set all the needed parameters to the test to be launched. Such as functions that set the time parameters, functions that help with mask translations and the ones that check if an answer received is a valid command.
+
 ### Starting Variables
 
 #### Register Status
