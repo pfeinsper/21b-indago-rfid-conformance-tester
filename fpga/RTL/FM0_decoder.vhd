@@ -16,7 +16,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
---! \brief This component decodes the packets received from the TAG that have been encoded with FM0 encoding
+--! \brief https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/RTL/FM0_decoder.vhd
 --!
 --! For further explanation on how this decoding is done, check the EPC-GEN2 documentation - https://www.gs1.org/sites/default/files/docs/epc/Gen2_Protocol_Standard.pdf
 --!

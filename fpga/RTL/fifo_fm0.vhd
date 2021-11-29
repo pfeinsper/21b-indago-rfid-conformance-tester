@@ -15,8 +15,9 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
---! \brief Component that integrates the FIFO with the FM0 encoder.
+--! \brief https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/RTL/fifo_fm0.vhd
 --!
+--! Component that integrates the FIFO with the FM0 encoder.
 --!
 entity FIFO_FM0 is
     generic (

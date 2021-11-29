@@ -17,9 +17,9 @@ use IEEE.std_logic_1164.all;
 use IEEE.std_logic_unsigned.all;
 use IEEE.numeric_std.all;
 use work.all;
---! \brief Project top level, instantiates the sender, receiver and Avalon Interface.
+--! \brief https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/RTL/rfid.vhd
 --!
---! This component encopasses the whole project. Instantiating the Avalon Interface allows for communication between hardware and software, or, in other words, the NIOS II and the IP RFID.
+--! Project top level, instantiates the sender, receiver and Avalon Interface. This component encopasses the whole project. Instantiating the Avalon Interface allows for communication between hardware and software, or, in other words, the NIOS II and the IP RFID.
 --!
 --!
 --!

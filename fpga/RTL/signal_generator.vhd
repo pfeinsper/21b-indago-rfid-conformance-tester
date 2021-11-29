@@ -16,8 +16,9 @@
     library ieee;
     use ieee.std_logic_1164.all;
     use ieee.numeric_std.all;
-    --! \brief This component generates the preamble or framesync flag when requested
+    --! \brief https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/RTL/signal_generator.vhd
     --!
+    --! This component generates the preamble or framesync flag when requested
     --!
     entity Signal_Generator is
         generic (

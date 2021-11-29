@@ -15,7 +15,7 @@
     library ieee;
     use ieee.std_logic_1164.all;
     use ieee.numeric_std.all;
-    --! \brief This component controls the state machine in the sender
+    --! \brief https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/RTL/sender_controller.vhd
     --!
     --! This component is responsible for indicating to the other sender components if the data should be encoded or sent, since the TARI controls the rate at which encoded packets can be sent
     --!

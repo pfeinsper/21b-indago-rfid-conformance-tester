@@ -16,7 +16,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
---! \brief This component stores the bits received from the decoder and groups them into 26 data bits + 6 mask bits packets
+--! \brief https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/RTL/package_constructor.vhd
 --!
 --!
 entity package_constructor is

@@ -17,7 +17,7 @@
     use IEEE.std_logic_unsigned.all;
     use IEEE.numeric_std.all;
     use work.all;
-    --! \brief This component receives the encoded data from the TAG (DUT), decoding and sending them back to the NIOS II processor.
+    --! \brief https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/RTL/receiver.vhd
     --!
     --! The data is received bit by bit, and thus needs to be first gouped in pairs, in order to be decoded, since the TAG also uses the FM0 encoding.
     --! After this, the decoded bits are stored in a FIFO until the packet is complete and ready to be sent back to the NIOS II.
