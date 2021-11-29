@@ -143,6 +143,8 @@ As the project consists of the creation of a conformance tester for the EPC-GEN2
 
 Since the project was open-source and available on GitHub, it was decided that the group would also provide a documentation to the whole project, which was later decided would be available through GitHub Pages. Inside, the group would give an in-depth description of all components, and also a tutorial on how to clone, run, utilize and modify this project.
 
+To help with code documentation, the group used the Doxygen application, which was incorporated into the already existing guthub-pages documentation. This application generates a page of every VHDL file, giving a brief explanation of the purpose of that component, as well as explain every aspect of the entity, including generics, ports in and outs.
+
 ### Environment Tools
 
 #### Development Tools

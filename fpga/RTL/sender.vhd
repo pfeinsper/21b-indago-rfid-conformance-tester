@@ -17,7 +17,7 @@
     use IEEE.std_logic_unsigned.all;
     use IEEE.numeric_std.all;
     use work.all;
-    --! \brief Component responsible for encoding packets and sending them to the TAG.
+    --! \brief https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/RTL/sender.vhd
     --!
     --! This component receives individual packets from the Avalon Interface and stores them in a FIFO until each packet is ready to be encoded. Currently only supports the FM0 encoding.
     --! After this, it is also responsible for sendind the encoded packets to the TAG, while respecting the restrictions of the preamble, framesync and TARI.
