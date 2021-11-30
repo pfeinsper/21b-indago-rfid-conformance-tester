@@ -229,6 +229,8 @@ void crc_16_ccitt_init(void)
 ### Mandatory commands
 [/main/fpga/software/rfid_test/helpers/commands/](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/software/rfid_test/helpers/commands/)
 
+#### Table of commands 
+
 The Mandatory commands were already explained in the [Protocol EPC-GEN2 UHF RFID](index.md) subsection, so here in the Firmware page it will be presented just their status of implementation in the following table. The tested collumn stands for the commands that were sent and received properly, the Validated one means that the whole command was build according to the EPC-GEN2 protocol and functional means that it is also already intepreted correctly once sent or received by the tag or by the reader. The last collumn is the ToDo, which is the one that indicates if that especific command has a GitHub issue to be completed.
 
 
@@ -241,12 +243,12 @@ The Mandatory commands were already explained in the [Protocol EPC-GEN2 UHF RFID
 |     Query    |    x   |     x     |      x     |      |
 | Query_adjust |    x   |     x     |      x     |      |
 |   Query_rep  |    x   |     x     |      x     |      |
-|     Read     |    x   |           |            |   x  |
+|     Read     |    x   |     x     |            |      |
 |    Req_rn    |    x   |     x     |      x     |      |
 |     Rn16     |    x   |     x     |      x     |   x  |
 |    Rn_crc    |    x   |     x     |      x     |      |
 |    Select    |    x   |           |            |   x  |
-|     Write    |    x   |           |            |   x  |
+|     Write    |    x   |     x     |            |      |
 
 #### Example of command build: The Ack command
 [/main/fpga/software/rfid_test/helpers/commands/ack.c](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/software/rfid_test/helpers/commands/ack.c)
@@ -287,7 +289,7 @@ int ack_validate(int packages[], int command_size)
 ### Main.c - Start of Communication Values
 [/main/fpga/examples_of_main/](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/examples_of_main/)
 
-In every variation of the main code present inside the folder ./examples_of_main what them all have in common is the need to set all the time parameters metioned in the Signal Generator section inside the Hardware page.
+In each variation of the main code present inside the folder examples_of_main, a sample of code is common between them all and it is the set of all the time parameters metioned in the Signal Generator section inside the [Hardware page](hardware.md). 
 
 ```C
 int tari_100  = rfid_tari_2_clock(10e-6, FREQUENCY);
