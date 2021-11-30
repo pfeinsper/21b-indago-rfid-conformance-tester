@@ -1,3 +1,15 @@
+// -----------------------------------------
+// --               WRITE                 --
+// -- Projeto Final de Engenharia         --
+// -- Professor Orientador: Rafael Corsi  --
+// -- Orientador: Shephard                --
+// -- Alunos:                             --
+// -- 		Alexandre Edington            --
+// -- 		Bruno Domingues               --
+// -- 		Lucas Leal                    --
+// -- 		Rafael Santos                 --
+// -----------------------------------------
+
 #ifndef WRITE_H
 #define WRITE_H
 
@@ -7,7 +19,7 @@
 #define WRITE_SIZE 58
 
 void write_build(command *write, unsigned char mem_bank, unsigned char word_ptr,
-                unsigned short data, unsigned short rn, unsigned short crc);
+                 unsigned short data, unsigned short rn, unsigned short crc);
 
 int write_validate(int packages[], int command_size);
 

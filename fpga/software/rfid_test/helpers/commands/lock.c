@@ -1,7 +1,18 @@
+// -----------------------------------------
+// --                LOCK                 --
+// -- Projeto Final de Engenharia         --
+// -- Professor Orientador: Rafael Corsi  --
+// -- Orientador: Shephard                --
+// -- Alunos:                             --
+// -- 		Alexandre Edington            --
+// -- 		Bruno Domingues               --
+// -- 		Lucas Leal                    --
+// -- 		Rafael Santos                 --
+// -----------------------------------------
 #include "lock.h"
 
 void lock_build(command *lock, unsigned int payload, unsigned short rn,
-               unsigned short crc)
+                unsigned short crc)
 {
     lock->result_data = 0;
 
@@ -11,11 +22,11 @@ void lock_build(command *lock, unsigned int payload, unsigned short rn,
     lock->result_data |= crc;
 
     lock->size = LOCK_SIZE;
-
 }
 
-int lock_validate(int packages_vector[], int command_size){
+int lock_validate(int packages_vector[], int command_size)
+{
     //TODO: validate
-    
+
     return 0;
 }

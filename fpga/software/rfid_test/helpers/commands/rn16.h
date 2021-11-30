@@ -1,3 +1,15 @@
+// -----------------------------------------
+// --                RN16                 --
+// -- Projeto Final de Engenharia         --
+// -- Professor Orientador: Rafael Corsi  --
+// -- Orientador: Shephard                --
+// -- Alunos:                             --
+// -- 		Alexandre Edington            --
+// -- 		Bruno Domingues               --
+// -- 		Lucas Leal                    --
+// -- 		Rafael Santos                 --
+// -----------------------------------------
+
 #ifndef RN16_H
 #define RN16_H
 

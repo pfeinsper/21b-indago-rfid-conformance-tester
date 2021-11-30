@@ -1,5 +1,16 @@
-#include "query_rep.h"
+// -----------------------------------------
+// --              QUERY REP              --
+// -- Projeto Final de Engenharia         --
+// -- Professor Orientador: Rafael Corsi  --
+// -- Orientador: Shephard                --
+// -- Alunos:                             --
+// -- 		Alexandre Edington            --
+// -- 		Bruno Domingues               --
+// -- 		Lucas Leal                    --
+// -- 		Rafael Santos                 --
+// -----------------------------------------
 
+#include "query_rep.h"
 
 void query_rep_build(command *query_rep, unsigned char session)
 {

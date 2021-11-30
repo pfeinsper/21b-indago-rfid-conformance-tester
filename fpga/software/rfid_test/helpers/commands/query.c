@@ -1,8 +1,20 @@
+// -----------------------------------------
+// --                QUERY                --
+// -- Projeto Final de Engenharia         --
+// -- Professor Orientador: Rafael Corsi  --
+// -- Orientador: Shephard                --
+// -- Alunos:                             --
+// -- 		Alexandre Edington            --
+// -- 		Bruno Domingues               --
+// -- 		Lucas Leal                    --
+// -- 		Rafael Santos                 --
+// -----------------------------------------
+
 #include "query.h"
 
 void query_build(command *query, unsigned char dr, unsigned char m,
-                unsigned char trext, unsigned char sel, unsigned char session,
-                unsigned char target, unsigned char q)
+                 unsigned char trext, unsigned char sel, unsigned char session,
+                 unsigned char target, unsigned char q)
 {
     query->result_data = 0;
 

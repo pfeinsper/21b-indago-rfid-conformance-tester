@@ -1,3 +1,15 @@
+// -----------------------------------------
+// --                RN16                 --
+// -- Projeto Final de Engenharia         --
+// -- Professor Orientador: Rafael Corsi  --
+// -- Orientador: Shephard                --
+// -- Alunos:                             --
+// -- 		Alexandre Edington            --
+// -- 		Bruno Domingues               --
+// -- 		Lucas Leal                    --
+// -- 		Rafael Santos                 --
+// -----------------------------------------
+
 #include "rn16.h"
 
 void rn16_build(command *rn16)

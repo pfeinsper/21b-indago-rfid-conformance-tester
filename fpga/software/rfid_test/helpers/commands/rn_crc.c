@@ -1,3 +1,15 @@
+// -----------------------------------------
+// --               RN CRC                --
+// -- Projeto Final de Engenharia         --
+// -- Professor Orientador: Rafael Corsi  --
+// -- Orientador: Shephard                --
+// -- Alunos:                             --
+// -- 		Alexandre Edington            --
+// -- 		Bruno Domingues               --
+// -- 		Lucas Leal                    --
+// -- 		Rafael Santos                 --
+// -----------------------------------------
+
 #include "rn_crc.h"
 
 void rn_crc_build(command *rn_crc, int rn)
@@ -19,7 +31,6 @@ int rn_crc_validate(int packages[], int command_size)
     int rn = ((packages[1] & 0x3F) << 10) | ((packages[0] >> 16) & 0x3FF);
     int crc = packages[0] & 0xFFFF;
     int crc_calc = crc_16_ccitt(rn, 3);
-
 
     if (crc != crc_calc)
         return 0;

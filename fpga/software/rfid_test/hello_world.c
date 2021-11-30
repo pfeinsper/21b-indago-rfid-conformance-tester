@@ -1,3 +1,15 @@
+// -----------------------------------------
+// --             HELLO WORLD             --
+// -- Projeto Final de Engenharia         --
+// -- Professor Orientador: Rafael Corsi  --
+// -- Orientador: Shephard                --
+// -- Alunos:                             --
+// -- 		Alexandre Edington            --
+// -- 		Bruno Domingues               --
+// -- 		Lucas Leal                    --
+// -- 		Rafael Santos                 --
+// -----------------------------------------
+
 #include "io.h"
 #include "system.h"
 #include "stdint.h"
@@ -9,12 +21,12 @@
 int main()
 {
     // Time parameters
-    int tari_100  = rfid_tari_2_clock(10e-6, FREQUENCY);
-	int pw        = rfid_tari_2_clock(5e-6, FREQUENCY);
-	int delimiter = rfid_tari_2_clock(62.5e-6, FREQUENCY);
-	int RTcal     = rfid_tari_2_clock(135e-6, FREQUENCY);
-	int TRcal     = rfid_tari_2_clock(135e-6, FREQUENCY);
-    
+    int tari_100 = rfid_tari_2_clock(10e-6, FREQUENCY);
+    int pw = rfid_tari_2_clock(5e-6, FREQUENCY);
+    int delimiter = rfid_tari_2_clock(62.5e-6, FREQUENCY);
+    int RTcal = rfid_tari_2_clock(135e-6, FREQUENCY);
+    int TRcal = rfid_tari_2_clock(135e-6, FREQUENCY);
+
     //configurations------------------------------------------------------------------------------
     rfid_set_loopback();
     rfid_set_tari(tari_100);
@@ -30,8 +42,8 @@ int main()
     printf("==          READER          ==\n");
     printf("==============================\n");
 
-//    HANDSHAKE EXAMPLE READER -----------------------------------------------------------------------
-//    SEND A QUERY ----------------------------------------------------------------------------------
+    //    HANDSHAKE EXAMPLE READER -----------------------------------------------------------------------
+    //    SEND A QUERY ----------------------------------------------------------------------------------
 
     unsigned char dr = 1;
     unsigned char m = 1;
@@ -46,7 +58,7 @@ int main()
     printf("sending query\n");
     sender_send_command(&query);
     printf("sent query\n\n");
-    
+
     // ---------------------------------------------------------------------------------------------
 
     printf("==============================\n");
@@ -63,7 +75,7 @@ int main()
         return 1;
     }
     int label = rfid_check_command(pack_query, command_size_rn);
-    
+
     if (label != QUERY_LABEL)
     {
         printf("QUERY_LABEL NOT FOUND\n");
@@ -84,7 +96,6 @@ int main()
     printf("==          READER          ==\n");
     printf("==============================\n");
 
-
     quant_packages = 1;
     command_size_rn = 0;
     int pack_rn[quant_packages];
@@ -95,7 +106,7 @@ int main()
         return 1;
     }
     label = rfid_check_command(pack_rn, command_size_rn);
-    
+
     if (label != RN16_LABEL)
     {
         printf("RN16_LABEL NOT FOUND\n");
@@ -105,7 +116,6 @@ int main()
     printf("found RN16_LABEL\n");
     int RN16 = pack_rn[0] & 0xFF;
     printf("RN16 is: %X\n\n", RN16);
-
 
     // SEND AN ACK ------------------------------------------------------------------------------
     command ack;
@@ -153,7 +163,6 @@ int main()
     printf("==          READER          ==\n");
     printf("==============================\n");
 
-
     quant_packages = 2;
     int command_size_rn_crc = 0;
     int pack_rn_crc[quant_packages];
@@ -180,7 +189,6 @@ int main()
     printf("sending handle");
     sender_send_command(&req_rn);
     printf("sent handle\n\n");
-
 
     //-------------------------------------------------------------------------------------------------------
 
@@ -209,12 +217,11 @@ int main()
 
     // REQ_RN_RESPONSE-------------------------------------------------------------------------------------------------------
     command req_rn_resp;
-    int handle = 0x2AAA; 
+    int handle = 0x2AAA;
     rn_crc_build(&req_rn_resp, handle);
     printf("sending handle\n");
     sender_send_command(&req_rn_resp);
     printf("handle was sent\n\n");
-
 
     //RECEIVER-------------------------------------------------------------------------------------------------------
 

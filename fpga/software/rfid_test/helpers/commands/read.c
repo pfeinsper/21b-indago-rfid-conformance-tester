@@ -1,7 +1,19 @@
+// -----------------------------------------
+// --                READ                 --
+// -- Projeto Final de Engenharia         --
+// -- Professor Orientador: Rafael Corsi  --
+// -- Orientador: Shephard                --
+// -- Alunos:                             --
+// -- 		Alexandre Edington            --
+// -- 		Bruno Domingues               --
+// -- 		Lucas Leal                    --
+// -- 		Rafael Santos                 --
+// -----------------------------------------
+
 #include "read.h"
 
 void read_build(command *read, unsigned char mem_bank, unsigned char word_ptr,
-               unsigned char word_count, unsigned short rn, unsigned short crc)
+                unsigned char word_count, unsigned short rn, unsigned short crc)
 {
     read->result_data = 0;
 

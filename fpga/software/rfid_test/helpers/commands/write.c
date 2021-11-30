@@ -1,7 +1,19 @@
+// -----------------------------------------
+// --               WRITE                 --
+// -- Projeto Final de Engenharia         --
+// -- Professor Orientador: Rafael Corsi  --
+// -- Orientador: Shephard                --
+// -- Alunos:                             --
+// -- 		Alexandre Edington            --
+// -- 		Bruno Domingues               --
+// -- 		Lucas Leal                    --
+// -- 		Rafael Santos                 --
+// -----------------------------------------
+
 #include "write.h"
 
 void write_build(command *write, unsigned char mem_bank, unsigned char word_ptr,
-                unsigned short data, unsigned short rn, unsigned short crc)
+                 unsigned short data, unsigned short rn, unsigned short crc)
 {
     write->result_data = 0;
 
@@ -13,7 +25,6 @@ void write_build(command *write, unsigned char mem_bank, unsigned char word_ptr,
     write->result_data |= crc;
 
     write->size = WRITE_SIZE;
-
 }
 
 int write_validate(int packages[], int command_size)

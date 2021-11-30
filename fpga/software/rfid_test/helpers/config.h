@@ -1,3 +1,15 @@
+// -----------------------------------------
+// --               CONFIG                --
+// -- Projeto Final de Engenharia         --
+// -- Professor Orientador: Rafael Corsi  --
+// -- Orientador: Shephard                --
+// -- Alunos:                             --
+// -- 		Alexandre Edington            --
+// -- 		Bruno Domingues               --
+// -- 		Lucas Leal                    --
+// -- 		Rafael Santos                 --
+// -----------------------------------------
+
 /************************************************************************/
 /* defines                                                              */
 /************************************************************************/
@@ -44,7 +56,7 @@
 #define data_mask_size 6
 #define data_package_size 26
 #define eop 0b00000000000000000000000000000000
-#define bits6  0b111111;
+#define bits6 0b111111;
 #define bits26 0b11111111111111111111111111
 #define bits32 0b11111111111111111111111111111111
 

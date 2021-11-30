@@ -1,6 +1,18 @@
+// -----------------------------------------
+// --                RFID                 --
+// -- Projeto Final de Engenharia         --
+// -- Professor Orientador: Rafael Corsi  --
+// -- Orientador: Shephard                --
+// -- Alunos:                             --
+// -- 		Alexandre Edington            --
+// -- 		Bruno Domingues               --
+// -- 		Lucas Leal                    --
+// -- 		Rafael Santos                 --
+// -----------------------------------------
+
 #include "rfid.h"
 
-void rfid_set_loopback(void) { IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 2, MASK_LOOPBACK ); }
+void rfid_set_loopback(void) { IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_SET << 2, MASK_LOOPBACK); }
 
 void rfid_set_tari(int tari_value) { IOWR_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_REG_TARI << 2, tari_value); }
 
@@ -41,8 +53,8 @@ int rfid_check_command(int packages[], int command_size)
         return RN_CRC_LABEL;
     else if (kill_validate(packages, command_size))
         return KILL_LABEL;
-   else if (lock_validate(packages, command_size))
-       return LOCK_LABEL;
+    else if (lock_validate(packages, command_size))
+        return LOCK_LABEL;
     else if (query_adjust_validate(packages, command_size))
         return QUERY_ADJUST_LABEL;
     else if (query_rep_validate(packages, command_size))

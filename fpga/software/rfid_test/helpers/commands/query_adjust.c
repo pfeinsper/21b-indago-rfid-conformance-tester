@@ -1,8 +1,19 @@
+// -----------------------------------------
+// --            QUERY ADJUST             --
+// -- Projeto Final de Engenharia         --
+// -- Professor Orientador: Rafael Corsi  --
+// -- Orientador: Shephard                --
+// -- Alunos:                             --
+// -- 		Alexandre Edington            --
+// -- 		Bruno Domingues               --
+// -- 		Lucas Leal                    --
+// -- 		Rafael Santos                 --
+// -----------------------------------------
+
 #include "query_adjust.h"
 
-
 int query_adjust_command(command *query_adjust, unsigned char session,
-                       unsigned char updn)
+                         unsigned char updn)
 {
     query_adjust->result_data = 0;
 
@@ -11,7 +22,6 @@ int query_adjust_command(command *query_adjust, unsigned char session,
     query_adjust->result_data |= updn;
 
     query_adjust->size = QUERY_ADJUST_SIZE;
-
 }
 
 int query_adjust_validate(int packages[], int command_size)
