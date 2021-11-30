@@ -1,14 +1,14 @@
 # Firmware
 
-This section contains an explanation of the firmware/code of this project, which is centered around the NIOS II soft processor.
+This section contains an explanation of the firmware/code of this project, which is centered around the Nios II soft processor.
 
-## NIOS II
+## Nios II
 
-The NIOS II is a soft processor, which means that, unlike discrete processors, such as those in conventional computers, its peripherals and addressing can be reconfigured on demand. This enables the development of a specialized and efficient processor, reducing the costs and time of producing a prototype since i!t is dynamically generated inside the FPGA without the need to produce a new processor.
+The Nios II is a soft processor, which means that, unlike discrete processors, such as those in conventional computers, its peripherals and addressing can be reconfigured on demand. This enables the development of a specialized and efficient processor, reducing the costs and time of producing a prototype since i!t is dynamically generated inside the FPGA without the need to produce a new processor.
 
-Communication between the NIOS II and the peripheral IP core is done via the Avalon data bus, which is a memory-mapped peripheral. The addressing works as in a common memory, having write, read, and address signals, as well as the input and output vectors of this bus.
+Communication between the Nios II and the peripheral IP core is done via the Avalon data bus, which is a memory-mapped peripheral. The addressing works as in a common memory, having write, read, and address signals, as well as the input and output vectors of this bus.
 
-The NIOS II function is to write the commands and tests in the register banks present in the IP peripheral, so that it can communicate with the tag. This processor can be viewed as the conductor and all other components as the orchestra, as it is responsible for enabling, configuring, reading, and writing data from the Avalon memory to the IP core.
+The Nios II function is to write the commands and tests in the register banks present in the IP peripheral, so that it can communicate with the tag. This processor can be viewed as the conductor and all other components as the orchestra, as it is responsible for enabling, configuring, reading, and writing data from the Avalon memory to the IP core.
 
 Throughout this project, commands are separated into packages for ease of use. Details on how this is done can be found [here](hardware.md)
 
@@ -17,7 +17,7 @@ Throughout this project, commands are separated into packages for ease of use. D
 All necessary C and header files are located in the project’s `fpga/software/rfid_test` folder. The top entity of the entire processor including all the required configuration generics is main.c and all other relevant files are inside the helpers folder.
 
 ```
-main.c                   - NIOS II soft processor top entity
+main.c                   - Nios II soft processor top entity
 │
 └/helpers                - Holds all complimentary C files
     │
@@ -402,7 +402,7 @@ As mentioned in the Main Code subsection, there are a set of examples already im
 
 The chosen file to this walk-through is the [test_individual_commands_loopback.c](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/examples_of_main/test_individual_commands_loopback.c), because it is succinct and sufficient to evidence a simple communication in loopback mode.
 
-First, the header of the code brings all the necessary imports to this test, the IO is the NIOS II import that permits the communication with the IP core Interface, the System.h brings the functionalities of the FPGA followed by all the proprietary codes of functions and commands imports.Follows this header of the C code in the box below:
+First, the header of the code brings all the necessary imports to this test, the IO is the Nios II import that permits the communication with the IP core Interface, the System.h brings the functionalities of the FPGA followed by all the proprietary codes of functions and commands imports.Follows this header of the C code in the box below:
 
 ```C
 #include "io.h"

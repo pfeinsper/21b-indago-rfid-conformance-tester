@@ -10,7 +10,7 @@ Our implementation was done on a DE10-Standard Terasic FPGA and focuses on creat
 
 ![Reader diagram](./docs-src/hardware/reader.png)
 
- The first component is the NIOS II soft processor, which splits the commands into smaller packages (including data and mask), and sends them to the IP core so they can be encoded and sent. The processor is also responsible for interpreting the responses of the tag, after they have been decoded by the IP core.
+ The first component is the Nios II soft processor, which splits the commands into smaller packages (including data and mask), and sends them to the IP core so they can be encoded and sent. The processor is also responsible for interpreting the responses of the tag, after they have been decoded by the IP core.
  
 The packages are a method to easily deal with the variable sizes of the mandatory commands since there is no specification about their size in bits. More information on how this is done can be found on the hardware section of the GitHub-pages documentation.
 
