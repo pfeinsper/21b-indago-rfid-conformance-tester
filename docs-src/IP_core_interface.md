@@ -19,7 +19,7 @@ The IP core contains all the VHDL components of our projects, encompassing both 
 
 ## Avalon Interface
 
-The Avalon Interface, according to its developer Intel®[^1]: "Avalon® interfaces simplify system design by allowing you to easily connect components in Intel® FPGA. The Avalon interface family defines interfaces appropriate for streaming high-speed data, reading, and writing registers and memory, and controlling off-chip devices. Components available in Platform Designer incorporate these standard interfaces. Additionally, you can incorporate Avalon interfaces in custom components, enhancing the interoperability of designs.".
+The Avalon Interface, according to its developer Intel®: "Avalon® interfaces simplify system design by allowing you to easily connect components in Intel® FPGA. The Avalon interface family defines interfaces appropriate for streaming high-speed data, reading, and writing registers and memory, and controlling off-chip devices. Components available in Platform Designer incorporate these standard interfaces. Additionally, you can incorporate Avalon interfaces in custom components, enhancing the interoperability of designs.".
 
 In other words, it is possible to conclude from this excerpt that, in addition to enabling the connection between Intel® FPGA components, that once the interfaces are added to Platform Designer, they can connect custom components, which the group uses for the IP core in our product. All documentation for other possible interfaces and connection is present in the document “Avalon® Interface Specifications”.
 
@@ -252,7 +252,3 @@ The binary value above can be read in Hex as `0XFF0055FF`, and it is written to 
 |    0   |    1   |    0   |    1   |    0   |    1   |    0   |    1   |
 |  **7** |  **6** |  **5** |  **4** |  **3** |  **2** |  **1** |  **0** |
 |    1   |    1   |    1   |    1   |    1   |    1   |    1   |    1   |
-
-[^1]: Avalon® Interface Specifications.
-<https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu-nii5v1gen2.pdf>
-Accessed on: 23/09/2021
