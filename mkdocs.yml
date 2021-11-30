@@ -35,7 +35,7 @@ nav:
   - IP_core_interface.md
   - firmware.md
   - tests.md
-  - Doxygen: https://pfeinsper.github.io/21b-indago-rfid-conformance-tester/doxygen/annotated.html
+  - Doxygen: doxygen.md
   
 # Extensions
 markdown_extensions:
