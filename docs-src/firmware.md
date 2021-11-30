@@ -229,6 +229,8 @@ void crc_16_ccitt_init(void)
 ### Mandatory commands
 [/main/fpga/software/rfid_test/helpers/commands/](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/software/rfid_test/helpers/commands/)
 
+#### Table of commands 
+
 The Mandatory commands were already explained in the [Protocol EPC-GEN2 UHF RFID](index.md) subsection, so here in the Firmware page it will be presented just their status of implementation in the following table. The tested collumn stands for the commands that were sent and received properly, the Validated one means that the whole command was build according to the EPC-GEN2 protocol and functional means that it is also already intepreted correctly once sent or received by the tag or by the reader. The last collumn is the ToDo, which is the one that indicates if that especific command has a GitHub issue to be completed.
 
 
