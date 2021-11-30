@@ -4,7 +4,7 @@ This page is to give a brief description of the team responsible for the develop
 
 ## Alexandre Almeida Edington
 
-Computer engineering student in the 9th period, passionate about front-end development and user experience. Responsible for this project’s GitHub-pages and Doxygen documentation.
+Computer engineering student in the 9th period, passionate about front-end development and user experience. Mainly responsible for this project’s GitHub-pages and Doxygen documentation.
 
 ## Bruno Signorelli Domingues
 
@@ -12,8 +12,8 @@ Computer engineering student in the 8th semester, interested in backend and data
 
 ## Lucas Leal Vale
 
-Computer engineering student in the 8th period, Hardware enthusiast and passionate to it, interested in backend development. In this project responsible for the NIOS and software implementations.
+Computer engineering student in the 8th period, Hardware enthusiast and passionate to it, interested in backend development. Mainly responsible for the Nios soft processor and software implementations of this project.
 
 ## Rafael dos Santos
 
-Computer engineering student in the 8th period, interested in game development and hardware advances, was mainly responsible for the VHDL development in this project.
+Computer engineering student in the 8th period, interested in game development and hardware advances. Mainly responsible for the VHDL development in this project.
