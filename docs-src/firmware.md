@@ -229,14 +229,32 @@ void crc_16_ccitt_init(void)
 ### Mandatory commands
 [/main/fpga/software/rfid_test/helpers/commands/](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/software/rfid_test/helpers/commands/)
 
-The Mandatory commands were already explained in the [Protocol EPC-GEN2 UHF RFID](index.md) subsection, so here in the Firmware page it will be presented just their implamentation in plain C code. 
+The Mandatory commands were already explained in the [Protocol EPC-GEN2 UHF RFID](index.md) subsection, so here in the Firmware page it will be presented just their status of implementation in the following table. The tested collumn stands for the commands that were sent and received properly, the Validated one means that the whole command was build according to the EPC-GEN2 protocol and functional means that it is also already intepreted correctly once sent or received by the tag or by the reader. The last collumn is the ToDo, which is the one that indicates if that especific command has a GitHub issue to be completed.
 
-#### Ack
+
+|   commands   | tested | validated | functional | ToDo |
+|:------------:|:------:|:---------:|:----------:|:----:|
+|      Ack     |    x   |     x     |      x     |      |
+|     Kill     |    x   |           |            |   x  |
+|     Lock     |    x   |           |            |   x  |
+|      Nak     |    x   |     x     |      x     |      |
+|     Query    |    x   |     x     |      x     |      |
+| Query_adjust |    x   |     x     |      x     |      |
+|   Query_rep  |    x   |     x     |      x     |      |
+|     Read     |    x   |           |            |   x  |
+|    Req_rn    |    x   |     x     |      x     |      |
+|     Rn16     |    x   |     x     |      x     |   x  |
+|    Rn_crc    |    x   |     x     |      x     |      |
+|    Select    |    x   |           |            |   x  |
+|     Write    |    x   |           |            |   x  |
+
+#### Example of command build: The Ack command
 [/main/fpga/software/rfid_test/helpers/commands/ack.c](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/software/rfid_test/helpers/commands/ack.c)
 
-The Ack command was tested and validated and can be seen below:
+The Ack command was fully implemented and it`s code can be seen in the box below:
 
 ```c
+
 #include "ack.h"
 
 void ack_build(command *ack, int rn)
@@ -260,233 +278,8 @@ int ack_validate(int packages[], int command_size)
 
     return 1;
 }
-
 ```
 
-#### Kill
-[/main/fpga/software/rfid_test/helpers/commands/kill.c](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/software/rfid_test/helpers/commands/kill.c)
-
-The kill command was tested but not validated, which means that it was not tested in a full comunication between two fpgas, in whose it was supposed to stop it.
-What we have done is built it and checked if it was beying sent properly. It has an Issue in the GitHub to be completed.
-
-```c
-#include "kill.h"
-
-void kill_build(command *kill, unsigned short password, unsigned char rfu,
-               unsigned short rn, unsigned short crc)
-{
-    kill->result_data = 0;
-
-    kill->result_data |= (KILL_COMMAND << 51);
-    kill->result_data |= (password << 35);
-    kill->result_data |= (rfu << 32);
-    kill->result_data |= (rn << 16);
-    kill->result_data |= crc;
-
-    kill->size = KILL_SIZE;
-}
-
-int kill_validate(int packages[], int command_size)
-{
-    if (command_size != KILL_SIZE && command_size != KILL_SIZE + 1)
-        return 0;
-
-    // | packages[2] |            packages[1]           | packages[0] |
-    // |   command   | command |   password | rfu | rn  |  rn  | crc  |
-    // |     X*7     |    X    |    X*16    | X*3 | X*6 | X*10 | X*16 |
-
-    int command = ((packages[2] & 0xEF) << 1) | ((packages[1] >> 25) & 0x01);
-
-    if (command != KILL_COMMAND)
-        return 0;
-
-    int crc = packages[0] & 0xFFFF;
-
-    return 1;
-}
-
-```
-
-#### Lock
-[/main/fpga/software/rfid_test/helpers/commands/lock.c](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/software/rfid_test/helpers/commands/lock.c)
-
-As much as the kill command the lock was implamented and its send was tested, but its actual function was not yet tested and also its validation is to be done in a GitHub issue.
-
-```c
-#include "lock.h"
-
-void lock_build(command *lock, unsigned int payload, unsigned short rn,
-               unsigned short crc)
-{
-    lock->result_data = 0;
-
-    lock->result_data |= (LOCK_COMMAND << 52);
-    lock->result_data |= (payload << 32);
-    lock->result_data |= (rn << 16);
-    lock->result_data |= crc;
-
-    lock->size = LOCK_SIZE;
-
-}
-
-int lock_validate(int packages_vector[], int command_size){
-    //TODO: validate
-    
-    return 0;
-}
-
-```
-
-#### Nak
-[/main/fpga/software/rfid_test/helpers/commands/nak.c](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/software/rfid_test/helpers/commands/nak.c)
-
-The Nak, as much as the Ack command, is fully implemented and tested. It can be seen bellow:
-
-```c
-#include "nak.h"
-
-void nak_build(command *nak)
-{
-    nak->result_data = NAK_COMMAND;
-    nak->size = NAK_SIZE;
-}
-
-int nak_validate(int *packages, int command_size)
-{
-    if (command_size != NAK_SIZE && command_size != NAK_SIZE + 1)
-        return 0;
-
-    // | packages[0] |
-    // |   command   |
-    // |     X*8     |
-
-    int command = packages[0] & 0xFF;
-    if (command != NAK_COMMAND)
-        return 0;
-
-    return 1;
-}
-
-
-```
-
-
-#### Query
-[/main/fpga/software/rfid_test/helpers/commands/query.c](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/software/rfid_test/helpers/commands/query.c)
-The Query, as much as the Ack command, is fully implemented and tested. It can be seen bellow:
-```c
-#include "query.h"
-
-void query_build(command *query, unsigned char dr, unsigned char m,
-                unsigned char trext, unsigned char sel, unsigned char session,
-                unsigned char target, unsigned char q)
-{
-    query->result_data = 0;
-
-    query->result_data |= (QUERY_COMMAND << 13);
-    query->result_data |= (dr << 12);
-    query->result_data |= (m << 10);
-    query->result_data |= (trext << 9);
-    query->result_data |= (sel << 7);
-    query->result_data |= (session << 5);
-    query->result_data |= (target << 4);
-    query->result_data |= q;
-
-    const int crc = crc5(query->result_data);
-
-    query->result_data <<= 5;
-    query->result_data |= crc;
-
-    query->size = QUERY_SIZE;
-}
-
-int query_validate(int packages[], int command_size)
-{
-    if (command_size != QUERY_SIZE && command_size != QUERY_SIZE + 1)
-        return 0;
-
-    // |                           packages[0]                           |
-    // | command | dr |  m  | trext | sel | session | target |  q  | crc |
-    // |   X*4   | X  | X*2 |   X   | X*2 |   X*2   |    X   | X*4 | X*5 |
-
-    int command = (packages[0] >> 18) & 0xF;
-    if (command != QUERY_COMMAND)
-        return 0;
-
-    int crc = packages[0] & 0x1F;
-    int without_crc = packages[0] >> 5;
-    int crc_calculated = crc5(without_crc);
-    if (crc != crc_calculated)
-        return 0;
-
-    return 1;
-}
-
-```
-
-
-#### Query_adjust
-[/main/fpga/software/rfid_test/helpers/commands/query_adjust.c](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/software/rfid_test/helpers/commands/query_adjust.c)
-
-```c
-
-```
-
-
-#### Query_rep
-[/main/fpga/software/rfid_test/helpers/commands/nak.c](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/software/rfid_test/helpers/commands/nak.c)
-
-```c
-
-```
-
-
-#### Read
-[/main/fpga/software/rfid_test/helpers/commands/read.c](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/software/rfid_test/helpers/commands/read.c)
-
-```c
-
-```
-
-
-#### Req_rn
-[/main/fpga/software/rfid_test/helpers/commands/req_rn.c](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/software/rfid_test/helpers/commands/req_rn.c)
-
-```c
-
-```
-
-
-#### Rn16
-[/main/fpga/software/rfid_test/helpers/commands/rn16.c](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/software/rfid_test/helpers/commands/rn16.c)
-
-```c
-
-```
-
-
-#### Rn_crc
-[/main/fpga/software/rfid_test/helpers/commands/rn_crc.c](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/software/rfid_test/helpers/commands/rn_crc.c)
-
-```c
-
-```
-
-
-#### Select
-[/main/fpga/software/rfid_test/helpers/commands/select.c](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/software/rfid_test/helpers/commands/select.c)
-
-```c
-
-```
-
-
-#### Write
-[/main/fpga/software/rfid_test/helpers/commands/write.c](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/software/rfid_test/helpers/commands/write.c)
-
-```c
-
-```
 
 
 ## Functions
