@@ -83,7 +83,7 @@ Custom commands may be enabled in conformance with the protocol but are not spec
 
 #### Handshake
 
-The diagram below can be found in annex E of the EPC-GEN2 documentation and represents the Hand-shake between reader and tag.
+The diagram below can be found in annex E of the EPC-GEN2 documentation and represents the handshake between reader and tag.
 
 ![Handshake diagram](./index/handshake.png)
 *EPC UHF Gen2 Air Interface Protocol, p 138*
@@ -92,11 +92,13 @@ The reader sends a `Query` (1), to start an inventory round with the tag. Upon r
 
 #### Tari
 
-The reference time interval for a data-0 in reader to tag signaling. The acronym TARI derives from Type A Reference Interval.
+The reference time interval for a package in the reader to be sent to the tag. The acronym TARI derives from Type A Reference Interval.
 
 According to the EPC-GEN2 protocol, section 6.3.1.2.4, p 27:
 
 > *Interrogators shall communicate using Tari values in the range of 6.25μs to 25μs. Interrogator compliance shall be evaluated using at least one Tari value between 6.25μs and 25μs with at least one value of the parameter x. The tolerance on all parameters specified in units of Tari shall be +/–1%. The choice of Tari value and x shall be in accordance with local radio regulations.*
+
+This time reference dictates the whole communication and garantees it's conformance.
 
 ### State-of-the-Art Review
 
@@ -154,7 +156,7 @@ The day-to-day communication between the members were done through Discord[^11],
 
 Documents and reports were produced and stored in Google Drive[^13], so that multiple members could work on them simultaneously, and also be accessed by the professor to provide insights and feedback. It also served as another backup storage to the Github repository, in case any problems occurred.
 
-The programming languages VHDL and C were used throughout the project, and the Intel® Quartus® Prime FPGA Design Software[^14] was used in conjunction with the Nios II Software Build Tools for Eclipse[^15] plugin, which supports simulations and tests that assisted in the development process, as well as the ModelSim*-Intel® FPGA Edition Software[^16], widely used for tsting VHDL component codes. As the client specified that he wanted the project to be open-source, all code, reports and images relevant to this will also be available on the project’s public GitHub repository.
+The programming languages VHDL and C were used throughout the project, and the Intel® Quartus® Prime FPGA Design Software[^14] was used in conjunction with the Nios II Software Build Tools for Eclipse[^15] plugin, which supports simulations and tests that assisted in the development process, as well as the ModelSim*-Intel® FPGA Edition Software[^16], widely used for testing VHDL component codes. As the client specified that he wanted the project to be open-source, all code, reports and images relevant to this will also be available on the project’s public GitHub repository.
 
 Considering the project consists of the creation of a conformance tester for the EPC-GEN2 UHF RFID protocol, its documentation was widely used, researched, and discussed by all members of the group during the project, focusing mainly on the communication sections between the reader and tag, as well as encoding data, and mandatory commands for protocol standards.
 
