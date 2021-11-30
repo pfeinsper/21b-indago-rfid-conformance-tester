@@ -1,3 +1,15 @@
+// -----------------------------------------
+// --               SENDER                --
+// -- Projeto Final de Engenharia         --
+// -- Professor Orientador: Rafael Corsi  --
+// -- Orientador: Shephard                --
+// -- Alunos:                             --
+// -- 		Alexandre Edington            --
+// -- 		Bruno Domingues               --
+// -- 		Lucas Leal                    --
+// -- 		Rafael Santos                 --
+// -----------------------------------------
+
 #ifndef SENDER_H
 #define SENDER_H
 
@@ -23,7 +35,7 @@ void sender_write_clr_finished_sending(void);
 
 int sender_read_finished_send(void);
 
-void sender_add_mask(int , int[], unsigned long long*, unsigned int);
+void sender_add_mask(int, int[], unsigned long long *, unsigned int);
 
 int sender_get_command_ints_size(int);
 
@@ -31,6 +43,6 @@ void sender_has_gen(int);
 
 void sender_is_preamble(void);
 
-void sender_send_command(command*);
+void sender_send_command(command *);
 
 #endif /* SENDER_H */

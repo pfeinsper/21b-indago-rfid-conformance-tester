@@ -1,10 +1,21 @@
+// -----------------------------------------
+// --               SELECT                --
+// -- Projeto Final de Engenharia         --
+// -- Professor Orientador: Rafael Corsi  --
+// -- Orientador: Shephard                --
+// -- Alunos:                             --
+// -- 		Alexandre Edington            --
+// -- 		Bruno Domingues               --
+// -- 		Lucas Leal                    --
+// -- 		Rafael Santos                 --
+// -----------------------------------------
+
 #include "select.h"
 
-
 void select_build(command *select, unsigned char target, unsigned char action,
-                 unsigned char mem_bank, unsigned char pointer,
-                 unsigned char length, unsigned char mask,
-                 unsigned char truncate, unsigned short crc)
+                  unsigned char mem_bank, unsigned char pointer,
+                  unsigned char length, unsigned char mask,
+                  unsigned char truncate, unsigned short crc)
 {
     select->result_data = 0;
 
@@ -19,7 +30,6 @@ void select_build(command *select, unsigned char target, unsigned char action,
     select->result_data |= crc;
 
     select->size = SELECT_SIZE;
-
 }
 
 int select_validate(int packages[], int command_size)
@@ -29,6 +39,7 @@ int select_validate(int packages[], int command_size)
 
     // | command | target | action | mem_bank | pointer | length | mask | truncate | crc  |
     // |   X*4   |   X*3  |   X*3  |    X*2   |  X*EBV  |   X*8  |  X*? |    X*1   | X*16 |
+    // mask has variable size
 
     // TODO: implement select_validate
 

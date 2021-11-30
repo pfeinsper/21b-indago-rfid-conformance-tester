@@ -1,3 +1,15 @@
+// -----------------------------------------
+// --               SELECT                --
+// -- Projeto Final de Engenharia         --
+// -- Professor Orientador: Rafael Corsi  --
+// -- Orientador: Shephard                --
+// -- Alunos:                             --
+// -- 		Alexandre Edington            --
+// -- 		Bruno Domingues               --
+// -- 		Lucas Leal                    --
+// -- 		Rafael Santos                 --
+// -----------------------------------------
+
 #ifndef SELECT_H
 #define SELECT_H
 
@@ -7,9 +19,9 @@
 #define SELECT_SIZE 44
 
 void select_build(command *select, unsigned char target, unsigned char action,
-                 unsigned char mem_bank, unsigned char pointer,
-                 unsigned char length, unsigned char mask,
-                 unsigned char truncate, unsigned short crc);
+                  unsigned char mem_bank, unsigned char pointer,
+                  unsigned char length, unsigned char mask,
+                  unsigned char truncate, unsigned short crc);
 
 int select_validate(int packages[], int command_size);
 

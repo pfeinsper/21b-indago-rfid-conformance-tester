@@ -1,3 +1,15 @@
+// -----------------------------------------
+// --              COMMANDS               --
+// -- Projeto Final de Engenharia         --
+// -- Professor Orientador: Rafael Corsi  --
+// -- Orientador: Shephard                --
+// -- Alunos:                             --
+// -- 		Alexandre Edington            --
+// -- 		Bruno Domingues               --
+// -- 		Lucas Leal                    --
+// -- 		Rafael Santos                 --
+// -----------------------------------------
+
 // Mandatory Commands
 #include "query_rep.h"
 #include "ack.h"

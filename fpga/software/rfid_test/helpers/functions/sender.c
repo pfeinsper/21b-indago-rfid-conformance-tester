@@ -1,3 +1,15 @@
+// -----------------------------------------
+// --               SENDER                --
+// -- Projeto Final de Engenharia         --
+// -- Professor Orientador: Rafael Corsi  --
+// -- Orientador: Shephard                --
+// -- Alunos:                             --
+// -- 		Alexandre Edington            --
+// -- 		Bruno Domingues               --
+// -- 		Lucas Leal                    --
+// -- 		Rafael Santos                 --
+// -----------------------------------------
+
 #include "sender.h"
 
 // SENDER -----------------------------------------------------------------------------------------------------------
@@ -85,7 +97,9 @@ void sender_send_command(command *command_ptr)
     // WAITING FOR FIFO AND THEN SENDING PACKAGES
     for (int i = 0; i < size_with_mask; i++)
     {
-        while (sender_check_fifo_full()){}
+        while (sender_check_fifo_full())
+        {
+        }
         sender_send_package(command_vector[i]);
     }
 
@@ -93,7 +107,9 @@ void sender_send_command(command *command_ptr)
 
     sender_start_ctrl();
 
-    while(!sender_read_finished_send()){}
+    while (!sender_read_finished_send())
+    {
+    }
 
     sender_write_clr_finished_sending();
 }

@@ -1,3 +1,15 @@
+// -----------------------------------------
+// --                QUERY                --
+// -- Projeto Final de Engenharia         --
+// -- Professor Orientador: Rafael Corsi  --
+// -- Orientador: Shephard                --
+// -- Alunos:                             --
+// -- 		Alexandre Edington            --
+// -- 		Bruno Domingues               --
+// -- 		Lucas Leal                    --
+// -- 		Rafael Santos                 --
+// -----------------------------------------
+
 #ifndef QUERY_H
 #define QUERY_H
 
@@ -9,8 +21,8 @@
 #define QUERY_SIZE 22
 
 void query_build(command *query, unsigned char dr, unsigned char m,
-                unsigned char trext, unsigned char sel, unsigned char session,
-                unsigned char target, unsigned char q);
+                 unsigned char trext, unsigned char sel, unsigned char session,
+                 unsigned char target, unsigned char q);
 
 int query_validate(int packages[], int command_size);
 

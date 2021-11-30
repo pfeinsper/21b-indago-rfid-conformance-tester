@@ -1,3 +1,15 @@
+// -----------------------------------------
+// --               READER                --
+// -- Projeto Final de Engenharia         --
+// -- Professor Orientador: Rafael Corsi  --
+// -- Orientador: Shephard                --
+// -- Alunos:                             --
+// -- 		Alexandre Edington            --
+// -- 		Bruno Domingues               --
+// -- 		Lucas Leal                    --
+// -- 		Rafael Santos                 --
+// -----------------------------------------
+
 #include "io.h"
 #include "system.h"
 #include "stdint.h"
@@ -9,11 +21,11 @@
 int main()
 {
     // Time parameters
-    int tari_100  = rfid_tari_2_clock(10e-6, FREQUENCY);
-	int pw        = rfid_tari_2_clock(5e-6, FREQUENCY);
-	int delimiter = rfid_tari_2_clock(62.5e-6, FREQUENCY);
-	int RTcal     = rfid_tari_2_clock(135e-6, FREQUENCY);
-	int TRcal     = rfid_tari_2_clock(135e-6, FREQUENCY);
+    int tari_100 = rfid_tari_2_clock(10e-6, FREQUENCY);
+    int pw = rfid_tari_2_clock(5e-6, FREQUENCY);
+    int delimiter = rfid_tari_2_clock(62.5e-6, FREQUENCY);
+    int RTcal = rfid_tari_2_clock(135e-6, FREQUENCY);
+    int TRcal = rfid_tari_2_clock(135e-6, FREQUENCY);
     //configurations------------------------------------------------------------------------------
     rfid_set_loopback();
     rfid_set_tari(tari_100);
@@ -24,12 +36,11 @@ int main()
     sender_has_gen(0);
     //sender_is_preamble(); // NOTE: enable this function if implementing RFID tech
 
-
     printf("IP connected ID is: %04X , also starting handshake\n", rfid_get_ip_id());
     printf("==============================\n");
     printf("==          READER          ==\n");
     printf("==============================\n");
-    
+
     // HANDSHAKE EXAMPLE READER -----------------------------------------------------------------------
     // SEND A QUERY ----------------------------------------------------------------------------------
 
@@ -68,7 +79,6 @@ int main()
     printf("found RN16_LABEL\n");
     int RN16 = pack_rn[0] & 0xFF;
     printf("RN16 is: %X\n\n", RN16);
-
 
     // SEND AN ACK ------------------------------------------------------------------------------
     command ack;
@@ -125,7 +135,7 @@ int main()
         return 1;
     }
 
-    printf("found RN_CRC_LABEL\n\n"); 
+    printf("found RN_CRC_LABEL\n\n");
     int handle = ((pack_handle[1] & 0x3F) << 10) | ((pack_handle[0] >> 16) & 0x3FF);
     printf("handle is: %X\n", handle);
 

@@ -54,7 +54,7 @@ Additional information on the EPC-GEN2 protocol and mandatory commands (as well 
 
 The software is developed to be easy to understand, it calls single responsibility functions, defines and commands structures from the /helpers folder which are granted by the higher level code. These features are all called in the main.c code, which is responsible for the control and monitoring of the IP core. 
 
-In the main code the user can choose which commands they want to send to the TAG, to see if it responds properly according to the EPC-GEN2 protocol. Also It is possible to make timing tests by varying the Tari values, to check if the Tag will respond accordingly. This also permits the user to implement new commands such as propertary or custom ones.
+In the main code the user can choose which commands they want to send to the TAG, to see if it responds properly according to the EPC-GEN2 protocol. Also It is possible to make timing tests by varying the Tari values, to check if the Tag will respond accordingly. This also permits the user to implement new commands such as proprietary or custom ones.
 
 The group has prepared a set of examples in which this code will be used by the final user. For example, if the user wants to test it's reader or even make a simulation in ModelSim, they must copy the file loopback_handshake.c from the folder ./examples_of_main to the main code located [here](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/software/rfid_test/main.c). By executing this code inside the main, what the user will be able to see and test will be shown later in the section Example of Main code. This folder can be found [here](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/tree/main/fpga/example_of_main).
 
@@ -62,12 +62,12 @@ Besides the [loopback_handshake.c](https://github.com/pfeinsper/21b-indago-rfid-
  the others examples of main codes are the [reader.c](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/examples_of_main/reader.c)
 , the [tag.c](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/examples_of_main/tag.c)
  and the [test_individual_commands_loopback.c](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/examples_of_main/test_individual_commands_loopback.c)
- which are variations that are capable, respectivily, of making the job of a Reader or emulating a Tag and even testing the send and receive of a single command in a single fpga.
+ which are variations that are capable, respectively, of making the job of a Reader or emulating a Tag and even testing the send and receive of a single command in a single fpga.
 
 
 ## Config.h - Starting Variables
 
-Inside the /helpers folder the first group to be explained are the defines that declares the adresses in which the previous page, IP core Interface, acts. IN this file there are also defines that store default values for package, command and mask sizes. Those defines are in more details right bellow.
+Inside the /helpers folder the first group to be explained are the defines that declares the addresses in which the previous page, IP core Interface, acts. IN this file there are also defines that store default values for package, command and mask sizes. Those defines are in more detail right below.
 
 #### Register Status
 
@@ -141,8 +141,8 @@ define BASE_ID             (7)
 - `BASE_REG_TARI_1584`  - W   - address of tari_1584
 - `BASE_REG_PW`         - W   - address of pw
 - `BASE_REG_DELIMITER`  - W   - address of delimiter
-- `BASE_REG_RTCAL`      - W   - address of receiver transmitter callibration
-- `BASE_REG_TRCAL`      - W   - address of transmitter receiver callibrtation
+- `BASE_REG_RTCAL`      - W   - address of receiver transmitter calibration
+- `BASE_REG_TRCAL`      - W   - address of transmitter receiver calibration
 - `BASE_REG_STATUS`     - R   - address of `REGISTER_STATUS`
 - `BASE_RECEIVER_DATA`  - R   - address of receiver data
 - `BASE_SENDER_USEDW`   - R   - address of `sender_FIFO_actual_size`
@@ -171,15 +171,15 @@ define bits32              (0xFFFFFFFF)
 ## Commands
 [/main/fpga/software/rfid_test/helpers/commands](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/tree/main/fpga/software/rfid_test/helpers/commands)
 
-As described in the Mandatory Commands subsection inside the [Project Overview](index.md) page, the group has implemented all the mandatory commands, a couple of them still need to be validated, but the ones that are necessary for a full handshake are both implamented and deeply tested.
+As described in the Mandatory Commands subsection inside the [Project Overview](index.md) page, the group has implemented all the mandatory commands, a couple of them still need to be validated, but the ones that are necessary for a full handshake are both implemented and deeply tested.
 
 ### Command Struct and CRC
-Both the Command Struct and the CRC files are not together with the rest of the commands, because they are not exactly commands they actualy are part of the build of each command depending on the demands of the protocol.
+Both the Command Struct and the CRC files are not together with the rest of the commands, because they are not exactly commands they actually are part of the build of each command depending on the demands of the protocol.
 
 #### Command Struct
 [/main/fpga/software/rfid_test/helpers/commands/command_struct.h](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/software/rfid_test/helpers/commands/command_struct.h)
 
-The first, is the Command Struct which stablishes the base struct that every command will have in common. Which is composed by the commands size and data. It can be seen in the box bellow.
+The first, is the Command Struct which establishes the base struct that every command will have in common. Which is composed by the commands size and data. It can be seen in the box below.
 ```c
 typedef struct
 {
@@ -190,9 +190,9 @@ typedef struct
 #### Cyclic Redundancy Check - CRC-5/CRC-16
 [/main/fpga/software/rfid_test/helpers/commands/crc.c](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/software/rfid_test/helpers/commands/crc.c)
 
-Secondely, the  CRC code was added by the previous group. It comes from the BarrGroup, a verified hardware site, which is coted and documented properly inside the file. 
+Secondly, the  CRC code was added by the previous group. It comes from the BarrGroup, a verified hardware site, which is cited and documented properly inside the file. 
 
-The CRC implemented by them, in the C language, is the same that the EPC-GEN2 documentation requires and as it is an Open Source code, just like this project, the group maintened and make use of it. 
+The CRC implemented by them, in the C language, is the same that the EPC-GEN2 documentation requires and as it is an Open Source code, just like this project, the group maintained and made use of it. 
 
 Follows a CRC-16 example:
 
@@ -234,7 +234,7 @@ void crc_16_ccitt_init(void)
 
 #### Table of commands 
 
-The Mandatory commands were already explained in the [Protocol EPC-GEN2 UHF RFID](index.md) subsection, so here in the Firmware page it will be presented just their status of implementation in the following table. The tested collumn stands for the commands that were sent and received properly, the Validated one means that the whole command was build according to the EPC-GEN2 protocol and functional means that it is also already intepreted correctly once sent or received by the tag or by the reader. The last collumn is the ToDo, which is the one that indicates if that especific command has a GitHub issue to be completed.
+The Mandatory commands were already explained in the [Protocol EPC-GEN2 UHF RFID](index.md) subsection, so here in the Firmware page it will be presented just their status of implementation in the following table. The tested column stands for the commands that were sent and received properly, the Validated one means that the whole command was built according to the EPC-GEN2 protocol and functional means that it is also already interpreted correctly once sent or received by the tag or by the reader. The last column is the ToDo, which is the one that indicates if that specific command has a GitHub issue to be completed.
 
 
 |   commands   | tested | validated | functional | ToDo |
@@ -292,7 +292,7 @@ int ack_validate(int packages[], int command_size)
 ### Main.c - Start of Communication Values
 [/main/fpga/examples_of_main/](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/examples_of_main/)
 
-In each variation of the main code present inside the folder examples_of_main, a sample of code is common between them all and it is the set of all the time parameters metioned in the Signal Generator section inside the [Hardware page](hardware.md). 
+In each variation of the main code present inside the folder examples_of_main, a sample of code is common between them all and it is the set of all the time parameters mentioned in the Signal Generator section inside the [Hardware page](hardware.md). 
 
 ```C
 int tari_100  = rfid_tari_2_clock(10e-6, FREQUENCY);
@@ -305,14 +305,14 @@ int TRcal     = rfid_tari_2_clock(135e-6, FREQUENCY);
 - `tari_100`    - tari time parameter
 - `pw`          - pw parameter
 - `delimiter`   - Delimiter parameter
-- `RTcal`       - Receiver transmitter callibration parameter
-- `TRcal`       - Transmitter receiver callibration parameter
+- `RTcal`       - Receiver transmitter calibration parameter
+- `TRcal`       - Transmitter receiver calibration parameter
 
 ### RFID.c
 
 [/main/fpga/software/rfid_test/helpers/functions/rfid.c](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/software/rfid_test/helpers/functions/rfid.c)
 
-The RFID code comes first in use inside the main, because it stores the functions that set all the needed parameters to the test to be launched. Such as functions that set the time parameters, functions that help with mask translations and the ones that check if an answer received is a valid command. They are all discribed bellow:  
+The RFID code comes first in use inside the main, because it stores the functions that set all the needed parameters to the test to be launched. Such as functions that set the time parameters, functions that help with mask translations and the ones that check if an answer received is a valid command. They are all described below:  
 
 #### RFID functions
 
@@ -337,7 +337,7 @@ int rfid_get_ip_id()
 
 [/main/fpga/software/rfid_test/helpers/functions/sender.c](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/software/rfid_test/helpers/functions/sender.c)
 
-This file is responsible for the functions of control of the Sender peripheral, it has the functions that enable the peripheral, the ones that prepares the commands in the proper format to be sent to the TAG and also the one that actually sends it. for more information they are presented bellow:
+This file is responsible for the functions of control of the Sender peripheral, it has the functions that enable the peripheral, the ones that prepares the commands in the proper format to be sent to the TAG and also the one that actually sends it. for more information they are presented below:
 
 #### SENDER functions
 
@@ -358,7 +358,7 @@ void sender_send_command(command *command_ptr)
 ```
 
 - `sender_check_usedw` - Access the address that indicates how many packages are in the sender FIFO
-- `sender_check_fifo_full` - Access `REG_STATUS` to verify wether the FIFO is full or not
+- `sender_check_fifo_full` - Access `REG_STATUS` to verify whether the FIFO is full or not
 - `sender_enable` - Access `REG_SET` to activate the peripheral Sender on the IP core
 - `sender_send_package` - Writes the package on the FIFO address
 - `sender_send_end_of_package` - Writes the EOP on the FIFO address
@@ -368,7 +368,7 @@ void sender_send_command(command *command_ptr)
 - `sender_get_command_ints_size` - Check the size of the command and calculates the size of each smaller package
 - `sender_add_mask` - Divides the command into smaller packages if needed and generates a mask based on the current package data size
 - `sender_has_gen` - Access `REG_SET` to define wether the generator should be activated
-- `sender_is_preamble` - If the generator is activated, defines if the generator is a preamble or a framesync
+- `sender_is_preamble` - If the generator is activated, defines if the generator is a preamble or a frame sync
 - `sender_send_command` - Runs the all the functions related to the command, going through all the steps necessary to split in packages, add the masks, send and clear the flag registers in the end
 
 
@@ -376,7 +376,7 @@ void sender_send_command(command *command_ptr)
 
 [/main/fpga/software/rfid_test/helpers/functions/receiver.c](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/software/rfid_test/helpers/functions/receiver.c)
 
-This section of code stores all the functions necessary to retrieve data from the IP core, which is composed by the functions that enable the peripheral Receiver, the ones that check the fifo for data and also the ones that request a new package. As the previous two, they are all discribed bellow:
+This section of code stores all the functions necessary to retrieve data from the IP core, which is composed by the functions that enable the peripheral Receiver, the ones that check the fifo for data and also the ones that request a new package. As the previous two, they are all described below:
 
 #### RECEIVER functions
 
@@ -401,9 +401,9 @@ void receiver_get_package(int *command_vector, int quant_packages, int *command_
 As mentioned in the Main Code subsection, there are a set of examples already implemented in which the  user can work on tests and communication between reader and tag. All those files are located in the 
 [examples_of_main](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/tree/main/fpga/examples_of_main) folder and in this section a walk-through the code will be described so that the functionality of the project can be clarified.
 
-The chosen file to this walk-through is the [test_individual_commands_loopback.c](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/examples_of_main/test_individual_commands_loopback.c), because it is succint and sufficient to evidence a simple comunication in loopback mode.
+The chosen file to this walk-through is the [test_individual_commands_loopback.c](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/examples_of_main/test_individual_commands_loopback.c), because it is succinct and sufficient to evidence a simple communication in loopback mode.
 
-First, the header of the code brings all the necessary imports to this test, the IO is the NIOS II import that permits the comunication with the IP core Interface, the System.h brings the functionalites of the FPGA followed by all the proprietary codes of functions and commands imports.Follows this header of the C code in the box bellow:
+First, the header of the code brings all the necessary imports to this test, the IO is the NIOS II import that permits the communication with the IP core Interface, the System.h brings the functionalities of the FPGA followed by all the proprietary codes of functions and commands imports.Follows this header of the C code in the box below:
 
 ```c
 #include "io.h"
@@ -414,7 +414,7 @@ First, the header of the code brings all the necessary imports to this test, the
 #include "stdio.h"
 #include "helpers/config.h"
 ```
-Sencond, now inside the main function, there is the setting of the enviroment, in which the time parameters are calculate, followed by the definition of the looback function that indicates a test with the same fpga and the set of the [signal generator](hardware.md).
+Sencond, now inside the main function, there is the setting of the environment, in which the time parameters are calculated, followed by the definition of the loopback function that indicates a test with the same fpga and the set of the [signal generator](hardware.md).
 Also in this sample the peripherals sender and receiver are being enabled, as both of them will be needed. 
 
 ```c
@@ -436,9 +436,9 @@ Also in this sample the peripherals sender and receiver are being enabled, as bo
 
 ```
 
-A disclameir about the sender_is_preamble, which is responsible, as mentioned in the sender functions subsection, to the signal generator is that it is muted in the code because the team did not implemented the radio frequency part of the project as accorded before with the professor and the mentor, but once it is implemented the necessary preamble or frame-sync is ready for use.  
+A disclaimer about the sender_is_preamble, which is responsible, as mentioned in the sender functions subsection, to the signal generator is that it is muted in the code because the team did not implemented the radio frequency part of the project as accorded before with the professor and the mentor, but once it is implemented the necessary preamble or frame-sync is ready for use.  
 
-Now it is necessary to send the disired command to be tested and validated. So in the following sample a Ack command will be built and sended. 
+Now it is necessary to send the desired command to be tested and validated. So in the following sample a Ack command will be built and sended. 
 
 ```c
     printf("==============================\n");
@@ -460,9 +460,9 @@ Now it is necessary to send the disired command to be tested and validated. So i
 
 ```
 
-The Ack command, also needs a random number in it`s built that is why it was also instantiated.
+The Ack command also needs a random number in it`s built that is why it was also instantiated.
 
-Last, it is necessary to read the IP core for the sended previous command, so the following box of code is responsibel to retrieve that data from the IP.
+Last, it is necessary to read the IP core for the sended previous command, so the following box of code is responsible to retrieve that data from the IP.
 
 ```c
     int quant_packages = 3;
@@ -484,4 +484,4 @@ Last, it is necessary to read the IP core for the sended previous command, so th
 
 Wrapping all this code a command shall be sent, received and also validated.  
 
-For more informantion on how to run it and get the outputs for it see the Testing / Running section of the [Getting Started](getting_started.md) page.
+For more information on how to run it and get the outputs for it see the Testing / Running section of the [Getting Started](getting_started.md) page.

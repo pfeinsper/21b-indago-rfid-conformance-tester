@@ -1,7 +1,19 @@
+// -----------------------------------------
+// --                KILL                 --
+// -- Projeto Final de Engenharia         --
+// -- Professor Orientador: Rafael Corsi  --
+// -- Orientador: Shephard                --
+// -- Alunos:                             --
+// -- 		Alexandre Edington            --
+// -- 		Bruno Domingues               --
+// -- 		Lucas Leal                    --
+// -- 		Rafael Santos                 --
+// -----------------------------------------
+
 #include "kill.h"
 
 void kill_build(command *kill, unsigned short password, unsigned char rfu,
-               unsigned short rn, unsigned short crc)
+                unsigned short rn, unsigned short crc)
 {
     kill->result_data = 0;
 

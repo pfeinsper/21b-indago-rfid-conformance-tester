@@ -1,3 +1,15 @@
+// -----------------------------------------
+// --               REQ RN                --
+// -- Projeto Final de Engenharia         --
+// -- Professor Orientador: Rafael Corsi  --
+// -- Orientador: Shephard                --
+// -- Alunos:                             --
+// -- 		Alexandre Edington            --
+// -- 		Bruno Domingues               --
+// -- 		Lucas Leal                    --
+// -- 		Rafael Santos                 --
+// -----------------------------------------
+
 #include "req_rn.h"
 
 void req_rn_build(command *req_rn_ptr, int rn)
@@ -27,7 +39,6 @@ int req_rn_validate(int packages[], int command_size)
 
     const int crc = packages[0] & 0xFFFF;
     const int crc_calc = crc_16_ccitt(without_crc, 3);
-
 
     if (crc != crc_calc)
         return 0;
