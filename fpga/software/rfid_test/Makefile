@@ -142,7 +142,6 @@ ACDS_VERSION := 18.1
 ELF := rfid_test.elf
 
 # Paths to C, C++, and assembly source files.
-C_SRCS += hello_world.c
 C_SRCS += helpers/commands/ack.c
 C_SRCS += helpers/commands/kill.c
 C_SRCS += helpers/commands/lock.c
@@ -160,6 +159,7 @@ C_SRCS += helpers/commands/rn_crc.c
 C_SRCS += helpers/functions/receiver.c
 C_SRCS += helpers/functions/rfid.c
 C_SRCS += helpers/functions/sender.c
+C_SRCS += main.c
 CXX_SRCS :=
 ASM_SRCS :=
 
