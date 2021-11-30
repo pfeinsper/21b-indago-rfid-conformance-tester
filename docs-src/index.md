@@ -13,7 +13,7 @@
 
 ## About
 
-This project's objective is to develop an equipment capable of performing a series of tests on RFID tags, based on the communication protocol "EPC-GEN2 UHF RFID" [^1]. Such equipmment will be of value in simplifying the development of new tags that need to conform to the established protocol, being able to assert whether the tag satisfies the requirements of the aforementioned protocol, and also whether the tag itself is working as intended.
+This project's objective is to develop an equipment capable of performing a series of tests on RFID tags, based on the communication protocol "EPC-GEN2 UHF RFID" [^1]. Such equipment will be of value in simplifying the development of new tags that need to conform to the established protocol, being able to assert whether the tag satisfies the requirements of the aforementioned protocol, and also whether the tag itself is working as intended.
 
 [^1]: EPC UHF Gen2 Air Interface Protocol.
 <https://www.gs1.org/sites/default/files/docs/epc/Gen2_Protocol_Standard.pdf>
@@ -21,7 +21,7 @@ Accessed on: 16/08/2021.
 
 ### Insper
 
-This project was developed by four computer engineering students at "Insper Instituto de Ensino e Pesquisa" [^2], who worked together with "Indago Devices Inc." [^3]. As part of the engineering completion of course work, the students must choose between a variety of projects proposed by different companies one that attracts their interest. Once the groups and projects are settled, the students work together with a representative of the company who proposed the project in order to find and implement a solution. For each group of students there is also a professor advisor which aids the group with matters of communication, organization, meetings and project/report feedbacks.
+This project was developed by four computer engineering students at "Insper Instituto de Ensino e Pesquisa" [^2], who worked together with "Indago Devices Inc." [^3]. As part of the engineering completion of course work, the students must choose between a variety of projects proposed by different companies, choosing one that attracts their interest. Once the groups and projects are settled, the students work together with a representative of the company who proposed the project in order to find and implement a solution. For each group of students there is also a professor advisor which aids the group with matters of communication, organization, meetings and project/report feedbacks.
 
 [^2]: Insper Instituto de Ensino e Pesquisa.
 <https://www.insper.edu.br/>
@@ -33,7 +33,7 @@ Accessed on: 16/08/2021.
 
 ### Indago Devices Inc.
 
-Indago Devices Inc. is a startup that has its headquarters in the city of Birmingham, in the state of Alabama, US, and works in the field of development and study of electronics. Despite having few employees, it seeks to innovate in the electronics market, specifically in the development of systems that communicate through RFID.
+Indago Devices Inc. is a startup that has its headquarters in the city of Birmingham, Alabama, US, and works in the field of development and study of electronics. Despite having few employees, it seeks to innovate in the electronics market, specifically in the development of systems that communicate through RFID.
 
 They had already been conversing with Insper in the first half of 2021, with another group of students who planned to do a similar project. On the second half of 2021, they decided to follow up with a conformance tester to assist the development of RFID tags. One of the driving points of the project is that the currently existing solutions are proprietary, and there is no open-source alternative available for the RFID community. Hence, they opted to make one, so it could positively impact not only their company, but also the worldwide RFID development community.
 
@@ -118,7 +118,7 @@ Given these advantages, Indago Devices opted for a completely open-source produc
 
 The direct competitors of our project would be the previously mentioned products. However, as the team is aiming for an open-source solution, the project may attract users interested in a more accessible/customizable product.
 
-Another point mentioned by our mentor is that he also intends to use the project as study material for students at the University of North Carolina [^9], which consequently opens up possibilities for further expansion of the product.
+Another point mentioned by the mentor is that he also intends to use the project as study material for students at the University of North Carolina [^9], which consequently opens up possibilities for further expansion of the product.
 
 [^4]: Cisc Semiconductors.
 <https://www.cisc.at/>
@@ -148,19 +148,55 @@ Accessed on: 20/09/2021.
 
 During the first weeks of the project, the group settled on definitions and agreements on what would be the methodology used throughout the semester, as well as the different tools and softwares that would be used.
 
-The platform GitHub was chosen as the method for sharing the code between the group members and the teacher, as it can store many important files other than code files, such as diagrams and images the group would produce for the project. Another feature often used by the group is the creation of issues, which can help define and order the group’s next tasks and assign members to complete them.
+The platform GitHub[^10] was chosen as the method for sharing the code between the group members and the teacher, as it can store many important files other than code files, such as diagrams and images the group would produce for the project. Another feature often used by the group is the creation of issues, which can help define and order the group’s next tasks and assign members to complete them.
 
-The day-to-day communication between the members were done through Discord, and meetings with Indago’s representative/mentor or Insper's coordinators though Microsoft Teams. As meetings with the mentor were infrequent, taking place every fortnight, the group usually kept a list of questions and issues about the EPC-GEN2 protocol and the project in general so that the representative could provide some support.
+The day-to-day communication between the members were done through Discord[^11], and meetings with Indago’s representative/mentor or Insper's coordinators though Microsoft Teams[^12]. As meetings with the mentor were infrequent, taking place every fortnight, the group usually kept a list of questions and issues about the EPC-GEN2 protocol and the project in general so that the representative could provide some support.
 
-Documents and reports were produced and stored in Google Drive, so that multiple members could work on them simultaneously, and also be accessed by the teacher to provide insights and feedback. It also served as another backup storage to the Github repository, in case any problems occurred.
+Documents and reports were produced and stored in Google Drive[^13], so that multiple members could work on them simultaneously, and also be accessed by the teacher to provide insights and feedback. It also served as another backup storage to the Github repository, in case any problems occurred.
 
-The programming languages VHDL and C were used throughout the project, and the Quartus Prime Lite Edition Software was used in conjunction with the Nios II Software Build Tools for Eclipse plugin, which supports simulations and tests that assisted in the development process. As the client specified that he wanted the project to be open-source, all code, reports and images relevant to this will also be available on the project’s public GitHub repository.
+The programming languages VHDL and C were used throughout the project, and the Intel® Quartus® Prime FPGA Design Software[^14] was used in conjunction with the Nios II Software Build Tools for Eclipse[^15] plugin, which supports simulations and tests that assisted in the development process, as well as the ModelSim*-Intel® FPGA Edition Software[^16], widely used for tsting VHDL component codes. As the client specified that he wanted the project to be open-source, all code, reports and images relevant to this will also be available on the project’s public GitHub repository.
 
 Considering the project consists of the creation of a conformance tester for the EPC-GEN2 UHF RFID protocol, its documentation was widely used, researched, and discussed by all members of the group during the project, focusing mainly on the communication sections between the reader and tag, as well as encoding data, and mandatory commands for protocol standards.
 
-Given the project's open-source nature and its public availability on GitHub, it was decided that the group would also provide a documentation to the whole project, which was later decided would be done using GitHub Pages. Inside, the group would give an in-depth description of all components, a tutorial on how to clone, run, utilize and modify this project, and explanations for the hardware, the IP core interface and the firmware.
+Given the project's open-source nature and its public availability on GitHub, it was decided that the group would also provide a documentation to the whole project, which was later decided would be done using GitHub Pages[^17]. Inside, the group would give an in-depth description of all components, a tutorial on how to clone, run, utilize and modify this project, and explanations for the hardware, the IP core interface and the firmware.
 
-To further help with code documentation, the group used the Doxygen application, which was incorporated into the already existing GitHub Pages documentation. This application generates a page of every VHDL file, giving a brief explanation of the purpose of that component, as well as explain every aspect of the entity, including generics, ports in and outs.
+To further help with code documentation, the group used the Doxygen[^18] application, which was incorporated into the already existing GitHub Pages documentation. This application generates a page of every VHDL file, giving a brief explanation of the purpose of that component, as well as explain every aspect of the entity, including generics, ports in and outs.
+
+[^10]: GitHub website.
+<https://github.com/>
+Accessed on: 16/08/2021.
+
+[^11]: Discord website.
+<https://discord.com/>
+Accessed on: 16/08/2021.
+
+[^12]: Microsoft Teams.
+<https://www.microsoft.com/pt-br/microsoft-teams/group-chat-software/>
+Accessed on: 16/08/2021.
+
+[^13]: Google Drive.
+<https://www.google.com/intl/pt-BR/drive/>
+Accessed on: 16/08/2021.
+
+[^14]: Intel® Quartus® Prime Software Suite.
+<https://www.intel.com.br/content/www/br/pt/software/programmable/quartus-prime/overview.html>
+Accessed on: 16/08/2021.
+
+[^15]: Eclipse Foundation.
+<https://www.eclipse.org/>
+Accessed on: 16/08/2021.
+
+[^16]: ModelSim*-Intel® FPGA Edition Software .
+<https://www.intel.com.br/content/www/br/pt/software/programmable/quartus-prime/model-sim.html>
+Accessed on: 16/08/2021.
+
+[^17]: GitHub Pages.
+<https://pages.github.com/>
+Accessed on: 16/08/2021.
+
+[^18]: Doxygen documentation.
+<https://www.doxygen.nl/index.html>
+Accessed on: 01/10/2021.
 
 ### Environment Tools
 
