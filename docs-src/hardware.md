@@ -113,10 +113,13 @@ Acessed on: 23/08/2021.
 
 [rfid.vhd entity](https://pfeinsper.github.io/21b-indago-rfid-conformance-tester/doxygen/classrfid.html)
 
-The developed peripheral can be split into two components, visualized in the diagram below. Those are the SENDER, in red, responsible for receiving the data from the NIOS II, encoding and forwarding them to the tag; and the RECEIVER, in blue, responsible for receiving the data from the tag, decoding and forwarding them to the NIOS II.
+The developed peripheral can be split into two components, as mentioned in the previous subsection, it can be visualized in the diagram below. Those are the SENDER, in red, responsible for receiving the data from the NIOS II, encoding and forwarding them to the tag; and the RECEIVER, in blue, responsible for receiving the data from the tag, decoding and forwarding them to the NIOS II.
 
 ![IP Core](./hardware/ip.png)
 *IP core visual diagram*
+
+That implementation permits a feature in which the developer can link the transmitter pin with the receiver pin,  which the team named by loopback mode. This mode helps with debugging of both the IP core and the NIOS II software side, because it permits a full communication in which the same fpga makes the role of the reader and the tag at the same time. This feature will eventually show up in the  [firmware](firmware.md) page.  
+
 
 ### SENDER
 
