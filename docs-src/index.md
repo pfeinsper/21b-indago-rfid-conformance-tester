@@ -7,7 +7,7 @@
     - Rafael Dos Santos (rafaels6@al.insper.edu.br)
 - **Course:** Computer Engineering
 - **Semester:** 8th
-- **professor:** Rafael Corsi Ferrão (rafael.corsi@insper.edu.br)
+- **Professor:** Rafael Corsi Ferrão (rafael.corsi@insper.edu.br)
 - **Year:** 2021
 - **Repository URL:** <https://github.com/pfeinsper/21b-indago-rfid-conformance-tester>
 
