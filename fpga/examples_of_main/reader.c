@@ -6,7 +6,6 @@
 #include "stdio.h"
 #include "helpers/config.h"
 
-
 int main()
 {
     // Time parameters
