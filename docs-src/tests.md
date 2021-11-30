@@ -22,13 +22,13 @@ The FIFO communication test by simulating a FIFO component, and the test bench c
 
 [/main/fpga/RTL/tb/sender_controller_tb.vhd](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/RTL/tb/sender_controller_tb.vhd)
 
-The sender_controller_tb.vhd file tests the sender controller component by simulating the flags that dictate its functionalities, those being the <guide>has gen</guide>, <guide>start encoder</guide>, <guide>start generator</guide>, <guide>clr_finished sending</guide>.
+The sender_controller_tb.vhd file tests the sender controller component by simulating the flags that dictate its functionalities, those being the `has gen`, `start encoder`, `start generator`, `clr_finished sending`.
 
 ### Signal Generator
 
 [/main/fpga/RTL/tb/signal_generator_tb.vhd](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/RTL/tb/signal_generator_tb.vhd)
 
-The signal_generator_tb.vhd file tests the sender signal generator component by simulating the flags that dictate its functionalities, those being the <guide>has gen</guide>, <guide>start generator</guide>, <guide>is_preamble</guide>.
+The signal_generator_tb.vhd file tests the sender signal generator component by simulating the flags that dictate its functionalities, those being the `has gen`, `start generator`, `is_preamble`.
 
 ## Receiver
 

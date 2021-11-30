@@ -31,9 +31,9 @@ The one accessed directly by the software on this project is the Data Master Por
 
 ## Register Bank
 
-The register bank intermediates the communication between the NIOS II processor and the IP core. Each access to the bus is done through a <guide>read</guide> or <guide>write</guide> command in which they carry data up to 32 bits, a value that represents the size of an integer in the programming language C, as it is the one implemented in the processor.
+The register bank intermediates the communication between the NIOS II processor and the IP core. Each access to the bus is done through a `read` or `write` command in which they carry data up to 32 bits, a value that represents the size of an integer in the programming language C, as it is the one implemented in the processor.
 
-As seen in the table, this communication path is responsible for the IP peripheral settings, informing essential values for communication such as <guide>Tari</guide>, <guide>Delimiter</guide> and <guide>Status</guide>, as well as others shown below.
+As seen in the table, this communication path is responsible for the IP peripheral settings, informing essential values for communication such as `Tari`, `Delimiter` and `Status`, as well as others shown below.
 
 | offset | Name                  | Access     | Size (bits) |
 |--------|-----------------------|------------|-------------|
@@ -54,7 +54,7 @@ As seen in the table, this communication path is responsible for the IP peripher
 |      6 | REG_Receiver_usedw    | Read       |           8 |
 |      7 | REG_IP-ID             | Read       |          32 |
 
-While some registers indicate a single variable, such as those that indicate Tari values, others carry multiple peripheral control variables with them, those being <guide>REG_SETTINGS</guide> and <guide>REG_STATUS</guide>.
+While some registers indicate a single variable, such as those that indicate Tari values, others carry multiple peripheral control variables with them, those being `REG_SETTINGS` and `REG_STATUS`.
 
 ### Offset 0 - REG_Settings (R/W)
 
@@ -185,7 +185,7 @@ Stores the TRcal variable, which is used by the READER to specify the tag's back
 
 ### Offset 3 - REG_Status (R)
 
-In contrast to the <guide>REG_Settings</guide>, the <guide>REG_Status</guide> is a read only register from the processor. It carries errors and others status flags explained bellow.
+In contrast to the `REG_Settings`, the `REG_Status` is a read only register from the processor. It carries errors and others status flags explained bellow.
 
 |   31   |       30      |       29       |        28       |            27           |              26              |           25           |          24         |
 |:------:|:-------------:|:--------------:|:---------------:|:-----------------------:|:----------------------------:|:----------------------:|:-------------------:|
