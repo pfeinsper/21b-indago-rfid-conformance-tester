@@ -174,7 +174,7 @@ define bits32              (0xFFFFFFFF)
 As described in the Mandatory Commands subsection inside the [Project Overview](index.md) page, the group has implemented all the mandatory commands, a couple of them still need to be validated, but the ones that are necessary for a full handshake are both implamented and deeply tested.
 
 ### Command Struct and CRC
-Both the Command Struct and the CRC files are not together with the rest of the commands, because they are not exactly commands they are in essence part of the build of each command depending of course on the demands of the protocol.
+Both the Command Struct and the CRC files are not together with the rest of the commands, because they are not exactly commands they actualy are part of the build of each command depending on the demands of the protocol.
 
 #### Command Struct
 [/main/fpga/software/rfid_test/helpers/commands/command_struct.h](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/software/rfid_test/helpers/commands/command_struct.h)
@@ -436,9 +436,9 @@ Also in this sample the peripherals sender and receiver are being enabled, as bo
 
 ```
 
-A disclameir about the sender_is_preamble, which is responsible, as mentioned in the sender functions sunbsection, to the signal generator is that it is muted in the code because the team did not implemented the radio frequency part of the project as accorded before with the professor and the client, but once it is implemented the necessary preamble or frame-sync is ready for use.  
+A disclameir about the sender_is_preamble, which is responsible, as mentioned in the sender functions subsection, to the signal generator is that it is muted in the code because the team did not implemented the radio frequency part of the project as accorded before with the professor and the mentor, but once it is implemented the necessary preamble or frame-sync is ready for use.  
 
-Now it is necessary to send the disered command to be tested and validated. So in the following sample a Ack command will be built and sended. 
+Now it is necessary to send the disired command to be tested and validated. So in the following sample a Ack command will be built and sended. 
 
 ```c
     printf("==============================\n");
@@ -460,7 +460,7 @@ Now it is necessary to send the disered command to be tested and validated. So i
 
 ```
 
-The Ack, also needs a random number in it`s built that is why it was also built.
+The Ack command, also needs a random number in it`s built that is why it was also instantiated.
 
 Last, it is necessary to read the IP core for the sended previous command, so the following box of code is responsibel to retrieve that data from the IP.
 
