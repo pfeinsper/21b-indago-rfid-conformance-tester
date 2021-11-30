@@ -56,10 +56,13 @@ The software is developed to be easy to understand, it calls single responsibili
 
 In the main code the user can choose which commands they want to send to the TAG, to see if it responds properly according to the EPC-GEN2 protocol. Also It is possible to make timing tests by varying the Tari values, to check if the Tag will respond accordingly. This also permits the user to implement new commands such as propertary or custom ones.
 
-The group has prepared a set of examples in which this code will be used by the final user. For example, if the user wants to test it's reader or even make a simulation in ModelSim, they must copy the file loopback_handshake.c from the folder ./examples_of_main to the main code. By executing this code inside the main, what the user will be able to see and test will be shown later in the section Example of Main code. This folder can be found [here](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/tree/main/fpga/example_of_main).
+The group has prepared a set of examples in which this code will be used by the final user. For example, if the user wants to test it's reader or even make a simulation in ModelSim, they must copy the file loopback_handshake.c from the folder ./examples_of_main to the main code located [here](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/software/rfid_test/main.c). By executing this code inside the main, what the user will be able to see and test will be shown later in the section Example of Main code. This folder can be found [here](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/tree/main/fpga/example_of_main).
 
-Besides the loopback_handshake.c the others examples of main codes are the reader.c, the tag.c and the test_individual_commands_loopback.c which are variations that are capable, respectivily, of making the job of a Reader or emulating a Tag and even testing the send and receive of a single command in a single fpga.
-
+Besides the [loopback_handshake.c](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/examples_of_main/loopback_handshake.c)
+ the others examples of main codes are the [reader.c](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/examples_of_main/reader.c)
+, the [tag.c](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/examples_of_main/tag.c)
+ and the [test_individual_commands_loopback.c](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/examples_of_main/test_individual_commands_loopback.c)
+ which are variations that are capable, respectivily, of making the job of a Reader or emulating a Tag and even testing the send and receive of a single command in a single fpga.
 
 
 ## Config.h - Starting Variables
@@ -394,3 +397,91 @@ void receiver_get_package(int *command_vector, int quant_packages, int *command_
 - `receiver_get_package` - Separates the package from `receiver_request_package` into data and mask
 
 ## Example of Main code
+
+As mentioned in the Main Code subsection, there are a set of examples already implemented in which the  user can work on tests and communication between reader and tag. All those files are located in the 
+[examples_of_main](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/tree/main/fpga/examples_of_main) folder and in this section a walk-through the code will be described so that the functionality of the project can be clarified.
+
+The chosen file to this walk-through is the [test_individual_commands_loopback.c](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/examples_of_main/test_individual_commands_loopback.c), because it is succint and sufficient to evidence a simple comunication in loopback mode.
+
+First, the header of the code brings all the necessary imports to this test, the IO is the NIOS II import that permits the comunication with the IP core Interface, the System.h brings the functionalites of the FPGA followed by all the proprietary codes of functions and commands imports.Follows this header of the C code in the box bellow:
+
+```c
+#include "io.h"
+#include "system.h"
+#include "stdint.h"
+#include "helpers/commands/commands.h"
+#include "helpers/functions/functions.h"
+#include "stdio.h"
+#include "helpers/config.h"
+```
+Sencond, now inside the main function, there is the setting of the enviroment, in which the time parameters are calculate, followed by the definition of the looback function that indicates a test with the same fpga and the set of the [signal generator](hardware.md).
+Also in this sample the peripherals sender and receiver are being enabled, as both of them will be needed. 
+
+```c
+ // Time parameters
+	int tari_100  = rfid_tari_2_clock(10e-6, FREQUENCY);
+	int pw        = rfid_tari_2_clock(5e-6, FREQUENCY);
+	int delimiter = rfid_tari_2_clock(62.5e-6, FREQUENCY);
+	int RTcal     = rfid_tari_2_clock(135e-6, FREQUENCY);
+	int TRcal     = rfid_tari_2_clock(135e-6, FREQUENCY);
+    //configurations------------------------------------------------------------------------------
+    rfid_set_loopback();
+    rfid_set_tari(tari_100);
+    sender_enable();
+
+    receiver_enable();
+    rfid_set_tari_boundaries(tari_100 * 1.01, tari_100 * 0.99, tari_100 * 1.616, tari_100 * 1.584, pw, delimiter, RTcal, TRcal);
+    sender_has_gen(0);
+    //sender_is_preamble(); // NOTE: enable this function if implementing RFID tech
+
+```
+
+A disclameir about the sender_is_preamble, which is responsible, as mentioned in the sender functions sunbsection, to the signal generator is that it is muted in the code because the team did not implemented the radio frequency part of the project as accorded before with the professor and the client, but once it is implemented the necessary preamble or frame-sync is ready for use.  
+
+Now it is necessary to send the disered command to be tested and validated. So in the following sample a Ack command will be built and sended. 
+
+```c
+    printf("==============================\n");
+    printf("==       TEST COMMAND       ==\n");
+    printf("==============================\n");
+
+    command rn16;
+    rn16_build(&rn16);
+
+    command ack;
+
+    ack_build(&ack, rn16);
+
+    printf("sending ack\n");
+
+    sender_send_command(&ack);
+
+    printf("sent ack\n\n");
+
+```
+
+The Ack, also needs a random number in it`s built that is why it was also built.
+
+Last, it is necessary to read the IP core for the sended previous command, so the following box of code is responsibel to retrieve that data from the IP.
+
+```c
+    int quant_packages = 3;
+    int command_size = 0;
+    int packages[quant_packages];
+
+    printf("waiting for packages\n");
+
+    if (receiver_get_package(packages,quant_packages, &command_size) == -1)
+    {
+        printf("exiting on receiver\n");
+        return 1;
+    }
+
+    printf("command_size: %d\n", command_size);
+    int label = rfid_check_command(packages, command_size);
+    printf("label is: %d\n\n", label);
+```
+
+Wrapping all this code a command shall be sent, received and also validated.  
+
+For more informantion on how to run it and get the outputs for it see the Testing / Running section of the [Getting Started](getting_started.md) page.
