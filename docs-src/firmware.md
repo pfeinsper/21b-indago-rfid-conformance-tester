@@ -241,12 +241,12 @@ The Mandatory commands were already explained in the [Protocol EPC-GEN2 UHF RFID
 |     Query    |    x   |     x     |      x     |      |
 | Query_adjust |    x   |     x     |      x     |      |
 |   Query_rep  |    x   |     x     |      x     |      |
-|     Read     |    x   |           |            |   x  |
+|     Read     |    x   |     x     |            |      |
 |    Req_rn    |    x   |     x     |      x     |      |
 |     Rn16     |    x   |     x     |      x     |   x  |
 |    Rn_crc    |    x   |     x     |      x     |      |
 |    Select    |    x   |           |            |   x  |
-|     Write    |    x   |           |            |   x  |
+|     Write    |    x   |     x     |            |      |
 
 #### Example of command build: The Ack command
 [/main/fpga/software/rfid_test/helpers/commands/ack.c](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/software/rfid_test/helpers/commands/ack.c)
@@ -287,7 +287,7 @@ int ack_validate(int packages[], int command_size)
 ### Main.c - Start of Communication Values
 [/main/fpga/examples_of_main/](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/examples_of_main/)
 
-In every variation of the main code present inside the folder ./examples_of_main what them all have in common is the need to set all the time parameters metioned in the Signal Generator section inside the Hardware page.
+In each variation of the main code present inside the folder examples_of_main, a sample of code is common between them all and it is the set of all the time parameters metioned in the Signal Generator section inside the [Hardware page](hardware.md). 
 
 ```C
 int tari_100  = rfid_tari_2_clock(10e-6, FREQUENCY);
