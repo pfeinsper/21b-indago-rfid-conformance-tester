@@ -1,14 +1,15 @@
-guide {
+.rst-content code {
     font-family: Consolas, "courier new";
     color: black;
     background-color: #f1f1f1;
     padding: 2px;
-    font-size: 95%;
+    font-size: 80%;
 }
 
 pre {
+    background-color: #f8f8f8;
     font-family: monospace;
-    font-size: 0.8em;
+    font-size: 0.85em;
     line-height: 1.5;
     -webkit-text-size-adjust: none;
 }
