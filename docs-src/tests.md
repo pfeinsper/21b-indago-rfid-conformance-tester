@@ -2,6 +2,10 @@
 
 Due to the complexity of our .vhd files, they had to be extensively tested individually. This was done through the ModelSim software, which enabled us to simulate values and compare the results with the expected ones.
 
+The video below shows a visual example of how the tests were done using ModelSim.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/7u0xb6CM-Ng" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## Sender
 
 [/main/fpga/RTL/tb/sender_tb.vhd](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/RTL/tb/sender_tb.vhd)
