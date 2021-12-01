@@ -101,7 +101,7 @@ According to the EPC-GEN2 protocol, section 6.3.1.2.4, p 27:
 
 > *Interrogators shall communicate using Tari values in the range of 6.25μs to 25μs. Interrogator compliance shall be evaluated using at least one Tari value between 6.25μs and 25μs with at least one value of the parameter x. The tolerance on all parameters specified in units of Tari shall be +/–1%. The choice of Tari value and x shall be in accordance with local radio regulations.*
 
-This time reference dictates the whole communication and garantees it's conformance.
+This time reference dictates the whole communication and guarantees its conformance.
 
 ### State-of-the-Art Review
 
