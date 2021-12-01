@@ -1,13 +1,16 @@
 # Conformance Tester for Tags EPC-GEN2 UHF RFID
 
+![Connection between two DE-10 Standard boards](./tests/boards.png)
+
 - **Students:**
-    - Alexandre Almeida Edington (alexandreedington@gmail.com)
-    - Bruno Signorelli Domingues (brunao.signorelli@hotmail.com.br)
-    - Lucas Leal Vale (lucaslealvale01@gmail.com)
-    - Rafael Dos Santos (rafael_1999_@hotmail.com.br)
+    - Alexandre Almeida Edington (<alexandreedington@gmail.com>)
+    - Bruno Signorelli Domingues (<brunao.signorelli@hotmail.com.br>)
+    - Lucas Leal Vale (<lucaslealvale01@gmail.com>)
+    - Rafael Dos Santos (<rafael_1999_@hotmail.com.br>)
 - **Course:** Computer Engineering
 - **Semester:** 8th
-- **Professor:** Rafael Corsi Ferrão (rafael.corsi@insper.edu.br)
+- **Professor Advisor:** Rafael Corsi Ferrão (<rafael.corsi@insper.edu.br>)
+- **Mentor:** Wallace Shepherd Pitts (<wspitts2@ncsu.edu>)
 - **Year:** 2021
 - **Repository URL:** <https://github.com/pfeinsper/21b-indago-rfid-conformance-tester>
 
@@ -156,19 +159,19 @@ The day-to-day communication between the members were done through Discord[^11],
 
 Documents and reports were produced and stored in Google Drive[^13], so that multiple members could work on them simultaneously, and also be accessed by the professor to provide insights and feedback. It also served as another backup storage to the Github repository, in case any problems occurred.
 
-The programming languages VHDL and C were used throughout the project, and the Intel® Quartus® Prime FPGA Design Software[^14] was used in conjunction with the Nios II Software Build Tools for Eclipse[^15] plugin, which supports simulations and tests that assisted in the development process, as well as the ModelSim*-Intel® FPGA Edition Software[^16], widely used for testing VHDL component codes. As the client specified that he wanted the project to be open-source, all code, reports and images relevant to this will also be available on the project’s public GitHub repository.
+The programming languages VHDL and C were used throughout the project, and the Intel® Quartus® Prime FPGA Design Software[^14] was used in conjunction with the Nios® II Software Build Tools for Eclipse[^15] plugin, which supports simulations and tests that assisted in the development process, as well as the ModelSim*-Intel® FPGA Edition Software[^16], widely used for testing VHDL component codes. As the client specified that he wanted the project to be open-source, all code, reports and images relevant to this will also be available on the project’s public GitHub repository.
 
 Considering the project consists of the creation of a conformance tester for the EPC-GEN2 UHF RFID protocol, its documentation was widely used, researched, and discussed by all members of the group during the project, focusing mainly on the communication sections between the reader and tag, as well as encoding data, and mandatory commands for protocol standards.
 
-Given the project's open-source nature and its public availability on GitHub, it was decided that the group would also provide a documentation to the whole project, which was later decided would be done using GitHub Pages[^17]. Inside, the group would give an in-depth description of all components, a tutorial on how to clone, run, utilize and modify this project, and explanations for the hardware, the IP core interface and the firmware.
+Given the project's open-source nature and its public availability on GitHub, it was decided that the group would also provide a documentation to the whole project, which was later decided would be done using GitHub Pages[^17]. Inside, the group would give an in-depth description of all components, a tutorial on how to clone, run, utilize and modify this project, and explanations for the hardware, the IP core[^18] interface and the firmware.
 
-To further help with code documentation, the group used the Doxygen[^18] application, which was incorporated into the already existing GitHub Pages documentation. This application generates a page of every VHDL file, giving a brief explanation of the purpose of that component, as well as explain every aspect of the entity, including generics, ports in and outs.
+To further help with code documentation, the group used the Doxygen[^19] application, which was incorporated into the already existing GitHub Pages documentation. This application generates a page of every VHDL file, giving a brief explanation of the purpose of that component, as well as explain every aspect of the entity, including generics, ports in and outs.
 
 [^10]: GitHub website.
 <https://github.com/>
 Accessed on: 16/08/2021.
 
-[^11]: Discord website.
+[^11]: Discord.
 <https://discord.com/>
 Accessed on: 16/08/2021.
 
@@ -184,11 +187,11 @@ Accessed on: 16/08/2021.
 <https://www.intel.com.br/content/www/br/pt/software/programmable/quartus-prime/overview.html>
 Accessed on: 16/08/2021.
 
-[^15]: Eclipse Foundation.
-<https://www.eclipse.org/>
+[^15]: Nios® II Software Build Tools for Eclipse.
+<https://www.intel.com/content/www/us/en/support/programmable/support-resources/intellectual-property/ips-nios2-ide.html>
 Accessed on: 16/08/2021.
 
-[^16]: ModelSim*-Intel® FPGA Edition Software .
+[^16]: ModelSim*-Intel® FPGA Edition Software.
 <https://www.intel.com.br/content/www/br/pt/software/programmable/quartus-prime/model-sim.html>
 Accessed on: 16/08/2021.
 
@@ -196,7 +199,11 @@ Accessed on: 16/08/2021.
 <https://pages.github.com/>
 Accessed on: 16/08/2021.
 
-[^18]: Doxygen documentation.
+[^18]: IP Core.
+<https://www.intel.com/content/www/us/en/products/programmable/intellectual-property.html>
+Accessed on: 23/08/2021.
+
+[^19]: Doxygen documentation.
 <https://www.doxygen.nl/index.html>
 Accessed on: 01/10/2021.
 
@@ -208,10 +215,18 @@ These are the tools used by the team in order to meet up, develop and design the
     - Intel® Quartus® Prime FPGA Design Software
     - Nios® II Software Build Tools for Eclipse
     - Intel® FPGA Simulation - ModelSim
-    - Logic 2 Software
-    - [GitHub](https://github.com)
+    - Intel® Quartus® Prime FPGA Design Software
+    - Logic 2 Software[^20]
 - **Design:**
     - Google Drive
-    - [Excalidraw](https://excalidraw.com)
     - Discord
     - Microsoft Teams
+    - Excalidraw[^21]
+
+[^20]: Logic 2 Software.
+<https://www.saleae.com/downloads/>
+Accessed on: 01/10/2021.
+
+[^21]: Excalidraw.
+<https://www.excalidraw.com/>
+Accessed on: 01/10/2021.
