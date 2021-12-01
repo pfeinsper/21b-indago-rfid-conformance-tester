@@ -1,4 +1,4 @@
-# Getting Started
+# Getting started
 
 ## Tools
 
@@ -161,7 +161,7 @@ You can also watch the video below, which shows the step-by-step process.
 
 You can also run a handshake version of the project using two DE-10 Standard boards. To do so, follow the same steps shown on the hardware guide until you reach the `rfid_test` project build. Before building the project, you need to find the `tag.c` and  `reader.c` files, located in the `fpga` folder.
 
-Choose one board to act as the tag, and one board to act as the reader; after that, replace the code present in the `hello_world.c` with the corresponding code (one board will have the `tag.c` code and the other will have the `reader.c` code).
+Choose one board to act as the tag, and one board to act as the reader; after that, replace the code present in the `main.c` with the corresponding code (one board will have the `tag.c` code and the other will have the `reader.c` code).
 
 After overwriting the code, build the project on each Nios workspace (you can open up two workspaces on the same PC, but it is a little trickier to do so; hence, it is recommended that you do this on two PCs). Once the projects are built, use female/female jumpers to connect the board pins as shown in the image below.
 
