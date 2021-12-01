@@ -408,7 +408,7 @@ void receiver_get_package(int *command_vector, int quant_packages, int *command_
 
 As mentioned in the [Main code subsection](../firmware/#main-code), there are a set of examples already implemented in which the user can work on tests and communication between reader and tag. All those files are located in the [`fpga/examples_of_main`](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/tree/main/fpga/examples_of_main) folder and in this section the code will be thoroughly described so that the functionality of the project can be clarified.
 
-For this example, the[test_individual_commands_loopback.c](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/examples_of_main/test_individual_commands_loopback.c) file was chosen, because it is succinct and it suffices in showing a simple communication in loopback mode.
+For this example, the [test_individual_commands_loopback.c](https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/examples_of_main/test_individual_commands_loopback.c) file was chosen, because it is succinct and it suffices in showing a simple communication in loopback mode.
 
 Firstly is the header of the code, which brings all the necessary includes to this test. The first one present is the `io.h`: this is the Nios II include that establishes the communication with the IP core interface; after that is `system.h`, which helps bring the functionalities of the FPGA. The following includes are the proprietary codes of the functions and the commands used. The code block below shows these includes.
 
