@@ -55,7 +55,7 @@ Make sure the settings are as follows, and click on `Generate` on the bottom.
 ![Testbench settings](./getting_started/generate_tb2.png){ style="width: 90%; display: block; margin: auto" }
 *Generate testbench window prompt with settings*
 
-Next, you wanna open up the `Nios II Software Build Tools for Eclipse`. If it's your first time opening this tool, the Eclipse window will ask you to choose a workspace. Now the Eclipse window should be open with a blank workspace like the one below.
+Next, you wanna open up the `Nios® II Software Build Tools for Eclipse`. If it's your first time opening this tool, the Eclipse window will ask you to choose a workspace. Now the Eclipse window should be open with a blank workspace like the one below.
 
 ![Eclipse workspace](./getting_started/eclipse_blank.png)
 *Eclipse workspace*
@@ -135,7 +135,7 @@ After programming the board, get a female/female jumper, plug one end on pin 6 o
 ![GPIO schematic](./getting_started/gpio.png){ style="height: 40%; display: block; margin: auto" }
 *GPIO schematic showing jumper connections (image obtained [here](http://modernhackers.com/wp-content/uploads/2019/12/SDRAM-Board-GPIO-Direction-DE10-Standard-DE1-SoC-ArrowSoCKit.png))*
 
-Once the jumpers are connected, open up the `Nios II Software Build Tools for Eclipse`. You can follow the same steps shown in the ModelSim guide on how to do so.
+Once the jumpers are connected, open up the `Nios® II Software Build Tools for Eclipse`. You can follow the same steps shown in the ModelSim guide on how to do so.
 
 After both projects have been imported, right-click on `rfid_test_bsp` ➡️ `BSP Editor`.Make sure that the options are the same as the ones present in the image below (they are **not** the same settings from the ModelSim guide).
 
