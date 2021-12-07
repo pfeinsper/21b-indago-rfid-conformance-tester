@@ -212,11 +212,10 @@ Accessed on: 01/10/2021.
 These are the tools used by the team in order to meet up, develop and design the project.
 
 - **Development:**
-    - Intel® Quartus® Prime FPGA Design Software
+    - Intel® Quartus® Prime FPGA Design Software - v18.1.0.625
     - Nios® II Software Build Tools for Eclipse
     - Intel® FPGA Simulation - ModelSim
-    - Intel® Quartus® Prime FPGA Design Software
-    - Logic 2 Software[^20]
+    - Logic 2 Software[^20] - v2.3.39-master
 - **Design:**
     - Google Drive
     - Discord

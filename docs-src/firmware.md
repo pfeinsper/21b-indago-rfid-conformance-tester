@@ -327,12 +327,13 @@ The RFID code's first appearance is in the main code, because it stores the func
 #### RFID functions
 
 ```C
-void rfid()
+void rfid_set_loopback()
 void rfid_set_tari(int tari_value)
 void rfid_set_tari_boundaries(int tari_101, int tari_099, int tari_1616, int tari_1584, int pw, int delimiter, int RTcal, int TRcal)
 int rfid_create_mask_from_value(int value)
 int rfid_check_command(int *packages, int quant_packages, int command_size)
 int rfid_get_ip_id()
+int rfid_tari_2_clock(double tari, double clock)
 ```
 
 - `void rfid_set_loopback` - Connects Tx on Rx, creating a loop. Used for testing the reader.
@@ -341,6 +342,7 @@ int rfid_get_ip_id()
 - `int rfid_create_mask_from_value` - Generates the package's mask based on the package received.
 - `int rfid_check_command` - Checks if the received command is valid and present on the EPC-GEN2 protocol.
 - `int rfid_get_ip_id` - Checks the id of the IP core.
+- `rfid_tari_2_clock` - Calculates the tari parameter based on the microprocessor clock.
 
 ### `sender.c`
 
