@@ -73,4 +73,4 @@ int rfid_check_command(int packages[], int command_size)
 
 int rfid_get_ip_id() { return IORD_32DIRECT(NIOS_RFID_PERIPHERAL_0_BASE, BASE_ID << 2); }
 
-int rfid_tari_2_clock(double tari, double clock) { return (int)(tari * clock); }
+int rfid_tari_2_clock(double tari, double frequency) { return (int)(tari * frequency); }
