@@ -20,4 +20,4 @@ The second main component of the reader is the IP core, responsible for the comm
 
 ![IP core diagram](./docs-src/hardware/ip.png)
 
-Currently our project can fully run the handshake process defined in the protocol, as well as indenepently check some of the mandatory commands.
+Currently our project can fully run the handshake process defined in the protocol, as well as independently check some of the mandatory commands.
