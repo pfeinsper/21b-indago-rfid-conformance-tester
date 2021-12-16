@@ -1,0 +1,15 @@
+digraph "sender"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="sender",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/RTL/sender...."];
+  Node2 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="sender_controller",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classsender__controller.html",tooltip="https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/RTL/sender_controller...."];
+  Node3 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="Signal_Generator",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_signal___generator.html",tooltip="https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/RTL/signal_generator...."];
+  Node4 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="FIFO_FM0",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_f_i_f_o___f_m0.html",tooltip="https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/RTL/fifo_fm0...."];
+  Node5 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="FM0_encoder",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_f_m0__encoder.html",tooltip="https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/RTL/FM0_encoder...."];
+}
