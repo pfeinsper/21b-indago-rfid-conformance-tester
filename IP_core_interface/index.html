@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>IP core interface - Insper: Open-source Conformance Tester for Tags EPC-GEN2 UHF RFID</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+  <link href="../css/extra.css" rel="stylesheet" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "IP core interface";
+    var mkdocs_page_input_path = "IP_core_interface.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/C.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Insper: Open-source Conformance Tester for Tags EPC-GEN2 UHF RFID</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../getting_started/">Getting started</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../hardware/">Hardware</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">IP core interface</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#solution-diagram">Solution Diagram</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#avalon-interface">Avalon Interface</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#register-bank">Register Bank</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#offset-0-reg_settings-rw">Offset 0 - REG_Settings (R/W)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#offset-1-reg_tari-rw">Offset 1 - REG_Tari (R/W)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#offset-2-reg_fifo-w">Offset 2 - REG_FIFO (W)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#tari-limit-registers">TARI limit Registers</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#offset-3-reg_tari_101-w">Offset 3 - REG_Tari_101 (W)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#offset-4-reg_tari_099-w">Offset 4 - REG_Tari_099 (W)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#offset-5-reg_tari_1616-w">Offset 5 - REG_Tari_1616 (W)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#offset-6-reg_tari_1584-w">Offset 6 - REG_Tari_1584 (W)</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#preamble-and-framesync-time-parameter-registers">Preamble and Framesync time parameter registers</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#offset-7-reg_pw-w">Offset 7 - REG_Pw (W)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#offset-8-reg_delimiter-w">Offset 8 - REG_Delimiter (W)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#offset-9-reg_rtcal-w">Offset 9 - REG_RTcal (W)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#offset-10-reg_trcal-w">Offset 10 - REG_TRcal (W)</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#offset-3-reg_status-r">Offset 3 - REG_Status (R)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#offset-4-reg_receiver_data_out-r">Offset 4 - REG_Receiver_data_out (R)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#fifo-package-count-registers">FIFO Package count Registers</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#offset-5-reg_sender_usedw-r">Offset 5 - REG_Sender_usedw (R)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#offset-6-reg_receiver_usedw-r">Offset 6 - REG_Receiver_usedw (R)</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#offset-7-reg_ip-id-r">Offset 7 - REG_IP-ID (R)</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../firmware/">Firmware</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../tests/">Testing the components</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="" href="https://pfeinsper.github.io/21b-indago-rfid-conformance-tester/doxygen/annotated.html">Doxygen</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../conclusion_%26_team/">Conclusion</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Insper: Open-source Conformance Tester for Tags EPC-GEN2 UHF RFID</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>IP core interface</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="ip-core-interface">IP core interface<a class="headerlink" href="#ip-core-interface" title="Permanent link">&para;</a></h1>
+<p>Below is an in depth explanation of the mechanism responsible for the communication between the Nios II processor and the IP core, which is composed by the Avalon Interface and a register bank that connect the other components.</p>
+<h2 id="solution-diagram">Solution Diagram<a class="headerlink" href="#solution-diagram" title="Permanent link">&para;</a></h2>
+<p>In this diagram, generated by the Platform Designer, it is possible to see the overview of the solution implemented by the group. Inside, the clock interface, Nios II processor, memory, and IP core are connected by the Avalon Interface, represented by the blue dotted lines.</p>
+<p><img alt="Diagram of the solution implemented" src="../firmware/solution_diagram.png" />
+<em>Diagram generated by the Quartus Platform Designer</em></p>
+<p>The Cyclone V FPGA clock interface works on a 50MHz clock speed, which allows for multiple clocks between each Tari interval, ensuring that the encoding and decoding processes run smoothly. All the time intervals necessary for communication, as present in the EPC-GEN2 documentation, are also calculated based on the original 50MHz clock.</p>
+<p>The Nios II soft processor used in this project was implemented by the team and is based on RISC architecture. It is responsible for generating all the commands sent to the tag, as well as interpreting the responses our device receives. More information on the Nios II can be found <a href="../firmware/">here</a>.</p>
+<p>The on-chip memory is the RAM memory for the system. It is accessed through the Avalon bus which writes and reads data on the register bank. It has 115.199 addressable bytes divided between the different interfaces.</p>
+<p>The IP core contains all the VHDL components of our projects, encompassing both the sender and receiver, as well as all their inner components. These are also accessed by the Avalon bus to receive settings and commands, as well as to send the responses back to the processor. More information on the IP core can be found <a href="../hardware/">here</a>.</p>
+<h2 id="avalon-interface">Avalon Interface<a class="headerlink" href="#avalon-interface" title="Permanent link">&para;</a></h2>
+<p>The Avalon Interface, according to its developer Intel®: "Avalon® interfaces simplify system design by allowing you to easily connect components in Intel® FPGA. The Avalon interface family defines interfaces appropriate for streaming high-speed data, reading, and writing registers and memory, and controlling off-chip devices. Components available in Platform Designer incorporate these standard interfaces. Additionally, you can incorporate Avalon interfaces in custom components, enhancing the interoperability of designs.".</p>
+<p>In other words, it is possible to conclude from this excerpt that, in addition to enabling the connection between Intel® FPGA components, that once the interfaces are added to Platform Designer, they can connect custom components, which the group uses for the IP core in our product. All documentation for other possible interfaces and connection is present in the document “Avalon® Interface Specifications”.</p>
+<p>The Avalon Bus can be implemented with multiple features and modules. In this project, Avalon Memory-Mapped will be used, but other alternatives were considered, such as Avalon Interrupt Interfaces and Avalon Streaming Interfaces.</p>
+<p>The Avalon Memory-Mapped (Avalon-MM) interface implements both the Instruction and the Data Master Ports. Both of them share a single memory and also a single bus to outside of the processor. According to the same document the data and instructions master ports never cause a gridlock in which one port starves the other.</p>
+<p>The one accessed directly by the software on this project is the Data Master Port, which is a 32-bit bus capable of reading and writing in the memory or in any other peripheral of the project, just like it does in our IP core. This bus is one of the dotted line in the platform designer image above.</p>
+<h2 id="register-bank">Register Bank<a class="headerlink" href="#register-bank" title="Permanent link">&para;</a></h2>
+<p>The register bank intermediates the communication between the Nios II processor and the IP core. Each access to the bus is done through a <code>read</code> or <code>write</code> command in which they carry data up to 32 bits, a value that represents the size of an integer in the programming language C, as it is the one implemented in the processor.</p>
+<p>As seen in the table, this communication path is responsible for the IP peripheral settings, informing essential values for communication such as <code>Tari</code>, <code>Delimiter</code> and <code>Status</code>, as well as others shown below.</p>
+<table>
+<thead>
+<tr>
+<th>offset</th>
+<th>Name</th>
+<th>Access</th>
+<th>Size (bits)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>REG_Settings</td>
+<td>Read/Write</td>
+<td>32</td>
+</tr>
+<tr>
+<td>1</td>
+<td>REG_Tari</td>
+<td>Read/Write</td>
+<td>16</td>
+</tr>
+<tr>
+<td>2</td>
+<td>REG_FIFO</td>
+<td>Write</td>
+<td>32</td>
+</tr>
+<tr>
+<td>3</td>
+<td>REG_Tari_101</td>
+<td>Write</td>
+<td>16</td>
+</tr>
+<tr>
+<td>4</td>
+<td>REG_Tari_099</td>
+<td>Write</td>
+<td>16</td>
+</tr>
+<tr>
+<td>5</td>
+<td>REG_Tari_1616</td>
+<td>Write</td>
+<td>16</td>
+</tr>
+<tr>
+<td>6</td>
+<td>REG_Tari_1584</td>
+<td>Write</td>
+<td>16</td>
+</tr>
+<tr>
+<td>7</td>
+<td>REG_Pw</td>
+<td>Write</td>
+<td>16</td>
+</tr>
+<tr>
+<td>8</td>
+<td>REG_Delimiter</td>
+<td>Write</td>
+<td>16</td>
+</tr>
+<tr>
+<td>9</td>
+<td>REG_RTcal</td>
+<td>Write</td>
+<td>16</td>
+</tr>
+<tr>
+<td>10</td>
+<td>REG_TRcal</td>
+<td>Write</td>
+<td>16</td>
+</tr>
+<tr>
+<td>3</td>
+<td>REG_Status</td>
+<td>Read</td>
+<td>32</td>
+</tr>
+<tr>
+<td>4</td>
+<td>REG_Receiver_data_out</td>
+<td>Read</td>
+<td>32</td>
+</tr>
+<tr>
+<td>5</td>
+<td>REG_Sender_usedw</td>
+<td>Read</td>
+<td>8</td>
+</tr>
+<tr>
+<td>6</td>
+<td>REG_Receiver_usedw</td>
+<td>Read</td>
+<td>8</td>
+</tr>
+<tr>
+<td>7</td>
+<td>REG_IP-ID</td>
+<td>Read</td>
+<td>32</td>
+</tr>
+</tbody>
+</table>
+<p>While some registers indicate a single variable, such as those that indicate Tari values, others carry multiple peripheral control variables with them, those being <code>REG_SETTINGS</code> and <code>REG_STATUS</code>.</p>
+<h3 id="offset-0-reg_settings-rw">Offset 0 - REG_Settings (R/W)<a class="headerlink" href="#offset-0-reg_settings-rw" title="Permanent link">&para;</a></h3>
+<p>The Register Settings is responsible for the control of the IP core, as a Read and Write register it is capable of setting flags, making pulses in specific bits and also activating components of the IP core</p>
+<table>
+<thead>
+<tr>
+<th align="center">31</th>
+<th align="center">30</th>
+<th align="center">29</th>
+<th align="center">28</th>
+<th align="center">27</th>
+<th align="center">26</th>
+<th align="center">25</th>
+<th align="center">24</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+</tr>
+<tr>
+<td align="center"><strong>23</strong></td>
+<td align="center"><strong>22</strong></td>
+<td align="center"><strong>21</strong></td>
+<td align="center"><strong>20</strong></td>
+<td align="center"><strong>19</strong></td>
+<td align="center"><strong>18</strong></td>
+<td align="center"><strong>17</strong></td>
+<td align="center"><strong>16</strong></td>
+</tr>
+<tr>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+</tr>
+<tr>
+<td align="center"><strong>15</strong></td>
+<td align="center"><strong>14</strong></td>
+<td align="center"><strong>13</strong></td>
+<td align="center"><strong>12</strong></td>
+<td align="center"><strong>11</strong></td>
+<td align="center"><strong>10</strong></td>
+<td align="center"><strong>9</strong></td>
+<td align="center"><strong>8</strong></td>
+</tr>
+<tr>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">Receiver read request</td>
+<td align="center">Receiver reset</td>
+<td align="center">Sender clr finished send</td>
+<td align="center">x</td>
+<td align="center">Loopback</td>
+</tr>
+<tr>
+<td align="center"><strong>7</strong></td>
+<td align="center"><strong>6</strong></td>
+<td align="center"><strong>5</strong></td>
+<td align="center"><strong>4</strong></td>
+<td align="center"><strong>3</strong></td>
+<td align="center"><strong>2</strong></td>
+<td align="center"><strong>1</strong></td>
+<td align="center"><strong>0</strong></td>
+</tr>
+<tr>
+<td align="center">Sender is preamble</td>
+<td align="center">Sender start controller</td>
+<td align="center">Sender has_gen</td>
+<td align="center">Receiver enable</td>
+<td align="center">x</td>
+<td align="center">Sender clear FIFO</td>
+<td align="center">Sender  enable</td>
+<td align="center">Sender reset</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Bits 31 through 13 are unused, instead being reserved for future implementations.</li>
+<li>Bit 12 - <code>Receiver read request</code> stores the read request flag for the Receiver FIFO;</li>
+<li>Bit 11 - <code>Receiver reset</code> stores the reset flag for the Receiver;</li>
+<li>Bit 10 - <code>Sender clr finished send</code> stores the Sender clear finished send flag;</li>
+<li>Bit 9 -  unused;  </li>
+<li>Bit 8 - <code>Loopback</code> stores the loopback flag used in testing the reader;</li>
+<li>Bit 7 - <code>Sender is preamble</code> stores the preamble flag for the Sender generator;</li>
+<li>Bit 6 - <code>Sender start controller</code> stores the start controller flag for the Sender;</li>
+<li>Bit 5 - <code>Sender has_gen</code> stores the generator flag for the Sender;</li>
+<li>Bit 4 - <code>Receiver enable</code> stores the enable flag for the Receiver;</li>
+<li>Bit 3 -  unused;  </li>
+<li>Bit 2 - <code>Sender clear FIFO</code> stores the clear FIFO flag for the Sender FIFO;</li>
+<li>Bit 1 - <code>Sender enable</code> stores the enable flag for the Sender;</li>
+<li>Bit 0 - <code>Sender reset</code> stores the reset flag for the Sender;</li>
+</ul>
+<h3 id="offset-1-reg_tari-rw">Offset 1 - REG_Tari (R/W)<a class="headerlink" href="#offset-1-reg_tari-rw" title="Permanent link">&para;</a></h3>
+<p>The Register Tari carries the time parameter to the IP Core, in the software it is declared as an int and can vary between 313 to 1250 values. These range is calculated by multiplying frequency of the µProcessor times the Tari range. The Tari range is 6.25µs to 25µs, which is also stablished in EPC-GEN2 Documentation.</p>
+<p>Some values can be used to manually set the Tari time parameter. Values from the range of 300 - 600 are allowed by the EPC-GEN2 documentation.</p>
+<p>The Tari is written in the Register Tari from least significant (0) to most significant bit (15) of the register. Depending only on the binary value for the Integer mentioned previously.</p>
+<table>
+<thead>
+<tr>
+<th align="center"><strong>15</strong></th>
+<th align="center"><strong>14</strong></th>
+<th align="center">...</th>
+<th align="center"><strong>2</strong></th>
+<th align="center"><strong>1</strong></th>
+<th align="center"><strong>0</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">...</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+</tr>
+</tbody>
+</table>
+<h3 id="offset-2-reg_fifo-w">Offset 2 - REG_FIFO (W)<a class="headerlink" href="#offset-2-reg_fifo-w" title="Permanent link">&para;</a></h3>
+<p>The register FIFO carries the package, from the C Software to the IP core through Avalon bus.</p>
+<p>The FIFO register is also written from least significant (0) to most significant bit (31) of the register. In which the six least significant bits are the mask which carries the size of the data and the remaining 26 are reserved for data itself.</p>
+<table>
+<thead>
+<tr>
+<th align="center"><strong>31</strong></th>
+<th align="center"><strong>30</strong></th>
+<th align="center"><strong>...</strong></th>
+<th align="center"><strong>2</strong></th>
+<th align="center"><strong>1</strong></th>
+<th align="center"><strong>0</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">...</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+</tr>
+</tbody>
+</table>
+<h3 id="tari-limit-registers">TARI limit Registers<a class="headerlink" href="#tari-limit-registers" title="Permanent link">&para;</a></h3>
+<p>The Registers 3 to 6 are called Registers Tari Boundaries, they stablish the 1%-time variation in which the READER can communicate with the tag. If the tag does not reply in time or if the Sender or Receiver peripherals delay, an error flag will be raised as if the communication had ended.</p>
+<p>Each Tari Boundary is written its respective Register from least significant (0) to most significant bit (15) of the register. Depending only on the binary value for the Integer that it represents.</p>
+<h4 id="offset-3-reg_tari_101-w">Offset 3 - REG_Tari_101 (W)<a class="headerlink" href="#offset-3-reg_tari_101-w" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th align="center"><strong>15</strong></th>
+<th align="center"><strong>14</strong></th>
+<th align="center">...</th>
+<th align="center"><strong>2</strong></th>
+<th align="center"><strong>1</strong></th>
+<th align="center"><strong>0</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">...</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+</tr>
+</tbody>
+</table>
+<p>Stores the Tari upper limit.</p>
+<h4 id="offset-4-reg_tari_099-w">Offset 4 - REG_Tari_099 (W)<a class="headerlink" href="#offset-4-reg_tari_099-w" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th align="center"><strong>15</strong></th>
+<th align="center"><strong>14</strong></th>
+<th align="center">...</th>
+<th align="center"><strong>2</strong></th>
+<th align="center"><strong>1</strong></th>
+<th align="center"><strong>0</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">...</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+</tr>
+</tbody>
+</table>
+<p>Stores the Tari lower limit.</p>
+<h4 id="offset-5-reg_tari_1616-w">Offset 5 - REG_Tari_1616 (W)<a class="headerlink" href="#offset-5-reg_tari_1616-w" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th align="center"><strong>15</strong></th>
+<th align="center"><strong>14</strong></th>
+<th align="center">...</th>
+<th align="center"><strong>2</strong></th>
+<th align="center"><strong>1</strong></th>
+<th align="center"><strong>0</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">...</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+</tr>
+</tbody>
+</table>
+<p>stores the 1.6 Tari upper limit.</p>
+<h4 id="offset-6-reg_tari_1584-w">Offset 6 - REG_Tari_1584 (W)<a class="headerlink" href="#offset-6-reg_tari_1584-w" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th align="center"><strong>15</strong></th>
+<th align="center"><strong>14</strong></th>
+<th align="center">...</th>
+<th align="center"><strong>2</strong></th>
+<th align="center"><strong>1</strong></th>
+<th align="center"><strong>0</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">...</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+</tr>
+</tbody>
+</table>
+<p>stores the 1.6 Tari lower limit.</p>
+<h3 id="preamble-and-framesync-time-parameter-registers">Preamble and Framesync time parameter registers<a class="headerlink" href="#preamble-and-framesync-time-parameter-registers" title="Permanent link">&para;</a></h3>
+<p>The following registers are also time parameters which can be seen in the Preamble and Frame-sync images, they are part of the RFID modulation and a future implementation of Radio frequency depends on these values to be set.</p>
+<p>Each value written its respective Register from least significant (0) to most significant bit (15) of the register. Depending only on the binary value for the Integer that it represents.</p>
+<h4 id="offset-7-reg_pw-w">Offset 7 - REG_Pw (W)<a class="headerlink" href="#offset-7-reg_pw-w" title="Permanent link">&para;</a></h4>
+<p>Stores the value of a half-tari, which is used in the signal generator component to generate the preamble or frame-sync.</p>
+<table>
+<thead>
+<tr>
+<th align="center"><strong>15</strong></th>
+<th align="center"><strong>14</strong></th>
+<th align="center">...</th>
+<th align="center"><strong>2</strong></th>
+<th align="center"><strong>1</strong></th>
+<th align="center"><strong>0</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">...</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+</tr>
+</tbody>
+</table>
+<h4 id="offset-8-reg_delimiter-w">Offset 8 - REG_Delimiter (W)<a class="headerlink" href="#offset-8-reg_delimiter-w" title="Permanent link">&para;</a></h4>
+<p>Stores a value between 0.5 - 1.0 Tari responsible for starting the communication between READER and tag.</p>
+<table>
+<thead>
+<tr>
+<th align="center"><strong>15</strong></th>
+<th align="center"><strong>14</strong></th>
+<th align="center">...</th>
+<th align="center"><strong>2</strong></th>
+<th align="center"><strong>1</strong></th>
+<th align="center"><strong>0</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">...</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+</tr>
+</tbody>
+</table>
+<h4 id="offset-9-reg_rtcal-w">Offset 9 - REG_RTcal (W)<a class="headerlink" href="#offset-9-reg_rtcal-w" title="Permanent link">&para;</a></h4>
+<p>Stores the RTcal variable, which is based on the data lenght of the communication.</p>
+<table>
+<thead>
+<tr>
+<th align="center"><strong>15</strong></th>
+<th align="center"><strong>14</strong></th>
+<th align="center">...</th>
+<th align="center"><strong>2</strong></th>
+<th align="center"><strong>1</strong></th>
+<th align="center"><strong>0</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">...</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+</tr>
+</tbody>
+</table>
+<h4 id="offset-10-reg_trcal-w">Offset 10 - REG_TRcal (W)<a class="headerlink" href="#offset-10-reg_trcal-w" title="Permanent link">&para;</a></h4>
+<p>Stores the TRcal variable, which is used by the READER to specify the tag's backscatter link frequency.</p>
+<table>
+<thead>
+<tr>
+<th align="center"><strong>15</strong></th>
+<th align="center"><strong>14</strong></th>
+<th align="center">...</th>
+<th align="center"><strong>2</strong></th>
+<th align="center"><strong>1</strong></th>
+<th align="center"><strong>0</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">...</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+</tr>
+</tbody>
+</table>
+<h3 id="offset-3-reg_status-r">Offset 3 - REG_Status (R)<a class="headerlink" href="#offset-3-reg_status-r" title="Permanent link">&para;</a></h3>
+<p>In contrast to the <code>REG_Settings</code>, the <code>REG_Status</code> is a read only register from the processor. It carries errors and others status flags explained bellow.</p>
+<table>
+<thead>
+<tr>
+<th align="center">31</th>
+<th align="center">30</th>
+<th align="center">29</th>
+<th align="center">28</th>
+<th align="center">27</th>
+<th align="center">26</th>
+<th align="center">25</th>
+<th align="center">24</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+</tr>
+<tr>
+<td align="center"><strong>23</strong></td>
+<td align="center"><strong>22</strong></td>
+<td align="center"><strong>21</strong></td>
+<td align="center"><strong>20</strong></td>
+<td align="center"><strong>19</strong></td>
+<td align="center"><strong>18</strong></td>
+<td align="center"><strong>17</strong></td>
+<td align="center"><strong>16</strong></td>
+</tr>
+<tr>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+</tr>
+<tr>
+<td align="center"><strong>15</strong></td>
+<td align="center"><strong>14</strong></td>
+<td align="center"><strong>13</strong></td>
+<td align="center"><strong>12</strong></td>
+<td align="center"><strong>11</strong></td>
+<td align="center"><strong>10</strong></td>
+<td align="center"><strong>9</strong></td>
+<td align="center"><strong>8</strong></td>
+</tr>
+<tr>
+<td align="center">x</td>
+<td align="center">Receiver full</td>
+<td align="center">Receiver empty</td>
+<td align="center">Receiver sclear</td>
+<td align="center">x</td>
+<td align="center">Receiver clear error decoder</td>
+<td align="center">Receiver error decoder</td>
+<td align="center">x</td>
+</tr>
+<tr>
+<td align="center"><strong>7</strong></td>
+<td align="center"><strong>6</strong></td>
+<td align="center"><strong>5</strong></td>
+<td align="center"><strong>4</strong></td>
+<td align="center"><strong>3</strong></td>
+<td align="center"><strong>2</strong></td>
+<td align="center"><strong>1</strong></td>
+<td align="center"><strong>0</strong></td>
+</tr>
+<tr>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">Sender finished sending</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">Sender is fifo full</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Bits 31 through 15 are not in use, instead being reserved for future implementations.</li>
+<li>Bit 14 - <code>Receiver full</code> stores the full flag for the Receiver FIFO;</li>
+<li>Bit 13 - <code>Receiver empty</code> stores the empty flag for the Recevier FIFO;</li>
+<li>Bit 12 - <code>Receiver sclear</code>stores the clear flag for the Receiver FIFO;</li>
+<li>Bit 10 - <code>Receiver clear error decoder</code> stores the clear error flag for the Receiver decoder;</li>
+<li>Bit 9 - <code>Receiver error decoder</code> stores the error flag for the Receiver decoder;</li>
+<li>Bit 3 - <code>Sender finished sending</code> stores the finished sending flag for the Sender FIFO;</li>
+<li>Bit 0 - <code>Sender is fifo full</code> stores the full flag for the Sender FIFO;</li>
+</ul>
+<h3 id="offset-4-reg_receiver_data_out-r">Offset 4 - REG_Receiver_data_out (R)<a class="headerlink" href="#offset-4-reg_receiver_data_out-r" title="Permanent link">&para;</a></h3>
+<p>The Register <code>Receiver data out</code> is the output of the Receiver peripheral from the IP core. This Register carries a package built from the signal received, this package comes from the FIFO in which it was stored. A combination of one or more packages read from this register makes a command.</p>
+<p>This register is written from least significant (0) to most significant bit(31) of the register. In which the least six significant bits are the mask that carries the size of the data and the remaining 26 are reserved for data itself.</p>
+<table>
+<thead>
+<tr>
+<th align="center"><strong>31</strong></th>
+<th align="center"><strong>30</strong></th>
+<th align="center"><strong>...</strong></th>
+<th align="center"><strong>2</strong></th>
+<th align="center"><strong>1</strong></th>
+<th align="center"><strong>0</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">...</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+</tr>
+</tbody>
+</table>
+<h3 id="fifo-package-count-registers">FIFO Package count Registers<a class="headerlink" href="#fifo-package-count-registers" title="Permanent link">&para;</a></h3>
+<p>The next two registers store the number of packages in their respective FIFOs. The former being the Sender FIFO and the latter being the Receiver FIFO.</p>
+<p>Both registers are automatically filled by the Intel FIFO and are just read by the C software through the Avalon bus.</p>
+<h4 id="offset-5-reg_sender_usedw-r">Offset 5 - REG_Sender_usedw (R)<a class="headerlink" href="#offset-5-reg_sender_usedw-r" title="Permanent link">&para;</a></h4>
+<p>Stores the usedw variable for the Sender FIFO, which specifies the amount of words currently stored in their memory.</p>
+<table>
+<thead>
+<tr>
+<th align="center"><strong>7</strong></th>
+<th align="center"><strong>6</strong></th>
+<th align="center">...</th>
+<th align="center"><strong>2</strong></th>
+<th align="center"><strong>1</strong></th>
+<th align="center"><strong>0</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">...</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+</tr>
+</tbody>
+</table>
+<h4 id="offset-6-reg_receiver_usedw-r">Offset 6 - REG_Receiver_usedw (R)<a class="headerlink" href="#offset-6-reg_receiver_usedw-r" title="Permanent link">&para;</a></h4>
+<p>Stores the usedw variable for the Receiver FIFO, which specifies the amount of words currently stored in their memory.</p>
+<table>
+<thead>
+<tr>
+<th align="center"><strong>7</strong></th>
+<th align="center"><strong>6</strong></th>
+<th align="center">...</th>
+<th align="center"><strong>2</strong></th>
+<th align="center"><strong>1</strong></th>
+<th align="center"><strong>0</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">...</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+</tr>
+</tbody>
+</table>
+<h3 id="offset-7-reg_ip-id-r">Offset 7 - REG_IP-ID (R)<a class="headerlink" href="#offset-7-reg_ip-id-r" title="Permanent link">&para;</a></h3>
+<p>This register stores the ID of the IP core so that is possible to verify if the software is communicating properly with the IP core and if it is correctly addressing the Avalon bus.
+The binary value above can be read in Hex as <code>0XFF0055FF</code>, and it is written to the Register IP-ID from least significant (0) to most significant bit (31).</p>
+<table>
+<thead>
+<tr>
+<th align="center">31</th>
+<th align="center">30</th>
+<th align="center">29</th>
+<th align="center">28</th>
+<th align="center">27</th>
+<th align="center">26</th>
+<th align="center">25</th>
+<th align="center">24</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center"><strong>23</strong></td>
+<td align="center"><strong>22</strong></td>
+<td align="center"><strong>21</strong></td>
+<td align="center"><strong>20</strong></td>
+<td align="center"><strong>19</strong></td>
+<td align="center"><strong>18</strong></td>
+<td align="center"><strong>17</strong></td>
+<td align="center"><strong>16</strong></td>
+</tr>
+<tr>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center"><strong>15</strong></td>
+<td align="center"><strong>14</strong></td>
+<td align="center"><strong>13</strong></td>
+<td align="center"><strong>12</strong></td>
+<td align="center"><strong>11</strong></td>
+<td align="center"><strong>10</strong></td>
+<td align="center"><strong>9</strong></td>
+<td align="center"><strong>8</strong></td>
+</tr>
+<tr>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center"><strong>7</strong></td>
+<td align="center"><strong>6</strong></td>
+<td align="center"><strong>5</strong></td>
+<td align="center"><strong>4</strong></td>
+<td align="center"><strong>3</strong></td>
+<td align="center"><strong>2</strong></td>
+<td align="center"><strong>1</strong></td>
+<td align="center"><strong>0</strong></td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">1</td>
+</tr>
+</tbody>
+</table>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../firmware/" class="btn btn-neutral float-right" title="Firmware">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../hardware/" class="btn btn-neutral" title="Hardware"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>Copyright &copy; 2021 / Prof. Rafael Corsi / rafael.corsi@insper.edu.br</p>
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../hardware/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../firmware/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

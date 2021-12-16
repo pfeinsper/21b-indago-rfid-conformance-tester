@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Testing the components - Insper: Open-source Conformance Tester for Tags EPC-GEN2 UHF RFID</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+  <link href="../css/extra.css" rel="stylesheet" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Testing the components";
+    var mkdocs_page_input_path = "tests.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/C.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Insper: Open-source Conformance Tester for Tags EPC-GEN2 UHF RFID</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../getting_started/">Getting started</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../hardware/">Hardware</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../IP_core_interface/">IP core interface</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../firmware/">Firmware</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Testing the components</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#overview-and-testing-order">Overview and testing order</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#individual-testing">Individual testing</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#sender">Sender</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#fmo-encoder">FMO Encoder</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#sender-controller">Sender Controller</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#signal-generator">Signal Generator</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#receiver">Receiver</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#fm0-decoder">FM0 Decoder</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#package-constructor">Package Constructor</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#saleae-logic-8-analyzer">Saleae Logic 8 Analyzer</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#handshake-between-two-boards">Handshake between two boards</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#how-to-run-any-vhd-testbench">How to run any .vhd testbench</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="" href="https://pfeinsper.github.io/21b-indago-rfid-conformance-tester/doxygen/annotated.html">Doxygen</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../conclusion_%26_team/">Conclusion</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Insper: Open-source Conformance Tester for Tags EPC-GEN2 UHF RFID</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Testing the components</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="testing-the-components">Testing the components<a class="headerlink" href="#testing-the-components" title="Permanent link">&para;</a></h1>
+<p>Due to the complexity of our <code>.vhd</code> files, they had to be extensively tested individually. This was done through the ModelSim software, which enabled us to simulate values and compare the results with the expected ones.</p>
+<h2 id="overview-and-testing-order">Overview and testing order<a class="headerlink" href="#overview-and-testing-order" title="Permanent link">&para;</a></h2>
+<p>The first step was to test each component individually to see if they fit to the specifications of the protocol. Once each component was tested and validated, the next step was to implement the interaction between the components using ModelSim to visualize if the components were working together properly.</p>
+<p>After running the necessary simulations, a hardware test was implemented, in which the sender was tested firstly and separately from the receiver component in order to validate the signal transmitted. To do so, a Saleae Logic 8 Analyzer<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> was used in conjunction with the Logic 2 Software to visualize the signal transmitted by the selected DE-10 Standard board pin. Once the transmitted signal had been validated, the next step was to use the board to send the signal via one pin and receive it on another pin.</p>
+<p>Lastly, after validating that the hardware implementation worked on a single board, the team decided to test the same communication, but using two boards: one acting as a tag and another acting as a reader. To do so, the transmitter of the tag was plugged into the reader's receiver, and the reader's transmitter was plugged into the tag's receiver. Both boards' ground pin were also connected so that both could share the same ground signal, otherwise the communication would not work.</p>
+<h2 id="individual-testing">Individual testing<a class="headerlink" href="#individual-testing" title="Permanent link">&para;</a></h2>
+<p>This section contains more information on how each component was individually tested.</p>
+<h3 id="sender">Sender<a class="headerlink" href="#sender" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/RTL/tb/sender_tb.vhd">/main/fpga/RTL/tb/sender_tb.vhd</a></p>
+<p>The <code>sender_tb.vhd</code> file tests the sender component by simulating a series of commands, each divided in packages, to be encoded and sent. Each component was manually inserted into the testbench, as the group knew what the sender output should be once the commands had been encoded, and compared the results obtained.</p>
+<h4 id="fmo-encoder">FMO Encoder<a class="headerlink" href="#fmo-encoder" title="Permanent link">&para;</a></h4>
+<p><a href="https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/RTL/tb/FM0_encoder_tb.vhd">/main/fpga/RTL/tb/FM0_encoder_tb.vhd</a></p>
+<p>The <code>FM0_encoder_tb.vhd</code> file tests the sender encoder component in regards to the encoding process and FIFO communication.</p>
+<p>The encoding process tests happen in the same way as the sender tests, in which the program simulates a series of commands, each divided in packages. Each component was manually inserted into the testbench, as the group knew what the encoder output should be once the commands had been encoded, and compared the results obtained.</p>
+<p>The FIFO communication test by simulating a FIFO component, and the testbench compares the values of the communication cable to their intended results.</p>
+<h4 id="sender-controller">Sender Controller<a class="headerlink" href="#sender-controller" title="Permanent link">&para;</a></h4>
+<p><a href="https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/RTL/tb/sender_controller_tb.vhd">/main/fpga/RTL/tb/sender_controller_tb.vhd</a></p>
+<p>The sender_controller_tb.vhd file tests the sender controller component by simulating the flags that dictate its functionalities, those being the <code>has gen</code>, <code>start encoder</code>, <code>start generator</code>, <code>clr_finished sending</code>.</p>
+<h4 id="signal-generator">Signal Generator<a class="headerlink" href="#signal-generator" title="Permanent link">&para;</a></h4>
+<p><a href="https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/RTL/tb/signal_generator_tb.vhd">/main/fpga/RTL/tb/signal_generator_tb.vhd</a></p>
+<p>The signal_generator_tb.vhd file tests the sender signal generator component by simulating the flags that dictate its functionalities, those being the <code>has gen</code>, <code>start generator</code>, <code>is_preamble</code>.</p>
+<h3 id="receiver">Receiver<a class="headerlink" href="#receiver" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/RTL/tb/receiver.vhd">/main/fpga/RTL/tb/receiver_tb.vhd</a></p>
+<p>The receiver_tb.vhd file tests the receiver component by simulating a series of commands, each divided in packages, as a response being sent from the tag. Each component was manually inserted into the testbench, as the group knew what the sender output should be once the commands had been decoded, and compared the results obtained.</p>
+<h4 id="fm0-decoder">FM0 Decoder<a class="headerlink" href="#fm0-decoder" title="Permanent link">&para;</a></h4>
+<p><a href="https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/RTL/tb/FM0_decoder_tb.vhd">/main/fpga/RTL/tb/FM0_decoder_tb.vhd</a></p>
+<p>The FM0_decoder_tb.vhd file tests the receiver decoder component by simulating a series of commands, each divided in packages. Each component was manually inserted into the testbench, as the group knew what the decoder output should be once the commands had been decoded, and compared the results obtained.</p>
+<h4 id="package-constructor">Package Constructor<a class="headerlink" href="#package-constructor" title="Permanent link">&para;</a></h4>
+<p><a href="https://github.com/pfeinsper/21b-indago-rfid-conformance-tester/blob/main/fpga/RTL/tb/package_constructor_tb.vhd">/main/fpga/RTL/tb/FM0_decoder_tb.vhd</a></p>
+<p>The package_constructor_tb.vhd file tests the receiver package constructor component by simulating a decoder component that sends decoded data to the package constructor, which once correctly packaged should result in full commands that are compared to the expected command outputs.</p>
+<h2 id="saleae-logic-8-analyzer">Saleae Logic 8 Analyzer<a class="headerlink" href="#saleae-logic-8-analyzer" title="Permanent link">&para;</a></h2>
+<p>The Saleae Logic 8 Analyzer is a small analyzer that can be plugged into the user's computer. It can be set up to run on loop, run during a set period of time or set to wait for a trigger of a specific signal. The user can visualize the signal and choose their preferred method for visualizing the signal using the Logic 2 Software.</p>
+<p>The images below show the Saleae Logic 8 Analyzer and the Logic 2 Software respectively.</p>
+<p><img alt="Logic 8 Analyzer" src="logic8.png" />
+<em>Logic 8 Analyzer (image obtained <a href="https://www.antratek.com/saleae-logic-8-logic-analyzer">here</a>)</em></p>
+<p><img alt="Logic 2 Software" src="logic2.png" />
+<em>Logic 2 Software (image obtained <a href="https://i.redd.it/xw4y5j7kna671.png">here</a>)</em></p>
+<h2 id="handshake-between-two-boards">Handshake between two boards<a class="headerlink" href="#handshake-between-two-boards" title="Permanent link">&para;</a></h2>
+<p>The steps on how to do this implementation can be read <a href="../getting_started/#hardware-guide-handshake">here</a>.</p>
+<p>The purpose of this implementation is to validate if two boards can succesfully communicate using the implemented mandatory commands to do so. A more detailed explanation of how this works can be found in the <a href="../firmware/#example-of-main-code">example of main code section</a>. The image below shows the two boards and their connections.</p>
+<p><img alt="Connection between two DE-10 Standard boards" src="boards.png" />
+<em>Handshake implementation setup with the two DE-10 Standard boards connected</em></p>
+<h2 id="how-to-run-any-vhd-testbench">How to run any <code>.vhd</code> testbench<a class="headerlink" href="#how-to-run-any-vhd-testbench" title="Permanent link">&para;</a></h2>
+<p>The video below shows a visual example of how the <code>.vhd</code> testbenches were validated using ModelSim (in this case, the <code>sender_tb.vhd</code>).</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/7u0xb6CM-Ng" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>Saleae Logic 8 Analyzer.
+<a href="https://www.saleae.com/">https://www.saleae.com/</a>
+Accessed on: 01/10/2021.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../conclusion_%26_team/" class="btn btn-neutral float-right" title="Conclusion">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../firmware/" class="btn btn-neutral" title="Firmware"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>Copyright &copy; 2021 / Prof. Rafael Corsi / rafael.corsi@insper.edu.br</p>
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../firmware/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../conclusion_%26_team/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
