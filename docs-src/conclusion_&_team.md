@@ -1,3 +1,9 @@
+# Conclusion
+
+The main purpose of the project was to develop a conformance tester  for the EPC-GEN2 protocol TAGs. Doing so required thorough understanding of most of the EPC-GEN2 UHF RFID protocol throughout each member of the group; development of complex VHDL components that operated through state machines; development of a NIOS II soft processor in C programming language that included all of the protocol’s mandatory commands, as well as other customizations for testing purposes; as well as building the Avalon Interface that intermediates the processor and IP core communication.
+
+The group as a whole had to do an extensive research on all these topics to learn how to implement the code, as well as understand the protocol to have a clear image of what the conformance tester should be evaluating in a TAG.
+
 # The team
 
 This page is to give a brief description of the team responsible for the development of this project.
